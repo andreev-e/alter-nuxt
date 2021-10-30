@@ -1,19 +1,27 @@
 <template>
   <div class="container page">
     <Header />
-    <Breadcrumbs :list="tag.locations" />
+    <Breadcrumbs :list="tag.locations" :loading="loadingRegion" />
     <div class="row">
       <div class="col-sm-12">
         <h1>
           <img v-if="tag.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + tag.flag" alt="flag">
           {{ tag.name }}
+          <b-spinner v-if="loadingRegion" />
         </h1>
       </div>
     </div>
-    <TwoPanels :left="tag.children" :right="[]"/>
-    <div class="row inner-gal gallery">
-      <div v-for="poi in pois" :key="poi.id" class="col-sm-3">
-        <PoiCard :poi="poi" />
+    <TwoPanels :left="tag.children" :right="[]" />
+    <Gallery :objects="pois" :loading="loadingPois" />
+    <div class="row">
+      <div class="col-12">
+        <b-pagination
+          v-if="pages > 0"
+          v-model="page"
+          :total-rows="pages"
+          :per-page="perPage"
+          aria-controls="my-table"
+        />
       </div>
     </div>
     <Footer />
@@ -28,10 +36,16 @@ export default {
       pois: [],
       tag: {
         name: ''
-      }
+      },
+      page: 1,
+      pages: null,
+      perPage: 15,
+      loadingPois: true,
+      loadingRegion: true
     }
   },
   async fetch () {
+    this.id = this.$route.params.id
     await this.fetchTagBackend()
     await this.fetchPoisBackend()
   },
@@ -44,20 +58,34 @@ export default {
       }
     ]
   },
+  watch: {
+    page: {
+      handler (val) {
+        this.fetchPoisBackend()
+      }
+    }
+  },
   mounted () {
   },
   methods: {
     async fetchTagBackend () {
-      const result = await this.$axios.$get('https://alter-api/tags/' + this.$route.params.id)
+      const result = await this.$axios.$get('https://alter-api/tags/' + this.id)
       this.tag = result.tag
+      this.loadingRegion = false
     },
     async fetchTag () {
-      const result = await this.$axios.$get('https://alter-api/tags/' + this.$route.params.id)
+      const result = await this.$axios.$get('https://alter-api/tags/' + this.id)
       this.tag = result.tag
     },
     async fetchPoisBackend () {
-      const result = await this.$axios.$get('https://alter-api/pois', { params: { tag: this.$route.params.id } })
-      this.pois = result.data
+      this.loadingPois = true
+      const { data, meta } = await this.$axios.$get(
+        'https://alter-api/pois',
+        { params: { tag: this.id, page: this.page } }
+      )
+      this.pois = data
+      this.pages = meta.total
+      this.loadingPois = false
     }
   }
 }

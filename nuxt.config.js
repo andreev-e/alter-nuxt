@@ -1,3 +1,6 @@
+import path from 'path'
+import fs from 'fs'
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -21,10 +24,12 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~assets/css/common.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/vue2-google-maps.js', mode: 'client', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,19 +49,23 @@ export default {
     ['@nuxtjs/component-cache', {
       max: 10000,
       maxAge: 1000 * 60 * 60
-    }],
-    ['nuxt-gmaps', {
-      key: 'AIzaSyDVxoYcrB_2arTNlYpFClzzKy9KgFW3_Y8',
-      libraries: ['places']
     }]
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: [/^vue2-google-maps($|\/)/]
   },
 
   axios: {
     // proxy: true,
   },
+
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt'))
+    }
+  }
 
 }

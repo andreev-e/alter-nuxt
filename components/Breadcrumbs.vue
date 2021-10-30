@@ -25,6 +25,9 @@
             {{ crumb.name }}
           </span>
         </li>
+        <li v-if="loading">
+          <b-spinner small />
+        </li>
       </ul>
     </div>
   </div>
@@ -37,6 +40,10 @@ export default {
       type: Array,
       required: true,
       default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {

@@ -1,8 +1,16 @@
 <template>
-  <nuxt-link :to="'/poi/' + poi.id" class="poi_card">
-    <img :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'" :title="poi.name" class="img-fluid">
-    <div class="img-title">
-      {{ poi.name }}
+  <nuxt-link
+    :to="'/poi/' + poi.id"
+    class="poi__card"
+  >
+    <div :class="loading ? 'poi_card loading' : 'poi__content'">
+      <div class="spinner">
+        <b-spinner v-if="loading" />
+      </div>
+      <img :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'" :title="poi.name" class="img-fluid">
+      <div class="img-title">
+        {{ poi.name }}
+      </div>
     </div>
   </nuxt-link>
 </template>
@@ -14,15 +22,33 @@ export default {
     poi: {
       type: Object,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 }
 </script>
 
 <style>
-  .poi_card {
+  .loading {
+    opacity: 0.4;
+  }
+  .spinner {
+    width:100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+  }
+  .poi__card {
     display: block;
     padding: 15px 0;
+  }
+  .poi__content {
+    position: relative;
   }
   .img-title {
     opacity: 0.9;
