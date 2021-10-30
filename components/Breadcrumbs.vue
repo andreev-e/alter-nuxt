@@ -1,8 +1,6 @@
 <template>
   <div class="content row">
-    <div
-      class="navigation col-sm-12"
-    >
+    <div class="navigation col-12">
       <ul>
         <li class="first">
           <router-link to="/">
@@ -15,7 +13,7 @@
           </router-link>
         </li>
         <li
-          v-for="crumb in list"
+          v-for="crumb in crumbs"
           :key="crumb.id"
         >
           <router-link v-if="crumb.url" :to="crumb.url">
@@ -35,6 +33,7 @@
 
 <script>
 export default {
+  name: 'Breadcrumbs',
   props: {
     list: {
       type: Array,
@@ -46,7 +45,34 @@ export default {
       default: false
     }
   },
-  mounted () {
+  data () {
+    return {
+      crumbs: []
+    }
+  },
+  watch: {
+    list: {
+      handler (val) {
+        localStorage.breadcrumbs = JSON.stringify(val)
+        this.crumbs = val
+      }
+    }
+  },
+  created () {
+    if (process.client) {
+      if (localStorage.breadcrumbs) {
+        try {
+          this.crumbs = JSON.parse(localStorage.breadcrumbs)
+        } catch (e) {
+          return []
+        }
+      } else {
+        localStorage.breadcrumbs = JSON.stringify(this.list)
+        this.crumbs = this.list
+      }
+    } else {
+      this.crumbs = this.list
+    }
   }
 }
 </script>

@@ -6,6 +6,12 @@
         :zoom="7"
         map-type-id="terrain"
       >
+        <GmapMarker
+          v-if="mylocation"
+          :position="mylocation"
+          :clickable="true"
+          :icon="mylocationMarker"
+        />
       </GmapMap>
     </client-only>
   </div>
@@ -22,7 +28,13 @@ export default {
   },
   data () {
     return {
-      center: { lat: 55, lng: 45 }
+      center: { lat: 55, lng: 45 },
+      mylocation: false,
+      mylocationMarker: {
+        url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
+        size: { width: 64, height: 64, f: 'px', b: 'px' },
+        scaledSize: { width: 64, height: 64, f: 'px', b: 'px' }
+      }
     }
   },
   computed: {
@@ -31,6 +43,21 @@ export default {
   created () {
   },
   mounted () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          this.mylocation = this.center
+        },
+        () => {
+        }
+      )
+    } else {
+      // Browser doesn't support Geolocation
+    }
   }
 }
 </script>
