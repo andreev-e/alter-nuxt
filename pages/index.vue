@@ -8,13 +8,7 @@
         </h1>
       </div>
     </div>
-    <div class="row">
-      <GmapMap
-        :center="{lat:10, lng:10}"
-        :zoom="7"
-        map-type-id="terrain"
-      />
-    </div>
+    <Map />
     <Gallery :objects="pois.slice(0, 3)" :loading="loadingPois" />
     <Comments />
     <Footer />
@@ -54,29 +48,10 @@ export default {
 </script>
 
 <style>
-  body {
-      background-color: #606084;
-      font-family: 'Roboto Condensed', sans-serif;
-  }
-  body a {
-      color: #0D293C;
-  }
-  ul, li {
-      list-style-type: none;
-  }
-  h1 {
-      color: #244255;
-      text-transform: uppercase;
-      font-size: 1.6em;
-  }
+
   h1.view {
       background: url(/i/star_grey.png) no-repeat left top;
       padding-left: 35px;
       cursor: pointer;
-  }
-
-  .vue-map-container {
-    height: 400px;
-    width: 100%;
   }
 </style>

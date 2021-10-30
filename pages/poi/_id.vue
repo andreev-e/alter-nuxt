@@ -13,25 +13,8 @@
     <div class="row inner">
       <div class="col-sm-8 object-full">
         <div class="near">
-          <ul class="tabs">
-            <li id="link_photo" class="taba1 active">
-              <a href="#" onclick="return vkladka1('_photo');">
-                <img src="https://altertravel.ru/i/altertravel.png"> Фото
-              </a>
-            </li>
-            <li id="link_map" class="taba1 ">
-              <a href="#" onclick="return vkladka1('_map');">
-                <img src="https://altertravel.ru/i/map.png"> Где находится?
-              </a>
-            </li>
-            <li id="link_ytb" class="taba1">
-              <a href="#" onclick="return vkladka1('_ytb');">
-                <img src="https://altertravel.ru/i/youtube.png"> Youtube
-              </a>
-            </li>
-          </ul>
-          <ul class="pages">
-            <li id="vkladka_photo" class="vkladka1 active">
+          <b-tabs>
+            <b-tab title="Фото">
               <div class="view_image">
                 <div id="bigimage">
                   <img :src="'https://altertravel.ru/full.php?f=/images/' + $route.params.id + '.jpg'" :title="poi.name" class="img-fluid">
@@ -45,9 +28,21 @@
                 </div>
                 <p><a href="https://altertravel.ru/show_user.php?name=olegoo">автор</a> © Все права на опубликованные фотографии и видео принадлежат их авторам</p>
               </div>
-            </li>
-            <li id="vkladka_map" class="vkladka1">
-              <div id="map_guide" />
+            </b-tab>
+            <b-tab title="Где находится?">
+              <client-only>
+                <GmapMap
+                  v-if="center"
+                  :center="center"
+                  :zoom="7"
+                  map-type-id="terrain"
+                >
+                  <GmapMarker
+                    :position="center"
+                    :clickable="true"
+                  />
+                </GmapMap>
+              </client-only>
               <h2 id="coord">
                 Кординаты
               </h2>
@@ -56,7 +51,7 @@
                   <img src="https://altertravel.ru/qr.php?lng=43.455948&amp;lat=43.123161" alt="QR code">
                 </div>
                 <div class="points">
-                  <span>43.123161,&nbsp;43.455948</span>
+                  <span>{{ poi.lat }},&nbsp;{{ poi.lng }}</span>
                   <a href="https://altertravel.ru/generate_kml.php?id=22728">
                     <div class="dwnl-kml">
                       <span>скачать KML файл</span>
@@ -64,11 +59,11 @@
                   </a>
                 </div>
               </div>
-            </li>
-            <li id="vkladka_ytb" class="vkladka1">
-              <iframe width="700" height="400" src="https://www.youtube.com/embed/FtqJY_QH5Xw" frameborder="0" allowfullscreen="" />
-            </li>
-          </ul>
+            </b-tab>
+            <b-tab v-if="poi.ytb" title="Видео">
+              <iframe width="700" height="400" :src="'https://www.youtube.com/embed/' + poi.ytb" frameborder="0" allowfullscreen="" />
+            </b-tab>
+          </b-tabs>
         </div>
       </div>
       <div class="col-sm-4">
@@ -137,7 +132,9 @@
 export default {
   data () {
     return {
-      poi: {}
+      poi: {},
+      mapData: {},
+      center: null
     }
   },
   async fetch () {
@@ -155,6 +152,7 @@ export default {
     }
   },
   created () {
+    this.mapData = { mainpoint: { name: this.poi.name, lat: this.poi.lat, lng: this.poi.lng } }
   },
   methods: {
     async fetchPoi () {
@@ -162,6 +160,7 @@ export default {
         'https://alter-api/pois/' + this.$route.params.id
       )
       this.poi = result.data
+      this.center = { lat: this.poi.lat, lng: this.poi.lng }
     }
   }
 }
