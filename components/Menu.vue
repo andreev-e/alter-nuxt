@@ -81,7 +81,7 @@ export default {
         try {
           tags = JSON.parse(localStorage.tags)
         } catch (e) {
-          console.log(localStorage.tags)
+          // console.log(localStorage.tags)
         }
       }
       if (tags.length > 0) {
@@ -96,7 +96,7 @@ export default {
         try {
           regions = JSON.parse(localStorage.regions)
         } catch (e) {
-          console.log(localStorage.regions)
+          // console.log(localStorage.regions)
         }
       }
       if (regions.length > 0) {
@@ -125,10 +125,10 @@ export default {
 
 <style scoped>
   .header-menu {
-      color: #fff;
-      font-size: 20px;
-      margin-top: 30px;
-      line-height: 22px;
+    color: #fff;
+    font-size: 20px;
+    margin-top: 30px;
+    line-height: 22px;
   }
   .header-menu li:hover {
     background-color: rgba(255, 255, 255, .90);
@@ -145,6 +145,7 @@ export default {
     border-top-right-radius: 9px;
     height: 46px;
     padding: 4px 4px;
+    margin-left: 1px;
   }
   .region_select ul {
     display: none;

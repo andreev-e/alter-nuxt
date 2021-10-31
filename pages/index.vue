@@ -8,8 +8,7 @@
         </h1>
       </div>
     </div>
-    <Map />
-    {{ mappois }}
+    <Map :center="center" />
     <Gallery :objects="pois" :loading="loadingPois" />
     <Comments />
     <Footer />
@@ -21,8 +20,8 @@ export default {
   data () {
     return {
       pois: [],
-      mappois: [],
-      loadingPois: true
+      loadingPois: true,
+      center: {}
     }
   },
   async fetch () {
@@ -38,6 +37,19 @@ export default {
     ]
   },
   mounted () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          this.mylocation = this.center
+        },
+        () => {
+        }
+      )
+    }
     this.fetchPois()
   },
   methods: {

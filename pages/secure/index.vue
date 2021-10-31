@@ -2,7 +2,7 @@
   <div class="container page">
     <Header />
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 text-center">
         <h1>
           Личный кабинет
         </h1>
@@ -14,7 +14,11 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      login: 'login'
+    }
+  }
 }
 </script>
 

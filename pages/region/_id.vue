@@ -12,6 +12,7 @@
       </div>
     </div>
     <TwoPanels :left="tag.children" :right="[]" />
+    <Map :center="{ lat: tag.lat, lng: tag.lng }"/>
     <Gallery :objects="pois" :loading="loadingPois" />
     <div class="row">
       <div class="col-12">
@@ -39,7 +40,7 @@ export default {
       },
       page: 1,
       pages: null,
-      perPage: 15,
+      perPage: 12,
       loadingPois: true,
       loadingRegion: true
     }
@@ -81,7 +82,7 @@ export default {
       this.loadingPois = true
       const { data, meta } = await this.$axios.$get(
         'https://alter-api/pois',
-        { params: { tag: this.id, page: this.page } }
+        { params: { tag: this.id, page: this.page, perPage: this.perPage } }
       )
       this.pois = data
       this.pages = meta.total

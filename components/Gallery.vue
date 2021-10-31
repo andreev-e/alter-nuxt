@@ -1,6 +1,6 @@
 <template>
   <div class="row inner-gal gallery">
-    <div v-for="poi in objects" :key="poi.id" class="col-sm-4">
+    <div v-for="poi in objects" :key="poi.id" class="col-sm-3">
       <PoiCard :poi="poi" :loading="loading" />
     </div>
   </div>

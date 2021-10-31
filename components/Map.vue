@@ -40,9 +40,18 @@ export default {
       type: Object
     }
   },
+  props: {
+    center: {
+      type: Object,
+      default: () => { return { lat: 55, lng: 45 } }
+    },
+    tag: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
-      center: { lat: 55, lng: 45 },
       mylocation: false,
       mylocationMarker: {
         url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
@@ -59,28 +68,21 @@ export default {
   created () {
   },
   mounted () {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.center = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-          this.mylocation = this.center
-        },
-        () => {
-        }
-      )
-    }
   },
   methods: {
     async fetchPoisToMap () {
-      console.log('fetchPoisToMap')
-      this.loading = true
-      const bounds = this.$refs.map.$mapObject.getBounds().toUrlValue()
-      const { data } = await this.$axios.$get('https://alter-api/pois?bounds=' + bounds)
-      this.mappois = data
-      this.loading = false
+      if (!this.loading) {
+        this.loading = true
+        const bounds = this.$refs.map.$mapObject.getBounds()
+        if (bounds) {
+          const { data } = await this.$axios.$get(
+            'https://alter-api/pois?bounds=' + bounds.toUrlValue(),
+            { params: { tag: this.tag } }
+          )
+          this.mappois = new Set([...this.mappois, ...data])
+        }
+        this.loading = false
+      }
     }
   }
 }
