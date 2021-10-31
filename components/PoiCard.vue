@@ -4,8 +4,8 @@
     class="poi__card"
   >
     <div :class="loading ? 'poi_card loading' : 'poi__content'">
-      <div class="spinner">
-        <b-spinner v-if="loading" />
+      <div v-if="loading" class="spinner">
+        <b-spinner />
       </div>
       <img :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'" :title="poi.name" class="img-fluid">
       <div class="img-title">
@@ -42,6 +42,7 @@ export default {
     position: absolute;
     align-items: center;
     justify-content: center;
+    background-color: rgba(255,255,255, 0.5);
   }
   .poi__card {
     display: block;

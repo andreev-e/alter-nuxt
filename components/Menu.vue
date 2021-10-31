@@ -75,11 +75,44 @@ export default {
     }
   },
   async fetch () {
-    let res = await this.$axios.$get('https://alter-api/tags')
-    this.tags = res.data
-    res = await this.$axios.$get('https://alter-api/countries')
-    this.regions = res.data
-    console.log('tags & countries loaded')
+    if (process.client) {
+      let tags = []
+      if (localStorage.tags) {
+        try {
+          tags = JSON.parse(localStorage.tags)
+        } catch (e) {
+          console.log(localStorage.tags)
+        }
+      }
+      if (tags.length > 0) {
+        this.tags = tags
+      } else {
+        const res = await this.$axios.$get('https://alter-api/tags')
+        this.tags = res.data
+        localStorage.tags = this.tags
+      }
+      let regions = []
+      if (localStorage.regions) {
+        try {
+          regions = JSON.parse(localStorage.regions)
+        } catch (e) {
+          console.log(localStorage.regions)
+        }
+      }
+      if (regions.length > 0) {
+        this.regions = regions
+      } else {
+        const res = await this.$axios.$get('https://alter-api/countries')
+        this.regions = res.data
+        localStorage.regions = this.regions
+      }
+    } else {
+      let res = await this.$axios.$get('https://alter-api/tags')
+      this.tags = res.data
+      res = await this.$axios.$get('https://alter-api/countries')
+      this.regions = res.data
+      console.log('tags & countries loaded')
+    }
   },
   mounted () {
 

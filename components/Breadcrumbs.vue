@@ -13,19 +13,21 @@
           </router-link>
         </li>
         <li
-          v-for="crumb in crumbs"
+          v-for="(crumb, index) in crumbs"
           :key="crumb.id"
         >
-          <router-link v-if="crumb.url" :to="crumb.url">
+          <router-link v-if="crumb.url" :to="crumb.url" @click.native="pop(index)">
             {{ crumb.name }}
           </router-link>
           <span v-else>
             {{ crumb.name }}
           </span>
         </li>
-        <span v-if="loading">
-          <b-spinner small />
-        </span>
+        <li v-if="loading">
+          <span>
+            <b-spinner small />
+          </span>
+        </li>
       </ul>
     </div>
   </div>
@@ -72,6 +74,14 @@ export default {
       }
     } else {
       this.crumbs = this.list
+    }
+  },
+  methods: {
+    pop (index) {
+      for (let i = 0; i < (this.crumbs.length - index); i++) {
+        this.crumbs.pop()
+      }
+      localStorage.breadcrumbs = JSON.stringify(this.crumbs)
     }
   }
 }

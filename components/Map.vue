@@ -1,16 +1,30 @@
 <template>
   <div class="row nopadding">
+    <div v-if="loading" class="spinner">
+      <b-spinner />
+    </div>
     <client-only>
       <GmapMap
+        ref="map"
         :center="center"
         :zoom="7"
         map-type-id="terrain"
+        @dragend="fetchPoisToMap"
+        @zoom_changed="fetchPoisToMap"
+        @idle="fetchPoisToMap"
       >
         <GmapMarker
           v-if="mylocation"
           :position="mylocation"
           :clickable="true"
           :icon="mylocationMarker"
+        />
+        <GmapMarker
+          v-for="poi in mappois"
+          :key="poi.id"
+          :position="{ lat: poi.lat, lng: poi.lng }"
+          :clickable="true"
+          @click="$router.push('/poi/' + poi.id)"
         />
       </GmapMap>
     </client-only>
@@ -34,7 +48,9 @@ export default {
         url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
         size: { width: 64, height: 64, f: 'px', b: 'px' },
         scaledSize: { width: 64, height: 64, f: 'px', b: 'px' }
-      }
+      },
+      mappois: [],
+      loading: false
     }
   },
   computed: {
@@ -55,8 +71,16 @@ export default {
         () => {
         }
       )
-    } else {
-      // Browser doesn't support Geolocation
+    }
+  },
+  methods: {
+    async fetchPoisToMap () {
+      console.log('fetchPoisToMap')
+      this.loading = true
+      const bounds = this.$refs.map.$mapObject.getBounds().toUrlValue()
+      const { data } = await this.$axios.$get('https://alter-api/pois?bounds=' + bounds)
+      this.mappois = data
+      this.loading = false
     }
   }
 }
@@ -66,5 +90,17 @@ export default {
   .vue-map-container {
     height: 400px;
     width: 100%;
+  }
+  .row.nopadding {
+    position: relative;
+  }
+  .spinner {
+    width:100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
   }
 </style>

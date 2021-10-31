@@ -9,16 +9,19 @@
       </div>
     </div>
     <Map />
-    <Gallery :objects="pois.slice(0, 3)" :loading="loadingPois" />
+    {{ mappois }}
+    <Gallery :objects="pois" :loading="loadingPois" />
     <Comments />
     <Footer />
   </div>
 </template>
 <script>
+
 export default {
   data () {
     return {
       pois: [],
+      mappois: [],
       loadingPois: true
     }
   },
@@ -35,7 +38,7 @@ export default {
     ]
   },
   mounted () {
-    console.log('frontend actions')
+    this.fetchPois()
   },
   methods: {
     async fetchPois () {
