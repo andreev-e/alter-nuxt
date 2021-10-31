@@ -23,9 +23,9 @@
             {{ crumb.name }}
           </span>
         </li>
-        <li v-if="loading">
+        <span v-if="loading">
           <b-spinner small />
-        </li>
+        </span>
       </ul>
     </div>
   </div>

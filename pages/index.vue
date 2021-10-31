@@ -23,7 +23,7 @@ export default {
     }
   },
   async fetch () {
-    await this.fetchPoisBackend()
+    await this.fetchPois()
   },
   head: {
     title: 'Карта достопримечательностей для самостоятельных путешественников',
@@ -34,10 +34,11 @@ export default {
       }
     ]
   },
-  loaded () {
+  mounted () {
+    console.log('frontend actions')
   },
   methods: {
-    async fetchPoisBackend () {
+    async fetchPois () {
       this.loadingPois = true
       const { data } = await this.$axios.$get('https://alter-api/pois')
       this.pois = data

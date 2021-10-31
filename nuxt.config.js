@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -66,6 +68,8 @@ export default {
       key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt'))
     }
-  }
+  },
+
+  serverMiddleware: ['~/server-middleware/logger']
 
 }

@@ -13,7 +13,7 @@
             :key="region.id"
           >
             <nuxt-link :to="region.url">
-              <img width="16" height="16" :src="`https://altertravel.ru/i/flags/` + region.flag" alt="flag">
+              <img v-if="region.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + region.flag" alt="flag">
               {{ region.name }} ({{ region.count }})
             </nuxt-link>
           </li>
@@ -75,12 +75,11 @@ export default {
     }
   },
   async fetch () {
-    let res = await this.$axios.$get(
-      'https://alter-api/tags'
-    )
+    let res = await this.$axios.$get('https://alter-api/tags')
     this.tags = res.data
     res = await this.$axios.$get('https://alter-api/countries')
     this.regions = res.data
+    console.log('tags & countries loaded')
   },
   mounted () {
 
