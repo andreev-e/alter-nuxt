@@ -157,7 +157,7 @@ export default {
   methods: {
     async fetchPoi () {
       const result = await this.$axios.$get(
-        'https://alter-api/pois/' + this.$route.params.id
+        'https://api.altertravel.ru/api/poi/' + this.$route.params.id
       )
       this.poi = result.data
       this.center = { lat: this.poi.lat, lng: this.poi.lng }

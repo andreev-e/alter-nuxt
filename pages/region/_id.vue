@@ -70,18 +70,18 @@ export default {
   },
   methods: {
     async fetchTagBackend () {
-      const result = await this.$axios.$get('https://alter-api/tags/' + this.id)
+      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
       this.tag = result.tag
       this.loadingRegion = false
     },
     async fetchTag () {
-      const result = await this.$axios.$get('https://alter-api/tags/' + this.id)
+      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
       this.tag = result.tag
     },
     async fetchPoisBackend () {
       this.loadingPois = true
       const { data, meta } = await this.$axios.$get(
-        'https://alter-api/pois',
+        'https://api.altertravel.ru/api/poi',
         { params: { tag: this.id, page: this.page, perPage: this.perPage } }
       )
       this.pois = data

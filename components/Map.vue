@@ -76,7 +76,7 @@ export default {
         const bounds = this.$refs.map.$mapObject.getBounds()
         if (bounds) {
           const { data } = await this.$axios.$get(
-            'https://alter-api/pois?bounds=' + bounds.toUrlValue(),
+            'https://api.altertravel.ru/api/poi?bounds=' + bounds.toUrlValue(),
             { params: { tag: this.tag } }
           )
           this.mappois = new Set([...this.mappois, ...data])

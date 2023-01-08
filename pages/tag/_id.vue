@@ -77,7 +77,7 @@ export default {
     async fetchPois () {
       this.loadingPois = true
       const { data, meta } = await this.$axios.$get(
-        'https://alter-api/pois',
+        'https://api.altertravel.ru/api/poi',
         { params: { tag: this.id, page: this.page, perPage: this.perPage } }
       )
       this.pois = data

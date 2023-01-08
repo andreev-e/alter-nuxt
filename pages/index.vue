@@ -55,7 +55,7 @@ export default {
   methods: {
     async fetchPois () {
       this.loadingPois = true
-      const { data } = await this.$axios.$get('https://alter-api/pois')
+      const { data } = await this.$axios.$get('https://api.altertravel.ru/api/poi')
       this.pois = data
       this.loadingPois = false
     }

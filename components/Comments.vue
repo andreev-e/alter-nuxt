@@ -4,7 +4,7 @@
       <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
       <b-spinner v-if="loading" label="Spinning" />
       <div id="comments_list" class="comments-list">
-        <div v-for="(comment, index) in comments" :key="comment.commentid" class="comment">
+        <div v-for="(comment, index) in comments" :key="comment.id" class="comment">
           <div class="author-date">
             <b>
               <router-link :to="'/user/' + comment.name">
@@ -12,9 +12,9 @@
               </router-link>
             </b>
             <i>{{ comment.time }}</i>
-            <router-link v-if="!id" :to="'/poi/' + comment.object.id">
+            <router-link v-if="!id" :to="'/poi/' + comment.id">
               об объекте
-              <span v-html="comment.object.name" />
+              <span v-html="comment.name" />
             </router-link>
           </div>
           <div class="comment-text-wrapper">
@@ -77,7 +77,7 @@ export default {
     async fetchComments () {
       this.loading = true
       const result = await this.$axios.$get(
-        'https://alter-api/comments',
+        'https://api.altertravel.ru/api/comment',
         { params: { id: this.id, type: this.type } }
       )
       this.comments = result.data
