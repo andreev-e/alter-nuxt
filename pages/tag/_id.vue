@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-12">
         <b-pagination
-          v-if="pages > 0"
+          v-if="pages > 1"
           v-model="page"
           :total-rows="pages"
           :per-page="perPage"
