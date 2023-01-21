@@ -2,7 +2,7 @@
   <div class="container page">
     <Header />
     <template v-if="tag">
-      <Breadcrumbs :list="tag.children" :loading="loadingRegion" />
+      <Breadcrumbs :list="crumbs" :loading="loadingRegion" />
       <div class="row">
         <div class="col-sm-12">
           <h1>
@@ -33,66 +33,86 @@
 
 <script>
 
-export default {
-  data () {
-    return {
-      pois: [],
-      tag: {
-        name: '',
-        children: []
+  export default {
+    data () {
+      return {
+        pois: [],
+        tag: {
+          name: '',
+          children: [],
+        },
+        page: 1,
+        pages: null,
+        perPage: 12,
+        loadingPois: true,
+        loadingRegion: true,
+      }
+    },
+    async fetch () {
+      this.id = this.$route.params.id
+      await this.fetchTagBackend()
+      await this.fetchPoisBackend()
+    },
+    head: {
+      title: 'Карта достопримечательностей для самостоятельных путешественников',
+      meta: [
+        {
+          name: 'description',
+          content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!',
+        },
+      ],
+    },
+    watch: {
+      page: {
+        handler (val) {
+          this.fetchPoisBackend()
+        },
       },
-      page: 1,
-      pages: null,
-      perPage: 12,
-      loadingPois: true,
-      loadingRegion: true
-    }
-  },
-  async fetch () {
-    this.id = this.$route.params.id
-    await this.fetchTagBackend()
-    await this.fetchPoisBackend()
-  },
-  head: {
-    title: 'Карта достопримечательностей для самостоятельных путешественников',
-    meta: [
-      {
-        name: 'description',
-        content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!'
-      }
-    ]
-  },
-  watch: {
-    page: {
-      handler (val) {
-        this.fetchPoisBackend()
-      }
-    }
-  },
-  mounted () {
-  },
-  methods: {
-    async fetchTagBackend () {
-      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
-      this.tag = result.tag
-      this.loadingRegion = false
     },
-    async fetchTag () {
-      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
-      this.tag = result.tag
+    computed: {
+      crumbs () {
+        return [
+          ...this.tag.parents ?? [],
+          {
+            name: this.tag.name,
+            url: '',
+          },
+        ]
+      },
     },
-    async fetchPoisBackend () {
-      this.loadingPois = true
-      const { data, meta } = await this.$axios.$get(
-        'https://api.altertravel.ru/api/poi',
-        { params: { tag: this.id, page: this.page, perPage: this.perPage } }
-      )
-      this.pois = data
-      this.pages = meta.total
-      this.loadingPois = false
-    }
+    mounted () {
+    },
+    methods: {
+      async fetchTagBackend () {
+        const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
+        this.tag = result.data
+        this.loadingRegion = false
+      },
+      async fetchTag () {
+        const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
+        this.tag = result.data
+      },
+      async fetchPoisBackend () {
+        this.loadingPois = true
+        const {
+          data,
+          meta,
+        } = await this.$axios.$get(
+          'https://api.altertravel.ru/api/poi',
+          {
+            params: {
+              location: this.id,
+              page: this.page,
+              perPage: this.perPage,
+            },
+          },
+        )
+        this.pois = data
+        this.pages = meta.last_page
+        this.loadingPois = false
+      },
+    },
   }
-}
 </script>
 
 <style>

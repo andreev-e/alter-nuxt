@@ -1,11 +1,11 @@
 <template>
   <div class="container page">
     <Header />
-    <Breadcrumbs :list="[{name: $route.params.id, url: '' }]" :loading="loadingTag" />
+    <Breadcrumbs :list="[{name: tag.name, url: '' }]" :loading="loadingTag" />
     <div class="row">
       <div class="col-sm-12">
         <h1>
-          {{ $route.params.id }}
+          {{ tag.name }}
         </h1>
       </div>
     </div>
@@ -38,6 +38,10 @@ export default {
   },
   data () {
     return {
+      tag: {
+        name: '',
+        children: []
+      },
       loadingTag: true,
       pois: [],
       loadingPois: true,
@@ -50,6 +54,7 @@ export default {
   async fetch () {
     this.id = this.$route.params.id
     await this.fetchPois()
+    await this.fetchTagBackend()
   },
   watch: {
     page: {
@@ -74,6 +79,15 @@ export default {
     }
   },
   methods: {
+    async fetchTagBackend () {
+      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
+      this.tag = result.data
+      this.loadingTag = false
+    },
+    async fetchTag () {
+      const result = await this.$axios.$get('https://api.altertravel.ru/api/tag/' + this.id)
+      this.tag = result.data
+    },
     async fetchPois () {
       this.loadingPois = true
       const { data, meta } = await this.$axios.$get(
@@ -81,7 +95,7 @@ export default {
         { params: { tag: this.id, page: this.page, perPage: this.perPage } }
       )
       this.pois = data
-      this.pages = meta.total
+      this.pages = meta.last_page
       this.loadingPois = false
     }
   }

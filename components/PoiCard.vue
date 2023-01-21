@@ -7,7 +7,11 @@
       <div v-if="loading" class="spinner">
         <b-spinner />
       </div>
-      <img :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'" :title="poi.name" class="img-fluid">
+      <img
+        :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'"
+        class="img-fluid"
+        :alt="poi.name"
+      >
       <div class="img-title">
         {{ poi.name }}
       </div>

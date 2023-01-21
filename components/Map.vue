@@ -24,6 +24,7 @@
           :key="`poi_`+poi.id"
           :position="{ lat: poi.lat, lng: poi.lng }"
           :clickable="true"
+          :icon="getMarker(poi.hovered)"
           @click="$router.push('/poi/' + poi.id)"
         />
       </GmapMap>
@@ -98,6 +99,11 @@
             this.$emit('update', this.mappois)
           }
           this.loading = false
+        }
+      },
+      getMarker(hovered) {
+        return {
+          url: hovered ? 'https://maps.google.com/mapfiles/kml/paddle/wht-circle.png' : 'http://maps.google.com/mapfiles/kml/paddle/red-circle.png',
         }
       },
     },
