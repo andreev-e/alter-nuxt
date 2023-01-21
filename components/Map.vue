@@ -54,6 +54,10 @@
         type: String,
         default: null,
       },
+      location: {
+        type: String,
+        default: null,
+      },
     },
     emits: ['update'],
     data () {
@@ -93,7 +97,7 @@
           if (bounds) {
             const { data } = await this.$axios.$get(
               'https://api.altertravel.ru/api/poi',
-              { params: { tag: this.tag, ...bounds.toJSON() } },
+              { params: { tag: this.tag, location: this.location, ...bounds.toJSON() } },
             )
             this.mappois = data
             this.$emit('update', this.mappois)

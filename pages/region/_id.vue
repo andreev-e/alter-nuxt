@@ -13,7 +13,10 @@
         </div>
       </div>
       <TwoPanels :left="tag.children" :right="[]" />
-      <Map :center="{ lat: tag.lat, lng: tag.lng }" />
+      <Map
+        :center="{ lat: tag.lat, lng: tag.lng }"
+        :location="id"
+      />
       <Gallery :objects="pois" :loading="loadingPois" />
       <div class="row">
         <div class="col-12">
