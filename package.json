@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node_modules/.bin/nuxt",
-    "build": "node_modules/.bin/nuxt build",
-    "start": "node_modules/.bin/nuxt start",
-    "generate": "node_modules/.bin/nuxt generate",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js"
   },
