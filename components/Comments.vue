@@ -5,7 +5,7 @@
       <b-spinner v-if="loading" label="Spinning" />
       <div id="comments_list" class="comments-list">
         <comment
-          v-for="(comment, index) in comments"
+          v-for="(comment, index) in filteredComments"
           :key="comment.id"
           class="comment"
           :comment="comment"
@@ -54,6 +54,11 @@
         required: false,
         default: false,
       },
+      last: {
+        type: Number,
+        required: false,
+        default: null,
+      },
     },
     data () {
       return {
@@ -69,6 +74,11 @@
     },
     mounted () {
       this.fetchComments()
+    },
+    computed: {
+      filteredComments () {
+        return  this.last ? this.comments.splice(0, this.last) : this.comments
+      }
     },
     methods: {
       async fetchComments () {

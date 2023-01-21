@@ -11,27 +11,45 @@ export default {
   head: {
     title: 'alter-nuxt',
     htmlAttrs: {
-      lang: 'ru'
+      lang: 'ru',
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: '',
+      },
+      {
+        name: 'format-detection',
+        content: 'telephone=no',
+      },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~assets/css/common.css'
+    '~assets/css/common.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vue2-google-maps.js', mode: 'client', ssr: false },
+    {
+      src: '~/plugins/vue2-google-maps.js',
+      mode: 'client',
+      ssr: false,
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,8 +59,14 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/moment',
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
   ],
+
+  moment: {
+    defaultLocale: 'ru',
+    locale: 'ru',
+    locales: ['ru']
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -51,13 +75,13 @@ export default {
     '@nuxtjs/axios',
     ['@nuxtjs/component-cache', {
       max: 10000,
-      maxAge: 1000 * 60 * 60
-    }]
+      maxAge: 1000 * 60 * 60,
+    }],
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [/^vue2-google-maps($|\/)/]
+    transpile: [/^vue2-google-maps($|\/)/],
   },
 
   axios: {
@@ -67,10 +91,10 @@ export default {
   server: {
     https: {
       key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt'))
-    }
+      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt')),
+    },
   },
 
-  serverMiddleware: ['~/server-middleware/logger']
+  serverMiddleware: ['~/server-middleware/logger'],
 
 }

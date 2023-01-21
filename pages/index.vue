@@ -11,10 +11,10 @@
     <Map
       v-model="mapPois"
       :center="center"
+      @update="updatePois"
     />
-    {{ mapPois }}
-    <Gallery :objects="mapPois.length ? mapPois : pois.slice(4)" :loading="loadingPois" />
-    <Comments link-objects />
+    <Gallery :objects="mapPois.length ? mapPois : pois.slice(0,4)" :loading="loadingPois" />
+    <Comments link-objects :last="4" />
     <Footer />
   </div>
 </template>
@@ -41,11 +41,6 @@
         },
       ],
     },
-    watch: {
-      mapPois(val) {
-        console.log(val)
-      }
-    },
     mounted () {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -69,6 +64,9 @@
         this.pois = data
         this.loadingPois = false
       },
+      updatePois(val) {
+        this.mapPois = val.slice(0,4)
+      }
     },
   }
 </script>
