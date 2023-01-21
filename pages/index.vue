@@ -8,66 +8,76 @@
         </h1>
       </div>
     </div>
-    <Map :center="center" />
-    <Gallery :objects="pois" :loading="loadingPois" />
-    <Comments />
+    <Map
+      v-model="mapPois"
+      :center="center"
+    />
+    {{ mapPois }}
+    <Gallery :objects="mapPois.length ? mapPois : pois.slice(4)" :loading="loadingPois" />
+    <Comments link-objects />
     <Footer />
   </div>
 </template>
 <script>
 
-export default {
-  data () {
-    return {
-      pois: [],
-      loadingPois: true,
-      center: {}
-    }
-  },
-  async fetch () {
-    await this.fetchPois()
-  },
-  head: {
-    title: 'Карта достопримечательностей для самостоятельных путешественников',
-    meta: [
-      {
-        name: 'description',
-        content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!'
+  export default {
+    data () {
+      return {
+        pois: [],
+        mapPois: [],
+        loadingPois: true,
+        center: {},
       }
-    ]
-  },
-  mounted () {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.center = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-          this.mylocation = this.center
+    },
+    async fetch () {
+      await this.fetchPois()
+    },
+    head: {
+      title: 'Карта достопримечательностей для самостоятельных путешественников',
+      meta: [
+        {
+          name: 'description',
+          content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!',
         },
-        () => {
-        }
-      )
-    }
-    this.fetchPois()
-  },
-  methods: {
-    async fetchPois () {
-      this.loadingPois = true
-      const { data } = await this.$axios.$get('https://api.altertravel.ru/api/poi')
-      this.pois = data
-      this.loadingPois = false
-    }
+      ],
+    },
+    watch: {
+      mapPois(val) {
+        console.log(val)
+      }
+    },
+    mounted () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.center = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            }
+            this.mylocation = this.center
+          },
+          () => {
+          },
+        )
+      }
+      this.fetchPois()
+    },
+    methods: {
+      async fetchPois () {
+        this.loadingPois = true
+        const { data } = await this.$axios.$get('https://api.altertravel.ru/api/poi')
+        this.pois = data
+        this.loadingPois = false
+      },
+    },
   }
-}
 </script>
 
 <style>
 
   h1.view {
-      background: url(/i/star_grey.png) no-repeat left top;
-      padding-left: 35px;
-      cursor: pointer;
+    background: url('/i/star_grey.png') no-repeat left top;
+    padding-left: 35px;
+    cursor: pointer;
   }
 </style>

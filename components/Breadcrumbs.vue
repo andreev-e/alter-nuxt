@@ -39,7 +39,7 @@ export default {
   props: {
     list: {
       type: Array,
-      required: true,
+      required: false,
       default: () => []
     },
     loading: {

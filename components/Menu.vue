@@ -9,7 +9,7 @@
         </a>
         <ul>
           <li
-            v-for="region in regions"
+            v-for="region in regions.slice(0, 20)"
             :key="region.id"
           >
             <nuxt-link :to="region.url">
@@ -26,7 +26,7 @@
         </a>
         <ul>
           <li
-            v-for="tag in tags"
+            v-for="tag in tags.slice(0, 20)"
             :key="tag.id"
           >
             <nuxt-link :to="tag.url">
@@ -76,43 +76,19 @@ export default {
   },
   async fetch () {
     if (process.client) {
-      let tags = []
-      if (localStorage.tags) {
-        try {
-          tags = JSON.parse(localStorage.tags)
-        } catch (e) {
-          // console.log(localStorage.tags)
-        }
-      }
-      if (tags.length > 0) {
-        this.tags = tags
-      } else {
-        const res = await this.$axios.$get('https://alter-api/tags')
-        this.tags = res.data
-        localStorage.tags = this.tags
-      }
-      let regions = []
-      if (localStorage.regions) {
-        try {
-          regions = JSON.parse(localStorage.regions)
-        } catch (e) {
-          // console.log(localStorage.regions)
-        }
-      }
-      if (regions.length > 0) {
-        this.regions = regions
-      } else {
-        const res = await this.$axios.$get('https://alter-api/countries')
-        this.regions = res.data
-        localStorage.regions = this.regions
-      }
+      const res1 = await this.$axios.$get('https://api.altertravel.ru/api/tag')
+      this.tags = res1.data
+      localStorage.tags = this.tags
+      const res2 = await this.$axios.$get('https://api.altertravel.ru/api/locations')
+      this.regions = res2.data
     } else {
-      let res = await this.$axios.$get('https://alter-api/tags')
+      let res = await this.$axios.$get('https://api.altertravel.ru/api/tag')
       this.tags = res.data
-      res = await this.$axios.$get('https://alter-api/countries')
+      res = await this.$axios.$get('https://api.altertravel.ru/api/locations')
       this.regions = res.data
-      console.log('tags & countries loaded')
     }
+  },
+  computed: {
   },
   mounted () {
 

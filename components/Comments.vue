@@ -4,26 +4,15 @@
       <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
       <b-spinner v-if="loading" label="Spinning" />
       <div id="comments_list" class="comments-list">
-        <div v-for="(comment, index) in comments" :key="comment.id" class="comment">
-          <div class="author-date">
-            <b>
-              <router-link :to="'/user/' + comment.name">
-                {{ comment.name }}
-              </router-link>
-            </b>
-            <i>{{ comment.time }}</i>
-            <router-link v-if="!id" :to="'/poi/' + comment.id">
-              об объекте
-              <span v-html="comment.name" />
-            </router-link>
-          </div>
-          <div class="comment-text-wrapper">
-            <div class="comment-text">
-              <p>{{ comment.comment }}</p>
-            </div>
-          </div>
-          <hr v-if="index != comments.length - 1">
-        </div>
+        <comment
+          v-for="(comment, index) in comments"
+          :key="comment.id"
+          class="comment"
+          :comment="comment"
+          :index="index"
+          :total="comments.length"
+          :link-objects="linkObjects"
+        />
       </div>
       <b-form v-if="id">
         <b-form-group>
@@ -45,46 +34,59 @@
 </template>
 
 <script>
-export default {
-  props: {
-    id: {
-      type: [Number, String],
-      required: false,
-      default: null
+  import Comment from '@/components/comments/Comment.vue'
+
+  export default {
+    components: { Comment },
+    props: {
+      id: {
+        type: [Number, String],
+        required: false,
+        default: null,
+      },
+      type: {
+        type: String,
+        required: false,
+        default: null,
+      },
+      linkObjects: {
+        type: Boolean,
+        required: false,
+        default: false,
+      },
     },
-    type: {
-      type: String,
-      required: false,
-      default: null
-    }
-  },
-  data () {
-    return {
-      comments: [],
-      loading: true,
-      form: {
-        text: null
+    data () {
+      return {
+        comments: [],
+        loading: true,
+        form: {
+          text: null,
+        },
       }
-    }
-  },
-  async fetch () {
-    await this.fetchComments()
-  },
-  mounted () {
-    this.fetchComments()
-  },
-  methods: {
-    async fetchComments () {
-      this.loading = true
-      const result = await this.$axios.$get(
-        'https://api.altertravel.ru/api/comment',
-        { params: { id: this.id, type: this.type } }
-      )
-      this.comments = result.data
-      this.loading = false
-    }
+    },
+    async fetch () {
+      await this.fetchComments()
+    },
+    mounted () {
+      this.fetchComments()
+    },
+    methods: {
+      async fetchComments () {
+        this.loading = true
+        const result = await this.$axios.$get(
+          'https://api.altertravel.ru/api/comment',
+          {
+            params: {
+              id: this.id,
+              type: this.type,
+            },
+          },
+        )
+        this.comments = result.data
+        this.loading = false
+      },
+    },
   }
-}
 </script>
 
 <style>

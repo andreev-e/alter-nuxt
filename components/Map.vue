@@ -21,7 +21,7 @@
         />
         <GmapMarker
           v-for="poi in mappois"
-          :key="poi.id"
+          :key="`poi_`+poi.id"
           :position="{ lat: poi.lat, lng: poi.lng }"
           :clickable="true"
           @click="$router.push('/poi/' + poi.id)"
@@ -32,60 +32,76 @@
 </template>
 
 <script>
-import { gmapApi } from '~/node_modules/vue2-google-maps/src/main'
+  import { gmapApi } from '~/node_modules/vue2-google-maps/src/main'
 
-export default {
-  prop: {
-    value: {
-      type: Object
-    }
-  },
-  props: {
-    center: {
-      type: Object,
-      default: () => { return { lat: 55, lng: 45 } }
-    },
-    tag: {
-      type: String,
-      default: null
-    }
-  },
-  data () {
-    return {
-      mylocation: false,
-      mylocationMarker: {
-        url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
-        size: { width: 64, height: 64, f: 'px', b: 'px' },
-        scaledSize: { width: 64, height: 64, f: 'px', b: 'px' }
+  export default {
+    props: {
+      model: {
+        type: Array,
+        default: () => [],
       },
-      mappois: [],
-      loading: false
-    }
-  },
-  computed: {
-    google: gmapApi
-  },
-  created () {
-  },
-  mounted () {
-  },
-  methods: {
-    async fetchPoisToMap () {
-      if (!this.loading) {
-        this.loading = true
-        const bounds = this.$refs.map.$mapObject.getBounds()
-        if (bounds) {
-          const { data } = await this.$axios.$get(
-            'https://api.altertravel.ru/api/poi?bounds=' + bounds.toUrlValue(),
-            { params: { tag: this.tag } }
-          )
-          this.mappois = new Set([...this.mappois, ...data])
-        }
-        this.loading = false
+      center: {
+        type: Object,
+        default: () => {
+          return {
+            lat: 55,
+            lng: 45,
+          }
+        },
+      },
+      tag: {
+        type: String,
+        default: null,
+      },
+    },
+    emits: ['update'],
+    data () {
+      return {
+        mylocation: false,
+        mylocationMarker: {
+          url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
+          size: {
+            width: 64,
+            height: 64,
+            f: 'px',
+            b: 'px',
+          },
+          scaledSize: {
+            width: 64,
+            height: 64,
+            f: 'px',
+            b: 'px',
+          },
+        },
+        mappois: [],
+        loading: false,
       }
-    }
+    },
+    computed: {
+      google: gmapApi,
+    },
+    created () {
+    },
+    mounted () {
+    },
+    methods: {
+      async fetchPoisToMap () {
+        if (!this.loading) {
+          this.loading = true
+          const bounds = this.$refs.map.$mapObject.getBounds()
+          if (bounds) {
+            const { data } = await this.$axios.$get(
+              'https://api.altertravel.ru/api/poi',
+              { params: { tag: this.tag, ...bounds.toJSON() } },
+            )
+            this.mappois = data
+            this.$emit('update', this.mappois)
+          }
+          this.loading = false
+        }
+      },
+    },
   }
-}
 </script>
 
 <style>
@@ -93,11 +109,13 @@ export default {
     height: 400px;
     width: 100%;
   }
+
   .row.nopadding {
     position: relative;
   }
+
   .spinner {
-    width:100%;
+    width: 100%;
     height: 100%;
     display: flex;
     position: absolute;

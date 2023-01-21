@@ -1,30 +1,32 @@
 <template>
   <div class="container page">
     <Header />
-    <Breadcrumbs :list="tag.locations" :loading="loadingRegion" />
-    <div class="row">
-      <div class="col-sm-12">
-        <h1>
-          <img v-if="tag.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + tag.flag" alt="flag">
-          {{ tag.name }}
-          <b-spinner v-if="loadingRegion" />
-        </h1>
+    <template v-if="tag">
+      <Breadcrumbs :list="tag.children" :loading="loadingRegion" />
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>
+            <img v-if="tag.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + tag.flag" alt="flag">
+            {{ tag.name }}
+            <b-spinner v-if="loadingRegion" />
+          </h1>
+        </div>
       </div>
-    </div>
-    <TwoPanels :left="tag.children" :right="[]" />
-    <Map :center="{ lat: tag.lat, lng: tag.lng }"/>
-    <Gallery :objects="pois" :loading="loadingPois" />
-    <div class="row">
-      <div class="col-12">
-        <b-pagination
-          v-if="pages > 0"
-          v-model="page"
-          :total-rows="pages"
-          :per-page="perPage"
-          aria-controls="my-table"
-        />
+      <TwoPanels :left="tag.children" :right="[]" />
+      <Map :center="{ lat: tag.lat, lng: tag.lng }" />
+      <Gallery :objects="pois" :loading="loadingPois" />
+      <div class="row">
+        <div class="col-12">
+          <b-pagination
+            v-if="pages > 0"
+            v-model="page"
+            :total-rows="pages"
+            :per-page="perPage"
+            aria-controls="my-table"
+          />
+        </div>
       </div>
-    </div>
+    </template>
     <Footer />
   </div>
 </template>
@@ -36,7 +38,8 @@ export default {
     return {
       pois: [],
       tag: {
-        name: ''
+        name: '',
+        children: []
       },
       page: 1,
       pages: null,
