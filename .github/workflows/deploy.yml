@@ -15,8 +15,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: cd /var/www/altertravel.ru/data/www/new.altertravel.ru
-            - git pull alter_nuxt master
-            - npm run generate
-            - pm2 restart all
+            & git pull alter_nuxt master
+            & npm run generate
+            & pm2 restart all
 
 
