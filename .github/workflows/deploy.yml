@@ -14,4 +14,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd /var/www/altertravel.ru/data/www/new.altertravel.ru
+          script: |
+        cd /var/www/altertravel.ru/data/www/new.altertravel.ru
+        ls -al
+
+
