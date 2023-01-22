@@ -4,6 +4,10 @@
       <b-spinner />
     </div>
     <client-only>
+      <MapFilter
+        v-model="categories"
+        @update="filterChanged"
+      />
       <gmap-map
         ref="map"
         :center="center"
@@ -35,9 +39,20 @@
 
 <script>
   import { gmapApi } from '~/node_modules/vue2-google-maps/src/main'
-  import { faLeaf, faIndustry, faCircleExclamation, faBuildingFlag, faMuseum, faMonument, faSkull } from '@fortawesome/free-solid-svg-icons'
+  import {
+    faLeaf,
+    faIndustry,
+    faCircleExclamation,
+    faBuildingFlag,
+    faMuseum,
+    faMonument,
+    faSkull,
+  } from '@fortawesome/free-solid-svg-icons'
+  import MapFilter from '~/components/map/MapFilter.vue'
+  import { TYPES } from '/constants/'
 
   export default {
+    components: { MapFilter },
     props: {
       model: {
         type: Array,
@@ -82,6 +97,7 @@
         },
         mappois: [],
         loading: false,
+        categories: [...TYPES],
       }
     },
     computed: {
@@ -92,6 +108,12 @@
     mounted () {
     },
     methods: {
+      filterChanged (val) {
+        this.categories = val
+        if (this.$refs.map.$mapObject) {
+          this.fetchPoisToMap()
+        }
+      },
       async fetchPoisToMap () {
         if (!this.loading) {
           this.loading = true
@@ -103,6 +125,7 @@
                 params: {
                   tag: this.tag,
                   location: this.location, ...bounds.toJSON(),
+                  categories: this.categories,
                 },
               },
             )
