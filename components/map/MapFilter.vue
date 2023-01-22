@@ -1,5 +1,6 @@
 <template>
   <div class="col-sm-12 p-3">
+    Отображены категории:
     <b-button
       v-for="type in types"
       :key="type"

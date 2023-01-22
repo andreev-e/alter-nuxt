@@ -35,30 +35,30 @@
           </li>
         </ul>
       </li>
-      <li>
-        <a href="/catalog/">
-          Популярные
-          <span>в августе</span>
-        </a>
-      </li>
-      <li>
-        <a href="/catalog/?order=order">
-          Новые
-          <span>места</span>
-        </a>
-      </li>
-      <li>
-        <a href="/catalog/?order=order">
-          Маршруты
-          <span>Готовые треки</span>
-        </a>
-      </li>
-      <li>
-        <a href="/catalog/?order=order">
-          Планирование
-          <span>строим маршрут с точками</span>
-        </a>
-      </li>
+<!--      <li>-->
+<!--        <a href="/catalog/">-->
+<!--          Популярные-->
+<!--          <span>в августе</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="/catalog/?order=order">-->
+<!--          Новые-->
+<!--          <span>места</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="/catalog/?order=order">-->
+<!--          Маршруты-->
+<!--          <span>Готовые треки</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="/catalog/?order=order">-->
+<!--          Планирование-->
+<!--          <span>строим маршрут с точками</span>-->
+<!--        </a>-->
+<!--      </li>-->
     </ul>
   </div>
 </template>

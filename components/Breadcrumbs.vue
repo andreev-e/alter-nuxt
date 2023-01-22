@@ -7,14 +7,9 @@
             <img src="https://altertravel.ru/i/first_li.png" alt="Home">
           </router-link>
         </li>
-        <li>
-          <router-link to="/region">
-            Все страны
-          </router-link>
-        </li>
         <li
           v-for="crumb in list"
-          :key="`crumb_${crumb.id}`"
+          :key="`crumb_${crumb.name}`"
         >
           <router-link v-if="crumb.url" :to="crumb.url">
             {{ crumb.name }}

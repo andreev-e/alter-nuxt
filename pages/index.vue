@@ -12,6 +12,7 @@
       v-model="mapPois"
       :center="center"
       @update="updatePois"
+      show-filter
     />
     <Gallery :objects="mapPois.length ? mapPois : pois.slice(0,4)" :loading="loadingPois" />
     <Comments link-objects :last="4" />

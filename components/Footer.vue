@@ -1,14 +1,14 @@
 <template>
   <div class="row footer">
     <div class="first_menu col-sm-4">
-      <a href="/secure/">Вход для авторов</a>
-      <a href="/register/">Регистрация</a>
+      <router-link to="/secure/">Вход для авторов</router-link>
+<!--      <router-link to="/register/">Регистрация</router-link>-->
     </div>
     <div class="copyright col-sm-4">
       2009-{{ year }} © Альтернативный путеводитель
     </div>
     <div class="second_menu col-sm-4">
-      <a href="/users/">Авторы</a>
+      <router-link to="/user/">Авторы</router-link>
     </div>
   </div>
 </template>

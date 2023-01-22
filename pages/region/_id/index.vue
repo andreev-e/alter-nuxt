@@ -7,12 +7,16 @@
         <div class="col-sm-12">
           <h1>
             <img v-if="tag.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + tag.flag" alt="flag">
-            {{ tag.name }}
+            {{ h1 }}
             <b-spinner v-if="loadingRegion" />
           </h1>
         </div>
       </div>
-      <TwoPanels :left="tag.children" :right="[]" />
+      <TwoPanels
+        v-if="tag.children.length"
+        :left="tag.children"
+        :right="[]"
+      />
       <Map
         :center="{ lat: tag.lat, lng: tag.lng }"
         :location="id"
@@ -37,9 +41,11 @@
 <script>
 
   export default {
+    name: 'RegionPage',
     data () {
       return {
         pois: [],
+        type: null,
         tag: {
           name: '',
           children: [],
@@ -53,6 +59,7 @@
     },
     async fetch () {
       this.id = this.$route.params.id
+      this.type = this.$route.params.type
       await this.fetchTagBackend()
       await this.fetchPoisBackend()
     },
@@ -73,14 +80,33 @@
       },
     },
     computed: {
+      h1() {
+        if (this.type) {
+          if (this.tag.NAME_ROD_ED) {
+            return `${this.type} ${this.tag.NAME_ROD_ED}`
+          }
+          return `${this.type}: ${this.tag.name}`
+        }
+        return this.tag.name
+      },
       crumbs () {
-        return [
-          ...this.tag.parents ?? [],
-          {
+        const crumbs = [...this.tag.parents ?? []]
+        if (this.type) {
+          crumbs.push({
+            name: this.tag.name,
+            url: this.tag.url,
+          })
+          crumbs.push({
+            name: this.type,
+            url: '',
+          })
+        } else {
+          crumbs.push({
             name: this.tag.name,
             url: '',
-          },
-        ]
+          })
+        }
+        return crumbs
       },
     },
     mounted () {
@@ -105,6 +131,7 @@
           {
             params: {
               location: this.id,
+              categories: this.type ? [this.type] : null,
               page: this.page,
               perPage: this.perPage,
             },

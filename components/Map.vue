@@ -5,6 +5,7 @@
     </div>
     <client-only>
       <MapFilter
+        v-if="showFilter"
         v-model="categories"
         @update="filterChanged"
       />
@@ -12,7 +13,7 @@
         ref="map"
         :center="center"
         :zoom="7"
-        map-type-id="terrain"
+        map-type-id="hybrid"
         @dragend="fetchPoisToMap"
         @zoom_changed="fetchPoisToMap"
         @idle="fetchPoisToMap"
@@ -75,6 +76,10 @@
         type: String,
         default: null,
       },
+      showFilter: {
+        type: Boolean,
+        default: false
+      }
     },
     emits: ['update'],
     data () {

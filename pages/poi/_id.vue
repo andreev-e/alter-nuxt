@@ -1,7 +1,7 @@
 <template>
   <div class="container page">
     <Header />
-    <Breadcrumbs :list="poi.locations" />
+    <Breadcrumbs :list="breadCrumbs" />
     <div class="row">
       <div class="col-sm-12">
         <h1 class="view">
@@ -38,17 +38,17 @@
             </b-tab>
             <b-tab title="Где находится?">
               <client-only>
-                <GmapMap
+                <gmap-map
                   v-if="center"
                   :center="center"
                   :zoom="7"
                   map-type-id="terrain"
                 >
-                  <GmapMarker
+                  <gmap-marker
                     :position="center"
                     :clickable="true"
                   />
-                </GmapMap>
+                </gmap-map>
               </client-only>
               <h2 id="coord">
                 Кординаты
@@ -129,7 +129,7 @@
           Примечание
         </h2>
         <p>{{ poi.addon }}</p>
-        <a class="button btn" href="/izbrannoe.php" onclick="izbrannoe(1331)">Построить маршрут с данной точкой</a>
+        <a class="button btn" href="/izbrannoe/" onclick="izbrannoe(1331)">Построить маршрут с данной точкой</a>
         <a id="geo" class="button btn" href="google.navigation:q=55.673737,37.700745">Навигация на точку</a>
       </div>
     </div>
@@ -137,6 +137,7 @@
       :id="$route.params.id"
       type="poi"
     />
+    <Footer />
   </div>
 </template>
 
@@ -145,7 +146,6 @@
     data () {
       return {
         poi: {},
-        mapData: {},
         center: null,
       }
     },
@@ -163,13 +163,13 @@
         ],
       }
     },
-    created () {
-      this.mapData = {
-        mainpoint: {
-          name: this.poi.name,
-          lat: this.poi.lat,
-          lng: this.poi.lng,
-        },
+    computed: {
+      breadCrumbs() {
+        const breadCrumbs = [...this.poi.locations ?? []]
+        if (this.poi && this.poi.locations) {
+          breadCrumbs.push({name: this.poi.type, url: this.poi.locations[this.poi.locations.length - 1].url + '/' + this.poi.type})
+        }
+        return breadCrumbs;
       }
     },
     methods: {
