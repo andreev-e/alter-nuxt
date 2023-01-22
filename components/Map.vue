@@ -4,7 +4,7 @@
       <b-spinner />
     </div>
     <client-only>
-      <GmapMap
+      <gmap-map
         ref="map"
         :center="center"
         :zoom="7"
@@ -13,27 +13,29 @@
         @zoom_changed="fetchPoisToMap"
         @idle="fetchPoisToMap"
       >
-        <GmapMarker
+        <gmap-marker
           v-if="mylocation"
           :position="mylocation"
           :clickable="true"
           :icon="mylocationMarker"
         />
-        <GmapMarker
+        <gmap-marker
           v-for="poi in mappois"
           :key="`poi_`+poi.id"
           :position="{ lat: poi.lat, lng: poi.lng }"
           :clickable="true"
-          :icon="getMarker(poi.hovered)"
+          :title="poi.name"
+          :icon="getIcon(poi.type)"
           @click="$router.push('/poi/' + poi.id)"
         />
-      </GmapMap>
+      </gmap-map>
     </client-only>
   </div>
 </template>
 
 <script>
   import { gmapApi } from '~/node_modules/vue2-google-maps/src/main'
+  import { faLeaf, faIndustry, faCircleExclamation, faBuildingFlag, faCoins, faMuseum, faMonument } from '@fortawesome/free-solid-svg-icons'
 
   export default {
     props: {
@@ -66,14 +68,14 @@
         mylocationMarker: {
           url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
           size: {
-            width: 64,
-            height: 64,
+            width: 32,
+            height: 32,
             f: 'px',
             b: 'px',
           },
           scaledSize: {
-            width: 64,
-            height: 64,
+            width: 32,
+            height: 32,
             f: 'px',
             b: 'px',
           },
@@ -97,7 +99,12 @@
           if (bounds) {
             const { data } = await this.$axios.$get(
               'https://api.altertravel.ru/api/poi',
-              { params: { tag: this.tag, location: this.location, ...bounds.toJSON() } },
+              {
+                params: {
+                  tag: this.tag,
+                  location: this.location, ...bounds.toJSON(),
+                },
+              },
             )
             this.mappois = data
             this.$emit('update', this.mappois)
@@ -105,9 +112,56 @@
           this.loading = false
         }
       },
-      getMarker(hovered) {
+      getIcon (type) {
+        let color = {}
+        switch (type) {
+          case 'Природа':
+            color = {
+              path: faLeaf.icon[4].toString(),
+              fillColor: '#A7FC00',
+            }
+            break
+          case 'Техноген':
+            color = {
+              path: faIndustry.icon[4].toString(),
+              fillColor: '#64400F',
+            }
+            break
+          case 'Архитектура':
+            color = {
+              path: faBuildingFlag.icon[4].toString(),
+              fillColor: '#256D7B',
+            }
+            break
+          case 'История-Культура':
+            color = {
+              path: faCoins.icon[4].toString(),
+              fillColor: '#256D7B',
+            }
+            break
+          case 'Музей':
+            color = {
+              path: faMuseum.icon[4].toString(),
+              fillColor: '#702963',
+            }
+            break
+          case 'Памятник':
+            color = {
+              path: faMonument.icon[4].toString(),
+              fillColor: '#F64A46',
+            }
+            break
+          default:
+            console.log(type)
+        }
         return {
-          url: hovered ? 'https://maps.google.com/mapfiles/kml/paddle/wht-circle.png' : 'http://maps.google.com/mapfiles/kml/paddle/red-circle.png',
+          path: faCircleExclamation.icon[4].toString(),
+          fillColor: '#FF0000',
+          fillOpacity: 1,
+          strokeColor: '#ffffff',
+          scale: 0.05,
+          strokeWeight: 1,
+          ...color,
         }
       },
     },
@@ -116,7 +170,7 @@
 
 <style>
   .vue-map-container {
-    height: 400px;
+    height: 500px;
     width: 100%;
   }
 
