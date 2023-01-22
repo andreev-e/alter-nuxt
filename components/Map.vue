@@ -35,7 +35,7 @@
 
 <script>
   import { gmapApi } from '~/node_modules/vue2-google-maps/src/main'
-  import { faLeaf, faIndustry, faCircleExclamation, faBuildingFlag, faCoins, faMuseum, faMonument } from '@fortawesome/free-solid-svg-icons'
+  import { faLeaf, faIndustry, faCircleExclamation, faBuildingFlag, faMuseum, faMonument, faSkull } from '@fortawesome/free-solid-svg-icons'
 
   export default {
     props: {
@@ -135,8 +135,8 @@
             break
           case 'История-Культура':
             color = {
-              path: faCoins.icon[4].toString(),
-              fillColor: '#256D7B',
+              path: faSkull.icon[4].toString(),
+              fillColor: '#FFCF48',
             }
             break
           case 'Музей':
