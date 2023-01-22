@@ -65,7 +65,7 @@ export default {
   moment: {
     defaultLocale: 'ru',
     locale: 'ru',
-    locales: ['ru']
+    locales: ['ru'],
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules

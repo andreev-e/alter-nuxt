@@ -18,7 +18,7 @@ jobs:
             && git reset --hard HEAD
             && git pull alter_nuxt master
             && npm install --production
-            && npm run --silent generate
+            && npm run --silent build
             && pm2 restart all
 
 
