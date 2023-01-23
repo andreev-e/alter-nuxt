@@ -6,9 +6,9 @@
       <div class="row">
         <div class="col-sm-12">
           <h1>
+            <b-spinner v-if="loadingRegion" />
             <img v-if="tag.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + tag.flag" alt="flag">
             {{ h1 }}
-            <b-spinner v-if="loadingRegion" />
           </h1>
         </div>
       </div>
@@ -20,6 +20,7 @@
       <Map
         :center="{ lat: tag.lat, lng: tag.lng }"
         :location="id"
+        :categories="categories"
       />
       <Gallery :objects="pois" :loading="loadingPois" />
       <div class="row">
@@ -108,6 +109,9 @@
         }
         return crumbs
       },
+      categories() {
+        return this.type ? [this.type] : null
+      }
     },
     mounted () {
     },
@@ -131,7 +135,7 @@
           {
             params: {
               location: this.id,
-              categories: this.type ? [this.type] : null,
+              categories: this.categories,
               page: this.page,
               perPage: this.perPage,
             },

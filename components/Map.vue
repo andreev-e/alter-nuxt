@@ -71,10 +71,10 @@
         type: String,
         default: null,
       },
-      showFilter: {
-        type: Boolean,
-        default: false
-      }
+      categories: {
+        type: Array,
+        default: () => [],
+      },
     },
     emits: ['update'],
     data () {
@@ -107,7 +107,7 @@
     mounted () {
     },
     methods: {
-      async fetchPoisToMap (categories) {
+      async fetchPoisToMap (categories = null) {
         if (!this.loading) {
           this.loading = true
           const bounds = this.$refs.map.$mapObject.getBounds()
@@ -118,7 +118,7 @@
                 params: {
                   tag: this.tag,
                   location: this.location, ...bounds.toJSON(),
-                  categories,
+                  categories: categories ?? this.categories,
                 },
               },
             )
