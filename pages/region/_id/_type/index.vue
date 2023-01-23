@@ -1,11 +1,11 @@
 <template>
-  <RegionPage />
+    <RegionPage />
 </template>
 
 <script>
-  import RegionPage from '../../_id/index.vue'
+    import RegionPage from '../index.vue';
 
-  export default {
-    components: { RegionPage },
-  }
+    export default {
+        components: { RegionPage },
+    };
 </script>

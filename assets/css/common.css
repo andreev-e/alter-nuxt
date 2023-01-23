@@ -2,35 +2,44 @@ ul {
   margin: 0;
   padding: 0;
 }
-.page>.row {
+
+.page > .row {
   padding: 15px 0;
 }
-.page>.row.nopadding {
+
+.page > .row.nopadding {
   padding: 0;
 }
-.page>.row:nth-child(even) {
+
+.page > .row:nth-child(even) {
   background: #fff;
 }
-.page>.row:nth-child(odd) {
+
+.page > .row:nth-child(odd) {
   background: #ebf1f5;
 }
-.page>.row:first-child {
+
+.page > .row:first-child {
   padding-bottom: 0;
 }
+
 .page {
-      box-shadow: 0px 7px 20px 0px rgb(50 50 50 / 50%);
+  box-shadow: 0px 7px 20px 0px rgb(50 50 50 / 50%);
 }
 
 body {
   background-color: #606084;
   font-family: 'Roboto Condensed', sans-serif;
 }
+
 body a {
   color: #0D293C;
 }
+
 ul, li {
   list-style-type: none;
 }
+
 h1 {
   color: #244255;
   text-transform: uppercase;

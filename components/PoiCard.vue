@@ -1,38 +1,41 @@
 <template>
-  <nuxt-link
-    :to="'/poi/' + poi.id"
-    class="poi__card"
-  >
-    <div :class="loading ? 'poi_card loading' : 'poi__content'">
-      <div v-if="loading" class="spinner">
-        <b-spinner />
-      </div>
-      <img
-        :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'"
-        class="img-fluid"
-        :alt="poi.name"
-      >
-      <div class="img-title">
-        {{ poi.name }}
-      </div>
-    </div>
-  </nuxt-link>
+    <nuxt-link
+        :to="'/poi/' + poi.id"
+        class="poi__card"
+    >
+        <div :class="loading ? 'poi_card loading' : 'poi__content'">
+            <div
+                v-if="loading"
+                class="spinner"
+            >
+                <b-spinner />
+            </div>
+            <img
+                :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'"
+                class="img-fluid"
+                :alt="poi.name"
+            >
+            <div class="img-title">
+                {{ poi.name }}
+            </div>
+        </div>
+    </nuxt-link>
 </template>
 
 <script>
-export default {
-  name: 'PoiCard',
-  props: {
-    poi: {
-      type: Object,
-      required: true
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
-  }
-}
+    export default {
+        name: 'PoiCard',
+        props: {
+            poi: {
+                type: Object,
+                required: true,
+            },
+            loading: {
+                type: Boolean,
+                default: false,
+            },
+        },
+    };
 </script>
 
 <style>

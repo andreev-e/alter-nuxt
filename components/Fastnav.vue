@@ -1,19 +1,19 @@
 <template>
-  <div class="row">
-    <div class="col-sm-12">
-      <ul id="fastnav">
-        <li><a href="#route">Как доехать?</a></li>
-        <li><a href="#near">Что рядом?</a></li>
-        <li><a href="#comments">Отзывы</a></li>
-      </ul>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul id="fastnav">
+                <li><a href="#route">Как доехать?</a></li>
+                <li><a href="#near">Что рядом?</a></li>
+                <li><a href="#comments">Отзывы</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-export default {
+    export default {
 
-}
+    };
 </script>
 
 <style>

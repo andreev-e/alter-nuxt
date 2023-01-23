@@ -1,102 +1,108 @@
 <!-- Please remove this file from your project -->
 <template>
-  <div class="header-menu col-sm-9">
-    <ul>
-      <li class="region_select">
-        <a href="#">
-          Регион
-          <span>выбрать</span>
-        </a>
+    <div class="header-menu col-sm-9">
         <ul>
-          <li
-            v-for="region in regions.slice(0, 20)"
-            :key="region.id"
-          >
-            <nuxt-link :to="region.url">
-              <img v-if="region.flag" width="16" height="16" :src="`https://altertravel.ru/i/flags/` + region.flag" alt="flag">
-              {{ region.name }} ({{ region.count }})
-            </nuxt-link>
-          </li>
+            <li class="region_select">
+                <a href="#">
+                    Регион
+                    <span>выбрать</span>
+                </a>
+                <ul>
+                    <li
+                        v-for="region in regions.slice(0, 20)"
+                        :key="region.id"
+                    >
+                        <nuxt-link :to="region.url">
+                            <img
+                                v-if="region.flag"
+                                width="16"
+                                height="16"
+                                :src="`https://altertravel.ru/i/flags/` + region.flag"
+                                alt="flag"
+                            >
+                            {{ region.name }} ({{ region.count }})
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </li>
+            <li class="region_select">
+                <a href="#">
+                    Метки
+                    <span>выбрать</span>
+                </a>
+                <ul>
+                    <li
+                        v-for="tag in tags.slice(0, 20)"
+                        :key="tag.id"
+                    >
+                        <nuxt-link :to="tag.url">
+                            {{ tag.name }} ({{ tag.count }})
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </li>
+            <!--      <li>-->
+            <!--        <a href="/catalog/">-->
+            <!--          Популярные-->
+            <!--          <span>в августе</span>-->
+            <!--        </a>-->
+            <!--      </li>-->
+            <!--      <li>-->
+            <!--        <a href="/catalog/?order=order">-->
+            <!--          Новые-->
+            <!--          <span>места</span>-->
+            <!--        </a>-->
+            <!--      </li>-->
+            <!--      <li>-->
+            <!--        <a href="/catalog/?order=order">-->
+            <!--          Маршруты-->
+            <!--          <span>Готовые треки</span>-->
+            <!--        </a>-->
+            <!--      </li>-->
+            <!--      <li>-->
+            <!--        <a href="/catalog/?order=order">-->
+            <!--          Планирование-->
+            <!--          <span>строим маршрут с точками</span>-->
+            <!--        </a>-->
+            <!--      </li>-->
         </ul>
-      </li>
-      <li class="region_select">
-        <a href="#">
-          Метки
-          <span>выбрать</span>
-        </a>
-        <ul>
-          <li
-            v-for="tag in tags.slice(0, 20)"
-            :key="tag.id"
-          >
-            <nuxt-link :to="tag.url">
-              {{ tag.name }} ({{ tag.count }})
-            </nuxt-link>
-          </li>
-        </ul>
-      </li>
-<!--      <li>-->
-<!--        <a href="/catalog/">-->
-<!--          Популярные-->
-<!--          <span>в августе</span>-->
-<!--        </a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="/catalog/?order=order">-->
-<!--          Новые-->
-<!--          <span>места</span>-->
-<!--        </a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="/catalog/?order=order">-->
-<!--          Маршруты-->
-<!--          <span>Готовые треки</span>-->
-<!--        </a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="/catalog/?order=order">-->
-<!--          Планирование-->
-<!--          <span>строим маршрут с точками</span>-->
-<!--        </a>-->
-<!--      </li>-->
-    </ul>
-  </div>
+    </div>
 </template>
 
 <script>
 
-export default {
-  name: 'Menu',
-  components: {},
-  data () {
-    return {
-      tags: [],
-      regions: []
-    }
-  },
-  async fetch () {
-    if (process.client) {
-      const res1 = await this.$axios.$get('https://api.altertravel.ru/api/tag')
-      this.tags = res1.data
-      localStorage.tags = this.tags
-      const res2 = await this.$axios.$get('https://api.altertravel.ru/api/locations')
-      this.regions = res2.data
-    } else {
-      let res = await this.$axios.$get('https://api.altertravel.ru/api/tag')
-      this.tags = res.data
-      res = await this.$axios.$get('https://api.altertravel.ru/api/locations')
-      this.regions = res.data
-    }
-  },
-  computed: {
-  },
-  mounted () {
+    export default {
+        name: 'Menu',
+        components: {},
+        data() {
+            return {
+                tags: [],
+                regions: [],
+            };
+        },
+        async fetch() {
+            if (process.client) {
+                const res1 = await this.$axios.$get('https://api.altertravel.ru/api/tag');
+                this.tags = res1.data;
+                localStorage.tags = this.tags;
+                const res2 = await this.$axios.$get('https://api.altertravel.ru/api/locations');
+                this.regions = res2.data;
+            } else {
+                let res = await this.$axios.$get('https://api.altertravel.ru/api/tag');
+                this.tags = res.data;
+                res = await this.$axios.$get('https://api.altertravel.ru/api/locations');
+                this.regions = res.data;
+            }
+        },
+        computed: {
+        },
+        mounted() {
 
-  },
-  methods: {
+        },
+        methods: {
 
-  }
-}
+        },
+    };
 </script>
 
 <style scoped>

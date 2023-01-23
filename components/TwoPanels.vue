@@ -1,44 +1,50 @@
 <template>
-  <b-row>
-    <b-col v-if="left.length">
-      <b>Выберите регион</b>
-      <ul class="additional_cities">
-        <li v-for="child in left" :key="child.id">
-          <nuxt-link :to="child.url">
-            {{ child.name }}
-          </nuxt-link>
-        </li>
-      </ul>
-    </b-col>
-    <b-col v-if="right.length">
-      <b>Объекты по видам</b>
-      <ul class="pravaya_kolonka">
-        <li v-for="child in right" :key="child.id">
-          <nuxt-link :to="child.url">
-            {{ child.name }}
-          </nuxt-link>
-        </li>
-      </ul>
-    </b-col>
-  </b-row>
+    <b-row>
+        <b-col v-if="left.length">
+            <b>Выберите регион</b>
+            <ul class="additional_cities">
+                <li
+                    v-for="child in left"
+                    :key="child.id"
+                >
+                    <nuxt-link :to="child.url">
+                        {{ child.name }}
+                    </nuxt-link>
+                </li>
+            </ul>
+        </b-col>
+        <b-col v-if="right.length">
+            <b>Объекты по видам</b>
+            <ul class="pravaya_kolonka">
+                <li
+                    v-for="child in right"
+                    :key="child.id"
+                >
+                    <nuxt-link :to="child.url">
+                        {{ child.name }}
+                    </nuxt-link>
+                </li>
+            </ul>
+        </b-col>
+    </b-row>
 </template>
 
 <script>
-export default {
-  name: 'TwoPanels',
-  props: {
-    left: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
-    right: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  }
-}
+    export default {
+        name: 'TwoPanels',
+        props: {
+            left: {
+                type: Array,
+                required: false,
+                default: () => [],
+            },
+            right: {
+                type: Array,
+                required: false,
+                default: () => [],
+            },
+        },
+    };
 </script>
 
 <style>

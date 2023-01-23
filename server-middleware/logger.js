@@ -1,4 +1,3 @@
-export default function (req, res, next) {
-  console.log(req.url)
-  next()
-}
+export default (req, res, next) => {
+    next();
+};
