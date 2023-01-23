@@ -4,11 +4,6 @@
       <b-spinner />
     </div>
     <client-only>
-      <MapFilter
-        v-if="showFilter"
-        v-model="categories"
-        @update="filterChanged"
-      />
       <gmap-map
         ref="map"
         :center="center"
@@ -50,10 +45,10 @@
     faSkull,
   } from '@fortawesome/free-solid-svg-icons'
   import MapFilter from '~/components/map/MapFilter.vue'
-  import { TYPES } from '/constants/'
 
   export default {
     components: { MapFilter },
+    expose: ['fetchPoisToMap'],
     props: {
       model: {
         type: Array,
@@ -102,7 +97,6 @@
         },
         mappois: [],
         loading: false,
-        categories: [...TYPES],
       }
     },
     computed: {
@@ -113,13 +107,7 @@
     mounted () {
     },
     methods: {
-      filterChanged (val) {
-        this.categories = val
-        if (this.$refs.map.$mapObject) {
-          this.fetchPoisToMap()
-        }
-      },
-      async fetchPoisToMap () {
+      async fetchPoisToMap (categories) {
         if (!this.loading) {
           this.loading = true
           const bounds = this.$refs.map.$mapObject.getBounds()
@@ -130,7 +118,7 @@
                 params: {
                   tag: this.tag,
                   location: this.location, ...bounds.toJSON(),
-                  categories: this.categories,
+                  categories,
                 },
               },
             )

@@ -8,8 +8,15 @@
         </h1>
       </div>
     </div>
+    <div class="row nopadding">
+    <MapFilter
+      v-model="categories"
+      @update="filterChanged"
+    />
+    </div>
     <Map
       v-model="mapPois"
+      ref="mapComponent"
       :center="center"
       @update="updatePois"
       show-filter
@@ -20,6 +27,7 @@
   </div>
 </template>
 <script>
+  import { TYPES } from '/constants/'
 
   export default {
     data () {
@@ -28,6 +36,7 @@
         mapPois: [],
         loadingPois: true,
         center: {},
+        categories: [...TYPES],
       }
     },
     async fetch () {
@@ -67,7 +76,12 @@
       },
       updatePois(val) {
         this.mapPois = val.slice(0,4)
-      }
+      },
+      filterChanged (val) {
+        if (this.$refs.mapComponent.$refs.map?.$mapObject) {
+          this.$refs.mapComponent.fetchPoisToMap(val)
+        }
+      },
     },
   }
 </script>
