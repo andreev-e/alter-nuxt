@@ -18,7 +18,7 @@
         :right="[]"
       />
       <Map
-        :center="{ lat: tag.lat, lng: tag.lng }"
+        :center="center"
         :location="id"
         :categories="categories"
       />
@@ -45,6 +45,7 @@
     name: 'RegionPage',
     data () {
       return {
+        id: null,
         pois: [],
         type: null,
         tag: {
@@ -111,6 +112,12 @@
       },
       categories() {
         return this.type ? [this.type] : null
+      },
+      center() {
+        if (this.tag) {
+          return { lat: this.tag.lat, lng: this.tag.lng }
+        }
+        return null
       }
     },
     mounted () {
