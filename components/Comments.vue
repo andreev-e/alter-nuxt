@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    import Comment from '@/components/comments/Comment.vue';
+    import Comment from './comments/Comment.vue';
 
     export default {
         components: { Comment },
@@ -83,7 +83,7 @@
         },
         computed: {
             filteredComments() {
-                return this.last ? this.comments.splice(0, this.last) : this.comments;
+                return this.last ? [...this.comments].splice(0, this.last) : this.comments;
             },
         },
         mounted() {
@@ -93,7 +93,7 @@
             async fetchComments() {
                 this.loading = true;
                 const result = await this.$axios.$get(
-                    'https://api.altertravel.ru/api/comment',
+                    '/comment',
                     {
                         params: {
                             id: this.id,

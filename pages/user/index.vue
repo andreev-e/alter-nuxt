@@ -81,7 +81,7 @@
                     data,
                     meta,
                 } = await this.$axios.$get(
-                    'https://api.altertravel.ru/api/user',
+                    '/user',
                     {
                         params: {
                             page: this.page,

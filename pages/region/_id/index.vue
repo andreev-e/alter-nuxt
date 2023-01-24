@@ -53,7 +53,7 @@
 
 <script>
     export default {
-        name: 'RegionPage',
+        name: 'Index',
         data() {
             return {
                 id: null,
@@ -130,29 +130,27 @@
         watch: {
             page: {
                 handler() {
-                    this.fetchPoisBackend();
+                    this.fetchPois();
                 },
             },
         },
-        mounted() {
-        },
         methods: {
             async fetchTagBackend() {
-                const result = await this.$axios.$get(`https://api.altertravel.ru/api/tag/${this.id}`);
+                const result = await this.$axios.$get(`/tag/${this.id}`);
                 this.tag = result.data;
                 this.loadingRegion = false;
             },
             async fetchTag() {
-                const result = await this.$axios.$get(`https://api.altertravel.ru/api/tag/${this.id}`);
+                const result = await this.$axios.$get(`/tag/${this.id}`);
                 this.tag = result.data;
             },
-            async fetchPoisBackend() {
+            async fetchPois() {
                 this.loadingPois = true;
                 const {
                     data,
                     meta,
                 } = await this.$axios.$get(
-                    'https://api.altertravel.ru/api/poi',
+                    '/poi',
                     {
                         params: {
                             location: this.id,

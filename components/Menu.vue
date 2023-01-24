@@ -76,7 +76,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'Menu',
         components: {},
@@ -87,26 +86,10 @@
             };
         },
         async fetch() {
-            if (process.client) {
-                const res1 = await this.$axios.$get('https://api.altertravel.ru/api/tag');
-                this.tags = res1.data;
-                localStorage.tags = this.tags;
-                const res2 = await this.$axios.$get('https://api.altertravel.ru/api/locations');
-                this.regions = res2.data;
-            } else {
-                let res = await this.$axios.$get('https://api.altertravel.ru/api/tag');
-                this.tags = res.data;
-                res = await this.$axios.$get('https://api.altertravel.ru/api/locations');
-                this.regions = res.data;
-            }
-        },
-        computed: {
-        },
-        mounted() {
-
-        },
-        methods: {
-
+            let res = await this.$axios.$get('/tag');
+            this.tags = res.data;
+            res = await this.$axios.$get('/locations');
+            this.regions = res.data;
         },
     };
 </script>

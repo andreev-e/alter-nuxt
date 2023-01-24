@@ -88,7 +88,7 @@ export default {
     },
 
     axios: {
-    // proxy: true,
+        baseURL: 'https://api.altertravel.ru/api',
     },
 
     server: {

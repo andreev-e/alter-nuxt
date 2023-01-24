@@ -46,7 +46,7 @@
         faMonument,
         faSkull,
     } from '@fortawesome/free-solid-svg-icons';
-    import { gmapApi } from '~/node_modules/vue2-google-maps/src/main.js';
+    import { gmapApi } from 'vue2-google-maps';
 
     export default {
         expose: ['fetchPoisToMap'],
@@ -112,7 +112,7 @@
                     const bounds = this.$refs.map.$mapObject.getBounds();
                     if (bounds) {
                         const { data } = await this.$axios.$get(
-                            'https://api.altertravel.ru/api/poi',
+                            '/poi',
                             {
                                 params: {
                                     tag: this.tag,
