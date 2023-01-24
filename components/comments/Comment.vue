@@ -6,7 +6,7 @@
                     {{ comment.name }}
                 </router-link>
             </b>
-            <i>{{ $moment(comment.time * 1000) }}</i>
+            <i>{{ $moment(comment.time * 1000).fomat('dd-mm-YYYY') }}</i>
             <router-link
                 v-if="linkObjects"
                 :to="'/poi/' + comment.backlink"
