@@ -28,7 +28,11 @@
             <li class="region_select">
                 <a href="#">
                     Метки
-                    <span>выбрать</span>
+                    <span v-if="!tagsLoading">выбрать</span>
+                    <b-spinner
+                        v-else
+                        small
+                    />
                 </a>
                 <ul>
                     <li
@@ -100,6 +104,7 @@
             ...mapGetters({
                 tagsExist: 'tags/tagsExist',
                 countriesExist: 'tags/countriesExist',
+                tagsLoading: 'tags/tagsLoading',
             }),
             menuTags() {
                 return [...this.$store.state.tags.tags].slice(0, 20);
