@@ -4,9 +4,8 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
-                    Личный кабинет
+                    Вход
                 </h1>
-                {{ login }}
             </div>
         </div>
         <Footer />
@@ -15,14 +14,8 @@
 
 <script>
     export default {
-        middleware: 'auth',
         data() {
             return {
-                login: 'login',
-                // form: new Form({
-                //     login: null,
-                //       password: null,
-                //       })
             };
         },
     };

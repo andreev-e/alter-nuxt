@@ -73,6 +73,7 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
+        '@nuxtjs/auth',
         ['@nuxtjs/component-cache', {
             max: 10000,
             maxAge: 1000 * 60 * 60,
@@ -99,5 +100,29 @@ export default {
     },
 
     serverMiddleware: ['~/server-middleware/logger'],
+
+    auth: {
+        redirect: {
+            login: '/login',
+            logout: '/',
+            home: '/secure',
+        },
+        strategies: {
+            local: {
+                endpoints: {
+                    login: {
+                        url: '/user/login',
+                        method: 'post',
+                        propertyName: 'data.token',
+                    },
+                    logout: false,
+                    user: false,
+                },
+                tokenType: '',
+                tokenName: 'x-auth',
+                autoFetchUser: false,
+            },
+        },
+    },
 
 };
