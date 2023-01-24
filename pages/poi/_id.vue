@@ -216,7 +216,7 @@
         methods: {
             async fetchPoi() {
                 const result = await this.$axios.$get(
-                    `https://api.altertravel.ru/api/poi/${this.$route.params.id}`,
+                    `/poi/${this.$route.params.id}`,
                 );
                 this.poi = result.data;
                 this.center = {
