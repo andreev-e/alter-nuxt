@@ -89,7 +89,7 @@ export default {
     },
 
     axios: {
-        baseURL: 'https://api.altertravel.ru/api',
+        baseURL: process.env.API_URL,
     },
 
     server: {
