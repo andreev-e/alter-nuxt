@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-    import { TYPES } from '/constants/';
+    import { TYPES } from '../constants';
 
     export default {
         data() {

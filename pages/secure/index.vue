@@ -5,7 +5,7 @@
             <div class="col-sm-12 text-center">
                 <h1>
                     Личный кабинет
-                </h1
+                </h1>
                 {{ login }}
             </div>
         </div>
@@ -18,10 +18,10 @@
         data() {
             return {
                 login: 'login',
-               // form: new Form({
-             //     login: null,
-           //       password: null,
-         //       })
+                // form: new Form({
+                //     login: null,
+                //       password: null,
+                //       })
             };
         },
     };
