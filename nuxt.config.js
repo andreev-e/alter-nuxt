@@ -83,7 +83,7 @@ export default {
     build: {
         transpile: [/^vue2-google-maps($|\/)/],
         babel: {
-          compact: true,
+            compact: true,
         },
     },
 

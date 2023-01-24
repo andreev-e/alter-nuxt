@@ -41,6 +41,12 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <nuxt-link to="/user">
+                    Авторы
+                    <span>путеводителя</span>
+                </nuxt-link>
+            </li>
             <!--      <li>-->
             <!--        <a href="/catalog/">-->
             <!--          Популярные-->

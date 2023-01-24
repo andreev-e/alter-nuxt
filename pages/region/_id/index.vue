@@ -129,7 +129,7 @@
         },
         watch: {
             page: {
-                handler(val) {
+                handler() {
                     this.fetchPoisBackend();
                 },
             },
