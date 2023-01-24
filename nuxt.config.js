@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1;
 
 export default {
     // Target: https://go.nuxtjs.dev/config-target
