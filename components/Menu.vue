@@ -9,7 +9,7 @@
                 </a>
                 <ul>
                     <li
-                        v-for="region in regions.slice(0, 20)"
+                        v-for="region in menuCountries"
                         :key="region.id"
                     >
                         <nuxt-link :to="region.url">
@@ -32,7 +32,7 @@
                 </a>
                 <ul>
                     <li
-                        v-for="tag in tags.slice(0, 20)"
+                        v-for="tag in menuTags"
                         :key="tag.id"
                     >
                         <nuxt-link :to="tag.url">
@@ -76,6 +76,9 @@
 </template>
 
 <script>
+  // eslint-disable-next-line no-unused-vars,import/no-extraneous-dependencies
+    import { mapMutations, mapGetters } from 'vuex';
+
     export default {
         name: 'Menu',
         components: {},
@@ -85,11 +88,31 @@
                 regions: [],
             };
         },
-        async fetch() {
-            let res = await this.$axios.$get('/tag');
-            this.tags = res.data;
-            res = await this.$axios.$get('/locations');
-            this.regions = res.data;
+        fetch() {
+            if (!this.tagsExist) {
+                this.getTags();
+            }
+            if (!this.countriesExist) {
+                this.getCountries();
+            }
+        },
+        computed: {
+            ...mapGetters({
+                tagsExist: 'tags/tagsExist',
+                countriesExist: 'tags/countriesExist',
+            }),
+            menuTags() {
+                return [...this.$store.state.tags.tags].slice(0, 20);
+            },
+            menuCountries() {
+                return [...this.$store.state.tags.countries];
+            },
+        },
+        methods: {
+            ...mapMutations({
+                getTags: 'tags/getTags',
+                getCountries: 'tags/getCountries',
+            }),
         },
     };
 </script>
@@ -101,12 +124,14 @@
     margin-top: 30px;
     line-height: 22px;
   }
+
   .header-menu li:hover {
     background-color: rgba(255, 255, 255, .90);
     border: 0px solid;
     box-shadow: 1 0 1px rgb(0, 0, 0);
     box-shadow: inset -2 0 1px rgb(255, 255, 255);
   }
+
   .header-menu ul li {
     text-align: center;
     float: left;
@@ -118,11 +143,12 @@
     padding: 4px 4px;
     margin-left: 1px;
   }
+
   .region_select ul {
     display: none;
     position: absolute;
     z-index: 999;
-    box-shadow: 10px 72px 72px -10px rgba(0,0,0,0.3);
+    box-shadow: 10px 72px 72px -10px rgba(0, 0, 0, 0.3);
     width: 350px;
     margin: 0;
     margin-top: -1px;
@@ -134,15 +160,18 @@
     border: 1px solid #cbd6ee;
     border-top: none;
   }
+
   .header-menu a {
     color: #244255;
     text-decoration: none;
-    list-style:none;
+    list-style: none;
     font-size: 20px;
   }
+
   .region_select:hover ul {
     display: block;
   }
+
   .region_select ul li {
     margin: 0;
     font-size: 14px;
@@ -155,24 +184,29 @@
     text-align: left;
     padding-left: 4px;
   }
+
   .header-menu ul li.region_select ul li {
     height: 26px;
     text-align: left;
     padding-left: 4px;
   }
+
   .region_select a {
     margin: 0;
     padding: 0;
     line-height: 17px;
     overflow: hidden;
   }
-    ul, li {
+
+  ul, li {
     list-style-type: none;
   }
+
   .header-menu ul li a span {
     font-size: 14px;
     display: block;
   }
+
   .region_select img {
     margin-bottom: -4px;
     margin-right: 5px;
