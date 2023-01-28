@@ -37,16 +37,9 @@
 </template>
 
 <script>
-    import {
-        faLeaf,
-        faIndustry,
-        faCircleExclamation,
-        faBuildingFlag,
-        faMuseum,
-        faMonument,
-        faSkull,
-    } from '@fortawesome/free-solid-svg-icons';
+    import * as Icons from '@fortawesome/free-solid-svg-icons';
     import { gmapApi } from 'vue2-google-maps';
+    import { TYPES } from '../constants';
 
     export default {
         expose: ['fetchPoisToMap'],
@@ -104,6 +97,9 @@
         },
         computed: {
             google: gmapApi,
+            types() {
+                return TYPES;
+            },
         },
         created() {
         },
@@ -135,55 +131,24 @@
             zoomChanged() {
                 this.fetchPoisToMap();
             },
-            getIcon(type) {
-                let color = {};
-                switch (type) {
-                case 'Природа':
-                    color = {
-                        path: faLeaf.icon[4].toString(),
-                        fillColor: '#A7FC00',
-                    };
-                    break;
-                case 'Техноген':
-                    color = {
-                        path: faIndustry.icon[4].toString(),
-                        fillColor: '#64400F',
-                    };
-                    break;
-                case 'Архитектура':
-                    color = {
-                        path: faBuildingFlag.icon[4].toString(),
-                        fillColor: '#256D7B',
-                    };
-                    break;
-                case 'История-Культура':
-                    color = {
-                        path: faSkull.icon[4].toString(),
-                        fillColor: '#FFCF48',
-                    };
-                    break;
-                case 'Музей':
-                    color = {
-                        path: faMuseum.icon[4].toString(),
-                        fillColor: '#702963',
-                    };
-                    break;
-                case 'Памятник':
-                    color = {
-                        path: faMonument.icon[4].toString(),
-                        fillColor: '#F64A46',
-                    };
-                    break;
-                default:
-                }
+            getTypeByName(name) {
+                // eslint-disable-next-line consistent-return
+                return this.types.reduce((acc, type) => {
+                    if (type.name === name) {
+                        return type;
+                    }
+                    return acc;
+                });
+            },
+            getIcon(name) {
+                const type = this.getTypeByName(name);
                 return {
-                    path: faCircleExclamation.icon[4].toString(),
-                    fillColor: '#FF0000',
+                    path: (type ? Icons[type.icon] : Icons.faCircleExclamation)?.icon[4].toString(),
+                    fillColor: type.color ?? '#FF0000',
                     fillOpacity: 1,
                     strokeColor: '#ffffff',
                     scale: 0.05,
                     strokeWeight: 1,
-                    ...color,
                 };
             },
         },

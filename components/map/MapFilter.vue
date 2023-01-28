@@ -10,7 +10,7 @@
         >
             <font-awesome-icon
                 v-if="categories.includes(type.name)"
-                :icon="type.icon"
+                :icon="paramCase(type.icon)"
                 class="mr-2"
                 :style="{ color: type.color, height: '18px' }"
             />
@@ -61,6 +61,11 @@
                     this.categories = [...TYPES].map((t) => t.name);
                 }
                 this.$emit('update', this.categories);
+            },
+            paramCase(str) {
+                return str
+                    .replace(/\B([A-Z])/gu, '-$1')
+                    .toLowerCase();
             },
         },
     };
