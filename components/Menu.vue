@@ -28,11 +28,11 @@
             <li class="region_select">
                 <a href="#">
                     Метки
-                    <span v-if="!tagsLoading">выбрать</span>
                     <b-spinner
-                        v-else
+                        v-if="tagsLoading"
                         small
                     />
+                    <span v-else>выбрать</span>
                 </a>
                 <ul>
                     <li
@@ -45,6 +45,7 @@
                     </li>
                 </ul>
             </li>
+
             <li>
                 <nuxt-link to="/user">
                     Авторы
@@ -81,14 +82,13 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars,import/no-extraneous-dependencies
-    import { mapMutations, mapGetters } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: 'Menu',
         components: {},
         data() {
             return {
-                tags: [],
                 regions: [],
             };
         },
@@ -96,27 +96,23 @@
             if (!this.tagsExist) {
                 this.getTags();
             }
-            if (!this.countriesExist) {
-                this.getCountries();
-            }
         },
         computed: {
             ...mapGetters({
-                tagsExist: 'tags/tagsExist',
-                countriesExist: 'tags/countriesExist',
-                tagsLoading: 'tags/tagsLoading',
+                tagsExist: 'tags/itemsExist',
+                tagsLoading: 'tags/loading',
+                tags: 'tags/items',
             }),
             menuTags() {
-                return [...this.$store.state.tags.tags].slice(0, 20);
+                return this.tags.slice(0, 20);
             },
             menuCountries() {
-                return [...this.$store.state.tags.countries];
+                return [];
             },
         },
         methods: {
-            ...mapMutations({
-                getTags: 'tags/getTags',
-                getCountries: 'tags/getCountries',
+            ...mapActions({
+                getTags: 'tags/get',
             }),
         },
     };
@@ -132,8 +128,7 @@
 
   .header-menu li:hover {
     background-color: rgba(255, 255, 255, .90);
-    border: 0px solid;
-    box-shadow: 1 0 1px rgb(0, 0, 0);
+    border: 0 solid;
     box-shadow: inset -2 0 1px rgb(255, 255, 255);
   }
 
