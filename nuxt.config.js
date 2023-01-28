@@ -40,7 +40,7 @@ export default {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        '~assets/css/common.css',
+        '~assets/css/common',
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -58,7 +58,6 @@ export default {
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: [
     // https://go.nuxtjs.dev/eslint
-        '@nuxtjs/moment',
         '@nuxtjs/eslint-module',
     ],
 
@@ -73,7 +72,9 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
+        '@nuxtjs/moment',
         '@nuxtjs/auth',
+        '@nuxtjs/i18n',
         ['@nuxtjs/component-cache', {
             max: 10000,
             maxAge: 1000 * 60 * 60,
@@ -86,6 +87,7 @@ export default {
         babel: {
             compact: true,
         },
+        postcss: null,
     },
 
     axios: {
@@ -124,5 +126,4 @@ export default {
             },
         },
     },
-
 };
