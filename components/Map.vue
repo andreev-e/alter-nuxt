@@ -10,10 +10,10 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="12"
+                :zoom="zoom"
                 map-type-id="terrain"
                 @dragend="fetchPoisToMap"
-                @zoom_changed="zoom"
+                @zoom_changed="zoomChanged"
                 @idle="fetchPoisToMap"
             >
                 <gmap-marker
@@ -74,6 +74,10 @@
                 type: Array,
                 default: () => [],
             },
+            zoom: {
+                type: Number,
+                default: 12,
+            },
         },
         emits: ['update'],
         data() {
@@ -128,7 +132,7 @@
                     this.loading = false;
                 }
             },
-            zoom() {
+            zoomChanged() {
                 this.fetchPoisToMap();
             },
             getIcon(type) {

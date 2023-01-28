@@ -30,6 +30,7 @@
                 :center="center"
                 :location="id"
                 :categories="categories"
+                :zoom="tag.zoom"
             />
             <Gallery
                 :objects="pois"
@@ -74,7 +75,7 @@
             this.id = this.$route.params.id;
             this.type = this.$route.params.type;
             await this.fetchTagBackend();
-            await this.fetchPoisBackend();
+            await this.fetchPois();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
