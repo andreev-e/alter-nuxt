@@ -3,12 +3,18 @@
         Отображены категории:
         <b-button
             v-for="type in types"
-            :key="type"
+            :key="type.name"
             class="btn btn-default mr-2"
-            :class="{ 'btn-light': !categories.includes(type) }"
-            @click="toggle(type)"
+            :class="{ 'btn-light': !categories.includes(type.name) }"
+            @click="toggle(type.name)"
         >
-            {{ type }}
+            <font-awesome-icon
+                v-if="categories.includes(type.name)"
+                :icon="type.icon"
+                class="mr-2"
+                :style="{ color: type.color, height: '18px' }"
+            />
+            {{ type.name }}
         </b-button>
     </div>
 </template>
@@ -28,7 +34,7 @@
         emits: ['update'],
         data() {
             return {
-                categories: [...TYPES],
+                categories: [...TYPES].map((t) => t.name),
             };
         },
         computed: {
@@ -52,7 +58,7 @@
                     this.categories.push(type);
                 }
                 if (this.categories.length === 0) {
-                    this.categories = [...TYPES];
+                    this.categories = [...TYPES].map((t) => t.name);
                 }
                 this.$emit('update', this.categories);
             },

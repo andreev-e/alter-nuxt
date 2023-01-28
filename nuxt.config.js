@@ -50,6 +50,7 @@ export default {
             mode: 'client',
             ssr: false,
         },
+        '~/plugins/font-awesome.js',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

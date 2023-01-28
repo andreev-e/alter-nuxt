@@ -11,7 +11,7 @@
                 ref="map"
                 :center="center"
                 :zoom="12"
-                map-type-id="hybrid"
+                map-type-id="terrain"
                 @dragend="fetchPoisToMap"
                 @zoom_changed="zoom"
                 @idle="fetchPoisToMap"
@@ -171,7 +171,6 @@
                     };
                     break;
                 default:
-                    console.log(type);
                 }
                 return {
                     path: faCircleExclamation.icon[4].toString(),
