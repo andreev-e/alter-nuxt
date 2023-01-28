@@ -5,7 +5,11 @@
             <li class="region_select">
                 <a href="#">
                     Регион
-                    <span>выбрать</span>
+                    <b-spinner
+                        v-if="countriesLoading"
+                        small
+                    />
+                    <span v-else>выбрать</span>
                 </a>
                 <ul>
                     <li
@@ -89,30 +93,36 @@
         components: {},
         data() {
             return {
-                regions: [],
             };
         },
         fetch() {
             if (!this.tagsExist) {
                 this.getTags();
             }
+            if (!this.countriesExist) {
+                this.getCountries();
+            }
         },
         computed: {
             ...mapGetters({
                 tagsExist: 'tags/itemsExist',
+                countriesExist: 'countries/itemsExist',
                 tagsLoading: 'tags/loading',
+                countriesLoading: 'countries/loading',
                 tags: 'tags/items',
+                countries: 'countries/items',
             }),
             menuTags() {
                 return this.tags.slice(0, 20);
             },
             menuCountries() {
-                return [];
+                return this.countries;
             },
         },
         methods: {
             ...mapActions({
                 getTags: 'tags/get',
+                getCountries: 'countries/get',
             }),
         },
     };
