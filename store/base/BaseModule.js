@@ -42,8 +42,8 @@ export default class BaseModule {
                 state,
                 commit,
             }) {
-                if (state.cached) {
-                    if (process.client && LocalStorage.has(state.endpoint)) {
+                if (process.client && state.cached) {
+                    if (LocalStorage.has(state.endpoint)) {
                         const item = LocalStorage.get(state.endpoint);
                         if (item.time && item.time > new Date().getTime() - (24 * 60 * 60 * 1000)) {
                             commit('setData', item.data);
@@ -55,7 +55,6 @@ export default class BaseModule {
 
                 commit('setLoading', true);
                 await Request.getInstance().get(state.endpoint, { params: state.params })
-                // await this.$axios.get(state.endpoint, { params: state.params })
                     .then((response) => {
                         if (!Object.prototype.hasOwnProperty.call(state.params, 'page')) {
                             commit('setData', response.data);
@@ -77,7 +76,6 @@ export default class BaseModule {
             },
             async remove({ state }, url) {
                 await Request.getInstance().delete(url, { params: state.params });
-                // await this.$axios.delete(url, { params: state.params });
             },
             setParams: ({ commit }, params) => {
                 commit('setParams', params);
