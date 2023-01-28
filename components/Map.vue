@@ -10,10 +10,10 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="7"
+                :zoom="12"
                 map-type-id="hybrid"
                 @dragend="fetchPoisToMap"
-                @zoom_changed="fetchPoisToMap"
+                @zoom_changed="zoom"
                 @idle="fetchPoisToMap"
             >
                 <gmap-marker
@@ -127,6 +127,9 @@
                     }
                     this.loading = false;
                 }
+            },
+            zoom() {
+                this.fetchPoisToMap();
             },
             getIcon(type) {
                 let color = {};
