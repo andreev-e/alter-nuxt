@@ -60,7 +60,7 @@
                 if (this.categories.length === 0) {
                     this.categories = [...TYPES].map((t) => t.name);
                 }
-                this.$emit('update', this.categories);
+                this.$emit('update', [...this.categories]);
             },
             paramCase(str) {
                 return str

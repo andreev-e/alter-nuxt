@@ -23,7 +23,7 @@
                     :icon="mylocationMarker"
                 />
                 <gmap-marker
-                    v-for="poi in pois"
+                    v-for="poi in mapPois"
                     :key="`poi_`+poi.id"
                     :position="{ lat: poi.lat, lng: poi.lng }"
                     :clickable="true"
@@ -91,6 +91,9 @@
             types() {
                 return TYPES;
             },
+            mapPois() {
+                return this.pois;
+            },
         },
         mounted() {
             this.clear();
@@ -117,7 +120,7 @@
                         user: this.user,
                     });
                     this.getPoi();
-                    this.$emit('update', this.pois);
+                    this.$emit('update', [...this.pois]);
                 }
             },
             zoomChanged() {
