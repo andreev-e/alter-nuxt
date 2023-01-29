@@ -95,6 +95,11 @@
                 return this.pois;
             },
         },
+        watch: {
+            pois() {
+                this.$emit('update', [...this.pois]);
+            },
+        },
         mounted() {
             this.clear();
         },
@@ -120,7 +125,6 @@
                         user: this.user,
                     });
                     this.getPoi();
-                    this.$emit('update', [...this.pois]);
                 }
             },
             zoomChanged() {

@@ -56,6 +56,9 @@
                 },
             ],
         },
+        watch: {
+
+        },
         mounted() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(

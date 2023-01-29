@@ -5,16 +5,14 @@
             <div class="col-sm-12">
                 <h1>
                     {{ user.firstname }} {{ user.lastname }}
-                    <span>(опубликовано {{ user.publications }}, с нами с {{ user.regdate }})</span>
                 </h1>
-                <div
+                <p>(опубликовано {{ user.publications }}, с нами с {{ user.regdate }})</p>
+                <p
                     v-if="user.about"
                     class="description"
                 >
-                    <p>
-                        {{ user.about }}
-                    </p>
-                </div>
+                    <b>{{ user.about }}</b>
+                </p>
             </div>
         </div>
         <Map
