@@ -68,17 +68,17 @@
         },
         computed: {
             ...mapGetters({
-                usersExist: 'user/itemsExist',
-                usersLoading: 'user/loading',
-                users: 'user/items',
-                meta: 'user/meta',
+                usersExist: 'users/itemsExist',
+                usersLoading: 'users/loading',
+                users: 'users/items',
+                meta: 'users/meta',
             }),
         },
         methods: {
             ...mapActions({
-                getUsers: 'user/get',
-                setParams: 'user/setParams',
-                clear: 'user/clear',
+                getUsers: 'users/get',
+                setParams: 'users/setParams',
+                clear: 'users/clear',
             }),
             async paginate(page) {
                 this.setParams({

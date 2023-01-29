@@ -10,11 +10,10 @@ Request.setConfig({
 
 export default class BaseModule {
     constructor(endpoint, stateParams = {}) {
-        this.endpoint = process.env.API_URL + endpoint;
         this.defaultState = () => ({
             ...stateParams,
             params: {},
-            endpoint: this.endpoint,
+            endpoint: `https://api.altertravel.ru/api${endpoint}`,
             loading: false,
             data: {},
             initiallyLoaded: false,
@@ -54,6 +53,8 @@ export default class BaseModule {
                 }
 
                 commit('setLoading', true);
+
+                // eslint-disable-next-line max-len
                 await Request.getInstance().get(state.endpoint, { params: state.params })
                     .then((response) => {
                         if (!Object.prototype.hasOwnProperty.call(state.params, 'page') || (state.params.page !== undefined && state.params.page !== null)) {

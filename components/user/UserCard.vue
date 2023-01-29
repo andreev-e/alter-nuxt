@@ -14,7 +14,7 @@
                 <nuxt-link :to="`/user/${user.username}`">
                     {{ user.firstname }}
                     {{ user.lastname }}
-                    (опубликовано {{ user.publications }}, с нами с {{ user.regdate }})
+                    (опубликовано {{ user.publications }}, с нами с {{ user.regdate?.split(' ')[0] }})
                 </nuxt-link>
             </div>
             <div

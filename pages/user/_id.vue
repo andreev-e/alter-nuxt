@@ -4,20 +4,42 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    {{ $route.params.id }}
+                    {{ user.firstname }} {{ user.lastname }}
+                    <span>(опубликовано {{ user.publications }}, с нами с {{ user.regdate?.split(' ')[0] }})</span>
                 </h1>
+                <div
+                    v-if="user.about"
+                    class="description"
+                >
+                    <p>
+                        {{ user.about }}
+                    </p>
+                </div>
             </div>
         </div>
         <Map
             :user="$route.params.id"
-            :zoom="9"
+            :zoom="5"
+            :center="mapCenter"
         />
         <Footer />
     </div>
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
+        data() {
+            return {
+                location: {},
+            };
+        },
+        async fetch() {
+            this.setId(this.$route.params.id);
+            await this.getUser();
+        },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
             meta: [
@@ -26,6 +48,37 @@
                     content: 'Каталог достопримечательностей на карте . Для самостоятельной организации путешествия!',
                 },
             ],
+        },
+        computed: {
+            ...mapGetters({
+                user: 'user/model',
+            }),
+            mapCenter() {
+                if (this.user.lat && this.user.lng) {
+                    return { lat: this.user.lat, lng: this.user.lng };
+                }
+                return this.location;
+            },
+        },
+        mounted() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        this.location = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                    },
+                    () => {
+                    },
+                );
+            }
+        },
+        methods: {
+            ...mapActions({
+                setId: 'user/setId',
+                getUser: 'user/get',
+            }),
         },
     };
 </script>

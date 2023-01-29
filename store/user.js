@@ -1,6 +1,6 @@
-import PaginatedItemsListModule from './base/PaginatedItemsListModule';
+import ModelModule from './base/ModelModule';
 
-class User extends PaginatedItemsListModule {
+class User extends ModelModule {
     constructor() {
         super('/user');
     }
