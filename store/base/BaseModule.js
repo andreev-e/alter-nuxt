@@ -56,7 +56,7 @@ export default class BaseModule {
                 commit('setLoading', true);
                 await Request.getInstance().get(state.endpoint, { params: state.params })
                     .then((response) => {
-                        if (state.params.page !== undefined && state.params.page !== null) {
+                        if (!Object.prototype.hasOwnProperty.call(state.params, 'page') || (state.params.page !== undefined && state.params.page !== null)) {
                             commit('setData', response.data);
                             if (process.client && state.cached) {
                                 LocalStorage
