@@ -25,7 +25,14 @@
                 :left="tag.children"
                 :right="[]"
             />
+            <div class="row nopadding">
+                <MapFilter
+                    v-model="categories"
+                    @update="filterChanged"
+                />
+            </div>
             <Map
+                ref="mapComponent"
                 :center="center"
                 :location="id"
                 :categories="categories"
@@ -163,6 +170,11 @@
                 this.pois = data;
                 this.pages = meta.last_page;
                 this.loadingPois = false;
+            },
+            filterChanged(val) {
+                if (this.$refs.mapComponent.$refs.map?.$mapObject) {
+                    this.$refs.mapComponent.fetchPois(val);
+                }
             },
         },
     };
