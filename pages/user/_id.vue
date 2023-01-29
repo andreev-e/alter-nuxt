@@ -1,6 +1,9 @@
 <template>
     <div class="container page">
         <Header />
+        <Breadcrumbs
+            :list="[{ name: 'Авторы', url: '/user/' }, { name: $route.params.id, url: '' }]"
+        />
         <div class="row">
             <div class="col-sm-12">
                 <h1>

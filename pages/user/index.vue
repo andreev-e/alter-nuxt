@@ -1,6 +1,9 @@
 <template>
     <div class="container page">
         <Header />
+        <Breadcrumbs
+            :list="[{ name: 'Авторы', url: '' }]"
+        />
         <div class="row">
             <div class="col-sm-12">
                 <h1>
