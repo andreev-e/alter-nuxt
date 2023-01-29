@@ -2,9 +2,17 @@
     <div class="comment">
         <div class="author-date">
             <b>
-                <router-link :to="'/user/' + comment.name">
-                    {{ comment.name }}
-                </router-link>
+                <router-link
+                    v-if="comment.user"
+                    :to="'/user/' + comment.user.username"
+                >
+                    {{ comment.user.firstname }} {{ comment.user.lastname }}</router-link>
+                <a
+                    v-else-if="comment.email"
+                    href="mailto:"
+                >{{ comment.name }}</a>
+                <span v-else>{{ comment.name }}
+                </span>
             </b>
             <i>{{ $moment(comment.time * 1000).format('LLLL') }}</i>
             <router-link

@@ -56,6 +56,7 @@
             },
             tag: { type: String, default: null },
             location: { type: String, default: null },
+            user: { type: String, default: null },
             categories: { type: Array, default: () => [] },
             zoom: { type: Number, default: 12 },
         },
@@ -91,10 +92,14 @@
                 return TYPES;
             },
         },
+        mounted() {
+            this.clear();
+        },
         methods: {
             ...mapActions({
                 getPoi: 'poi/get',
                 setParams: 'poi/setParams',
+                clear: 'poi/clear',
             }),
             idle() {
                 if (!this.poisExist) {
@@ -109,6 +114,7 @@
                         location: this.location,
                         ...bounds.toJSON(),
                         categories: categories ?? this.categories,
+                        user: this.user,
                     });
                     this.getPoi();
                     this.$emit('update', this.pois);

@@ -8,6 +8,10 @@
                 </h1>
             </div>
         </div>
+        <Map
+            :user="$route.params.id"
+            :zoom="9"
+        />
         <Footer />
     </div>
 </template>
