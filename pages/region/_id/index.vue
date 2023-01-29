@@ -10,13 +10,12 @@
                 <div class="col-sm-12">
                     <h1>
                         <b-spinner v-if="loadingRegion" />
-                        <img
-                            v-if="tag.flag"
-                            width="16"
-                            height="16"
-                            :src="`https://altertravel.ru/i/flags/` + tag.flag"
-                            alt="flag"
-                        >
+                        <country-flag
+                            v-if="tag.code"
+                            class="d-inline-block mr-1"
+                            :country="tag.code"
+                            size="normal"
+                        />
                         {{ h1 }}
                     </h1>
                 </div>

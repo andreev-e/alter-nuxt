@@ -51,6 +51,7 @@ export default {
             ssr: false,
         },
         '~/plugins/font-awesome',
+        '~/plugins/country-flag',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

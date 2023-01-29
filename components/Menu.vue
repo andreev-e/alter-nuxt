@@ -17,14 +17,13 @@
                         :key="region.id"
                     >
                         <nuxt-link :to="region.url">
-                            <img
-                                v-if="region.flag"
-                                width="16"
-                                height="16"
-                                :src="`https://altertravel.ru/i/flags/` + region.flag"
-                                alt="flag"
-                            >
-                            {{ region.name }} ({{ region.count }})
+                            <country-flag
+                                v-if="region.code"
+                                :country="region.code"
+                                size="small"
+                                class="d-inline-block"
+                            />
+                            {{ region.name }}
                         </nuxt-link>
                     </li>
                 </ul>
@@ -90,10 +89,8 @@
 
     export default {
         name: 'Menu',
-        components: {},
         data() {
-            return {
-            };
+            return {};
         },
         fetch() {
             if (!this.countriesExist) {
