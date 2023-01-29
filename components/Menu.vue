@@ -48,7 +48,6 @@
                     </li>
                 </ul>
             </li>
-
             <li>
                 <nuxt-link to="/user">
                     Авторы

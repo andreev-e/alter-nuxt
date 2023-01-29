@@ -31,11 +31,11 @@
         <div class="row">
             <div class="col-12">
                 <b-pagination
-                    v-if="pages > 1"
+                    v-if="meta.last_page > 1"
                     v-model="page"
-                    :total-rows="pages"
-                    :per-page="perPage"
-                    aria-controls="my-table"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
+                    @change="paginate"
                 />
             </div>
         </div>
@@ -44,19 +44,18 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
         name: 'Index',
         data() {
             return {
-                users: [],
                 page: 1,
-                pages: null,
-                perPage: 15,
-                loadingUsers: true,
             };
         },
         async fetch() {
-            await this.fetchUsers();
+            await this.paginate(1);
         },
         head: {
             title: 'Авторы',
@@ -67,31 +66,25 @@
                 },
             ],
         },
-        watch: {
-            page: {
-                handler() {
-                    this.fetchUsersBackend();
-                },
-            },
+        computed: {
+            ...mapGetters({
+                usersExist: 'user/itemsExist',
+                usersLoading: 'user/loading',
+                users: 'user/items',
+                meta: 'user/meta',
+            }),
         },
         methods: {
-            async fetchUsers() {
-                this.loadingPois = true;
-                const {
-                    data,
-                    meta,
-                } = await this.$axios.$get(
-                    '/user',
-                    {
-                        params: {
-                            page: this.page,
-                            perPage: this.perPage,
-                        },
-                    },
-                );
-                this.users = data;
-                this.pages = meta.last_page;
-                this.loadingUsers = false;
+            ...mapActions({
+                getUsers: 'user/get',
+                setParams: 'user/setParams',
+                clear: 'user/clear',
+            }),
+            async paginate(page) {
+                this.setParams({
+                    page,
+                });
+                await this.getUsers();
             },
         },
     };
