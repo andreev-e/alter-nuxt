@@ -84,7 +84,7 @@
             },
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {
-                    this.$refs.mapComponent.fetchPoisToMap(val);
+                    this.$refs.mapComponent.fetchPois(val);
                 }
             },
         },

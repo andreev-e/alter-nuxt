@@ -1,7 +1,7 @@
 <template>
     <div class="row nopadding">
         <div
-            v-if="loading"
+            v-if="poiLoading"
             class="spinner"
         >
             <b-spinner />
@@ -12,9 +12,9 @@
                 :center="center"
                 :zoom="zoom"
                 map-type-id="terrain"
-                @dragend="fetchPoisToMap"
+                @dragend="fetchPois"
                 @zoom_changed="zoomChanged"
-                @idle="fetchPoisToMap"
+                @idle="idle"
             >
                 <gmap-marker
                     v-if="mylocation"
@@ -23,7 +23,7 @@
                     :icon="mylocationMarker"
                 />
                 <gmap-marker
-                    v-for="poi in mappois"
+                    v-for="poi in pois"
                     :key="`poi_`+poi.id"
                     :position="{ lat: poi.lat, lng: poi.lng }"
                     :clickable="true"
@@ -39,15 +39,14 @@
 <script>
     import * as Icons from '@fortawesome/free-solid-svg-icons';
     import { gmapApi } from 'vue2-google-maps';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
 
     export default {
-        expose: ['fetchPoisToMap'],
+        expose: ['fetchPois'],
         props: {
-            model: {
-                type: Array,
-                default: () => [],
-            },
+            model: { type: Array, default: () => [] },
             center: {
                 type: Object,
                 default: () => ({
@@ -55,22 +54,10 @@
                     lng: 45,
                 }),
             },
-            tag: {
-                type: String,
-                default: null,
-            },
-            location: {
-                type: String,
-                default: null,
-            },
-            categories: {
-                type: Array,
-                default: () => [],
-            },
-            zoom: {
-                type: Number,
-                default: 12,
-            },
+            tag: { type: String, default: null },
+            location: { type: String, default: null },
+            categories: { type: Array, default: () => [] },
+            zoom: { type: Number, default: 12 },
         },
         emits: ['update'],
         data() {
@@ -91,45 +78,44 @@
                         b: 'px',
                     },
                 },
-                mappois: [],
-                loading: false,
             };
         },
         computed: {
+            ...mapGetters({
+                poiLoading: 'poi/loading',
+                pois: 'poi/items',
+                poisExist: 'poi/itemsExist',
+            }),
             google: gmapApi,
             types() {
                 return TYPES;
             },
         },
-        created() {
-        },
-        mounted() {
-        },
         methods: {
-            async fetchPoisToMap(categories = null) {
-                if (!this.loading) {
-                    this.loading = true;
-                    const bounds = this.$refs.map.$mapObject.getBounds();
-                    if (bounds) {
-                        const { data } = await this.$axios.$get(
-                            '/poi',
-                            {
-                                params: {
-                                    tag: this.tag,
-                                    location: this.location,
-                                    ...bounds.toJSON(),
-                                    categories: categories ?? this.categories,
-                                },
-                            },
-                        );
-                        this.mappois = data;
-                        this.$emit('update', this.mappois);
-                    }
-                    this.loading = false;
+            ...mapActions({
+                getPoi: 'poi/get',
+                setParams: 'poi/setParams',
+            }),
+            idle() {
+                if (!this.poisExist) {
+                    this.fetchPois();
+                }
+            },
+            fetchPois(categories = null) {
+                const bounds = this.$refs.map.$mapObject.getBounds();
+                if (bounds) {
+                    this.setParams({
+                        tag: this.tag,
+                        location: this.location,
+                        ...bounds.toJSON(),
+                        categories: categories ?? this.categories,
+                    });
+                    this.getPoi();
+                    this.$emit('update', this.pois);
                 }
             },
             zoomChanged() {
-                this.fetchPoisToMap();
+                this.fetchPois();
             },
             getTypeByName(name) {
                 // eslint-disable-next-line consistent-return

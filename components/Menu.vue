@@ -96,11 +96,11 @@
             };
         },
         fetch() {
-            if (!this.tagsExist) {
-                this.getTags();
-            }
             if (!this.countriesExist) {
                 this.getCountries();
+            }
+            if (!this.tagsExist) {
+                this.getTags();
             }
         },
         computed: {
