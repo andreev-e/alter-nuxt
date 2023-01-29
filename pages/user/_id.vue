@@ -5,7 +5,7 @@
             <div class="col-sm-12">
                 <h1>
                     {{ user.firstname }} {{ user.lastname }}
-                    <span>(опубликовано {{ user.publications }}, с нами с {{ user.regdate?.split(' ')[0] }})</span>
+                    <span>(опубликовано {{ user.publications }}, с нами с {{ user.regdate }})</span>
                 </h1>
                 <div
                     v-if="user.about"
