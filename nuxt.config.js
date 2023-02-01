@@ -94,6 +94,10 @@ export default {
 
     axios: {
         baseURL: process.env.API_URL,
+        proxy: true,
+    },
+    proxy: {
+        '/api': 'https://api.altertravel.ru/',
     },
 
     server: {
@@ -114,7 +118,7 @@ export default {
         strategies: {
             laravelSanctum: {
                 provider: 'laravel/sanctum',
-                url: process.env.API_URL || 'http://mylaravelapp.test',
+                url: 'https://localhost:3000/api',
             },
         },
     },

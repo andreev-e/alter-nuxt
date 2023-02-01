@@ -11,9 +11,9 @@
 
                 <form @submit.prevent="doLogin">
                     <div>
-                        <label>Username</label>
+                        <label>Email</label>
                         <input
-                            v-model="login.username"
+                            v-model="login.email"
                             type="text"
                         >
                     </div>
@@ -41,7 +41,7 @@
         data() {
             return {
                 login: {
-                    username: '',
+                    email: '',
                     password: '',
                 },
             };
