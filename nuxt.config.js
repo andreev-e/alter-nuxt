@@ -75,7 +75,7 @@ export default {
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/moment',
-        '@nuxtjs/auth',
+        '@nuxtjs/auth-next',
         '@nuxtjs/i18n',
         ['@nuxtjs/component-cache', {
             max: 10000,
@@ -112,19 +112,9 @@ export default {
             home: '/secure',
         },
         strategies: {
-            local: {
-                endpoints: {
-                    login: {
-                        url: '/user/login',
-                        method: 'post',
-                        propertyName: 'data.token',
-                    },
-                    logout: false,
-                    user: false,
-                },
-                tokenType: '',
-                tokenName: 'x-auth',
-                autoFetchUser: false,
+            laravelSanctum: {
+                provider: 'laravel/sanctum',
+                url: process.env.API_URL || 'http://mylaravelapp.test',
             },
         },
     },

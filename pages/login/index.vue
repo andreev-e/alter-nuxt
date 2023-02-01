@@ -6,6 +6,30 @@
                 <h1>
                     Вход
                 </h1>
+                {{ $auth.user }}
+                {{ $store.state.auth.user }}
+
+                <form @submit.prevent="doLogin">
+                    <div>
+                        <label>Username</label>
+                        <input
+                            v-model="login.username"
+                            type="text"
+                        >
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input
+                            v-model="login.password"
+                            type="text"
+                        >
+                    </div>
+                    <div>
+                        <button type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <Footer />
@@ -16,7 +40,23 @@
     export default {
         data() {
             return {
+                login: {
+                    username: '',
+                    password: '',
+                },
             };
+        },
+        mounted() {
+        },
+        methods: {
+            async doLogin() {
+                try {
+                    const response = await this.$auth.loginWith('laravelSanctum', { data: this.login });
+                    console.log(response);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
         },
     };
 </script>
