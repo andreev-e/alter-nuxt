@@ -170,14 +170,16 @@
                     Примечание
                 </h2>
                 <p>{{ poi.addon }}</p>
-                <a
-                    class="button btn"
-                    href="/izbrannoe/"
-                >Построить маршрут с данной точкой</a>
+                <nuxt-link
+                    to="/izbannoye"
+                    class="poi__card"
+                >
+                    Построить маршрут с данной точкой
+                </nuxt-link>
                 <a
                     id="geo"
                     class="button btn"
-                    :href="`http://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
+                    :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
                 >Навигация на точку</a>
             </div>
         </div>
@@ -242,7 +244,3 @@
         },
     };
 </script>
-
-<style>
-
-</style>
