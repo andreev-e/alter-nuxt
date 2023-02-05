@@ -83,9 +83,9 @@
         },
         computed: {
             ...mapGetters({
-                poiLoading: 'poi/loading',
-                pois: 'poi/items',
-                poisExist: 'poi/itemsExist',
+                poiLoading: 'pois/loading',
+                pois: 'pois/items',
+                poisExist: 'pois/itemsExist',
             }),
             google: gmapApi,
             types() {
@@ -105,9 +105,9 @@
         },
         methods: {
             ...mapActions({
-                getPoi: 'poi/get',
-                setParams: 'poi/setParams',
-                clear: 'poi/clear',
+                getPoi: 'pois/get',
+                setParams: 'pois/setParams',
+                clear: 'pois/clear',
             }),
             idle() {
                 if (!this.poisExist) {

@@ -116,20 +116,27 @@
                             title="Ближе всего"
                             active
                         >
-                            <p>Контент</p>
+                            <Gallery
+                                :objects="poi.nearest"
+                            />
                         </b-tab>
                         <b-tab
                             v-for="tag in poi.tags"
-                            :key="tag.ID"
-                            :title="tag.NAME_ROD + '(' + tag.COUNT + ')'"
+                            :key="`tag_` + tag.id"
+                            :title="tag.NAME_ROD ?? tag.name + '(' + tag.COUNT + ')'"
                         >
-                            <p>Контент</p>
+                            <Gallery
+                                :objects="poi.nearest"
+                            />
                         </b-tab>
-                        <b-tab title="«Техноген»">
-                            <p>Контент</p>
-                        </b-tab>
-                        <b-tab title="Ночлег">
-                            <p>Контент</p>
+                        <b-tab
+                            v-for="type in types"
+                            :key="`tag_` + type.name"
+                            :title="type.name"
+                        >
+                            <Gallery
+                                :objects="poi.nearest"
+                            />
                         </b-tab>
                     </b-tabs>
                 </div>
@@ -183,15 +190,19 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
+    import { TYPES } from '../../constants';
+
     export default {
         data() {
             return {
-                poi: {},
                 center: null,
             };
         },
         async fetch() {
-            await this.fetchPoi();
+            await this.setId(this.$route.params.id);
+            await this.get();
         },
         head() {
             return {
@@ -205,25 +216,28 @@
             };
         },
         computed: {
+            ...mapGetters({
+                poi: 'poi/model',
+            }),
+            types() {
+                return TYPES;
+            },
             breadCrumbs() {
                 const breadCrumbs = [...this.poi.locations ?? []];
                 if (this.poi && this.poi.locations) {
-                    breadCrumbs.push({ name: this.poi.type, url: `${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}` });
+                    breadCrumbs.push({
+                        name: this.poi.type,
+                        url: `${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}`,
+                    });
                 }
                 return breadCrumbs;
             },
         },
         methods: {
-            async fetchPoi() {
-                const result = await this.$axios.$get(
-                    `/poi/${this.$route.params.id}`,
-                );
-                this.poi = result.data;
-                this.center = {
-                    lat: this.poi.lat,
-                    lng: this.poi.lng,
-                };
-            },
+            ...mapActions({
+                get: 'poi/get',
+                setId: 'poi/setId',
+            }),
         },
     };
 </script>

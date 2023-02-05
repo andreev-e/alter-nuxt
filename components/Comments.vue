@@ -93,7 +93,7 @@
             async fetchComments() {
                 this.loading = true;
                 const result = await this.$axios.$get(
-                    '/comment',
+                    '/api/comment',
                     {
                         params: {
                             id: this.id,

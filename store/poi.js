@@ -1,6 +1,6 @@
-import ItemsListModule from './base/ItemsListModule';
+import ModelModule from './base/ModelModule';
 
-class Poi extends ItemsListModule {
+class Poi extends ModelModule {
     constructor() {
         super('/poi');
     }
