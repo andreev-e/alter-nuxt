@@ -18,7 +18,6 @@
             ref="mapComponent"
             v-model="mapPois"
             :center="center"
-            @update="updatePois"
         />
         <Gallery
             :objects="mapPois.length ? mapPois : pois.slice(0,4)"
@@ -90,12 +89,3 @@
         },
     };
 </script>
-
-<style>
-
-  h1.view {
-    background: url('/i/star_grey.png') no-repeat left top;
-    padding-left: 35px;
-    cursor: pointer;
-  }
-</style>

@@ -22,8 +22,8 @@
                                 <div id="bigimage">
                                     <img
                                         :src="'https://altertravel.ru/full.php?f=/images/' + $route.params.id + '.jpg'"
-                                        :title="poi.name"
                                         class="img-fluid"
+                                        :alt="poi.name"
                                     >
                                 </div>
                                 <div id="thumbs">
@@ -178,12 +178,11 @@
                 <a
                     class="button btn"
                     href="/izbrannoe/"
-                    onclick="izbrannoe(1331)"
                 >Построить маршрут с данной точкой</a>
                 <a
                     id="geo"
                     class="button btn"
-                    href="google.navigation:q=55.673737,37.700745"
+                    :href="`http://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
                 >Навигация на точку</a>
             </div>
         </div>
@@ -315,7 +314,6 @@
 
   .gal-img {
     position: relative;
-    margin-bottom: 12px;
     text-align: center;
     max-width: 150px;
     display: inline-block;
