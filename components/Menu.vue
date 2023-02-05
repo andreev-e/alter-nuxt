@@ -135,7 +135,7 @@
   .header-menu li:hover {
     background-color: rgba(255, 255, 255, .90);
     border: 0 solid;
-    box-shadow: inset -2 0 1px rgb(255, 255, 255);
+    box-shadow: inset 0 1px rgb(255, 255, 255);
   }
 
   .header-menu ul li {

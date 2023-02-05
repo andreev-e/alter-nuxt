@@ -143,12 +143,12 @@
         },
         methods: {
             async fetchTagBackend() {
-                const result = await this.$axios.$get(`/tag/${this.id}`);
+                const result = await this.$axios.$get(`/api/tag/${this.id}`);
                 this.tag = result.data;
                 this.loadingRegion = false;
             },
             async fetchTag() {
-                const result = await this.$axios.$get(`/tag/${this.id}`);
+                const result = await this.$axios.$get(`/api/tag/${this.id}`);
                 this.tag = result.data;
             },
             async fetchPois() {
@@ -157,7 +157,7 @@
                     data,
                     meta,
                 } = await this.$axios.$get(
-                    '/poi',
+                    '/api/poi',
                     {
                         params: {
                             location: this.id,

@@ -19,9 +19,14 @@
             </div>
         </div>
         <Map
+            ref="mapComponent"
+            v-model="mapPois"
             :user="$route.params.id"
             :zoom="5"
             :center="mapCenter"
+        />
+        <Gallery
+            :objects="mapPois"
         />
         <Footer />
     </div>
@@ -35,6 +40,7 @@
         data() {
             return {
                 location: {},
+                mapPois: [],
             };
         },
         async fetch() {

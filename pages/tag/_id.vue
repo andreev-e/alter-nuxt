@@ -90,18 +90,18 @@
         },
         methods: {
             async fetchTagBackend() {
-                const result = await this.$axios.$get(`/tag/${this.id}`);
+                const result = await this.$axios.$get(`/api/tag/${this.id}`);
                 this.tag = result.data;
                 this.loadingTag = false;
             },
             async fetchTag() {
-                const result = await this.$axios.$get(`/tag/${this.id}`);
+                const result = await this.$axios.$get(`/api/tag/${this.id}`);
                 this.tag = result.data;
             },
             async fetchPois() {
                 this.loadingPois = true;
                 const { data, meta } = await this.$axios.$get(
-                    '/poi',
+                    '/api/poi',
                     { params: { tag: this.id, page: this.page, perPage: this.perPage } },
                 );
                 this.pois = data;

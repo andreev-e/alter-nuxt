@@ -91,9 +91,7 @@
                             <iframe
                                 width="700"
                                 height="400"
-                                :src="'https://www.youtube.com/embed/' + poi.ytb"
-                                frameborder="0"
-                                allowfullscreen=""
+                                :src="`https://www.youtube.com/embed/${poi.ytb}`"
                             />
                         </b-tab>
                     </b-tabs>
@@ -128,7 +126,7 @@
                         </b-tab>
                         <b-tab
                             v-for="tag in poi.tags"
-                            :key="`tag_` + tag.id"
+                            :key="`tag_${tag.id}`"
                             :title="tag.name_rod ?? tag.name + '(' + tag.count + ')'"
                         >
                             <Gallery
@@ -249,7 +247,7 @@
 </script>
 
 <style scoped>
-  .near, .comments_tabz {
+  .near {
     background: #7495AA;
     padding: 5px;
     border-radius: 3px;
