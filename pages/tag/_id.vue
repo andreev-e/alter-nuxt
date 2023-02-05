@@ -55,7 +55,7 @@
         async fetch() {
             this.id = this.$route.params.id;
             await this.fetchPois();
-            await this.fetchTagBackend();
+            await this.fetchTag();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
@@ -89,11 +89,6 @@
             }
         },
         methods: {
-            async fetchTagBackend() {
-                const result = await this.$axios.$get(`/api/tag/${this.id}`);
-                this.tag = result.data;
-                this.loadingTag = false;
-            },
             async fetchTag() {
                 const result = await this.$axios.$get(`/api/tag/${this.id}`);
                 this.tag = result.data;

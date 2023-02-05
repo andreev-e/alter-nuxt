@@ -10,10 +10,7 @@
             </div>
         </div>
         <Fastnav />
-        <div
-
-            class="row inner"
-        >
+        <div class="row inner">
             <div class="col-sm-8 object-full">
                 <div class="near">
                     <b-tabs>
@@ -33,11 +30,10 @@
                                         class="gal-img"
                                     >
                                         <a
-                                            :href="'https://altertravel.ru/full.php?f=/images/' + $route.params.id + '/' + i + '.jpg'"
-                                            class="lightbox cboxElement"
+                                            :href="`https://altertravel.ru/full.php?f=/images/${$route.params.id}/${i}.jpg`"
                                         >
                                             <img
-                                                :src="'https://altertravel.ru/thumb.php?f=/images/' + $route.params.id + '/' + i + '.jpg'"
+                                                :src="`https://altertravel.ru/thumb.php?f=/images/${$route.params.id}/${i}.jpg`"
                                                 :alt="poi.name"
                                                 class="img-fluid"
                                             >
@@ -45,6 +41,7 @@
                                     </div>
                                 </div>
                                 <p>
+                                    {{ poi.author }}
                                     <a href="https://altertravel.ru/show_user.php?name=olegoo">автор</a> © Все права на опубликованные
                                     фотографии и видео принадлежат их авторам
                                 </p>
@@ -292,7 +289,7 @@
 
   ul.pages > li {
     background: #eee;
-    box-shadow: 2px 2px 5px 0px rgb(50 50 50 / 50%);
+    box-shadow: 2px 2px 5px 0 rgb(50 50 50 / 50%);
   }
 
   .view_image #bigimage {
