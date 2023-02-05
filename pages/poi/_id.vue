@@ -62,7 +62,7 @@
                                 </gmap-map>
                             </client-only>
                             <h2 id="coord">
-                                Кординаты
+                                Координаты
                             </h2>
                             <div class="coords plusplus_sl">
                                 <div class="qr">
@@ -242,77 +242,3 @@
         },
     };
 </script>
-
-<style scoped>
-  .near {
-    background: #7495AA;
-    padding: 5px;
-    border-radius: 3px;
-    margin-bottom: 5px;
-    overflow: hidden;
-  }
-
-  ul.tabs li.taba.active a, ul.tabs li.taba1.active a, ul.tabs li.taba.active, ul.tabs li.taba1.active, ul.tabs li.taba_c.active a, ul.tabs li.taba_c.active {
-    color: #7495AA;
-  }
-
-  ul.tabs li.active {
-    background: #eee;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-  }
-
-  ul.tabs li.taba a, ul.tabs li.taba1 a, ul.tabs li.taba, ul.tabs li.taba1, ul.tabs li.taba_c a, ul.tabs li.taba_c {
-    color: #FFF;
-    line-height: 35px;
-    height: 42px;
-    display: inline-block;
-  }
-
-  ul.tabs img {
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 4px;
-  }
-
-  ul.pages {
-    background: #FFF;
-  }
-
-  li.vkladka, li.vkladka_c, li.vkladka1 {
-    display: none;
-  }
-
-  li.vkladka.active, li.vkladka1.active, li.vkladka_c.active {
-    display: block;
-  }
-
-  ul.pages > li {
-    background: #eee;
-    box-shadow: 2px 2px 5px 0 rgb(50 50 50 / 50%);
-  }
-
-  .view_image #bigimage {
-    width: 80%;
-    float: left;
-  }
-
-  .view_image #bigimage img {
-    width: 90%;
-    margin: auto;
-  }
-
-  #vkladka_photo #thumbs {
-    float: left;
-    width: 20%;
-  }
-
-  .gal-img {
-    position: relative;
-    text-align: center;
-    max-width: 150px;
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-</style>

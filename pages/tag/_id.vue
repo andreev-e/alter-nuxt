@@ -3,7 +3,6 @@
         <Header />
         <Breadcrumbs
             :list="[{ name: tag.name, url: '' }]"
-            :loading="loadingTag"
         />
         <div class="row">
             <div class="col-sm-12">
@@ -23,10 +22,10 @@
         <div class="row">
             <div class="col-12">
                 <b-pagination
-                    v-if="pages > 1"
+                    v-if="meta.last_page > 1"
                     v-model="page"
-                    :total-rows="pages"
-                    :per-page="perPage"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
                     aria-controls="my-table"
                 />
             </div>
@@ -36,26 +35,21 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
         data() {
             return {
-                tag: {
-                    name: '',
-                    children: [],
-                },
                 loadingTag: true,
-                pois: [],
-                loadingPois: true,
                 center: {},
                 page: 1,
-                pages: null,
-                perPage: 12,
             };
         },
         async fetch() {
-            this.id = this.$route.params.id;
             await this.fetchPois();
-            await this.fetchTag();
+            await this.setId(this.$route.params.id);
+            await this.getTag();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
@@ -65,6 +59,14 @@
                     content: 'Каталог достопримечательностей на карте . Для самостоятельной организации путешествия!',
                 },
             ],
+        },
+        computed: {
+            ...mapGetters({
+                loadingPois: 'poisPaginated/loading',
+                pois: 'poisPaginated/items',
+                meta: 'poisPaginated/meta',
+                tag: 'tag/model',
+            }),
         },
         watch: {
             page: {
@@ -89,19 +91,15 @@
             }
         },
         methods: {
-            async fetchTag() {
-                const result = await this.$axios.$get(`/api/tag/${this.id}`);
-                this.tag = result.data;
-            },
+            ...mapActions({
+                getPoi: 'poisPaginated/get',
+                setParams: 'poisPaginated/setParams',
+                setId: 'tag/setId',
+                getTag: 'tag/get',
+            }),
             async fetchPois() {
-                this.loadingPois = true;
-                const { data, meta } = await this.$axios.$get(
-                    '/api/poi',
-                    { params: { tag: this.id, page: this.page, perPage: this.perPage } },
-                );
-                this.pois = data;
-                this.pages = meta.last_page;
-                this.loadingPois = false;
+                this.setParams({ tag: this.$route.params.id, page: this.page });
+                this.getPoi();
             },
         },
     };

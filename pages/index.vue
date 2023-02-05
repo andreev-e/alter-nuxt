@@ -79,7 +79,6 @@
             ...mapActions({
                 getPoi: 'pois/get',
                 setParams: 'pois/setParams',
-                clear: 'pois/clear',
             }),
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {

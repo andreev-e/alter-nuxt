@@ -4,12 +4,10 @@
         <template v-if="tag">
             <Breadcrumbs
                 :list="crumbs"
-                :loading="loadingRegion"
             />
             <div class="row">
                 <div class="col-sm-12">
                     <h1>
-                        <b-spinner v-if="loadingRegion" />
                         <country-flag
                             v-if="tag.code"
                             class="d-inline-block mr-1"
@@ -21,7 +19,7 @@
                 </div>
             </div>
             <TwoPanels
-                v-if="tag.children.length"
+                v-if="tag.children?.length"
                 :left="tag.children"
                 :right="[]"
             />
@@ -34,7 +32,7 @@
             <Map
                 ref="mapComponent"
                 :center="center"
-                :location="id"
+                :location="$route.params.id"
                 :categories="categories"
                 :zoom="tag.zoom"
             />
@@ -45,10 +43,10 @@
             <div class="row">
                 <div class="col-12">
                     <b-pagination
-                        v-if="pages > 1"
+                        v-if="meta.last_page > 1"
                         v-model="page"
-                        :total-rows="pages"
-                        :per-page="perPage"
+                        :total-rows="meta.total"
+                        :per-page="meta.per_page"
                         aria-controls="my-table"
                     />
                 </div>
@@ -59,28 +57,22 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
         name: 'Index',
         data() {
             return {
-                id: null,
-                pois: [],
                 type: null,
-                tag: {
-                    name: '',
-                    children: [],
-                },
                 page: 1,
                 pages: null,
-                perPage: 12,
-                loadingPois: true,
-                loadingRegion: true,
             };
         },
         async fetch() {
-            this.id = this.$route.params.id;
+            await this.setId(this.$route.params.id);
+            await this.getTag();
             this.type = this.$route.params.type;
-            await this.fetchTagBackend();
             await this.fetchPois();
         },
         head: {
@@ -93,6 +85,13 @@
             ],
         },
         computed: {
+            ...mapGetters({
+                loadingPois: 'poisPaginated/loading',
+                pois: 'poisPaginated/items',
+                meta: 'poisPaginated/meta',
+                tag: 'tag/model',
+            }),
+
             h1() {
                 if (this.type) {
                     if (this.tag.NAME_ROD_ED) {
@@ -142,34 +141,19 @@
             },
         },
         methods: {
-            async fetchTagBackend() {
-                const result = await this.$axios.$get(`/api/tag/${this.id}`);
-                this.tag = result.data;
-                this.loadingRegion = false;
-            },
-            async fetchTag() {
-                const result = await this.$axios.$get(`/api/tag/${this.id}`);
-                this.tag = result.data;
-            },
+            ...mapActions({
+                getPoi: 'poisPaginated/get',
+                setParams: 'poisPaginated/setParams',
+                setId: 'tag/setId',
+                getTag: 'tag/get',
+            }),
             async fetchPois() {
-                this.loadingPois = true;
-                const {
-                    data,
-                    meta,
-                } = await this.$axios.$get(
-                    '/api/poi',
-                    {
-                        params: {
-                            location: this.id,
-                            categories: this.categories,
-                            page: this.page,
-                            perPage: this.perPage,
-                        },
-                    },
-                );
-                this.pois = data;
-                this.pages = meta.last_page;
-                this.loadingPois = false;
+                this.setParams({
+                    location: this.$route.params.id,
+                    categories: this.categories,
+                    page: this.page,
+                });
+                this.getPoi();
             },
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {
