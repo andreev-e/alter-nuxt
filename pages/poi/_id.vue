@@ -10,7 +10,10 @@
             </div>
         </div>
         <Fastnav />
-        <div class="row inner">
+        <div
+
+            class="row inner"
+        >
             <div class="col-sm-8 object-full">
                 <div class="near">
                     <b-tabs>
@@ -105,7 +108,10 @@
                 </p>
             </div>
         </div>
-        <div class="row">
+        <div
+            v-if="loaded"
+            class="row"
+        >
             <div class="col-sm-12">
                 <h2 id="near">
                     Что еще есть рядом с эти местом
@@ -123,7 +129,7 @@
                         <b-tab
                             v-for="tag in poi.tags"
                             :key="`tag_` + tag.id"
-                            :title="tag.NAME_ROD ?? tag.name + '(' + tag.COUNT + ')'"
+                            :title="tag.name_rod ?? tag.name + '(' + tag.count + ')'"
                         >
                             <Gallery
                                 :objects="poi.nearest"
@@ -218,6 +224,7 @@
         computed: {
             ...mapGetters({
                 poi: 'poi/model',
+                loaded: 'poi/isEmpty',
             }),
             types() {
                 return TYPES;

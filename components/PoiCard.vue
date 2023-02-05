@@ -70,6 +70,6 @@
     box-shadow: 0 4px 4px -4px rgb(0 0 0);
     overflow: hidden;
     line-height: 22px;
-    border: 1px solid #000;
+    border: 1px solid #888;
   }
 </style>
