@@ -22,7 +22,6 @@
         />
         <Gallery
             :objects="mapPois.length ? mapPois : pois.slice(0,4)"
-            :loading="loadingPois"
         />
         <Comments
             link-objects
@@ -32,20 +31,20 @@
     </div>
 </template>
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
 
     export default {
         data() {
             return {
-                pois: [],
                 mapPois: [],
-                loadingPois: true,
                 center: {},
                 categories: [...TYPES],
             };
         },
         async fetch() {
-            await this.fetchPois();
+            await this.getPoi();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
@@ -56,8 +55,11 @@
                 },
             ],
         },
-        watch: {
-
+        computed: {
+            ...mapGetters({
+                loadingPois: 'pois/loading',
+                pois: 'pois/items',
+            }),
         },
         mounted() {
             if (navigator.geolocation) {
@@ -73,18 +75,13 @@
                     },
                 );
             }
-            this.fetchPois();
         },
         methods: {
-            async fetchPois() {
-                this.loadingPois = true;
-                const { data } = await this.$axios.$get('/poi');
-                this.pois = data;
-                this.loadingPois = false;
-            },
-            updatePois(val) {
-                this.mapPois = val.slice(0, 4);
-            },
+            ...mapActions({
+                getPoi: 'pois/get',
+                setParams: 'pois/setParams',
+                clear: 'pois/clear',
+            }),
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {
                     this.$refs.mapComponent.fetchPois(val);
