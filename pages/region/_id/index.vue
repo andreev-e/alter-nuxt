@@ -148,12 +148,12 @@
                 getTag: 'tag/get',
             }),
             async fetchPois() {
-                this.setParams({
+                await this.setParams({
                     location: this.$route.params.id,
                     categories: this.categories,
                     page: this.page,
                 });
-                this.getPoi();
+                await this.getPoi();
             },
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {

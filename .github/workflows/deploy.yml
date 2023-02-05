@@ -17,7 +17,6 @@ jobs:
           script: cd /var/www/altertravel.ru/data/www/new.altertravel.ru
             && git reset --hard HEAD
             && git pull alter_nuxt master
-            && rm -rf node_modules/
             && npm install --production
             && npm run build
             && pm2 restart all
