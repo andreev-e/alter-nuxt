@@ -124,7 +124,7 @@
                         <b-tab
                             v-for="tag in poi.tags"
                             :key="`tag_${tag.id}`"
-                            :title="tag.name_rod ?? tag.name + '(' + tag.count + ')'"
+                            :title="tag.name_rod ?? tag.name"
                         >
                             <Gallery
                                 :objects="poi.nearest"
