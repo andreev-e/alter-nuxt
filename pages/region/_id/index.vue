@@ -66,7 +66,6 @@
             return {
                 type: null,
                 page: 1,
-                pages: null,
             };
         },
         async fetch() {
@@ -134,10 +133,8 @@
             },
         },
         watch: {
-            page: {
-                handler() {
-                    this.fetchPois();
-                },
+            page() {
+                this.fetchPois();
             },
         },
         methods: {

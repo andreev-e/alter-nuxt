@@ -20,6 +20,17 @@
                     :link-objects="linkObjects"
                 />
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <b-pagination
+                        v-if="meta.last_page > 1"
+                        v-model="page"
+                        :total-rows="meta.total"
+                        :per-page="meta.per_page"
+                        aria-controls="my-table"
+                    />
+                </div>
+            </div>
             <b-form v-if="id">
                 <b-form-group>
                     <b-form-textarea
@@ -43,6 +54,8 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapActions, mapGetters } from 'vuex';
     import Comment from './comments/Comment.vue';
 
     export default {
@@ -71,38 +84,42 @@
         },
         data() {
             return {
-                comments: [],
-                loading: true,
                 form: {
                     text: null,
                 },
+                page: 1,
             };
         },
         async fetch() {
-            await this.fetchComments();
+            this.loadComments();
         },
         computed: {
+            ...mapGetters({
+                loading: 'commentsPaginated/loading',
+                comments: 'commentsPaginated/items',
+                meta: 'commentsPaginated/meta',
+            }),
             filteredComments() {
                 return this.last ? [...this.comments].splice(0, this.last) : this.comments;
             },
         },
-        mounted() {
-            this.fetchComments();
+        watch: {
+            page() {
+                this.loadComments();
+            },
         },
         methods: {
-            async fetchComments() {
-                this.loading = true;
-                const result = await this.$axios.$get(
-                    '/api/comment',
-                    {
-                        params: {
-                            id: this.id,
-                            type: this.type,
-                        },
-                    },
-                );
-                this.comments = result.data;
-                this.loading = false;
+            ...mapActions({
+                getComments: 'commentsPaginated/get',
+                setParams: 'commentsPaginated/setParams',
+            }),
+            loadComments() {
+                this.setParams({
+                    id: this.id,
+                    type: this.type,
+                    page: this.page,
+                });
+                this.getComments();
             },
         },
     };

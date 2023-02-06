@@ -18,6 +18,12 @@
             <div class="img-title">
                 {{ poi.name }}
             </div>
+            <div
+                v-if="poi.dist"
+                class="above_img"
+            >
+                {{ distance }}
+            </div>
         </div>
     </nuxt-link>
 </template>
@@ -35,6 +41,18 @@
                 default: false,
             },
         },
+        computed: {
+            distance() {
+                const dist = Math.round(this.poi.dist);
+                if (dist > 5) {
+                    return `${dist} км`;
+                }
+                if (dist === 0) {
+                    return `${Math.round(this.poi.dist * 1000)}  м`;
+                }
+                return `${Math.round(dist, 1)} км`;
+            },
+        },
     };
 </script>
 
@@ -42,22 +60,22 @@
   .loading {
     opacity: 0.4;
   }
+
   .spinner {
-    width:100%;
+    width: 100%;
     height: 100%;
     display: flex;
     position: absolute;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255,255,255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
   }
+
   .poi__card {
     display: block;
     padding: 15px 0;
   }
-  .poi__content {
-    position: relative;
-  }
+
   .img-title {
     opacity: 0.9;
     background: #7495AA;
@@ -71,5 +89,18 @@
     overflow: hidden;
     line-height: 22px;
     border: 1px solid #888;
+  }
+
+  .above_img {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    margin-top: 50%;
+    margin-left: -15px;
+    text-align: center;
+    font-size: 2em;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: #000 2px 3px 5px;
   }
 </style>

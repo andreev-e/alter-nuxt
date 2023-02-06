@@ -112,34 +112,9 @@
                     Что еще есть рядом с эти местом
                 </h2>
                 <div class="near">
-                    <b-tabs content-class="mt-3">
-                        <b-tab
-                            title="Ближе всего"
-                            active
-                        >
-                            <Gallery
-                                :objects="poi.nearest"
-                            />
-                        </b-tab>
-                        <b-tab
-                            v-for="tag in poi.tags"
-                            :key="`tag_${tag.id}`"
-                            :title="tag.name_rod ?? tag.name"
-                        >
-                            <Gallery
-                                :objects="poi.nearest"
-                            />
-                        </b-tab>
-                        <b-tab
-                            v-for="type in types"
-                            :key="`tag_` + type.name"
-                            :title="type.name"
-                        >
-                            <Gallery
-                                :objects="poi.nearest"
-                            />
-                        </b-tab>
-                    </b-tabs>
+                    <Gallery
+                        :objects="poi.nearest"
+                    />
                 </div>
             </div>
         </div>

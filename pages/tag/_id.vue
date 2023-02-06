@@ -69,10 +69,8 @@
             }),
         },
         watch: {
-            page: {
-                handler() {
-                    this.fetchPois();
-                },
+            page() {
+                this.fetchPois();
             },
         },
         mounted() {
