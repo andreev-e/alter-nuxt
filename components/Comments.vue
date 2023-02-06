@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12">
                     <b-pagination
-                        v-if="meta.last_page > 1"
+                        v-if="meta.last_page > 1 && !last"
                         v-model="page"
                         :total-rows="meta.total"
                         :per-page="meta.per_page"
@@ -90,7 +90,7 @@
                 page: 1,
             };
         },
-        async fetch() {
+        fetch() {
             this.loadComments();
         },
         computed: {
@@ -110,10 +110,12 @@
         },
         methods: {
             ...mapActions({
+                clear: 'commentsPaginated/clear',
                 getComments: 'commentsPaginated/get',
                 setParams: 'commentsPaginated/setParams',
             }),
             loadComments() {
+                this.clear();
                 this.setParams({
                     id: this.id,
                     type: this.type,
