@@ -68,11 +68,8 @@
                 page: 1,
             };
         },
-        async fetch() {
-            await this.setId(this.$route.params.id);
-            await this.getTag();
-            this.type = this.$route.params.type;
-            await this.fetchPois();
+        fetch() {
+            this.load();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
@@ -140,17 +137,23 @@
         methods: {
             ...mapActions({
                 getPoi: 'poisPaginated/get',
-                setParams: 'poisPaginated/setParams',
+                setPoiParams: 'poisPaginated/setParams',
                 setId: 'tag/setId',
                 getTag: 'tag/get',
             }),
-            async fetchPois() {
-                await this.setParams({
+            load() {
+                this.setId(this.$route.params.id);
+                this.getTag();
+                this.type = this.$route.params.type;
+                this.fetchPois();
+            },
+            fetchPois() {
+                this.setPoiParams({
                     location: this.$route.params.id,
                     categories: this.categories,
                     page: this.page,
                 });
-                await this.getPoi();
+                this.getPoi();
             },
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {

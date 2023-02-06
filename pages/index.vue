@@ -42,8 +42,8 @@
                 categories: [...TYPES],
             };
         },
-        async fetch() {
-            await this.getPoi();
+        fetch() {
+            this.getPoi();
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',
