@@ -119,6 +119,7 @@ export default {
             laravelSanctum: {
                 provider: 'laravel/sanctum',
                 url: 'https://localhost:3000/api',
+                // url: 'http://127.0.0.1:8000/api',
             },
         },
     },
