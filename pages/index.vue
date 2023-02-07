@@ -14,7 +14,7 @@
                 @update="filterChanged"
             />
         </div>
-        <Map
+        <universal-map
             ref="mapComponent"
             v-model="mapPois"
             :center="center"

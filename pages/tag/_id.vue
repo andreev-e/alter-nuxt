@@ -11,7 +11,7 @@
                 </h1>
             </div>
         </div>
-        <Map
+        <universal-map
             :center="center"
             :tag="$route.params.id"
         />

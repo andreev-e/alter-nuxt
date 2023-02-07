@@ -18,7 +18,7 @@
                 </p>
             </div>
         </div>
-        <Map
+        <universal-map
             ref="mapComponent"
             v-model="mapPois"
             :user="$route.params.id"

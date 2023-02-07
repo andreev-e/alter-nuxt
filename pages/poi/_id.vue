@@ -50,17 +50,11 @@
                         </b-tab>
                         <b-tab title="Где находится?">
                             <client-only>
-                                <gmap-map
-                                    v-if="center"
-                                    :center="center"
+                                <universal-map
+                                    :center="{ lat: poi.lat, lng: poi.lng }"
                                     :zoom="7"
-                                    map-type-id="terrain"
-                                >
-                                    <gmap-marker
-                                        :position="center"
-                                        :clickable="true"
-                                    />
-                                </gmap-map>
+                                    this-is-poi
+                                />
                             </client-only>
                             <h2 id="coord">
                                 Координаты
@@ -175,11 +169,6 @@
 
     export default {
         components: { Comments },
-        data() {
-            return {
-                center: null,
-            };
-        },
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();

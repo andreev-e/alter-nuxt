@@ -10,7 +10,7 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="zoom"
+                :zoom="mapZoom"
                 map-type-id="terrain"
                 @dragend="fetchPois"
                 @zoom_changed="zoomChanged"
@@ -21,6 +21,10 @@
                     :position="mylocation"
                     :clickable="true"
                     :icon="mylocationMarker"
+                />
+                <gmap-marker
+                    v-if="thisIsPoi"
+                    :position="center"
                 />
                 <gmap-marker
                     v-for="poi in mapPois"
@@ -59,11 +63,13 @@
             user: { type: String, default: null },
             categories: { type: Array, default: () => [] },
             zoom: { type: Number, default: 12 },
+            thisIsPoi: { type: Boolean, default: false },
         },
         emits: ['update'],
         data() {
             return {
                 mylocation: false,
+                autoZoom: 12,
                 mylocationMarker: {
                     url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
                     size: {
@@ -94,10 +100,16 @@
             mapPois() {
                 return this.pois;
             },
+            mapZoom() {
+                return Math.min(this.zoom, this.autoZoom);
+            },
         },
         watch: {
-            pois() {
+            pois(val) {
                 this.$emit('update', [...this.pois]);
+                if (val.length === 0) {
+                    this.autoZoom -= 3;
+                }
             },
         },
         mounted() {
@@ -115,16 +127,18 @@
                 }
             },
             fetchPois(categories = null) {
-                const bounds = this.$refs.map.$mapObject.getBounds();
-                if (bounds) {
-                    this.setParams({
-                        tag: this.tag,
-                        location: this.location,
-                        ...bounds.toJSON(),
-                        categories: categories ?? this.categories,
-                        user: this.user,
-                    });
-                    this.getPoi();
+                if (!this.thisIsPoi) {
+                    const bounds = this.$refs.map.$mapObject.getBounds();
+                    if (bounds) {
+                        this.setParams({
+                            tag: this.tag,
+                            location: this.location,
+                            ...bounds.toJSON(),
+                            categories: categories ?? this.categories,
+                            user: this.user,
+                        });
+                        this.getPoi();
+                    }
                 }
             },
             zoomChanged() {

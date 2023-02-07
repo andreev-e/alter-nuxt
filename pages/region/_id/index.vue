@@ -29,7 +29,7 @@
                     @update="filterChanged"
                 />
             </div>
-            <Map
+            <universal-map
                 ref="mapComponent"
                 :center="center"
                 :location="$route.params.id"
