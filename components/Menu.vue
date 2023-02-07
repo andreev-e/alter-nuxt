@@ -1,91 +1,89 @@
 <!-- Please remove this file from your project -->
 <template>
-    <div class="header-menu col-sm-9">
-        <ul>
-            <li class="region_select">
-                <a href="#">
-                    Регион
-                    <b-spinner
-                        v-if="countriesLoading"
-                        small
-                    />
-                    <span v-else>выбрать</span>
-                </a>
-                <ul>
-                    <li
-                        v-for="region in menuCountries"
-                        :key="region.id"
-                    >
-                        <nuxt-link :to="region.url">
-                            <country-flag
-                                v-if="region.code"
-                                :country="region.code"
-                                size="small"
-                                class="d-inline-block"
-                            />
-                            {{ region.name }}
-                        </nuxt-link>
-                    </li>
-                </ul>
-            </li>
-            <li class="region_select">
-                <a href="#">
-                    Метки
-                    <b-spinner
-                        v-if="tagsLoading"
-                        small
-                    />
-                    <span v-else>выбрать</span>
-                </a>
-                <ul>
-                    <li
-                        v-for="tag in menuTags"
-                        :key="tag.id"
-                    >
-                        <nuxt-link :to="tag.url">
-                            {{ tag.name }} ({{ tag.count }})
-                        </nuxt-link>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <nuxt-link to="/user">
-                    Авторы
-                    <span>путеводителя</span>
-                </nuxt-link>
-            </li>
-            <li>
-                <nuxt-link to="/route">
-                    Маршруты
-                    <span>готовые треки</span>
-                </nuxt-link>
-            </li>
-            <!--            <li>-->
-            <!--                <a href="/catalog/">-->
-            <!--                    Популярные-->
-            <!--                    <span>в августе</span>-->
-            <!--                </a>-->
-            <!--            </li>-->
-            <!--      <li>-->
-            <!--        <a href="/catalog/?order=order">-->
-            <!--          Новые-->
-            <!--          <span>места</span>-->
-            <!--        </a>-->
-            <!--      </li>-->
-            <!--      <li>-->
-            <!--        <a href="/catalog/?order=order">-->
-            <!--          Маршруты-->
-            <!--          <span>Готовые треки</span>-->
-            <!--        </a>-->
-            <!--      </li>-->
-            <!--      <li>-->
-            <!--        <a href="/catalog/?order=order">-->
-            <!--          Планирование-->
-            <!--          <span>строим маршрут с точками</span>-->
-            <!--        </a>-->
-            <!--      </li>-->
-        </ul>
-    </div>
+    <ul>
+        <li class="region_select">
+            <a href="#">
+                Регион
+                <b-spinner
+                    v-if="countriesLoading"
+                    small
+                />
+                <span v-else>выбрать</span>
+            </a>
+            <ul>
+                <li
+                    v-for="region in menuCountries"
+                    :key="region.id"
+                >
+                    <nuxt-link :to="region.url">
+                        <country-flag
+                            v-if="region.code"
+                            :country="region.code"
+                            size="small"
+                            class="d-inline-block"
+                        />
+                        {{ region.name }}
+                    </nuxt-link>
+                </li>
+            </ul>
+        </li>
+        <li class="region_select">
+            <a href="#">
+                Метки
+                <b-spinner
+                    v-if="tagsLoading"
+                    small
+                />
+                <span v-else>выбрать</span>
+            </a>
+            <ul>
+                <li
+                    v-for="tag in menuTags"
+                    :key="tag.id"
+                >
+                    <nuxt-link :to="tag.url">
+                        {{ tag.name }} ({{ tag.count }})
+                    </nuxt-link>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <nuxt-link to="/user">
+                Авторы
+                <span>путеводителя</span>
+            </nuxt-link>
+        </li>
+        <li>
+            <nuxt-link to="/route">
+                Маршруты
+                <span>готовые треки</span>
+            </nuxt-link>
+        </li>
+        <!--            <li>-->
+        <!--                <a href="/catalog/">-->
+        <!--                    Популярные-->
+        <!--                    <span>в августе</span>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--      <li>-->
+        <!--        <a href="/catalog/?order=order">-->
+        <!--          Новые-->
+        <!--          <span>места</span>-->
+        <!--        </a>-->
+        <!--      </li>-->
+        <!--      <li>-->
+        <!--        <a href="/catalog/?order=order">-->
+        <!--          Маршруты-->
+        <!--          <span>Готовые треки</span>-->
+        <!--        </a>-->
+        <!--      </li>-->
+        <!--      <li>-->
+        <!--        <a href="/catalog/?order=order">-->
+        <!--          Планирование-->
+        <!--          <span>строим маршрут с точками</span>-->
+        <!--        </a>-->
+        <!--      </li>-->
+    </ul>
 </template>
 
 <script>
@@ -131,13 +129,6 @@
 </script>
 
 <style scoped>
-  .header-menu {
-    color: #fff;
-    font-size: 20px;
-    margin-top: 30px;
-    line-height: 22px;
-  }
-
   .header-menu li:hover {
     background-color: rgba(255, 255, 255, .90);
     border: 0 solid;

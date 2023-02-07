@@ -2,10 +2,6 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
-            <b-spinner
-                v-if="loading"
-                label="Spinning"
-            />
             <div
                 id="comments_list"
                 class="comments-list"
@@ -95,7 +91,6 @@
         },
         computed: {
             ...mapGetters({
-                loading: 'commentsPaginated/loading',
                 comments: 'commentsPaginated/items',
                 meta: 'commentsPaginated/meta',
             }),
@@ -126,7 +121,3 @@
         },
     };
 </script>
-
-<style>
-
-</style>

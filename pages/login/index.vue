@@ -6,9 +6,6 @@
                 <h1>
                     Вход
                 </h1>
-                {{ $auth.user }}
-                {{ $store.state.auth.user }}
-
                 <form @submit.prevent="doLogin">
                     <div>
                         <label>Email</label>
@@ -21,7 +18,7 @@
                         <label>Password</label>
                         <input
                             v-model="login.password"
-                            type="text"
+                            type="password"
                         >
                     </div>
                     <div>
@@ -46,7 +43,10 @@
                 },
             };
         },
-        mounted() {
+        created() {
+            if (this.$auth.user) {
+                this.$router.push('/secure');
+            }
         },
         methods: {
             async doLogin() {

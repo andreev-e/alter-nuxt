@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
-                    Личный кабинет
+                    Личный кабинет {{ $auth.user.username }}
                 </h1>
-                {{ login }}
+                {{ $auth.user }}
             </div>
         </div>
         <Footer />
@@ -18,11 +18,7 @@
         middleware: 'auth',
         data() {
             return {
-                login: 'login',
-                // form: new Form({
-                //     login: null,
-                //       password: null,
-                //       })
+
             };
         },
     };

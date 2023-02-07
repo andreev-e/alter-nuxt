@@ -1,6 +1,20 @@
 <!-- Please remove this file from your project -->
 <template>
     <div class="header row">
+        <div
+            v-if="$auth.user"
+            class="col-sm-12 d-flex justify-content-end"
+        >
+            <div class="d-flex justify-content-between">
+                <b>{{ $auth.user?.firstname }} {{ $auth.user?.lastname }}</b> ({{ $auth.user?.username }})
+                <button
+                    class="btn btn-dark btn-sm"
+                    @click="logout"
+                >
+                    Выход
+                </button>
+            </div>
+        </div>
         <div class="logo col-sm-3">
             <nuxt-link :to="'/'">
                 <img
@@ -9,15 +23,36 @@
                 >
             </nuxt-link>
         </div>
-        <Menu />
+        <div class="header-menu col-sm-9">
+            <Menu />
+        </div>
     </div>
 </template>
+
+<script>
+    export default {
+        methods: {
+            async logout() {
+                await this.$auth.logout();
+                this.$router.push('/');
+            },
+        },
+    };
+</script>
 
 <style scoped>
   .header {
     padding: 10px 0;
   }
+
   .row {
     background: #ebf1f5;
+  }
+
+  .header-menu {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 30px;
+    line-height: 22px;
   }
 </style>
