@@ -4,12 +4,19 @@
             <b>Выберите регион</b>
             <ul class="additional_cities">
                 <li
-                    v-for="child in left"
+                    v-for="child in dataLeft"
                     :key="child.id"
                 >
                     <nuxt-link :to="child.url">
-                        {{ child.name }}
+                        <short :val="child.name" />
                     </nuxt-link>
+                </li>
+                <li
+                    v-if="left.length > limit"
+                    class="more"
+                    @click="limitedLeft = !limitedLeft"
+                >
+                    {{ limitedLeft ? 'Показать все' : 'Свернуть' }}
                 </li>
             </ul>
         </b-col>
@@ -30,8 +37,11 @@
 </template>
 
 <script>
+    import Short from './Short.vue';
+
     export default {
         name: 'TwoPanels',
+        components: { Short },
         props: {
             left: {
                 type: Array,
@@ -42,6 +52,20 @@
                 type: Array,
                 required: false,
                 default: () => [],
+            },
+        },
+        data() {
+            return {
+                limit: 7,
+                limitedLeft: true,
+            };
+        },
+        computed: {
+            dataLeft() {
+                if (this.limitedLeft) {
+                    return [...this.left].splice(0, this.limit);
+                }
+                return this.left;
             },
         },
     };
@@ -60,8 +84,11 @@
     border-radius: 3px;
     margin-right: 3px;
     margin-bottom: 3px;
-    padding: 1px;
+    padding: 1px 3px;
     cursor: pointer;
-    font-size:14px;
+    font-size:18px;
+  }
+  .additional_cities li.more {
+    background: #343a40;
   }
 </style>

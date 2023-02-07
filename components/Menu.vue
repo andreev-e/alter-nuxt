@@ -18,7 +18,7 @@
                             size="small"
                             class="d-inline-block"
                         />
-                        {{ region.name }}
+                        <short :val="region.name" />
                     </nuxt-link>
                 </li>
             </ul>
@@ -82,9 +82,11 @@
 <script>
   // eslint-disable-next-line no-unused-vars,import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import Short from './Short.vue';
 
     export default {
         name: 'Menu',
+        components: { Short },
         data() {
             return {};
         },
@@ -177,7 +179,6 @@
     line-height: 24px;
     background: none;
     height: 26px;
-    text-align: left;
     padding-left: 4px;
   }
 

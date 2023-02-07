@@ -18,11 +18,11 @@
                     </h1>
                 </div>
             </div>
-            <!--            <TwoPanels-->
-            <!--                v-if="tag.children?.length"-->
-            <!--                :left="tag.children"-->
-            <!--                :right="[]"-->
-            <!--            />-->
+            <TwoPanels
+                v-if="tag.children && tag.children.length"
+                :left="tag.children"
+                :right="[]"
+            />
             <div class="row nopadding">
                 <MapFilter
                     v-model="categories"
