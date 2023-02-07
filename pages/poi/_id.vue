@@ -41,8 +41,9 @@
                                     </div>
                                 </div>
                                 <p>
-                                    {{ poi.author }}
-                                    <a href="https://altertravel.ru/show_user.php?name=olegoo">автор</a> © Все права на опубликованные
+                                    <nuxt-link :to="`/user/${poi.author}`">
+                                        {{ poi.author }}
+                                    </nuxt-link> © Все права на опубликованные
                                     фотографии и видео принадлежат их авторам
                                 </p>
                             </div>
