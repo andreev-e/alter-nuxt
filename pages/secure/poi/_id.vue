@@ -2,7 +2,6 @@
     <div class="container page">
         <Header />
         <Breadcrumbs :list="breadCrumbs" />
-
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="onSubmit">

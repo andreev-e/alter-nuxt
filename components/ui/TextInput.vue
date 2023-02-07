@@ -10,10 +10,10 @@
             <input
                 v-if="!multiline"
                 :id="id"
+                v-model="model"
                 class="form-input block w-full sm:text-sm sm:leading-5 transition"
                 :class="{ 'pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-300': hasError }"
                 :type="type"
-                :value="modelValue"
                 :placeholder="placeholder"
                 :aria-invalid="hasError"
                 :aria-labelledby="`${id}-label`"
@@ -25,6 +25,7 @@
             <textarea
                 v-else
                 :id="id"
+                v-model="model"
                 rows="3"
                 class="form-textarea block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out"
                 :class="{ 'pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-300': hasError }"
@@ -33,7 +34,6 @@
                 :aria-labelledby="`${id}-label`"
                 :aria-describedby="`${id}-error`"
                 :required="required"
-                :value="modelValue"
                 @input="onInput"
             />
             <div
@@ -128,6 +128,11 @@
                 default: undefined,
             },
         },
+        data() {
+            return {
+                model: '',
+            };
+        },
         computed: {
             hasError() {
                 return typeof this.form !== 'undefined' ? this.form.errors.has(this.id) : false;
@@ -147,6 +152,11 @@
                 });
 
                 return props;
+            },
+        },
+        watch: {
+            modelValue(val) {
+                this.model = val;
             },
         },
         methods: {

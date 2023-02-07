@@ -7,7 +7,6 @@
                 <h1>
                     Авторский раздел
                 </h1>
-                {{ $auth.user }}
                 <Gallery
                     :objects="pois"
                     :loading="poiLoading"
@@ -33,9 +32,10 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Gallery from '../../components/Gallery.vue';
+    import Breadcrumbs from '../../components/Breadcrumbs.vue';
 
     export default {
-        components: { Gallery },
+        components: { Breadcrumbs, Gallery },
         middleware: 'auth',
         data() {
             return {
