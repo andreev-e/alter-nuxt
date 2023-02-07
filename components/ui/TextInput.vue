@@ -99,7 +99,7 @@
                 type: String,
                 default: '',
             },
-            modelValue: {
+            vModel: {
                 type: [String, Number],
                 default: '',
             },
@@ -155,7 +155,7 @@
             },
         },
         watch: {
-            modelValue(val) {
+            vModel(val) {
                 this.model = val;
             },
         },

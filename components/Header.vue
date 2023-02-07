@@ -7,7 +7,7 @@
         >
             <div class="d-flex justify-content-between">
                 <div class="d-inline-block">
-                    {{ $auth.user?.firstname }} {{ $auth.user?.lastname }}
+                    {{ $auth.user.firstname }} {{ $auth.user.lastname }}
                 </div>
                 <button
                     class="btn btn-dark btn-sm"

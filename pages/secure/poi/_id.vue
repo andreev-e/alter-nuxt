@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="onSubmit">
+                    {{ form.name }}
                     <text-input
                         id="name"
                         v-model="form.name"
