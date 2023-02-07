@@ -28,7 +28,7 @@
                 class="author"
             >
                 <nuxt-link
-                    v-if="$auth.user?.username === poi.author"
+                    v-if="$auth.user && $auth.user.username === poi.author"
                     :to="`/secure/poi/${poi.id}`"
                 >
                     <font-awesome-icon

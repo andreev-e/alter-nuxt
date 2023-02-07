@@ -6,9 +6,12 @@
             class="col-sm-12 d-flex justify-content-end"
         >
             <div class="d-flex justify-content-between">
-                <div class="d-inline-block">
+                <nuxt-link
+                    to="/secure"
+                    class="d-inline-block mr-1 mt-1"
+                >
                     {{ $auth.user.firstname }} {{ $auth.user.lastname }}
-                </div>
+                </nuxt-link>
                 <button
                     class="btn btn-dark btn-sm"
                     @click="logout"
