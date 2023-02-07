@@ -6,7 +6,9 @@
             class="col-sm-12 d-flex justify-content-end"
         >
             <div class="d-flex justify-content-between">
-                <b>{{ $auth.user?.firstname }} {{ $auth.user?.lastname }}</b> ({{ $auth.user?.username }})
+                <div class="d-inline-block">
+                    {{ $auth.user?.firstname }} {{ $auth.user?.lastname }}
+                </div>
                 <button
                     class="btn btn-dark btn-sm"
                     @click="logout"

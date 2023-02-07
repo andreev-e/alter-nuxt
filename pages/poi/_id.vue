@@ -170,8 +170,10 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../../constants';
+    import Comments from '../../components/Comments.vue';
 
     export default {
+        components: { Comments },
         data() {
             return {
                 center: null,

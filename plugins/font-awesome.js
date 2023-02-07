@@ -16,6 +16,9 @@ import {
     faMuseum,
     faMonument,
     faSkull,
+    faEdit,
+    faArrowRight,
+    faHome,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -27,6 +30,9 @@ library.add(
     faMuseum,
     faMonument,
     faSkull,
+    faEdit,
+    faArrowRight,
+    faHome,
 );
 
 /* add font awesome icon component */

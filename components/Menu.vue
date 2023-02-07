@@ -4,11 +4,7 @@
         <li class="region_select">
             <a href="#">
                 Регион
-                <b-spinner
-                    v-if="countriesLoading"
-                    small
-                />
-                <span v-else>выбрать</span>
+                <span>выбрать</span>
             </a>
             <ul>
                 <li
@@ -30,11 +26,7 @@
         <li class="region_select">
             <a href="#">
                 Метки
-                <b-spinner
-                    v-if="tagsLoading"
-                    small
-                />
-                <span v-else>выбрать</span>
+                <span>выбрать</span>
             </a>
             <ul>
                 <li
@@ -48,17 +40,18 @@
             </ul>
         </li>
         <li>
-            <nuxt-link to="/user">
-                Авторы
-                <span>путеводителя</span>
-            </nuxt-link>
-        </li>
-        <li>
             <nuxt-link to="/route">
                 Маршруты
                 <span>готовые треки</span>
             </nuxt-link>
         </li>
+        <li>
+            <nuxt-link to="/user">
+                Авторы
+                <span>путеводителя</span>
+            </nuxt-link>
+        </li>
+
         <!--            <li>-->
         <!--                <a href="/catalog/">-->
         <!--                    Популярные-->

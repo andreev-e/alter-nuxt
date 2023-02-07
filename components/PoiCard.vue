@@ -1,6 +1,6 @@
 <template>
     <nuxt-link
-        :to="'/poi/' + poi.id"
+        :to="`/poi/${poi.id}`"
         class="poi__card"
     >
         <div :class="loading ? 'poi_card loading' : 'poi__content'">
@@ -23,6 +23,19 @@
                 class="above_img"
             >
                 {{ distance }}
+            </div>
+            <div
+                class="author"
+            >
+                <nuxt-link
+                    v-if="$auth.user?.username === poi.author"
+                    :to="`/secure/poi/${poi.id}`"
+                >
+                    <font-awesome-icon
+                        icon="fa-edit"
+                    />
+                </nuxt-link>
+                <span v-else>{{ poi.author }}</span>
             </div>
         </div>
     </nuxt-link>
@@ -101,6 +114,17 @@
     text-align: center;
     font-size: 2em;
     color: rgba(255, 255, 255, 0.8);
+    text-shadow: #000 2px 3px 5px;
+  }
+  .author {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top:15px;
+    right:20px;
+    text-align: right;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 1);
     text-shadow: #000 2px 3px 5px;
   }
 </style>

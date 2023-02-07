@@ -4,16 +4,21 @@
             <ul>
                 <li class="first">
                     <router-link to="/">
-                        <img
-                            src="https://altertravel.ru/i/first_li.png"
-                            alt="Home"
-                        >
+                        <font-awesome-icon
+                            icon="fa-home"
+                            :style="{ height: '14px' }"
+                        />
                     </router-link>
                 </li>
                 <li
                     v-for="crumb in list"
                     :key="`crumb_${crumb.name}`"
                 >
+                    <font-awesome-icon
+                        icon="fa-arrow-right"
+                        class="mr-2"
+                        :style="{ height: '14px' }"
+                    />
                     <router-link
                         v-if="crumb.url"
                         :to="crumb.url"
@@ -53,9 +58,8 @@
 
 <style>
   .navigation li {
-    list-style-image: url('https://altertravel.ru/i/list_style.png');
     float: left;
-    margin-left: 24px;
+    margin-left: 14px;
     font-size: 17px;
   }
 
@@ -64,7 +68,6 @@
   }
 
   .navigation li.first {
-    list-style-image: none;
     margin-left: 0;
   }
 </style>
