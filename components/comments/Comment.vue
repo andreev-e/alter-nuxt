@@ -1,5 +1,8 @@
 <template>
-    <div class="comment">
+    <div
+        class="text-dark"
+        :class="{ 'text-muted': comment.approved ===0 }"
+    >
         <div class="author-date">
             <b>
                 <router-link
@@ -22,6 +25,22 @@
                 об объекте
                 {{ comment.object_name }}
             </router-link>
+            <font-awesome-icon
+                v-if="false"
+                icon="fa-edit"
+            />
+            <font-awesome-icon
+                v-if="$auth.user && ($auth.user.username === 'andreev' || $auth.user.username === comment.user.username)"
+                icon="fa-trash"
+                role="button"
+                @click="del(comment.commentid)"
+            />
+            <font-awesome-icon
+                v-if="$auth.user && $auth.user.username === 'andreev'"
+                icon="fa-check"
+                role="button"
+                @click="approve(comment.commentid)"
+            />
         </div>
         <div class="comment-text-wrapper">
             <div class="comment-text">
@@ -33,6 +52,8 @@
 </template>
 
 <script>
+    import { Request } from 'laravel-request-utils';
+
     export default {
         name: 'Comment',
         props: {
@@ -52,6 +73,19 @@
                 type: Boolean,
                 required: false,
                 default: false,
+            },
+        },
+        emits: ['reload'],
+        methods: {
+            del(id) {
+                Request.getInstance().delete(`/api/comment/${id}`).then(() => {
+                    this.$emit('reload');
+                });
+            },
+            approve(id) {
+                Request.getInstance().post(`/api/comment/${id}/approve`).then(() => {
+                    this.$emit('reload');
+                });
             },
         },
     };

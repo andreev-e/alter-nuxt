@@ -19,6 +19,8 @@ import {
     faEdit,
     faArrowRight,
     faHome,
+    faTrash,
+    faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -33,6 +35,8 @@ library.add(
     faEdit,
     faArrowRight,
     faHome,
+    faTrash,
+    faCheck,
 );
 
 /* add font awesome icon component */

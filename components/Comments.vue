@@ -14,6 +14,7 @@
                     :index="index"
                     :total="comments.length"
                     :link-objects="linkObjects"
+                    @reload="loadComments"
                 />
             </div>
             <div class="row">
@@ -124,7 +125,7 @@
                     id: this.id,
                     type: this.type,
                     page: this.page,
-                    with_trash: this.$auth.user && this.$auth.user.username === 'andreev',
+                    pending: this.$auth.user && this.$auth.user.username === 'andreev',
                 });
                 this.getComments();
                 this.form.addField('id', this.id);
