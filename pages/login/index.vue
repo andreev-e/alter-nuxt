@@ -7,22 +7,21 @@
                     Вход
                 </h1>
                 <form @submit.prevent="doLogin">
+                    <text-input
+                        v-model="email"
+                        label="Email"
+                        @update="pp"
+                    />
+                    <text-input
+                        v-model="password"
+                        label="Пароль"
+                        type="password"
+                    />
                     <div>
-                        <label>Email</label>
-                        <input
-                            v-model="login.email"
-                            type="text"
+                        <button
+                            class="btn btn-success"
+                            type="submit"
                         >
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input
-                            v-model="login.password"
-                            type="password"
-                        >
-                    </div>
-                    <div>
-                        <button type="submit">
                             Submit
                         </button>
                     </div>
@@ -34,13 +33,14 @@
 </template>
 
 <script>
+    import TextInput from '../../components/ui/TextInput.vue';
+
     export default {
+        components: { TextInput },
         data() {
             return {
-                login: {
-                    email: '',
-                    password: '',
-                },
+                email: 'andreev-e@mail.ru',
+                password: '',
             };
         },
         created() {
@@ -51,11 +51,16 @@
         methods: {
             async doLogin() {
                 try {
-                    const response = await this.$auth.loginWith('laravelSanctum', { data: this.login });
-                    console.log(response);
+                    const data = { email: this.email, password: this.password };
+                    console.log(data);
+                    await this.$auth
+                        .loginWith('laravelSanctum', { data });
                 } catch (err) {
                     console.log(err);
                 }
+            },
+            pp(vla) {
+                console.log(vla);
             },
         },
     };
