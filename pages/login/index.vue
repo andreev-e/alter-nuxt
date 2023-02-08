@@ -10,7 +10,6 @@
                     <text-input
                         v-model="email"
                         label="Email"
-                        @update="pp"
                     />
                     <text-input
                         v-model="password"
@@ -52,15 +51,11 @@
             async doLogin() {
                 try {
                     const data = { email: this.email, password: this.password };
-                    console.log(data);
                     await this.$auth
                         .loginWith('laravelSanctum', { data });
                 } catch (err) {
                     console.log(err);
                 }
-            },
-            pp(vla) {
-                console.log(vla);
             },
         },
     };

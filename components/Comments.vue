@@ -124,6 +124,7 @@
                     id: this.id,
                     type: this.type,
                     page: this.page,
+                    with_trash: this.$auth.user && this.$auth.user.username === 'andreev',
                 });
                 this.getComments();
                 this.form.addField('id', this.id);
