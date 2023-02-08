@@ -15,6 +15,7 @@
                 :type="type"
                 :name="name"
                 :value="value"
+                :required="required"
                 @input="$emit('input', $event.target.value)"
             >
         </b-col>
@@ -29,6 +30,7 @@
             value: { type: String, required: true },
             type: { type: String, default: 'text' },
             multiline: { type: Boolean, default: false },
+            required: { type: Boolean, default: false },
         },
         computed: {
             name() {

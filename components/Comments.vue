@@ -27,11 +27,17 @@
                     />
                 </div>
             </div>
-            <b-form v-if="id">
+            <form v-if="id">
                 <b-form-group>
+                    <text-input
+                        v-if="!$auth.user"
+                        v-model="form.email"
+                        label="Email"
+                        required
+                    />
                     <b-form-textarea
-                        id="text"
-                        v-model="form.text"
+                        id="comment"
+                        v-model="form.comment"
                         placeholder="Текст комментария"
                         required
                         rows="3"
@@ -39,12 +45,12 @@
                     />
                 </b-form-group>
                 <b-button
-                    type="submit"
                     variant="primary"
+                    @click.stop="addComment"
                 >
                     Отправить
                 </b-button>
-            </b-form>
+            </form>
         </div>
     </div>
 </template>
@@ -52,10 +58,12 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import { Form } from 'laravel-request-utils';
     import Comment from './comments/Comment.vue';
+    import TextInput from './ui/TextInput.vue';
 
     export default {
-        components: { Comment },
+        components: { TextInput, Comment },
         props: {
             id: {
                 type: [Number, String],
@@ -80,9 +88,10 @@
         },
         data() {
             return {
-                form: {
-                    text: null,
-                },
+                form: new Form({
+                    comment: '',
+                    email: '',
+                }),
                 page: 1,
             };
         },
@@ -117,6 +126,13 @@
                     page: this.page,
                 });
                 this.getComments();
+                this.form.addField('id', this.id);
+                this.form.addField('type', this.type);
+            },
+            addComment() {
+                this.form.submit('/api/comment').then(() => {
+                    this.getComments();
+                });
             },
         },
     };

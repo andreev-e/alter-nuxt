@@ -3,7 +3,7 @@ import LocalStorage from '../utils/LocalStorage';
 
 Request.setConfig({
     autoRequestCsrfCookie: true,
-    csrfCookieUrl: 'gimmecsrf',
+    csrfCookieUrl: '/api/sanctum/csrf-cookie',
     headers: {},
     withCredentials: false,
 });

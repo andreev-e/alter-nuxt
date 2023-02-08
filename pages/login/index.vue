@@ -39,7 +39,7 @@
         components: { TextInput },
         data() {
             return {
-                email: 'andreev-e@mail.ru',
+                email: '',
                 password: '',
             };
         },
