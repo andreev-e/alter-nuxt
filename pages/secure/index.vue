@@ -10,6 +10,7 @@
                 <Gallery
                     :objects="pois"
                     :loading="poiLoading"
+                    @reload="fetchPois"
                 />
                 <div class="row">
                     <div class="col-12">

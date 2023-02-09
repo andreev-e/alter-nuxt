@@ -9,6 +9,7 @@
                 :poi="poi"
                 :loading="loading"
                 :type="type"
+                @reload="$emit('reload')"
             />
         </div>
     </div>
@@ -33,6 +34,7 @@
                 default: 'poi',
             },
         },
+        emits: ['reload'],
     };
 </script>
 

@@ -36,12 +36,26 @@
                     />
                 </nuxt-link>
                 <span v-else>{{ poi.author }}</span>
+                <span class="text-dark">
+                    <font-awesome-icon
+                        v-if="canApprove"
+                        icon="fa-check"
+                        @click.prevent="approve(poi.id)"
+                    />
+                    <font-awesome-icon
+                        v-if="canDelete"
+                        icon="fa-trash"
+                        @click.prevent="del(poi.id)"
+                    />
+                </span>
             </div>
         </div>
     </nuxt-link>
 </template>
 
 <script>
+    import { Request } from 'laravel-request-utils';
+
     export default {
         name: 'PoiCard',
         props: {
@@ -58,6 +72,7 @@
                 default: 'poi',
             },
         },
+        emits: ['reload'],
         computed: {
             distance() {
                 const dist = Math.round(this.poi.dist);
@@ -71,6 +86,24 @@
             },
             canEdit() {
                 return this.$auth.user && (this.$auth.user.username === this.poi.author || this.$auth.user.username === 'andreev');
+            },
+            canDelete() {
+                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+            },
+            canApprove() {
+                return !this.poi.show && this.$auth.user && this.$auth.user.username === 'andreev';
+            },
+        },
+        methods: {
+            del(id) {
+                Request.getInstance().delete(`/api/poi/${id}`).then(() => {
+                    this.$emit('reload');
+                });
+            },
+            approve(id) {
+                Request.getInstance().post(`/api/poi/${id}/approve`).then(() => {
+                    this.$emit('reload');
+                });
             },
         },
     };

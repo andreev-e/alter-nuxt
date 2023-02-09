@@ -85,7 +85,7 @@
                         url: '/secure/',
                     },
                     {
-                        name: `Редактирование: ${this.poi.name}`,
+                        name: this.poi.name ? `Редактирование: ${this.poi.name}` : '',
                         url: '',
                     },
                 ];

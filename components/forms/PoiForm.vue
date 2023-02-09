@@ -73,7 +73,7 @@
 </template>
 
 <script>
-    // eslint-disable-next-line import/no-extraneous-dependencies
+  // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form } from 'laravel-request-utils';
     // eslint-disable-next-line import/extensions
     import { TYPES } from '../../constants/index.js';
@@ -120,6 +120,12 @@
                             lng: this.poi.lng,
                         };
                     }
+                    if (this.form) {
+                        return {
+                            lat: this.form.lat,
+                            lng: this.form.lng,
+                        };
+                    }
                     return {
                         lat: 0,
                         lng: 0,
@@ -140,6 +146,23 @@
                     this.form[field] = poi[field];
                 });
             },
+        },
+        created() {
+            const center = {
+                lat: 0,
+                lng: 0,
+            };
+            if (process.client && navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        center.lat = position.coords.latitude;
+                        center.lng = position.coords.longitude;
+                        this.center = center;
+                    },
+                    () => {
+                    },
+                );
+            }
         },
         methods: {
             onSubmit() {

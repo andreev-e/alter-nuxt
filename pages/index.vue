@@ -34,8 +34,15 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
+    import UniversalMap from '../components/UniversalMap.vue';
+    import MapFilter from '../components/map/MapFilter.vue';
+    import Gallery from '../components/Gallery.vue';
+    import Comments from '../components/Comments.vue';
 
     export default {
+        components: {
+            Comments, Gallery, MapFilter, UniversalMap,
+        },
         data() {
             return {
                 mapPois: [],

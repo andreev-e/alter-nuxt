@@ -211,7 +211,7 @@
             },
             breadCrumbs() {
                 const breadCrumbs = [...this.poi.locations ?? []];
-                if (this.poi && this.poi.locations) {
+                if (this.poi && this.poi.locations && this.poi.locations.length) {
                     breadCrumbs.push({
                         name: this.poi.type,
                         url: `${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}`,

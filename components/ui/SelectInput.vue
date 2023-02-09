@@ -8,7 +8,7 @@
             <b-form-select
                 v-model="val"
                 :required="required"
-                @select="$emit('input')"
+                @change="$emit('input', val)"
             >
                 <b-form-select-option
                     v-for="option in options"
