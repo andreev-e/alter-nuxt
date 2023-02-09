@@ -58,12 +58,12 @@
         <!--                    <span>в августе</span>-->
         <!--                </a>-->
         <!--            </li>-->
-        <!--      <li>-->
-        <!--        <a href="/catalog/?order=order">-->
-        <!--          Новые-->
-        <!--          <span>места</span>-->
-        <!--        </a>-->
-        <!--      </li>-->
+        <li>
+            <nuxt-link to="/latest">
+                Новые
+                <span>места</span>
+            </nuxt-link>
+        </li>
         <!--      <li>-->
         <!--        <a href="/catalog/?order=order">-->
         <!--          Маршруты-->
