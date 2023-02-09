@@ -83,7 +83,7 @@
             async fetchPois() {
                 await this.setPoiParams({
                     page: this.page,
-                    latest: true,
+                    latest: 1,
                 });
                 await this.getPoi();
             },
