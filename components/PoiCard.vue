@@ -1,6 +1,6 @@
 <template>
     <nuxt-link
-        :to="`/poi/${poi.id}`"
+        :to="`/${type}/${poi.id}`"
         class="poi__card"
     >
         <div :class="loading ? 'poi_card loading' : 'poi__content'">
@@ -29,7 +29,7 @@
             >
                 <nuxt-link
                     v-if="$auth.user && $auth.user.username === poi.author"
-                    :to="`/secure/poi/${poi.id}`"
+                    :to="`/secure/${type}/${poi.id}`"
                 >
                     <font-awesome-icon
                         icon="fa-edit"
@@ -52,6 +52,10 @@
             loading: {
                 type: Boolean,
                 default: false,
+            },
+            type: {
+                type: String,
+                default: 'poi',
             },
         },
         computed: {

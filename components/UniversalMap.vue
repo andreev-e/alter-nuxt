@@ -26,6 +26,21 @@
                     v-if="thisIsPoi"
                     :position="center"
                 />
+                <gmap-polyline
+                    v-if="line"
+                    v-model="path"
+                    :options="{ strokeColor:'#008000' }"
+                />
+                <gmap-marker
+                    v-if="start"
+                    :position="start"
+                    :icon="iconStart"
+                />
+                <gmap-marker
+                    v-if="finish"
+                    :position="finish"
+                    :icon="iconFinish"
+                />
                 <gmap-marker
                     v-for="poi in mapPois"
                     :key="`poi_`+poi.id"
@@ -43,6 +58,8 @@
 <script>
     import * as Icons from '@fortawesome/free-solid-svg-icons';
     import { gmapApi } from 'vue2-google-maps';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import polyline from '@mapbox/polyline';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
@@ -64,6 +81,10 @@
             categories: { type: Array, default: () => [] },
             zoom: { type: Number, default: 12 },
             thisIsPoi: { type: Boolean, default: false },
+            route: { type: Number, default: null },
+            start: { type: [Boolean, Object], default: false },
+            finish: { type: [Boolean, Object], default: false },
+            line: { type: String, default: null },
         },
         emits: ['update'],
         data() {
@@ -85,6 +106,22 @@
                         b: 'px',
                     },
                 },
+                iconStart: {
+                    path: Icons.faFlag.icon[4].toString(),
+                    fillColor: '#000',
+                    fillOpacity: 1,
+                    strokeColor: '#fff',
+                    scale: 0.05,
+                    strokeWeight: 1,
+                },
+                iconFinish: {
+                    path: Icons.faFlagCheckered.icon[4].toString(),
+                    fillColor: '#000',
+                    fillOpacity: 1,
+                    strokeColor: '#fff',
+                    scale: 0.05,
+                    strokeWeight: 1,
+                },
             };
         },
         computed: {
@@ -99,6 +136,9 @@
             },
             mapPois() {
                 return this.pois;
+            },
+            path() {
+                return this.line ? polyline.decode(this.line, 5) : null;
             },
         },
         watch: {
@@ -130,6 +170,7 @@
                             ...bounds.toJSON(),
                             categories: categories ?? this.categories,
                             user: this.user,
+                            route: this.route,
                         });
                         this.getPoi();
                     }

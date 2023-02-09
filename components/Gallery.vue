@@ -8,13 +8,17 @@
             <PoiCard
                 :poi="poi"
                 :loading="loading"
+                :type="type"
             />
         </div>
     </div>
 </template>
 
 <script>
+    import PoiCard from './PoiCard.vue';
+
     export default {
+        components: { PoiCard },
         props: {
             objects: {
                 type: Array,
@@ -23,6 +27,10 @@
             loading: {
                 type: Boolean,
                 default: false,
+            },
+            type: {
+                type: String,
+                default: 'poi',
             },
         },
     };

@@ -77,8 +77,8 @@
                 page: 1,
             };
         },
-        fetch() {
-            this.loadComments();
+        async fetch() {
+            await this.loadComments();
         },
         computed: {
             ...mapGetters({
@@ -100,15 +100,15 @@
                 getComments: 'commentsPaginated/get',
                 setParams: 'commentsPaginated/setParams',
             }),
-            loadComments() {
-                this.clear();
-                this.setParams({
+            async loadComments() {
+                await this.clear();
+                await this.setParams({
                     id: this.id,
                     type: this.type,
                     page: this.page,
                     pending: this.$auth.user && this.$auth.user.username === 'andreev',
                 });
-                this.getComments();
+                await this.getComments();
             },
         },
     };

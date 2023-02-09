@@ -90,12 +90,12 @@
         data() {
             return {};
         },
-        fetch() {
+        async fetch() {
             if (!this.countriesExist) {
-                this.getCountries();
+                await this.getCountries();
             }
             if (!this.tagsExist) {
-                this.getTags();
+                await this.getTags();
             }
         },
         computed: {

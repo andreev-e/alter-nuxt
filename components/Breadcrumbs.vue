@@ -8,6 +8,7 @@
                             icon="fa-home"
                             :style="{ height: '14px' }"
                         />
+                        Altertravel
                     </router-link>
                 </li>
                 <li
@@ -59,8 +60,8 @@
 <style>
   .navigation li {
     float: left;
-    margin-left: 14px;
-    font-size: 17px;
+    margin-left: 7px;
+    font-size: 16px;
   }
 
   .navigation a {

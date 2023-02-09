@@ -59,9 +59,17 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import Breadcrumbs from '../../../components/Breadcrumbs.vue';
+    import TwoPanels from '../../../components/TwoPanels.vue';
+    import MapFilter from '../../../components/map/MapFilter.vue';
+    import UniversalMap from '../../../components/UniversalMap.vue';
+    import Gallery from '../../../components/Gallery.vue';
 
     export default {
         name: 'Index',
+        components: {
+            Gallery, UniversalMap, MapFilter, TwoPanels, Breadcrumbs,
+        },
         data() {
             return {
                 type: null,

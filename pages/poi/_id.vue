@@ -166,9 +166,15 @@
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
+    import Fastnav from '../../components/Fastnav.vue';
+    import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import UniversalMap from '../../components/UniversalMap.vue';
+    import Gallery from '../../components/Gallery.vue';
 
     export default {
-        components: { Comments },
+        components: {
+            Gallery, UniversalMap, Breadcrumbs, Fastnav, Comments,
+        },
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();

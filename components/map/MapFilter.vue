@@ -4,7 +4,7 @@
         <b-button
             v-for="type in types"
             :key="type.name"
-            class="btn btn-default mr-2"
+            class="btn btn-default mr-1 mb-1"
             :class="{ 'btn-light': !categories.includes(type.name) }"
             @click="toggle(type.name)"
         >
