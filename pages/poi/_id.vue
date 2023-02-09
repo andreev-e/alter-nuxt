@@ -43,7 +43,7 @@
                                 <p>
                                     <nuxt-link :to="`/user/${poi.author}`">
                                         {{ poi.author }}
-                                    </nuxt-link> © Все права на опубликованные
+                                    </nuxt-link> {{ poi.date }} &copy; Все права на опубликованные
                                     фотографии и видео принадлежат их авторам
                                 </p>
                             </div>
