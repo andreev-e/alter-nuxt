@@ -2,7 +2,7 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: tag.name, url: '' }]"
+            :list="[{ name: 'Метка: '+tag.name, url: '' }]"
         />
         <div class="row">
             <div class="col-sm-12">
@@ -12,8 +12,11 @@
             </div>
         </div>
         <universal-map
+            ref="mapComponent"
             :center="center"
             :tag="$route.params.id"
+            :zoom="zoom"
+            @update="poisChanged"
         />
         <Gallery
             :objects="pois"
@@ -37,13 +40,23 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import Gallery from '../../components/Gallery.vue';
+    import UniversalMap from '../../components/UniversalMap.vue';
 
     export default {
+        components: {
+            UniversalMap,
+            Gallery,
+            Breadcrumbs,
+        },
         data() {
             return {
                 loadingTag: true,
                 center: {},
                 page: 1,
+                zoom: 12,
+                reZoomInitialized: false,
             };
         },
         async fetch() {
@@ -96,8 +109,19 @@
                 getTag: 'tag/get',
             }),
             async fetchPois() {
-                this.setParams({ tag: this.$route.params.id, page: this.page });
+                this.setParams({
+                    tag: this.$route.params.id,
+                    page: this.page,
+                });
                 this.getPoi();
+            },
+            poisChanged(pois) {
+                if (pois.length === 0
+                    && this.$refs.mapComponent.$refs.map
+                    && this.$refs.mapComponent.$refs.map.$mapObject
+                ) {
+                    this.zoom -= 2;
+                }
             },
         },
     };

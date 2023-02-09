@@ -10,7 +10,7 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="mapZoom"
+                :zoom="zoom"
                 map-type-id="terrain"
                 @dragend="fetchPois"
                 @zoom_changed="zoomChanged"
@@ -100,16 +100,10 @@
             mapPois() {
                 return this.pois;
             },
-            mapZoom() {
-                return Math.min(this.zoom, this.autoZoom);
-            },
         },
         watch: {
-            pois(val) {
+            pois() {
                 this.$emit('update', [...this.pois]);
-                if (val.length === 0) {
-                    this.autoZoom -= 3;
-                }
             },
         },
         mounted() {

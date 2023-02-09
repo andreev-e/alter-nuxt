@@ -1,5 +1,8 @@
 <template>
-    <div class="row">
+    <div
+        id="comments"
+        class="row"
+    >
         <div class="col-sm-12">
             <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
             <div
