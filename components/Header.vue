@@ -1,11 +1,11 @@
 <!-- Please remove this file from your project -->
 <template>
     <div class="header row">
-        <div
-            v-if="$auth.user"
-            class="col-sm-12 d-flex justify-content-end"
-        >
-            <div class="d-flex justify-content-between">
+        <div class="col-sm-12 d-flex justify-content-end">
+            <div
+                v-if="$auth.user"
+                class="d-flex justify-content-between"
+            >
                 <nuxt-link
                     to="/secure"
                     class="d-inline-block mr-1 mt-1"
@@ -18,6 +18,14 @@
                 >
                     Выход
                 </button>
+            </div>
+            <div
+                v-else
+                class="col-sm-4 text-right"
+            >
+                <router-link to="/secure/">
+                    Вход для авторов
+                </router-link>
             </div>
         </div>
         <div class="logo col-sm-3">

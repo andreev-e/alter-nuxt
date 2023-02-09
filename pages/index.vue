@@ -25,6 +25,7 @@
         <Comments
             link-objects
             :last="4"
+            type="poi"
         />
         <Footer />
     </div>

@@ -17,6 +17,7 @@
                     :index="index"
                     :total="comments.length"
                     :link-objects="linkObjects"
+                    :type="type"
                     @reload="loadComments"
                 />
             </div>
@@ -31,30 +32,12 @@
                     />
                 </div>
             </div>
-            <form v-if="id">
-                <b-form-group>
-                    <text-input
-                        v-if="!$auth.user"
-                        v-model="form.email"
-                        label="Email"
-                        required
-                    />
-                    <b-form-textarea
-                        id="comment"
-                        v-model="form.comment"
-                        placeholder="Текст комментария"
-                        required
-                        rows="3"
-                        max-rows="6"
-                    />
-                </b-form-group>
-                <b-button
-                    variant="primary"
-                    @click.stop="addComment"
-                >
-                    Отправить
-                </b-button>
-            </form>
+            <comment-form
+                v-if="id"
+                :id="id"
+                :type="type"
+                @update="getComments"
+            />
         </div>
     </div>
 </template>
@@ -62,12 +45,11 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import { Form } from 'laravel-request-utils';
     import Comment from './comments/Comment.vue';
-    import TextInput from './ui/TextInput.vue';
+    import CommentForm from './comments/CommentForm.vue';
 
     export default {
-        components: { TextInput, Comment },
+        components: { CommentForm, Comment },
         props: {
             id: {
                 type: [Number, String],
@@ -92,10 +74,6 @@
         },
         data() {
             return {
-                form: new Form({
-                    comment: '',
-                    email: '',
-                }),
                 page: 1,
             };
         },
@@ -131,13 +109,6 @@
                     pending: this.$auth.user && this.$auth.user.username === 'andreev',
                 });
                 this.getComments();
-                this.form.addField('id', this.id);
-                this.form.addField('type', this.type);
-            },
-            addComment() {
-                this.form.submit('/api/comment').then(() => {
-                    this.getComments();
-                });
             },
         },
     };

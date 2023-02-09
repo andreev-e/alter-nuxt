@@ -1,9 +1,15 @@
 <template>
     <div
         class="text-dark"
-        :class="{ 'text-muted': comment.approved ===0 }"
+        :class="{ 'text-muted': !comment.approved }"
     >
         <div class="author-date">
+            <font-awesome-icon
+                v-if="canApprove"
+                icon="fa-check"
+                role="button"
+                @click="approve(comment.commentid)"
+            />
             <b>
                 <router-link
                     v-if="comment.user"
@@ -26,23 +32,30 @@
                 {{ comment.object_name }}
             </router-link>
             <font-awesome-icon
-                v-if="false"
+                v-if="canEdit"
                 icon="fa-edit"
+                role="button"
+                @click="edit(comment.commentid)"
             />
             <font-awesome-icon
-                v-if="$auth.user && ($auth.user.username === 'andreev' || $auth.user.username === comment.user.username)"
+                v-if="canDelete"
                 icon="fa-trash"
                 role="button"
                 @click="del(comment.commentid)"
             />
-            <font-awesome-icon
-                v-if="$auth.user && $auth.user.username === 'andreev'"
-                icon="fa-check"
-                role="button"
-                @click="approve(comment.commentid)"
-            />
         </div>
-        <div class="comment-text-wrapper">
+        <comment-form
+            v-if="editing"
+            :id="comment.backlink"
+            :comment-id="comment.commentid"
+            :text="comment.comment"
+            :type="type"
+            @update="$emit('reload')"
+        />
+        <div
+            v-else
+            class="comment-text-wrapper"
+        >
             <div class="comment-text">
                 <p>{{ comment.comment }}</p>
             </div>
@@ -53,9 +66,11 @@
 
 <script>
     import { Request } from 'laravel-request-utils';
+    import CommentForm from './CommentForm.vue';
 
     export default {
         name: 'Comment',
+        components: { CommentForm },
         props: {
             comment: {
                 type: Object,
@@ -74,8 +89,28 @@
                 required: false,
                 default: false,
             },
+            type: {
+                type: String,
+                required: true,
+            },
         },
         emits: ['reload'],
+        data() {
+            return {
+                editing: false,
+            };
+        },
+        computed: {
+            canApprove() {
+                return !this.comment.approved && this.$auth.user && this.$auth.user.username === 'andreev';
+            },
+            canDelete() {
+                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+            },
+            canEdit() {
+                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+            },
+        },
         methods: {
             del(id) {
                 Request.getInstance().delete(`/api/comment/${id}`).then(() => {
@@ -86,6 +121,9 @@
                 Request.getInstance().post(`/api/comment/${id}/approve`).then(() => {
                     this.$emit('reload');
                 });
+            },
+            edit() {
+                this.editing = true;
             },
         },
     };
