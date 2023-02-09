@@ -2,22 +2,23 @@
     <b-row class="my-2">
         <b-col cols="4">
             {{ label }}
+            {{ required ? '*' : '' }}
         </b-col>
         <b-col cols="8">
-            <textarea
+            <b-textarea
                 v-if="multiline"
+                v-model="val"
                 class="w-100"
-                :value="value"
+                @input="$emit('input', val)"
             />
-            <input
+            <b-input
                 v-else
+                v-model="val"
                 class="w-100"
                 :type="type"
-                :name="name"
-                :value="value"
                 :required="required"
-                @input="$emit('input', $event.target.value)"
-            >
+                @input="$emit('input', val)"
+            />
         </b-col>
     </b-row>
 </template>
@@ -26,15 +27,37 @@
     export default {
         name: 'TextInput',
         props: {
-            label: { type: String, required: true },
-            value: { type: String, required: true },
-            type: { type: String, default: 'text' },
-            multiline: { type: Boolean, default: false },
-            required: { type: Boolean, default: false },
+            label: {
+                type: String,
+                required: true,
+            },
+            value: {
+                type: String,
+                required: false,
+                default: null,
+            },
+            type: {
+                type: String,
+                default: 'text',
+            },
+            multiline: {
+                type: Boolean,
+                default: false,
+            },
+            required: {
+                type: Boolean,
+                default: false,
+            },
         },
-        computed: {
-            name() {
-                return this.label.toLowerCase();
+        emits: ['input'],
+        data() {
+            return {
+                val: null,
+            };
+        },
+        watch: {
+            value(val) {
+                this.val = val;
             },
         },
     };

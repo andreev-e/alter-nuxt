@@ -67,8 +67,9 @@
                     style="height: auto !important;"
                 >
                     <h2>В маршрут входят точки</h2>
-                    {{ route.points }}
-
+                    <Gallery
+                        :objects="[]"
+                    />
                     <div class="route_photoes">
                         <h2>Фото</h2>
                         <p>© Все права на опубликованные фотографии принадлежат автору публикации.</p>

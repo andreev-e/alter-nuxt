@@ -5,12 +5,31 @@
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="onSubmit">
-                    {{ form.name }}
+                    <client-only>
+                        <gmap-map
+                            ref="map"
+                            :zoom="12"
+                            map-type-id="terrain"
+                            :center="center"
+                        >
+                            <gmap-marker
+                                :position="center"
+                                draggable
+                                @dragend="markerMoved"
+                            />
+                        </gmap-map>
+                    </client-only>
                     <text-input
                         id="name"
                         v-model="form.name"
                         label="Название"
                         :form="form"
+                        required
+                    />
+                    <select-input
+                        v-model="form.type"
+                        label="Категория"
+                        :options="types"
                         required
                     />
                     <text-input
@@ -59,29 +78,33 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { Form } from 'laravel-request-utils';
-    import { TYPES } from '../../../constants';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import TextInput from '../../../components/ui/TextInput.vue';
+    // eslint-disable-next-line import/extensions
+    import { TYPES } from '../../../constants/index.js';
+    import SelectInput from '../../../components/ui/SelectInput.vue';
 
     export default {
-        components: { TextInput, Breadcrumbs },
+        components: { SelectInput, TextInput, Breadcrumbs },
         middleware: 'auth',
         data() {
             return {
-                center: null,
                 form: new Form({
                     name: null,
                     description: null,
                     route: null,
                     route_o: null,
                     addon: null,
+                    lat: null,
+                    lng: null,
+                    type: null,
                 }),
             };
         },
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();
-            ['name', 'description', 'route', 'route_o', 'addon'].forEach((field) => {
+            ['name', 'description', 'route', 'route_o', 'addon', 'type'].forEach((field) => {
                 this.form[field] = this.poi[field];
             });
         },
@@ -102,6 +125,18 @@
                 loaded: 'poi/isEmpty',
                 endpoint: 'poi/endpoint',
             }),
+            center: {
+                get() {
+                    if (this.poi) {
+                        return { lat: this.poi.lat, lng: this.poi.lng };
+                    }
+                    return { lat: 0, lng: 0 };
+                },
+                set(val) {
+                    this.form.lat = val.lat;
+                    this.form.lng = val.lng;
+                },
+            },
             types() {
                 return TYPES;
             },
@@ -124,10 +159,10 @@
                 setId: 'poi/setId',
             }),
             onSubmit() {
-                let url = `${this.endpoint}`;
-                if (this.isEditMode) {
-                    url = `${url}/${this.params.id}`;
-                    this.form.addField('_method', 'patch');
+                let url = '/api/poi';
+                if (this.$route.params.id) {
+                    url = `${url}/${this.$route.params.id}`;
+                    this.form.addField('_method', 'PATCH');
                 }
 
                 this.form.submit(url)
@@ -139,6 +174,9 @@
                         this.disableLoading();
                         this.$router.push({ name: 'company.accounts' });
                     });
+            },
+            markerMoved(e) {
+                this.center = { lat: e.latLng.lat(), lng: e.latLng.lng() };
             },
         },
     };

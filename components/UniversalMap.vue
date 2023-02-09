@@ -19,7 +19,6 @@
                 <gmap-marker
                     v-if="mylocation"
                     :position="mylocation"
-                    :clickable="true"
                     :icon="mylocationMarker"
                 />
                 <gmap-marker
@@ -45,7 +44,7 @@
                     v-for="poi in mapPois"
                     :key="`poi_`+poi.id"
                     :position="{ lat: poi.lat, lng: poi.lng }"
-                    :clickable="true"
+                    clickable
                     :title="poi.name"
                     :icon="getIcon(poi.type)"
                     @click="$router.push('/poi/' + poi.id)"

@@ -11,6 +11,7 @@
                         v-model="email"
                         label="Email"
                     />
+                    {{ email }}
                     <text-input
                         v-model="password"
                         label="Пароль"

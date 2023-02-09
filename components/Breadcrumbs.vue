@@ -17,7 +17,7 @@
                 >
                     <font-awesome-icon
                         icon="fa-arrow-right"
-                        class="mr-2"
+                        class="mr-1"
                         :style="{ height: '14px' }"
                     />
                     <router-link
