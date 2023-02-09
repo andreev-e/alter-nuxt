@@ -4,70 +4,7 @@
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
             <div class="col-12">
-                <form @submit.prevent="onSubmit">
-                    <client-only>
-                        <gmap-map
-                            ref="map"
-                            :zoom="12"
-                            map-type-id="terrain"
-                            :center="center"
-                        >
-                            <gmap-marker
-                                :position="center"
-                                draggable
-                                @dragend="markerMoved"
-                            />
-                        </gmap-map>
-                    </client-only>
-                    <text-input
-                        id="name"
-                        v-model="form.name"
-                        label="Название"
-                        :form="form"
-                        required
-                    />
-                    <select-input
-                        v-model="form.type"
-                        label="Категория"
-                        :options="types"
-                        required
-                    />
-                    <text-input
-                        id="description"
-                        v-model="form.description"
-                        label="Описание"
-                        multiline
-                        required
-                        :form="form"
-                    />
-                    <text-input
-                        id="route"
-                        v-model="form.route"
-                        label="Как добраться на машине"
-                        multiline
-                        :form="form"
-                    />
-                    <text-input
-                        id="route_o"
-                        v-model="form.route_o"
-                        label="Как добраться на общественном транспорте"
-                        multiline
-                        :form="form"
-                    />
-                    <text-input
-                        id="addon"
-                        v-model="form.addon"
-                        label="Примечание"
-                        multiline
-                        :form="form"
-                    />
-                    <button
-                        type="submit"
-                        class="btn btn-success"
-                    >
-                        Сохранить
-                    </button>
-                </form>
+                <poi-form :poi="poi" />
             </div>
         </div>
         <Footer />
@@ -79,13 +16,14 @@
     import { mapActions, mapGetters } from 'vuex';
     import { Form } from 'laravel-request-utils';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
-    import TextInput from '../../../components/ui/TextInput.vue';
     // eslint-disable-next-line import/extensions
     import { TYPES } from '../../../constants/index.js';
-    import SelectInput from '../../../components/ui/SelectInput.vue';
+    import PoiForm from '../../../components/forms/PoiForm.vue';
 
     export default {
-        components: { SelectInput, TextInput, Breadcrumbs },
+        components: {
+            PoiForm, Breadcrumbs,
+        },
         middleware: 'auth',
         data() {
             return {
@@ -98,15 +36,15 @@
                     lat: null,
                     lng: null,
                     type: null,
+                    links: null,
+                }, {
+                    removeNullValues: false,
                 }),
             };
         },
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();
-            ['name', 'description', 'route', 'route_o', 'addon', 'type'].forEach((field) => {
-                this.form[field] = this.poi[field];
-            });
         },
         head() {
             return {
@@ -158,26 +96,6 @@
                 get: 'poi/get',
                 setId: 'poi/setId',
             }),
-            onSubmit() {
-                let url = '/api/poi';
-                if (this.$route.params.id) {
-                    url = `${url}/${this.$route.params.id}`;
-                    this.form.addField('_method', 'PATCH');
-                }
-
-                this.form.submit(url)
-                    .then((data) => {
-                        this.setData(data);
-                        this.closeSlide();
-                    })
-                    .finally(() => {
-                        this.disableLoading();
-                        this.$router.push({ name: 'company.accounts' });
-                    });
-            },
-            markerMoved(e) {
-                this.center = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-            },
         },
     };
 </script>

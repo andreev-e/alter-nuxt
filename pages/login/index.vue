@@ -11,7 +11,6 @@
                         v-model="email"
                         label="Email"
                     />
-                    {{ email }}
                     <text-input
                         v-model="password"
                         label="Пароль"
@@ -22,7 +21,7 @@
                             class="btn btn-success"
                             type="submit"
                         >
-                            Submit
+                            Войти
                         </button>
                     </div>
                 </form>

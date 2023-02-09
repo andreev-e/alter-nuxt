@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <h2
                     v-if="poi.route"
                     id="route"
@@ -123,7 +123,7 @@
                 </h2>
                 <p>{{ poi.route }}</p>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <h2
                     v-if="poi.route_o"
                     id="route_o"
@@ -131,6 +131,17 @@
                     Как добраться на общественном транспорте
                 </h2>
                 <p>{{ poi.route_o }}</p>
+            </div>
+            <div
+                v-if="poi.links"
+                class="col-sm-4"
+            >
+                <h2 id="links">
+                    Ссылки
+                </h2>
+                <p>
+                    {{ poi.links }}
+                </p>
             </div>
             <div class="col-sm-12">
                 <h2
@@ -142,13 +153,13 @@
                 <p>{{ poi.addon }}</p>
                 <nuxt-link
                     to="/izbannoye"
-                    class="poi__card"
+                    class="btn btn-dark"
                 >
                     Построить маршрут с данной точкой
                 </nuxt-link>
                 <a
                     id="geo"
-                    class="button btn"
+                    class="btn btn-dark"
                     :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
                 >Навигация на точку</a>
             </div>

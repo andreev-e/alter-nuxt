@@ -6,6 +6,17 @@
                 v-if="$auth.user"
                 class="d-flex justify-content-between"
             >
+                <router-link
+                    to="/secure/poi/create"
+                    class="d-inline-block mr-1 mt-1"
+                    title="Добавить достопримечательность"
+                >
+                    <font-awesome-icon
+                        icon="fa-plus-circle"
+                        class="text-success"
+                        role="button"
+                    />
+                </router-link>
                 <nuxt-link
                     to="/secure"
                     class="d-inline-block mr-1 mt-1"

@@ -28,7 +28,7 @@
                 class="author"
             >
                 <nuxt-link
-                    v-if="$auth.user && $auth.user.username === poi.author"
+                    v-if="canEdit"
                     :to="`/secure/${type}/${poi.id}`"
                 >
                     <font-awesome-icon
@@ -68,6 +68,9 @@
                     return `${Math.round(this.poi.dist * 1000)}  м`;
                 }
                 return `${Math.round(dist, 1)} км`;
+            },
+            canEdit() {
+                return this.$auth.user && (this.$auth.user.username === this.poi.author || this.$auth.user.username === 'andreev');
             },
         },
     };
