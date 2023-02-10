@@ -43,7 +43,12 @@
                         @click.prevent="approve(poi.id)"
                     />
                     <font-awesome-icon
-                        v-if="canDelete"
+                        v-if="canDisprove"
+                        icon="fa-times-circle"
+                        @click.prevent="disprove(poi.id)"
+                    />
+                    <font-awesome-icon
+                        v-if="canEdit"
                         icon="fa-trash"
                         @click.prevent="del(poi.id)"
                     />
@@ -85,13 +90,19 @@
                 return `${Math.round(dist, 1)} км`;
             },
             canEdit() {
-                return this.$auth.user && (this.$auth.user.username === this.poi.author || this.$auth.user.username === 'andreev');
-            },
-            canDelete() {
-                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+                return this.$auth.user && (this.isAdmin || this.isOwner);
             },
             canApprove() {
-                return !this.poi.show && this.$auth.user && this.$auth.user.username === 'andreev';
+                return !this.poi.show && this.isAdmin;
+            },
+            canDisprove() {
+                return this.poi.show && this.isAdmin;
+            },
+            isOwner() {
+                return this.$auth.user && this.$auth.user.username === this.poi.author;
+            },
+            isAdmin() {
+                return this.$auth.user && this.$auth.user.username === 'andreev';
             },
         },
         methods: {
@@ -102,6 +113,11 @@
             },
             approve(id) {
                 Request.getInstance().post(`/api/poi/${id}/approve`).then(() => {
+                    this.$emit('reload');
+                });
+            },
+            disprove(id) {
+                Request.getInstance().post(`/api/poi/${id}/disprove`).then(() => {
                     this.$emit('reload');
                 });
             },

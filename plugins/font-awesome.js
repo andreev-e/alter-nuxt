@@ -22,6 +22,7 @@ import {
     faTrash,
     faCheck,
     faPlusCircle,
+    faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -39,6 +40,7 @@ library.add(
     faTrash,
     faCheck,
     faPlusCircle,
+    faTimesCircle,
 );
 
 /* add font awesome icon component */

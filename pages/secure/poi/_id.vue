@@ -4,9 +4,30 @@
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
             <div class="col-12">
+                <h1>Редактирование</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <poi-form :poi="poi" />
             </div>
         </div>
+        <template v-if="$route.params.id">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Фото</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <photo-form
+                        :images="poi?.images??[]"
+                        :path="`poi/${$route.params.id}`"
+                        @images="setImages"
+                    />
+                </div>
+            </div>
+        </template>
         <Footer />
     </div>
 </template>
@@ -19,10 +40,13 @@
     // eslint-disable-next-line import/extensions
     import { TYPES } from '../../../constants/index.js';
     import PoiForm from '../../../components/forms/PoiForm.vue';
+    import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
         components: {
-            PoiForm, Breadcrumbs,
+            PhotoForm,
+            PoiForm,
+            Breadcrumbs,
         },
         middleware: 'auth',
         data() {
@@ -95,7 +119,11 @@
             ...mapActions({
                 get: 'poi/get',
                 setId: 'poi/setId',
+                setProperty: 'poi/setProperty',
             }),
+            setImages(value) {
+                this.setProperty({ property: 'images', value });
+            },
         },
     };
 </script>

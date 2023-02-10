@@ -4,6 +4,11 @@
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
             <div class="col-12">
+                <h1>Создание</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <poi-form />
             </div>
         </div>
@@ -14,10 +19,12 @@
 <script>
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import PoiForm from '../../../components/forms/PoiForm.vue';
+    import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
         name: 'Create',
         components: {
+            PhotoForm,
             PoiForm,
             Breadcrumbs,
         },

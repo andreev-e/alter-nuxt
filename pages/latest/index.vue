@@ -14,6 +14,7 @@
         <Gallery
             :objects="pois"
             :loading="loadingPois"
+            @reload="fetchPois"
         />
         <div class="row">
             <div class="col-12">
