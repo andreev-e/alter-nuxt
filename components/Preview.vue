@@ -1,5 +1,5 @@
 <template>
-    <div class="d-inline mr-2 my-2 border-1">
+    <div class="d-inline mr-2 mb-2 border-1">
         <a
             v-if="full"
             :href="full"

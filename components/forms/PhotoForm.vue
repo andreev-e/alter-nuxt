@@ -1,20 +1,24 @@
 <template>
-    <div>
-        <preview
-            v-for="image in images"
-            :key="image.id"
-            :alt="`${image.id}`"
-            :url="image.preview"
-            :full="image.full"
-            role="button"
-            @click="remove(image.id)"
-        />
-        <input
-            ref="file"
-            type="file"
-            accept="image/*"
-            @change="selectImage"
-        >
+    <div class="row">
+        <div class="col-12 mb-2">
+            <preview
+                v-for="image in images"
+                :key="image.id"
+                :alt="`${image.id}`"
+                :url="image.preview"
+                :full="image.full"
+                role="button"
+                @click="remove(image.id)"
+            />
+        </div>
+        <div class="col-4">
+            <input
+                ref="file"
+                type="file"
+                accept="image/*"
+                @change="selectImage"
+            >
+        </div>
         <div class="col-4">
             <button
                 class="btn btn-success btn-sm float-right"
@@ -26,8 +30,8 @@
         </div>
 
         <div
-            v-if="currentImage"
-            class="progress"
+            v-if="progress"
+            class="col-4 progress"
         >
             <div
                 class="progress-bar progress-bar-info"
