@@ -11,7 +11,14 @@
                 <b-spinner />
             </div>
             <img
-                :src="'https://altertravel.ru/thumb.php?f=/images/' + poi.id + '.jpg'"
+                v-if="poi.thumb"
+                :src="poi.thumb"
+                class="img-fluid"
+                :alt="poi.name"
+            >
+            <img
+                v-else
+                src="https://via.placeholder.com/350"
                 class="img-fluid"
                 :alt="poi.name"
             >
@@ -128,16 +135,6 @@
 <style>
   .loading {
     opacity: 0.4;
-  }
-
-  .spinner {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.5);
   }
 
   .poi__card {

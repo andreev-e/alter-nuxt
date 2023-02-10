@@ -15,37 +15,14 @@
                 <div class="near">
                     <b-tabs>
                         <b-tab title="Фото">
-                            <div class="view_image">
-                                <div id="bigimage">
-                                    <img
-                                        :src="'https://altertravel.ru/full.php?f=/images/' + $route.params.id + '.jpg'"
-                                        class="img-fluid"
-                                        :alt="poi.name"
-                                    >
-                                </div>
-                                <div id="thumbs">
-                                    <div
-                                        v-for="i in 3"
-                                        :key="i"
-                                        class="gal-img"
-                                    >
-                                        <a
-                                            :href="`https://altertravel.ru/full.php?f=/images/${$route.params.id}/${i}.jpg`"
-                                        >
-                                            <img
-                                                :src="`https://altertravel.ru/thumb.php?f=/images/${$route.params.id}/${i}.jpg`"
-                                                :alt="poi.name"
-                                                class="img-fluid"
-                                            >
-                                        </a>
-                                    </div>
-                                </div>
-                                <p>
-                                    <nuxt-link :to="`/user/${poi.author}`">
-                                        {{ poi.author }}
-                                    </nuxt-link> {{ poi.date }} &copy; Все права на опубликованные
-                                    фотографии и видео принадлежат их авторам
-                                </p>
+                            <div class="d-flex flex-wrap">
+                                <preview
+                                    v-for="image in poi.images"
+                                    :key="image.id"
+                                    :alt="poi.name"
+                                    :url="image.preview"
+                                    :full="image.original"
+                                />
                             </div>
                         </b-tab>
                         <b-tab title="Где находится?">
@@ -181,10 +158,16 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
     import Gallery from '../../components/Gallery.vue';
+    import Preview from '../../components/Preview.vue';
 
     export default {
         components: {
-            Gallery, UniversalMap, Breadcrumbs, Fastnav, Comments,
+            Preview,
+            Gallery,
+            UniversalMap,
+            Breadcrumbs,
+            Fastnav,
+            Comments,
         },
         async fetch() {
             await this.setId(this.$route.params.id);

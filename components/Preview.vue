@@ -1,14 +1,32 @@
 <template>
-    <div class="d-inline mr-2 mb-2 border-1">
+    <div class="position-relative mr-2 mb-2">
+        <div
+            v-if="loading"
+            class="d-flex justify-content-center position-absolute w-100 h-100 bg-white"
+            style="opacity: 75%"
+        >
+            <b-spinner class="align-self-center" />
+        </div>
+        <div
+            v-else-if="canDelete"
+            class="position-absolute"
+        >
+            <font-awesome-icon
+                icon="fa-trash"
+                role="button"
+                class="text-white"
+                @click="$emit('delete')"
+            />
+        </div>
         <a
             v-if="full"
             :href="full"
+            target="_blank"
         >
             <img
                 class="preview"
                 :src="url"
                 :alt="alt"
-                @click="$emit('click')"
             >
         </a>
         <img
@@ -16,7 +34,6 @@
             class="preview"
             :src="url"
             :alt="alt"
-            @click="$emit('click')"
         >
     </div>
 </template>
@@ -38,14 +55,22 @@
                 type: String,
                 required: true,
             },
+            loading: {
+                type: Boolean,
+                default: false,
+            },
+            canDelete: {
+                type: Boolean,
+                default: false,
+            },
         },
-        emits: ['click'],
+        emits: ['delete'],
     };
 </script>
 
 <style scoped>
   .preview {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
   }
 </style>

@@ -1,15 +1,23 @@
 <template>
     <div class="row">
         <div class="col-12 mb-2">
-            <preview
-                v-for="image in images"
-                :key="image.id"
-                :alt="`${image.id}`"
-                :url="image.preview"
-                :full="image.full"
-                role="button"
-                @click="remove(image.id)"
-            />
+            <div class="d-flex flex-wrap">
+                <preview
+                    v-for="image in images"
+                    :key="image.id"
+                    :alt="`${image.id}`"
+                    :url="image.preview"
+                    :full="image.original"
+                    can-delete
+                    :loading="loading"
+                    @delete="remove(image.id)"
+                />
+                <preview
+                    v-if="previewImage"
+                    :url="previewImage"
+                    loading
+                />
+            </div>
         </div>
         <div class="col-4">
             <input
@@ -19,42 +27,6 @@
                 @change="selectImage"
             >
         </div>
-        <div class="col-4">
-            <button
-                class="btn btn-success btn-sm float-right"
-                :disabled="!currentImage"
-                @click="upload"
-            >
-                Загрузить
-            </button>
-        </div>
-
-        <div
-            v-if="progress"
-            class="col-4 progress"
-        >
-            <div
-                class="progress-bar progress-bar-info"
-                role="progressbar"
-                :aria-valuenow="progress"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                :style="{ width: progress + '%' }"
-            >
-                {{ progress }}%
-            </div>
-        </div>
-
-        <div v-if="previewImage">
-            <div>
-                <img
-                    class="preview my-3 w-25"
-                    :src="previewImage"
-                    alt=""
-                >
-            </div>
-        </div>
-
         <div
             v-if="message"
             class="alert alert-secondary"
@@ -87,7 +59,7 @@
                 message: null,
                 currentImage: null,
                 previewImage: null,
-                progress: 0,
+                loading: false,
             };
         },
         methods: {
@@ -95,30 +67,30 @@
                 this.currentImage = this.$refs.file.files.item(0);
                 if (this.currentImage) {
                     this.previewImage = URL.createObjectURL(this.currentImage);
-                    this.progress = 0;
                     this.message = '';
                     this.form.image = this.currentImage;
+                    this.upload();
                 }
             },
             upload() {
-                this.progress = 30;
-
                 this.form.submit(`/api/${this.path}/image`)
                     .then((response) => {
                         this.$emit('images', response);
-                        this.progress = 0;
                         this.previewImage = null;
+                        this.$refs.file.value = null;
                     })
                     .catch((err) => {
-                        this.progress = 0;
                         this.message = `Ошибка загрузки! ${err}`;
                         this.currentImage = null;
+                        this.$refs.file.value = null;
                     });
             },
             remove(id) {
+                this.loading = true;
                 Request.getInstance().delete(`/api/${this.path}/image/${id}`)
                     .then((response) => {
-                        this.$emit('images', response);
+                        this.$emit('images', response.data);
+                        this.loading = false;
                     });
             },
         },
