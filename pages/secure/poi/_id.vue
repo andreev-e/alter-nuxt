@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12">
                     <photo-form
-                        :images="poi?.images??[]"
+                        :images="poi.images"
                         :path="`poi/${$route.params.id}`"
                         @images="setImages"
                     />
