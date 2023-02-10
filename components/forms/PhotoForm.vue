@@ -2,10 +2,12 @@
     <div>
         <preview
             v-for="image in images"
-            :key="image.uuid"
-            :alt="image.uuid"
+            :key="image.id"
+            :alt="`${image.id}`"
             :url="image.preview"
-            :full="image.original"
+            :full="image.full"
+            role="button"
+            @click="remove(image.id)"
         />
         <input
             ref="file"
@@ -60,14 +62,14 @@
 </template>
 
 <script>
-    import { Form } from 'laravel-request-utils';
+    import { Form, Request } from 'laravel-request-utils';
     import Preview from '../Preview.vue';
 
     export default {
         name: 'PhotoForm',
         components: { Preview },
         props: {
-            images: { type: Array, required: true },
+            images: { type: Array, false: true, default: () => [] },
             path: { type: String, required: true },
         },
         emits: ['images'],
@@ -79,31 +81,40 @@
                     description: null,
                 }),
                 message: null,
-                currentImage: undefined,
-                previewImage: undefined,
+                currentImage: null,
+                previewImage: null,
                 progress: 0,
             };
         },
         methods: {
             selectImage() {
                 this.currentImage = this.$refs.file.files.item(0);
-                this.previewImage = URL.createObjectURL(this.currentImage);
-                this.progress = 0;
-                this.message = '';
-                this.form.image = this.currentImage;
+                if (this.currentImage) {
+                    this.previewImage = URL.createObjectURL(this.currentImage);
+                    this.progress = 0;
+                    this.message = '';
+                    this.form.image = this.currentImage;
+                }
             },
             upload() {
-                this.progress = 10;
+                this.progress = 30;
 
                 this.form.submit(`/api/${this.path}/image`)
                     .then((response) => {
                         this.$emit('images', response);
-                        this.progress = 100;
+                        this.progress = 0;
+                        this.previewImage = null;
                     })
                     .catch((err) => {
                         this.progress = 0;
                         this.message = `Ошибка загрузки! ${err}`;
-                        this.currentImage = undefined;
+                        this.currentImage = null;
+                    });
+            },
+            remove(id) {
+                Request.getInstance().delete(`/api/${this.path}/image/${id}`)
+                    .then((response) => {
+                        this.$emit('images', response);
                     });
             },
         },

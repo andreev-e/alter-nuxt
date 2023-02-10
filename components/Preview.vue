@@ -1,11 +1,24 @@
 <template>
-    <a :href="full">
+    <div class="d-inline mr-2 my-2 border-1">
+        <a
+            v-if="full"
+            :href="full"
+        >
+            <img
+                class="preview"
+                :src="url"
+                :alt="alt"
+                @click="$emit('click')"
+            >
+        </a>
         <img
+            v-else
             class="preview"
             :src="url"
             :alt="alt"
+            @click="$emit('click')"
         >
-    </a>
+    </div>
 </template>
 
 <script>
@@ -19,19 +32,20 @@
             full: {
                 type: String,
                 required: false,
-                default: '',
+                default: null,
             },
             alt: {
                 type: String,
                 required: true,
             },
         },
+        emits: ['click'],
     };
 </script>
 
 <style scoped>
   .preview {
-    width: 100px;
-    height: 100px;
+    width: 250px;
+    height: 250px;
   }
 </style>
