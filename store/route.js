@@ -2,7 +2,7 @@ import ModelModule from './base/ModelModule';
 
 class Route extends ModelModule {
     constructor() {
-        super('/route', { cached: false });
+        super('/route');
     }
 }
 

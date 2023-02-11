@@ -15,7 +15,7 @@
                 <div class="near">
                     <b-tabs>
                         <b-tab title="Фото">
-                            <div class="d-flex flex-wrap">
+                            <div class="d-flex flex-wrap py-3">
                                 <preview
                                     v-for="image in poi.images"
                                     :key="image.id"
@@ -23,6 +23,9 @@
                                     :url="image.preview"
                                     :full="image.original"
                                 />
+                                <nuxt-link :to="`/user/${poi.author}`">
+                                    &copy; {{ poi.copyright ?? poi.author }}
+                                </nuxt-link>
                             </div>
                         </b-tab>
                         <b-tab title="Где находится?">

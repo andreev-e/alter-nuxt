@@ -78,7 +78,7 @@
             location: { type: String, default: null },
             user: { type: String, default: null },
             categories: { type: Array, default: () => [] },
-            zoom: { type: Number, default: 12 },
+            zoom: { type: Number, default: 10 },
             thisIsPoi: { type: Boolean, default: false },
             route: { type: Number, default: null },
             start: { type: [Boolean, Object], default: false },

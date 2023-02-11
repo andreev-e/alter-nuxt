@@ -1,10 +1,16 @@
 <template>
     <b-row class="my-2">
-        <b-col cols="4">
+        <b-col
+            md="3"
+            cols="12"
+        >
             {{ label }}
             {{ required ? '*': '' }}
         </b-col>
-        <b-col cols="8">
+        <b-col
+            cols="12"
+            md="9"
+        >
             <b-form-select
                 v-model="val"
                 :required="required"
