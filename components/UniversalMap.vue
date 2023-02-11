@@ -10,7 +10,7 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="zoom"
+                :zoom="zoom??9"
                 map-type-id="terrain"
                 @dragend="fetchPois"
                 @zoom_changed="zoomChanged"
@@ -66,7 +66,10 @@
     export default {
         expose: ['fetchPois'],
         props: {
-            model: { type: Array, default: () => [] },
+            model: {
+                type: Array,
+                default: () => [],
+            },
             center: {
                 type: Object,
                 default: () => ({
@@ -74,16 +77,46 @@
                     lng: 45,
                 }),
             },
-            tag: { type: String, default: null },
-            location: { type: String, default: null },
-            user: { type: String, default: null },
-            categories: { type: Array, default: () => [] },
-            zoom: { type: Number, default: 10 },
-            thisIsPoi: { type: Boolean, default: false },
-            route: { type: Number, default: null },
-            start: { type: [Boolean, Object], default: false },
-            finish: { type: [Boolean, Object], default: false },
-            line: { type: String, default: null },
+            tag: {
+                type: String,
+                default: null,
+            },
+            location: {
+                type: String,
+                default: null,
+            },
+            user: {
+                type: String,
+                default: null,
+            },
+            categories: {
+                type: Array,
+                default: () => [],
+            },
+            zoom: {
+                type: Number,
+                default: 10,
+            },
+            thisIsPoi: {
+                type: Boolean,
+                default: false,
+            },
+            route: {
+                type: Number,
+                default: null,
+            },
+            start: {
+                type: [Boolean, Object],
+                default: false,
+            },
+            finish: {
+                type: [Boolean, Object],
+                default: false,
+            },
+            line: {
+                type: String,
+                default: null,
+            },
         },
         emits: ['update'],
         data() {

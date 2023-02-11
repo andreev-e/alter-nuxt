@@ -42,19 +42,23 @@
         <div class="logo col-sm-3">
             <nuxt-link :to="'/'">
                 <img
+                    class="img-fluid"
                     src="https://altertravel.ru/i/logo.png"
                     alt="Альтернативный путеводитель"
                 >
             </nuxt-link>
         </div>
-        <div class="header-menu col-sm-9">
-            <Menu />
+        <div class="header-menu col-sm-9 d-flex">
+            <Menu class="align-self-end" />
         </div>
     </div>
 </template>
 
 <script>
+    import Menu from './Menu.vue';
+
     export default {
+        components: { Menu },
         methods: {
             logout() {
                 this.$auth.logout();
@@ -76,7 +80,6 @@
   .header-menu {
     color: #fff;
     font-size: 20px;
-    margin-top: 30px;
     line-height: 22px;
   }
 </style>

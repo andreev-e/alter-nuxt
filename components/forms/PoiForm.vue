@@ -63,6 +63,19 @@
             multiline
             :form="form"
         />
+        <h2>Метки</h2>
+        <div class="d-flex flex-wrap">
+            <input-checkbox
+                v-for="tag in tags"
+                :id="tag.name"
+                :key="tag.id"
+                class="px-1 py-1 cursor-pointer"
+                :class="{ 'bg-secondary': tag.active }"
+                :label="tag.name"
+                :model-value="isChecked(tag.id)"
+                @update="onInput($event, tag.id)"
+            />
+        </div>
         <button
             type="submit"
             class="btn btn-success"
@@ -75,14 +88,17 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form } from 'laravel-request-utils';
-    // eslint-disable-next-line import/extensions
-    import { TYPES } from '../../constants/index.js';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapGetters } from 'vuex';
+    import { TYPES } from '../../constants/index';
     import TextInput from '../ui/TextInput.vue';
     import SelectInput from '../ui/SelectInput.vue';
+    import InputCheckbox from '../ui/InputCheckbox.vue';
 
     export default {
         name: 'PoiForm',
         components: {
+            InputCheckbox,
             SelectInput,
             TextInput,
         },
@@ -106,12 +122,16 @@
                     lng: null,
                     type: null,
                     links: null,
+                    tags: [],
                 }, {
                     removeNullValues: false,
                 }),
             };
         },
         computed: {
+            ...mapGetters({
+                tags: 'tags/items',
+            }),
             center: {
                 get() {
                     if (this.poi) {
@@ -144,6 +164,9 @@
             poi(poi) {
                 ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links'].forEach((field) => {
                     this.form[field] = poi[field];
+                });
+                ['tags'].forEach((field) => {
+                    this.form[field] = [...poi[field]];
                 });
             },
         },
@@ -182,6 +205,19 @@
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng(),
                 };
+            },
+            isChecked(value) {
+                return this.form.tags.find((item) => item.id === value) !== undefined;
+            },
+            onInput(isChecked, value) {
+                if (isChecked && !this.isChecked(value)) {
+                    this.form.tags.push(value);
+                }
+                if (!isChecked) {
+                    // eslint-disable-next-line eqeqeq
+                    const index = this.form.tags.findIndex((item) => item == value);
+                    this.form.tags.splice(index, 1);
+                }
             },
         },
     };

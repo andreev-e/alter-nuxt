@@ -4,7 +4,7 @@
         <li class="region_select">
             <a href="#">
                 Регион
-                <span>выбрать</span>
+                <span class="d-none d-sm-block">выбрать</span>
             </a>
             <ul>
                 <li
@@ -26,7 +26,7 @@
         <li class="region_select">
             <a href="#">
                 Метки
-                <span>выбрать</span>
+                <span class="d-none d-sm-block">выбрать</span>
             </a>
             <ul>
                 <li
@@ -42,13 +42,13 @@
         <li>
             <nuxt-link to="/route">
                 Маршруты
-                <span>готовые треки</span>
+                <span class="d-none d-sm-block">готовые треки</span>
             </nuxt-link>
         </li>
         <li>
             <nuxt-link to="/user">
                 Авторы
-                <span>путеводителя</span>
+                <span class="d-none d-sm-block">путеводителя</span>
             </nuxt-link>
         </li>
 
@@ -61,7 +61,7 @@
         <li>
             <nuxt-link to="/latest">
                 Новые
-                <span>места</span>
+                <span class="d-none d-sm-block">места</span>
             </nuxt-link>
         </li>
         <!--      <li>-->
@@ -137,7 +137,6 @@
     background-color: #A2B9C8;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
-    height: 46px;
     padding: 4px 4px;
     margin-left: 1px;
   }
@@ -189,9 +188,6 @@
   }
 
   .region_select a {
-    margin: 0;
-    padding: 0;
-    line-height: 17px;
     overflow: hidden;
   }
 

@@ -7,6 +7,13 @@
                 <h1 class="view">
                     {{ poi.name }}
                 </h1>
+                <bage
+                    v-for="tag in poi.tags"
+                    :key="tag.id"
+                    class="bg-primary text-white"
+                >
+                    {{ tag.name }}
+                </bage>
             </div>
         </div>
         <Fastnav />
@@ -29,30 +36,32 @@
                             </div>
                         </b-tab>
                         <b-tab title="Где находится?">
-                            <client-only>
-                                <universal-map
-                                    :center="{ lat: poi.lat, lng: poi.lng }"
-                                    :zoom="7"
-                                    this-is-poi
-                                />
-                            </client-only>
-                            <h2 id="coord">
-                                Координаты
-                            </h2>
-                            <div class="coords plusplus_sl">
-                                <div class="qr">
-                                    <img
-                                        src="https://altertravel.ru/qr.php?lng=43.455948&amp;lat=43.123161"
-                                        alt="QR code"
-                                    >
-                                </div>
-                                <div class="points">
-                                    <span>{{ poi.lat }},&nbsp;{{ poi.lng }}</span>
-                                    <a href="https://altertravel.ru/generate_kml.php?id=22728">
-                                        <div class="dwnl-kml">
-                                            <span>скачать KML файл</span>
-                                        </div>
-                                    </a>
+                            <div class="py-3 px-3">
+                                <client-only>
+                                    <universal-map
+                                        :center="{ lat: poi.lat, lng: poi.lng }"
+                                        :zoom="7"
+                                        this-is-poi
+                                    />
+                                </client-only>
+                                <h2 id="coord">
+                                    Координаты
+                                </h2>
+                                <div class="coords plusplus_sl">
+                                    <div class="qr">
+                                        <img
+                                            src="https://altertravel.ru/qr.php?lng=43.455948&amp;lat=43.123161"
+                                            alt="QR code"
+                                        >
+                                    </div>
+                                    <div class="points">
+                                        <span>{{ poi.lat }},&nbsp;{{ poi.lng }}</span>
+                                        <a href="https://altertravel.ru/generate_kml.php?id=22728">
+                                            <div class="dwnl-kml">
+                                                <span>скачать KML файл</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </b-tab>
@@ -162,9 +171,11 @@
     import UniversalMap from '../../components/UniversalMap.vue';
     import Gallery from '../../components/Gallery.vue';
     import Preview from '../../components/Preview.vue';
+    import Bage from '../../components/ui/Bage.vue';
 
     export default {
         components: {
+            Bage,
             Preview,
             Gallery,
             UniversalMap,

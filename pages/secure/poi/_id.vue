@@ -33,9 +33,8 @@
 </template>
 
 <script>
-  // eslint-disable-next-line import/no-extraneous-dependencies
+    // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import { Form } from 'laravel-request-utils';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     // eslint-disable-next-line import/extensions
     import { TYPES } from '../../../constants/index.js';
@@ -49,23 +48,6 @@
             Breadcrumbs,
         },
         middleware: 'auth',
-        data() {
-            return {
-                form: new Form({
-                    name: null,
-                    description: null,
-                    route: null,
-                    route_o: null,
-                    addon: null,
-                    lat: null,
-                    lng: null,
-                    type: null,
-                    links: null,
-                }, {
-                    removeNullValues: false,
-                }),
-            };
-        },
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();
