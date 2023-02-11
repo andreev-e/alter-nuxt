@@ -10,7 +10,7 @@
             <gmap-map
                 ref="map"
                 :center="center"
-                :zoom="zoom??9"
+                :zoom="zoom"
                 map-type-id="terrain"
                 @dragend="fetchPois"
                 @zoom_changed="zoomChanged"
@@ -223,7 +223,7 @@
             getIcon(name) {
                 const type = this.getTypeByName(name);
                 return {
-                    path: (type ? Icons[type.icon] : Icons.faCircleExclamation)?.icon[4].toString(),
+                    path: (type ? Icons[type.icon] : Icons.faCircleExclamation).icon[4].toString(),
                     fillColor: type.color ?? '#FF0000',
                     fillOpacity: 1,
                     strokeColor: '#ffffff',
