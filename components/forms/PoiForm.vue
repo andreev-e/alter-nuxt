@@ -166,7 +166,7 @@
                     this.form[field] = poi[field];
                 });
                 ['tags'].forEach((field) => {
-                    this.form[field] = [...poi[field]];
+                    this.form[field] = poi[field].map((tag) => tag.id);
                 });
             },
         },
@@ -207,7 +207,7 @@
                 };
             },
             isChecked(value) {
-                return this.form.tags.find((item) => item.id === value) !== undefined;
+                return this.form.tags.find((item) => item === value) !== undefined;
             },
             onInput(isChecked, value) {
                 if (isChecked && !this.isChecked(value)) {

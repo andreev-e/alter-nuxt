@@ -31,7 +31,7 @@
                                     :full="image.original"
                                 />
                                 <nuxt-link :to="`/user/${poi.author}`">
-                                    &copy; {{ poi.copyright ?? poi.author }}
+                                    &copy; {{ poi.copyright ? poi.copyright : poi.author }}
                                 </nuxt-link>
                             </div>
                         </b-tab>
