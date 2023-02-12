@@ -20,7 +20,7 @@
             :center="center"
         />
         <Gallery
-            :objects="mapPois.length ? mapPois : pois.slice(0,4)"
+            :objects="mapPois.length ? mapPois : pois.slice(0,3)"
         />
         <Comments
             link-objects
