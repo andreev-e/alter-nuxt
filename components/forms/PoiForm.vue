@@ -13,6 +13,9 @@
                     @dragend="markerMoved"
                 />
             </gmap-map>
+            <div class="text-center">
+                {{ form.lat }};{{ form.lng }}
+            </div>
         </client-only>
         <text-input
             id="name"
