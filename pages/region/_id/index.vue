@@ -94,6 +94,7 @@
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
                 tag: 'tag/model',
+                tagLoaded: 'tag/isEmpty',
             }),
 
             h1() {
@@ -128,13 +129,13 @@
                 return this.type ? [this.type] : null;
             },
             center() {
-                if (this.tag) {
+                if (this.tagLoaded) {
                     return {
                         lat: this.tag.lat,
                         lng: this.tag.lng,
                     };
                 }
-                return null;
+                return { lat: 0, lng: 0 };
             },
         },
         watch: {

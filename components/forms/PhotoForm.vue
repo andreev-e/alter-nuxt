@@ -19,7 +19,10 @@
                 />
             </div>
         </div>
-        <div class="col-4">
+        <div
+            v-if="!loading"
+            class="col-4"
+        >
             <input
                 ref="file"
                 type="file"

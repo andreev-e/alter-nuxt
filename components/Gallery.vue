@@ -3,7 +3,7 @@
         <div
             v-for="poi in objects"
             :key="poi.id"
-            class="col-sm-3"
+            class="col-md-4 col-12 col-sm-6"
         >
             <PoiCard
                 :poi="poi"

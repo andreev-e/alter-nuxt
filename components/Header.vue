@@ -39,17 +39,17 @@
                 </router-link>
             </div>
         </div>
-        <div class="logo col-sm-3">
+        <div class="logo col-sm-12 col-md-3 text-center">
             <nuxt-link :to="'/'">
                 <img
-                    class="img-fluid"
+                    class="img-fluid mb-3"
                     src="https://altertravel.ru/i/logo.png"
                     alt="Альтернативный путеводитель"
                 >
             </nuxt-link>
         </div>
-        <div class="header-menu col-sm-9 d-flex">
-            <Menu class="align-self-end" />
+        <div class="header-menu col-sm-12 col-md-9 d-flex text-center justify-content-around">
+            <Menu class="align-self-end " />
         </div>
     </div>
 </template>
@@ -70,7 +70,8 @@
 
 <style scoped>
   .header {
-    padding: 10px 0;
+    padding-top: 5px;
+    padding-bottom: 0;
   }
 
   .row {

@@ -53,7 +53,7 @@
         data() {
             return {
                 loadingTag: true,
-                center: {},
+                center: { lat: 0, lng: 0 },
                 page: 1,
                 zoom: 12,
                 reZoomInitialized: false,

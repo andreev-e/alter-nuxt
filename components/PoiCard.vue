@@ -18,7 +18,7 @@
             >
             <img
                 v-else
-                src="https://via.placeholder.com/350"
+                src="https://via.placeholder.com/600"
                 class="img-fluid"
                 :alt="poi.name"
             >

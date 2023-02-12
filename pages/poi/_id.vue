@@ -10,9 +10,17 @@
                 <bage
                     v-for="tag in poi.tags"
                     :key="tag.id"
-                    class="bg-primary text-white"
+                    class="bg-primary"
+                    :to="tag.url"
+                    :url="tag.url"
                 >
                     {{ tag.name }}
+                </bage>
+                <bage class="bg-secondary text-white">
+                    {{ poi.views }} просмотров{{ poi.views_month ? `, за месяц ${poi.views_month}` : '' }}{{ poi.views_today ? `, сегодня ${poi.views_today}` : '' }}
+                </bage>
+                <bage class="bg-light">
+                    {{ poi.comments }} комментариев
                 </bage>
             </div>
         </div>
@@ -39,6 +47,7 @@
                             <div class="py-3 px-3">
                                 <client-only>
                                     <universal-map
+                                        v-if="loaded"
                                         :center="{ lat: poi.lat, lng: poi.lng }"
                                         :zoom="7"
                                         this-is-poi

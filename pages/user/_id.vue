@@ -26,7 +26,7 @@
             :center="mapCenter"
         />
         <Gallery
-            :objects="mapPois"
+            :objects="mapPois.length ? mapPois : []"
         />
         <Footer />
     </div>
@@ -35,11 +35,15 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import UniversalMap from '../../components/UniversalMap.vue';
+    import Gallery from '../../components/Gallery.vue';
 
     export default {
+        components: { Gallery, UniversalMap, Breadcrumbs },
         data() {
             return {
-                location: {},
+                location: { lat: 0, lng: 0 },
                 mapPois: [],
             };
         },
