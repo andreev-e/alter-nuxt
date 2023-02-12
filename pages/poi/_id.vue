@@ -19,7 +19,10 @@
                 <bage class="bg-secondary text-white">
                     {{ poi.views }} просмотров{{ poi.views_month ? `, за месяц ${poi.views_month}` : '' }}{{ poi.views_today ? `, сегодня ${poi.views_today}` : '' }}
                 </bage>
-                <bage class="bg-light">
+                <bage
+                    v-if="poi.comments"
+                    class="bg-light"
+                >
                     {{ poi.comments }} комментариев
                 </bage>
             </div>
@@ -49,7 +52,7 @@
                                     <universal-map
                                         v-if="loaded"
                                         :center="{ lat: poi.lat, lng: poi.lng }"
-                                        :zoom="7"
+                                        :zoom="10"
                                         this-is-poi
                                     />
                                 </client-only>

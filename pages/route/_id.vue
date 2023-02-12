@@ -70,8 +70,16 @@
                     <Gallery
                         :objects="[]"
                     />
+
                     <div class="route_photoes">
                         <h2>Фото</h2>
+                        <preview
+                            v-for="image in route.images"
+                            :key="image.id"
+                            :alt="route.name"
+                            :url="image.preview"
+                            :full="image.original"
+                        />
                         <p>© Все права на опубликованные фотографии принадлежат автору публикации.</p>
                     </div>
                 </div>
@@ -91,21 +99,19 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import Comments from '../../components/Comments.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
+    import Preview from '../../components/Preview.vue';
+    import Gallery from '../../components/Gallery.vue';
 
     export default {
         components: {
+            Gallery,
+            Preview,
             UniversalMap,
             Comments,
             Breadcrumbs,
         },
         data() {
             return {
-                crumbs: [
-                    {
-                        name: 'Маршруты',
-                        to: '/routes',
-                    },
-                ],
                 page: 1,
             };
         },
@@ -151,6 +157,17 @@
                     return { lat: parseFloat(finish[0]), lng: parseFloat(finish[1]) };
                 }
                 return { lat: 0, lng: 0 };
+            },
+            crumbs() {
+                return [
+                    {
+                        name: 'Маршруты',
+                        url: '/route',
+                    },
+                    {
+                        name: this.route.name,
+                    },
+                ];
             },
         },
         methods: {

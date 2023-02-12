@@ -114,17 +114,17 @@
         },
         methods: {
             del(id) {
-                Request.getInstance().delete(`/api/poi/${id}`).then(() => {
+                Request.getInstance().delete(`/api/${this.type}/${id}`).then(() => {
                     this.$emit('reload');
                 });
             },
             approve(id) {
-                Request.getInstance().post(`/api/poi/${id}/approve`).then(() => {
+                Request.getInstance().post(`/api/${this.type}/${id}/approve`).then(() => {
                     this.$emit('reload');
                 });
             },
             disprove(id) {
-                Request.getInstance().post(`/api/poi/${id}/disprove`).then(() => {
+                Request.getInstance().post(`/api/${this.type}/${id}/disprove`).then(() => {
                     this.$emit('reload');
                 });
             },
