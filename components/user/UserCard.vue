@@ -12,7 +12,7 @@
                     v-else
                     src="https://via.placeholder.com/600"
                     class="img-fluid"
-                    :alt="empty"
+                    alt="empty"
                 >
             </nuxt-link>
         </div>
