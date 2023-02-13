@@ -25,9 +25,7 @@
             :zoom="5"
             :center="mapCenter"
         />
-        <Gallery
-            :objects="mapPois.length ? mapPois : []"
-        />
+        {{ mapPois }}
         <Footer />
     </div>
 </template>
@@ -37,10 +35,9 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
-    import Gallery from '../../components/Gallery.vue';
 
     export default {
-        components: { Gallery, UniversalMap, Breadcrumbs },
+        components: { UniversalMap, Breadcrumbs },
         data() {
             return {
                 location: { lat: 0, lng: 0 },
@@ -48,7 +45,7 @@
             };
         },
         async fetch() {
-            this.setId(this.$route.params.id);
+            await this.setId(this.$route.params.id);
             await this.getUser();
         },
         head: {

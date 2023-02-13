@@ -95,6 +95,7 @@ export default {
     axios: {
         baseURL: process.env.API_URL,
         proxy: true,
+        credentials: true,
     },
     proxy: {
         '/api': 'https://api.altertravel.ru/',

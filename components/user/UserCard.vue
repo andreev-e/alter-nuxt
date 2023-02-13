@@ -4,7 +4,7 @@
             <nuxt-link :to="`/user/${user.username}`">
                 <img
                     class="img-fluid"
-                    :src="`https://altertravel.ru/authors/${user.username}.jpg`"
+                    :src="user.thumb"
                     :alt="user.username"
                 >
             </nuxt-link>
