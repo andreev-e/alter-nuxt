@@ -31,18 +31,20 @@
                 об объекте
                 {{ comment.object_name }}
             </router-link>
-            <font-awesome-icon
-                v-if="canEdit"
-                icon="fa-edit"
-                role="button"
-                @click="edit(comment.commentid)"
-            />
-            <font-awesome-icon
-                v-if="canDelete"
-                icon="fa-trash"
-                role="button"
-                @click="del(comment.commentid)"
-            />
+            <client-only>
+                <font-awesome-icon
+                    v-if="canEdit"
+                    icon="fa-edit"
+                    role="button"
+                    @click="edit(comment.commentid)"
+                />
+                <font-awesome-icon
+                    v-if="canDelete"
+                    icon="fa-trash"
+                    role="button"
+                    @click="del(comment.commentid)"
+                />
+            </client-only>
         </div>
         <comment-form
             v-if="editing"

@@ -8,13 +8,17 @@
                 </h1>
                 <form @submit.prevent="doLogin">
                     <text-input
+                        id="email"
                         v-model="email"
                         label="Email"
+                        :form="form"
                     />
                     <text-input
+                        id="password"
                         v-model="password"
                         label="Пароль"
                         type="password"
+                        :form="form"
                     />
                     <div>
                         <button
@@ -32,6 +36,7 @@
 </template>
 
 <script>
+    import { Form } from 'laravel-request-utils';
     import TextInput from '../../components/ui/TextInput.vue';
 
     export default {
@@ -40,6 +45,18 @@
             return {
                 email: '',
                 password: '',
+                form: new Form({
+                    name: null,
+                    description: null,
+                    route: null,
+                    route_o: null,
+                    addon: null,
+                    lat: null,
+                    lng: null,
+                    type: null,
+                    links: null,
+                    tags: [],
+                }),
             };
         },
         created() {
@@ -53,8 +70,8 @@
                     const data = { email: this.email, password: this.password };
                     await this.$auth
                         .loginWith('laravelSanctum', { data });
-                } catch (err) {
-                    console.log(err);
+                } catch (res) {
+                    console.log(res);
                 }
             },
         },

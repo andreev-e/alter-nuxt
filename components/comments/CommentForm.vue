@@ -20,7 +20,7 @@
             variant="primary"
             @click.stop="addComment"
         >
-            Отправить
+            {{ commentId ? 'Отредактировать' : 'Отправить' }}
         </b-button>
     </form>
 </template>
@@ -52,7 +52,7 @@
                 this.form.addField('id', this.id);
                 this.form.addField('type', this.type);
                 let url = '/api/comment';
-                if (this.id) {
+                if (this.commentId) {
                     this.form.addField('_method', 'PATCH');
                     url += `/${this.commentId}`;
                 }

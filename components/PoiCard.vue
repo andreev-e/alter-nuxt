@@ -34,32 +34,35 @@
             <div
                 class="author"
             >
-                <nuxt-link
-                    v-if="canEdit"
-                    :to="`/secure/${type}/${poi.id}`"
-                >
-                    <font-awesome-icon
-                        icon="fa-edit"
-                    />
-                </nuxt-link>
-                <span v-else>{{ poi.author }}</span>
-                <span class="text-dark">
-                    <font-awesome-icon
-                        v-if="canApprove"
-                        icon="fa-check"
-                        @click.prevent="approve(poi.id)"
-                    />
-                    <font-awesome-icon
-                        v-if="canDisprove"
-                        icon="fa-times-circle"
-                        @click.prevent="disprove(poi.id)"
-                    />
-                    <font-awesome-icon
+                <client-only>
+                    <nuxt-link
                         v-if="canEdit"
-                        icon="fa-trash"
-                        @click.prevent="del(poi.id)"
-                    />
-                </span>
+                        :to="`/secure/${type}/${poi.id}`"
+                    >
+                        <font-awesome-icon
+                            icon="fa-edit"
+                        />
+                    </nuxt-link>
+                    <span v-else>{{ poi.author }}</span>
+
+                    <span class="text-dark">
+                        <font-awesome-icon
+                            v-if="canApprove"
+                            icon="fa-check"
+                            @click.prevent="approve(poi.id)"
+                        />
+                        <font-awesome-icon
+                            v-if="canDisprove"
+                            icon="fa-times-circle"
+                            @click.prevent="disprove(poi.id)"
+                        />
+                        <font-awesome-icon
+                            v-if="canEdit"
+                            icon="fa-trash"
+                            @click.prevent="del(poi.id)"
+                        />
+                    </span>
+                </client-only>
             </div>
         </div>
     </nuxt-link>
