@@ -5,7 +5,7 @@
     >
         <div :class="loading ? 'poi_card loading' : 'poi__content'">
             <div
-                v-if="loading"
+                v-if="loading || loadingOne"
                 class="spinner"
             >
                 <b-spinner />
@@ -33,35 +33,38 @@
             </div>
             <div
                 class="author"
+                style="opacity: 0.8"
             >
                 <client-only>
-                    <nuxt-link
-                        v-if="canEdit"
-                        :to="`/secure/${type}/${poi.id}`"
-                    >
-                        <font-awesome-icon
-                            icon="fa-edit"
-                        />
-                    </nuxt-link>
-                    <span v-else>{{ poi.author }}</span>
-
-                    <span class="text-dark">
+                    <div class="bg-white">
+                        <nuxt-link
+                            v-if="canEdit"
+                            :to="`/secure/${type}/${poi.id}`"
+                        >
+                            <font-awesome-icon
+                                icon="fa-edit"
+                                class="m-2 h4 text-primary"
+                            />
+                        </nuxt-link>
                         <font-awesome-icon
                             v-if="canApprove"
                             icon="fa-check"
-                            @click.prevent="approve(poi.id)"
+                            class="m-2 h4 text-success"
+                            @click.prevent="approve"
                         />
                         <font-awesome-icon
                             v-if="canDisprove"
                             icon="fa-times-circle"
-                            @click.prevent="disprove(poi.id)"
+                            class="m-2 h4 text-warning"
+                            @click.prevent="disprove"
                         />
                         <font-awesome-icon
                             v-if="canEdit"
                             icon="fa-trash"
-                            @click.prevent="del(poi.id)"
+                            class="m-2 h4 text-danger"
+                            @click.prevent="del"
                         />
-                    </span>
+                    </div>
                 </client-only>
             </div>
         </div>
@@ -70,6 +73,8 @@
 
 <script>
     import { Request } from 'laravel-request-utils';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapMutations } from 'vuex';
 
     export default {
         name: 'PoiCard',
@@ -88,6 +93,11 @@
             },
         },
         emits: ['reload'],
+        data() {
+            return {
+                loadingOne: false,
+            };
+        },
         computed: {
             distance() {
                 const dist = Math.round(this.poi.dist);
@@ -116,20 +126,31 @@
             },
         },
         methods: {
-            del(id) {
-                Request.getInstance().delete(`/api/${this.type}/${id}`).then(() => {
-                    this.$emit('reload');
-                });
+            ...mapMutations({
+                updateOne: 'poisPaginated/updateOne',
+            }),
+            del() {
+                this.loadingOne = true;
+                Request.getInstance().delete(`/api/${this.type}/${this.poi.id}`)
+                    .then(() => {
+                        this.$emit('reload');
+                        this.loadingOne = false;
+                    });
             },
-            approve(id) {
-                Request.getInstance().post(`/api/${this.type}/${id}/approve`).then(() => {
-                    this.$emit('reload');
-                });
+            changeVisibility(action) {
+                this.loadingOne = true;
+                Request.getInstance().post(`/api/${this.type}/${this.poi.id}/${action}`)
+                    .then(({ data }) => {
+                        this.updateOne(data.data);
+                    }).finally(() => {
+                        this.loadingOne = false;
+                    });
             },
-            disprove(id) {
-                Request.getInstance().post(`/api/${this.type}/${id}/disprove`).then(() => {
-                    this.$emit('reload');
-                });
+            approve() {
+                this.changeVisibility('approve');
+            },
+            disprove() {
+                this.changeVisibility('disprove');
             },
         },
     };
@@ -175,9 +196,8 @@
   .author {
     position: absolute;
     z-index: 1;
-    width: 100%;
     top:15px;
-    right:20px;
+    right:15px;
     text-align: right;
     font-size: 1em;
     color: rgba(255, 255, 255, 1);
