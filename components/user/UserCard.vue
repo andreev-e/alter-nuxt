@@ -3,9 +3,16 @@
         <div class="col-2">
             <nuxt-link :to="`/user/${user.username}`">
                 <img
+                    v-if="user.thumb"
                     class="img-fluid"
                     :src="user.thumb"
                     :alt="user.username"
+                >
+                <img
+                    v-else
+                    src="https://via.placeholder.com/600"
+                    class="img-fluid"
+                    :alt="empty"
                 >
             </nuxt-link>
         </div>
