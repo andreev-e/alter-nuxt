@@ -46,7 +46,7 @@
         data() {
             return {
                 mapPois: [],
-                center: {},
+                center: { lat: 0, lng: 0 },
                 categories: [...TYPES],
             };
         },

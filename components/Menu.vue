@@ -64,18 +64,12 @@
                 <span class="d-none d-sm-block">места</span>
             </nuxt-link>
         </li>
-        <!--      <li>-->
-        <!--        <a href="/catalog/?order=order">-->
-        <!--          Маршруты-->
-        <!--          <span>Готовые треки</span>-->
-        <!--        </a>-->
-        <!--      </li>-->
-        <!--      <li>-->
-        <!--        <a href="/catalog/?order=order">-->
-        <!--          Планирование-->
-        <!--          <span>строим маршрут с точками</span>-->
-        <!--        </a>-->
-        <!--      </li>-->
+    <!--      <li>-->
+    <!--        <a href="/catalog/?order=order">-->
+    <!--          Планирование-->
+    <!--          <span>строим маршрут с точками</span>-->
+    <!--        </a>-->
+    <!--      </li>-->
     </ul>
 </template>
 
