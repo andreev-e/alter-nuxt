@@ -15,6 +15,7 @@
                 <preview
                     v-if="previewImage"
                     :url="previewImage"
+                    alt="preview"
                     loading
                 />
             </div>

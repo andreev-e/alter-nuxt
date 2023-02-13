@@ -137,13 +137,13 @@
             }),
             center: {
                 get() {
-                    if (this.poi) {
+                    if (this.poi && this.poi.lat && this.poi.lng) {
                         return {
                             lat: this.poi.lat,
                             lng: this.poi.lng,
                         };
                     }
-                    if (this.form) {
+                    if (this.form && this.form.lat && this.form.lng) {
                         return {
                             lat: this.form.lat,
                             lng: this.form.lng,
@@ -154,10 +154,7 @@
                         lng: 0,
                     };
                 },
-                set(val) {
-                    this.form.lat = val.lat;
-                    this.form.lng = val.lng;
-                },
+                set() { },
             },
             types() {
                 return TYPES;
@@ -199,8 +196,12 @@
                 }
 
                 this.form.submit(url)
-                    .then(() => {
-                        this.$router.back();
+                    .then((result) => {
+                        if (this.$route.params.id) {
+                            this.$router.push('/secure/');
+                        } else {
+                            this.$router.push(`/secure/poi/${result.data.id}`);
+                        }
                     });
             },
             markerMoved(e) {
@@ -208,6 +209,8 @@
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng(),
                 };
+                this.form.lat = e.latLng.lat();
+                this.form.lng = e.latLng.lng();
             },
             isChecked(value) {
                 return this.form.tags.find((item) => item === value) !== undefined;

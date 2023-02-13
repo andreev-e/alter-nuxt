@@ -19,12 +19,10 @@
 <script>
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import PoiForm from '../../../components/forms/PoiForm.vue';
-    import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
         name: 'Create',
         components: {
-            PhotoForm,
             PoiForm,
             Breadcrumbs,
         },

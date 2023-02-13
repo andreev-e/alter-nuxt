@@ -24,14 +24,14 @@
             target="_blank"
         >
             <img
-                class="preview"
+                class="img-fluid"
                 :src="url"
                 :alt="alt"
             >
         </a>
         <img
             v-else
-            class="preview"
+            class="img-fluid"
             :src="url"
             :alt="alt"
         >
@@ -67,10 +67,3 @@
         emits: ['delete'],
     };
 </script>
-
-<style scoped>
-  .preview {
-    width: 350px;
-    height: 350px;
-  }
-</style>
