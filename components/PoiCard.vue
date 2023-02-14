@@ -127,7 +127,8 @@
         },
         methods: {
             ...mapMutations({
-                updateOne: 'poisPaginated/updateOne',
+                updateOnePoi: 'poisPaginated/updateOne',
+                updateOneRoute: 'routesPaginated/updateOne',
             }),
             del() {
                 this.loadingOne = true;
@@ -141,7 +142,12 @@
                 this.loadingOne = true;
                 Request.getInstance().post(`/api/${this.type}/${this.poi.id}/${action}`)
                     .then(({ data }) => {
-                        this.updateOne(data.data);
+                        if (this.type === 'poi') {
+                            this.updateOnePoi(data.data);
+                        }
+                        if (this.type === 'route') {
+                            this.updateOneRoute(data.data);
+                        }
                     }).finally(() => {
                         this.loadingOne = false;
                     });

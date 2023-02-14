@@ -4,8 +4,7 @@ import LocalStorage from '../utils/LocalStorage';
 Request.setConfig({
     autoRequestCsrfCookie: true,
     csrfCookieUrl: '/api/sanctum/csrf-cookie',
-    headers: {},
-    withCredentials: false,
+    withCredentials: true,
 });
 
 export default class BaseModule {
@@ -13,7 +12,8 @@ export default class BaseModule {
         this.defaultState = () => ({
             ...stateParams,
             params: {},
-            endpoint: `https://api.altertravel.ru/api${endpoint}`,
+            endpoint: `/api${endpoint}`,
+            // endpoint: `https://api.altertravel.ru/api${endpoint}`,
             loading: false,
             data: {},
             initiallyLoaded: false,

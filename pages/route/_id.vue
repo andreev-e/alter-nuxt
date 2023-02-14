@@ -72,7 +72,7 @@
                     />
 
                     <div class="route_photoes">
-                        <h2>Фото</h2>
+                        <h2>Фото ({{ route.images ? route.images.length : '' }})</h2>
                         <preview
                             v-for="image in route.images"
                             :key="image.id"

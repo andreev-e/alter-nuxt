@@ -5,11 +5,28 @@
             :list="[{ name: 'Авторы', url: '/user/' }, { name: $route.params.id, url: '' }]"
         />
         <div class="row">
-            <div class="col-sm-12">
+            <div
+                v-if="user.thumb"
+                class="col-sm-2"
+            >
+                <img
+                    class="img-fluid"
+                    :src="user.thumb"
+                    :alt="user.username"
+                >
+            </div>
+            <div class="col-sm-10">
                 <h1>
                     {{ user.firstname }} {{ user.lastname }}
                 </h1>
-                <p>(опубликовано {{ user.publications }}, с нами с {{ user.regdate }})</p>
+                <bage
+                    class="bg-primary text-white"
+                >
+                    опубликовано {{ user.publications }}
+                </bage>
+                <bage class="bg-warning">
+                    C нами с {{ user.regdate }}
+                </bage>
                 <p
                     v-if="user.about"
                     class="description"
@@ -35,9 +52,10 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
+    import Bage from '../../components/ui/Bage.vue';
 
     export default {
-        components: { UniversalMap, Breadcrumbs },
+        components: { Bage, UniversalMap, Breadcrumbs },
         data() {
             return {
                 location: { lat: 0, lng: 0 },
