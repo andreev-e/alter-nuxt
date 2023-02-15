@@ -95,8 +95,8 @@
                 loadingPois: 'poisPaginated/loading',
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
-                tag: 'tag/model',
-                tagLoaded: 'tag/isEmpty',
+                tag: 'location/model',
+                tagLoaded: 'location/isEmpty',
             }),
 
             h1() {
@@ -152,8 +152,8 @@
             ...mapActions({
                 getPoi: 'poisPaginated/get',
                 setPoiParams: 'poisPaginated/setParams',
-                setId: 'tag/setId',
-                getTag: 'tag/get',
+                setId: 'location/setId',
+                getTag: 'location/get',
             }),
             load() {
                 this.setId(this.$route.params.region);

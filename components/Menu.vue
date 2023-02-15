@@ -95,11 +95,11 @@
         computed: {
             ...mapGetters({
                 tagsExist: 'tags/itemsExist',
-                countriesExist: 'countries/itemsExist',
+                countriesExist: 'locations/itemsExist',
                 tagsLoading: 'tags/loading',
-                countriesLoading: 'countries/loading',
+                countriesLoading: 'locations/loading',
                 tags: 'tags/items',
-                countries: 'countries/items',
+                countries: 'locations/items',
             }),
             menuTags() {
                 return this.tags.slice(0, 20);
@@ -111,7 +111,7 @@
         methods: {
             ...mapActions({
                 getTags: 'tags/get',
-                getCountries: 'countries/get',
+                getCountries: 'locations/get',
             }),
         },
     };
