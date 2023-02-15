@@ -4,7 +4,7 @@ import LocalStorage from '../utils/LocalStorage';
 Request.setConfig({
     autoRequestCsrfCookie: true,
     csrfCookieUrl: '/api/sanctum/csrf-cookie',
-    withCredentials: true,
+    withCredentials: false,
 });
 
 export default class BaseModule {
