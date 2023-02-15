@@ -11,7 +11,6 @@
                     v-for="tag in poi.tags"
                     :key="tag.id"
                     class="bg-primary"
-                    :to="tag.url"
                     :url="tag.url"
                 >
                     {{ tag.name }}

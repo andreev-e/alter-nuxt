@@ -7,30 +7,43 @@
                 <h1 class="view">
                     {{ route.name }}
                 </h1>
+                <bage
+                    class="bg-warning"
+                    :url="`/user/${route.author}`"
+                >
+                    {{ route.author }}
+                </bage>
+                <bage class="bg-primary text-white">
+                    {{ route.days }} дней
+                </bage>
+                <bage class="bg-warning">
+                    {{ route.cost }} рублей
+                </bage>
+                <bage class="bg-primary text-white">
+                    391.6 км TODO
+                </bage>
+                <bage class="bg-warning">
+                    Опубликовано - {{ route.date }}
+                </bage>
+                <bage class="bg-primary text-white">
+                    Просмотров - {{ route.views }}
+                </bage>
             </div>
         </div>
         <b-row>
+            <div class="col-sm-12">
+                <client-only>
+                    <universal-map
+                        :center="center"
+                        :zoom="6"
+                        :start="start"
+                        :finish="finish"
+                        :line="route.encoded_route"
+                        :route="route.id"
+                    />
+                </client-only>
+            </div>
             <div class="col-sm-8">
-                <h2>Сводка</h2>
-                <ul>
-                    <li>
-                        <b>Длительность</b> - {{ route.days }} дней
-                    </li>
-                    <li>
-                        <b>Бюджет поездки</b> - {{ route.cost }} рублей
-                    </li>
-                    <li>
-                        <b>Протяженность</b> - <span id="distance">391.6 км</span>
-                    </li>
-                    <li>
-                        <b>Дата публикации</b> - 2016-02-11 14:27:44<p />
-                    </li>
-                    <li>
-                        <b>Автор</b> - {{ route.author }}
-                    </li>
-                    <li><b>Просмотров</b> - {{ route.views }}</li>
-                </ul>
-
                 <h2 id="interesting">
                     Описание
                 </h2>
@@ -49,19 +62,6 @@
             <div
                 class="col-sm-4"
             >
-                <h2 id="#karta">
-                    Карта
-                </h2>
-                <client-only>
-                    <universal-map
-                        :center="center"
-                        :zoom="6"
-                        :start="start"
-                        :finish="finish"
-                        :line="route.encoded_route"
-                        :route="route.id"
-                    />
-                </client-only>
                 <div
                     class="route_photoes"
                     style="height: auto !important;"
@@ -101,9 +101,11 @@
     import UniversalMap from '../../components/UniversalMap.vue';
     import Preview from '../../components/Preview.vue';
     import Gallery from '../../components/Gallery.vue';
+    import Bage from '../../components/ui/Bage.vue';
 
     export default {
         components: {
+            Bage,
             Gallery,
             Preview,
             UniversalMap,
@@ -142,21 +144,30 @@
                         lng: (this.start.lng + this.finish.lng) / 2,
                     };
                 }
-                return { lat: 0, lng: 0 };
+                return {
+                    lat: 0,
+                    lng: 0,
+                };
             },
             start() {
                 if (this.route.start) {
                     const start = this.route.start.split(';');
-                    return { lat: parseFloat(start[0]), lng: parseFloat(start[1]) };
+                    return {
+                        lat: parseFloat(start[0]),
+                        lng: parseFloat(start[1]),
+                    };
                 }
-                return { lat: 0, lng: 0 };
+                return false;
             },
             finish() {
                 if (this.route.finish) {
                     const finish = this.route.finish.split(';');
-                    return { lat: parseFloat(finish[0]), lng: parseFloat(finish[1]) };
+                    return {
+                        lat: parseFloat(finish[0]),
+                        lng: parseFloat(finish[1]),
+                    };
                 }
-                return { lat: 0, lng: 0 };
+                return false;
             },
             crumbs() {
                 return [

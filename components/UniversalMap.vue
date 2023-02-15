@@ -27,8 +27,8 @@
                 />
                 <gmap-polyline
                     v-if="line"
-                    v-model="path"
-                    :options="{ strokeColor:'#008000' }"
+                    :path="path"
+                    :options="{ strokeColor: '#FF0000' }"
                 />
                 <gmap-marker
                     v-if="start"
@@ -57,8 +57,6 @@
 <script>
     import * as Icons from '@fortawesome/free-solid-svg-icons';
     import { gmapApi } from 'vue2-google-maps';
-    // eslint-disable-next-line import/no-extraneous-dependencies
-    import polyline from '@mapbox/polyline';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
@@ -170,7 +168,11 @@
                 return this.pois;
             },
             path() {
-                return this.line ? polyline.decode(this.line, 5) : null;
+                if (this.line) {
+                    return this.google.maps.geometry.encoding
+                        .decodePath(this.line);
+                }
+                return [];
             },
         },
         watch: {

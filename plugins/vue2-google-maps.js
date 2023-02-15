@@ -8,6 +8,8 @@ Vue.use(VueGoogleMaps, {
         // libraries: 'places',
         region: 'RU',
         language: 'ru',
+        libraries: 'geometry',
+
     // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'

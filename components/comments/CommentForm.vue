@@ -1,12 +1,6 @@
 <template>
     <form>
         <b-form-group>
-            <text-input
-                v-if="!$auth.user"
-                v-model="form.email"
-                label="Email"
-                required
-            />
             <b-form-textarea
                 id="comment"
                 v-model="form.comment"
@@ -27,11 +21,9 @@
 
 <script>
     import { Form } from 'laravel-request-utils';
-    import TextInput from '../ui/TextInput.vue';
 
     export default {
         name: 'CommentForm',
-        components: { TextInput },
         props: {
             id: { type: [Number, String], required: false, default: null },
             commentId: { type: Number, required: false, default: null },
@@ -43,7 +35,6 @@
             return {
                 form: new Form({
                     comment: this.text,
-                    email: '',
                 }),
             };
         },
