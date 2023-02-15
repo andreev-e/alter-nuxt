@@ -9,11 +9,11 @@
         <client-only>
             <gmap-map
                 ref="map"
-                :center="center"
+                :center="computedCenter"
                 :zoom="zoom"
                 map-type-id="terrain"
-                @dragend="fetchPois"
-                @zoom_changed="zoomChanged"
+                @dragend="userManipulates"
+                @zoom_changed="userManipulates"
                 @idle="idle"
             >
                 <gmap-marker
@@ -26,7 +26,7 @@
                     :position="center"
                 />
                 <gmap-polyline
-                    v-if="line"
+                    v-if="route && route.encoded_route"
                     :path="path"
                     :options="{ strokeColor: '#FF0000' }"
                 />
@@ -70,10 +70,7 @@
             },
             center: {
                 type: Object,
-                default: () => ({
-                    lat: 55,
-                    lng: 45,
-                }),
+                default: null,
             },
             tag: {
                 type: String,
@@ -100,20 +97,12 @@
                 default: false,
             },
             route: {
-                type: Number,
+                type: Object,
                 default: null,
             },
-            start: {
-                type: [Boolean, Object],
+            fitContent: {
+                type: Boolean,
                 default: false,
-            },
-            finish: {
-                type: [Boolean, Object],
-                default: false,
-            },
-            line: {
-                type: String,
-                default: null,
             },
         },
         emits: ['update'],
@@ -165,14 +154,65 @@
                 return TYPES;
             },
             mapPois() {
-                return this.pois;
-            },
-            path() {
-                if (this.line) {
-                    return this.google.maps.geometry.encoding
-                        .decodePath(this.line);
+                if (this.route) {
+                    return this.route.pois;
+                }
+                if (this.pois) {
+                    return this.pois;
                 }
                 return [];
+            },
+            computedCenter() {
+                if (this.fitContent && this.bounds) {
+                    return this.bounds.getCenter();
+                }
+                if (this.center) {
+                    return this.center;
+                }
+                return {
+                    lat: 55,
+                    lng: 45,
+                };
+            },
+            bounds() {
+                if (this.google && this.route) {
+                    let bounds = new this.google.maps.LatLngBounds();
+                    // eslint-disable-next-line no-return-assign
+                    this.path.forEach((point) => bounds = bounds.extend(point));
+                    if (this.mapPois) {
+                        // eslint-disable-next-line no-return-assign
+                        this.mapPois.forEach((poi) => bounds = bounds.extend({ lat: poi.lat, lng: poi.lng }));
+                    }
+                    return bounds;
+                }
+                return null;
+            },
+            path() {
+                if (this.route && this.route.encoded_route) {
+                    return this.google.maps.geometry.encoding
+                        .decodePath(this.route.encoded_route);
+                }
+                return [];
+            },
+            start() {
+                if (this.route && this.route.start) {
+                    const start = this.route.start.split(';');
+                    return {
+                        lat: parseFloat(start[0]),
+                        lng: parseFloat(start[1]),
+                    };
+                }
+                return false;
+            },
+            finish() {
+                if (this.route && this.route.finish) {
+                    const finish = this.route.finish.split(';');
+                    return {
+                        lat: parseFloat(finish[0]),
+                        lng: parseFloat(finish[1]),
+                    };
+                }
+                return false;
             },
         },
         watch: {
@@ -190,28 +230,29 @@
                 clear: 'pois/clear',
             }),
             idle() {
-                if (!this.poisExist) {
+                if (!this.route && !this.poisExist) {
                     this.fetchPois();
                 }
             },
             fetchPois(categories = null) {
                 if (!this.thisIsPoi) {
+                    let params = {
+                        tag: this.tag,
+                        location: this.location,
+                        categories: categories ?? this.categories,
+                        user: this.user,
+                        route: this.route ? this.route.id : null,
+                    };
                     const bounds = this.$refs.map.$mapObject.getBounds();
-                    if (bounds) {
-                        this.setParams({
-                            tag: this.tag,
-                            location: this.location,
+                    if (bounds && !this.route && !this.user) {
+                        params = {
+                            ...params,
                             ...bounds.toJSON(),
-                            categories: categories ?? this.categories,
-                            user: this.user,
-                            route: this.route,
-                        });
-                        this.getPoi();
+                        };
                     }
+                    this.setParams(params);
+                    this.getPoi();
                 }
-            },
-            zoomChanged() {
-                this.fetchPois();
             },
             getTypeByName(name) {
                 // eslint-disable-next-line consistent-return
@@ -232,6 +273,11 @@
                     scale: 0.05,
                     strokeWeight: 1,
                 };
+            },
+            userManipulates() {
+                if (!this.fitContent) {
+                    this.fetchPois();
+                }
             },
         },
     };

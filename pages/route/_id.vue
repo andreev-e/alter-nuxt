@@ -34,45 +34,49 @@
             <div class="col-sm-12">
                 <client-only>
                     <universal-map
-                        :center="center"
                         :zoom="6"
-                        :start="start"
-                        :finish="finish"
-                        :line="route.encoded_route"
-                        :route="route.id"
+                        :route="route"
+                        fit-content
                     />
                 </client-only>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-12">
+                <template v-if="route.pois && route.pois.length">
+                    <h2>В маршрут входят точки</h2>
+                    <Gallery
+                        :objects="route.pois"
+                    />
+                </template>
                 <h2 id="interesting">
                     Описание
                 </h2>
                 <p v-html="route.description" />
-
-                <h2 id="route">
+                <h2
+                    v-if="route.route"
+                    id="route"
+                >
                     Особенности
                 </h2>
                 <p v-html="route.route" />
 
-                <h2 id="links">
+                <h2
+                    v-if="route.links"
+                    id="links"
+                >
                     Ссылки
                 </h2>
                 <p v-html="route.links" />
             </div>
-            <div
-                class="col-sm-4"
-            >
+            <div class="col-sm-12">
                 <div
                     class="route_photoes"
                     style="height: auto !important;"
                 >
-                    <h2>В маршрут входят точки</h2>
-                    <Gallery
-                        :objects="[]"
-                    />
-
-                    <div class="route_photoes">
-                        <h2>Фото ({{ route.images ? route.images.length : '' }})</h2>
+                    <div
+                        v-if="route.images"
+                        class="route_photoes"
+                    >
+                        <h2>Фото</h2>
                         <preview
                             v-for="image in route.images"
                             :key="image.id"
@@ -137,38 +141,6 @@
                 route: 'route/model',
                 loaded: 'route/isEmpty',
             }),
-            center() {
-                if (this.route.start && this.route.finish) {
-                    return {
-                        lat: (this.start.lat + this.finish.lat) / 2,
-                        lng: (this.start.lng + this.finish.lng) / 2,
-                    };
-                }
-                return {
-                    lat: 0,
-                    lng: 0,
-                };
-            },
-            start() {
-                if (this.route.start) {
-                    const start = this.route.start.split(';');
-                    return {
-                        lat: parseFloat(start[0]),
-                        lng: parseFloat(start[1]),
-                    };
-                }
-                return false;
-            },
-            finish() {
-                if (this.route.finish) {
-                    const finish = this.route.finish.split(';');
-                    return {
-                        lat: parseFloat(finish[0]),
-                        lng: parseFloat(finish[1]),
-                    };
-                }
-                return false;
-            },
             crumbs() {
                 return [
                     {

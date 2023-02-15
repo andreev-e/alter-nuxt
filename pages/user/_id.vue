@@ -40,9 +40,8 @@
             v-model="mapPois"
             :user="$route.params.id"
             :zoom="5"
-            :center="mapCenter"
+            fit-content
         />
-        {{ mapPois }}
         <Footer />
     </div>
 </template>
@@ -79,12 +78,6 @@
             ...mapGetters({
                 user: 'user/model',
             }),
-            mapCenter() {
-                if (this.user.lat && this.user.lng) {
-                    return { lat: this.user.lat, lng: this.user.lng };
-                }
-                return this.location;
-            },
         },
         mounted() {
             if (navigator.geolocation) {
