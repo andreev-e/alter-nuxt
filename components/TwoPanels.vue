@@ -1,7 +1,7 @@
 <template>
     <b-row>
         <b-col v-if="left.length">
-            <b>Выберите регион</b>
+            <b>Выберите регион {{ tag.NAME_ROD_ED }}</b>
             <ul class="additional_cities">
                 <li
                     v-for="child in dataLeft"
@@ -21,15 +21,22 @@
             </ul>
         </b-col>
         <b-col v-if="right.length">
-            <b>Объекты по видам</b>
+            <b>Объекты {{ tag.NAME_ROD_ED }} по видам</b>
             <ul class="pravaya_kolonka">
                 <li
-                    v-for="child in right"
+                    v-for="child in dataRight"
                     :key="child.id"
                 >
-                    <nuxt-link :to="child.url">
-                        {{ child.name }}
+                    <nuxt-link :to="`${urlPrefix}/${child.url}`">
+                        {{ child.NAME_ROD ? child.NAME_ROD : child.name }}
                     </nuxt-link>
+                </li>
+                <li
+                    v-if="right.length > limit"
+                    class="more"
+                    @click="limitedRight = !limitedRight"
+                >
+                    {{ limitedRight ? 'Показать все' : 'Свернуть' }}
                 </li>
             </ul>
         </b-col>
@@ -53,19 +60,36 @@
                 required: false,
                 default: () => [],
             },
+            tag: {
+                type: [Boolean, Object],
+                default: false,
+            },
         },
         data() {
             return {
                 limit: 7,
                 limitedLeft: true,
+                limitedRight: true,
             };
         },
         computed: {
+            urlPrefix() {
+                if (this.tag) {
+                    return `/region/${this.tag.url}`;
+                }
+                return '';
+            },
             dataLeft() {
                 if (this.limitedLeft) {
                     return [...this.left].splice(0, this.limit);
                 }
                 return this.left;
+            },
+            dataRight() {
+                if (this.limitedRight) {
+                    return [...this.right].splice(0, this.limit);
+                }
+                return this.right;
             },
         },
     };
@@ -88,7 +112,7 @@
     cursor: pointer;
     font-size:18px;
   }
-  .additional_cities li.more {
+  li.more {
     background: #343a40;
   }
 </style>

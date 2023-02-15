@@ -19,9 +19,10 @@
                 </div>
             </div>
             <TwoPanels
-                v-if="tag.children && tag.children.length"
+                v-if="tag.children && !($route.params.tag && $route.params.region)"
                 :left="tag.children"
-                :right="[]"
+                :right="tag.tags"
+                :tag="tag"
             />
             <div class="row nopadding">
                 <MapFilter
@@ -32,7 +33,8 @@
             <universal-map
                 ref="mapComponent"
                 :center="center"
-                :location="$route.params.id"
+                :location="$route.params.region"
+                :tag="$route.params.tag"
                 :categories="categories"
                 :zoom="tag.zoom"
             />
@@ -98,6 +100,9 @@
             }),
 
             h1() {
+                if (this.$route.params.type && this.$route.params.tag) {
+                    console.log('double');
+                }
                 if (this.type) {
                     if (this.tag.NAME_ROD_ED) {
                         return `${this.type} ${this.tag.NAME_ROD_ED}`;
@@ -151,14 +156,15 @@
                 getTag: 'tag/get',
             }),
             load() {
-                this.setId(this.$route.params.id);
+                this.setId(this.$route.params.region);
                 this.getTag();
                 this.type = this.$route.params.type;
                 this.fetchPois();
             },
             fetchPois() {
                 this.setPoiParams({
-                    location: this.$route.params.id,
+                    location: this.$route.params.region,
+                    tag: this.$route.params.tag,
                     categories: this.categories,
                     page: this.page,
                 });

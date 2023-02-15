@@ -109,7 +109,6 @@
         data() {
             return {
                 mylocation: false,
-                autoZoom: 12,
                 mylocationMarker: {
                     url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
                     size: {

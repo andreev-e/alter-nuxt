@@ -11,7 +11,7 @@
                     v-for="tag in poi.tags"
                     :key="tag.id"
                     class="bg-primary"
-                    :url="tag.url"
+                    :url="`/tag/${tag.url}`"
                 >
                     {{ tag.name }}
                 </bage>
@@ -218,11 +218,14 @@
                 return TYPES;
             },
             breadCrumbs() {
-                const breadCrumbs = [...this.poi.locations ?? []];
+                const breadCrumbs = [...this.poi.locations ?? []].map((location) => ({
+                    name: location.name,
+                    url: `/region/${location.url}`,
+                }));
                 if (this.poi && this.poi.locations && this.poi.locations.length) {
                     breadCrumbs.push({
                         name: this.poi.type,
-                        url: `${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}`,
+                        url: `/region/${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}`,
                     });
                 }
                 return breadCrumbs;

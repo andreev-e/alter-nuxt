@@ -11,14 +11,14 @@
                     v-for="region in menuCountries"
                     :key="region.id"
                 >
-                    <nuxt-link :to="region.url">
+                    <nuxt-link :to="`/region/${region.url}`">
                         <country-flag
                             v-if="region.code"
                             :country="region.code"
                             size="small"
                             class="d-inline-block"
                         />
-                        <short :val="region.name" />
+                        <short :val="region.name" />({{ region.count }})
                     </nuxt-link>
                 </li>
             </ul>
@@ -33,7 +33,7 @@
                     v-for="tag in menuTags"
                     :key="tag.id"
                 >
-                    <nuxt-link :to="tag.url">
+                    <nuxt-link :to="`/tag/${tag.url}`">
                         {{ tag.name }} ({{ tag.count }})
                     </nuxt-link>
                 </li>
