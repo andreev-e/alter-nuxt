@@ -36,15 +36,10 @@
             <div class="col-sm-12 object-full">
                 <b-tabs>
                     <b-tab title="Фото">
-                        <div class="d-flex flex-wrap py-3">
-                            <preview
-                                v-for="image in poi.images"
-                                :key="image.id"
-                                :alt="poi.name"
-                                :url="image.preview"
-                                :full="image.original"
-                            />
-                        </div>
+                        <photo-gallery
+                            :alt="poi.name"
+                            :images="poi.images"
+                        />
                         <nuxt-link :to="`/user/${poi.author}`">
                             &copy; {{ poi.copyright ? poi.copyright : poi.author }}
                         </nuxt-link>
@@ -115,7 +110,7 @@
                                 Маршруты
                             </h2>
                             <div class="near">
-                                <Gallery
+                                <item-gallery
                                     :objects="poi.routes"
                                     type="route"
                                 />
@@ -181,7 +176,7 @@
                 <h2 id="near">
                     Что еще есть рядом с эти местом
                 </h2>
-                <Gallery
+                <item-gallery
                     :objects="poi.nearest"
                 />
             </div>
@@ -201,15 +196,15 @@
     import Comments from '../../components/Comments.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
-    import Gallery from '../../components/Gallery.vue';
-    import Preview from '../../components/Preview.vue';
     import Bage from '../../components/ui/Bage.vue';
+    import PhotoGallery from '../../components/PhotoGallery.vue';
+    import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {
         components: {
+            ItemGallery,
+            PhotoGallery,
             Bage,
-            Preview,
-            Gallery,
             UniversalMap,
             Breadcrumbs,
             Comments,

@@ -11,7 +11,7 @@
                 </h1>
             </div>
         </div>
-        <Gallery
+        <item-gallery
             :objects="routes"
             :loading="loadingRoutes"
             type="route"
@@ -33,15 +33,21 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import Gallery from '../../components/Gallery.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {
-        components: { Breadcrumbs, Gallery },
+        components: {
+            ItemGallery,
+            Breadcrumbs,
+        },
         data() {
             return {
                 crumbs: [
-                    { name: 'Маршруты', to: '' },
+                    {
+                        name: 'Маршруты',
+                        to: '',
+                    },
                 ],
                 page: 1,
             };

@@ -187,7 +187,7 @@
                 return null;
             },
             path() {
-                if (this.route && this.route.encoded_route) {
+                if (this.google && this.route && this.route.encoded_route) {
                     return this.google.maps.geometry.encoding
                         .decodePath(this.route.encoded_route);
                 }

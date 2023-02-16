@@ -43,7 +43,7 @@
             <div class="col-sm-12">
                 <template v-if="route.pois && route.pois.length">
                     <h2>В маршрут входят точки</h2>
-                    <Gallery
+                    <item-gallery
                         :objects="route.pois"
                     />
                 </template>
@@ -77,12 +77,9 @@
                         class="route_photoes"
                     >
                         <h2>Фото</h2>
-                        <preview
-                            v-for="image in route.images"
-                            :key="image.id"
+                        <photo-gallery
                             :alt="route.name"
-                            :url="image.preview"
-                            :full="image.original"
+                            :images="route.images"
                         />
                         <p>© Все права на опубликованные фотографии принадлежат автору публикации.</p>
                     </div>
@@ -103,15 +100,15 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import Comments from '../../components/Comments.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
-    import Preview from '../../components/Preview.vue';
-    import Gallery from '../../components/Gallery.vue';
     import Bage from '../../components/ui/Bage.vue';
+    import PhotoGallery from '../../components/PhotoGallery.vue';
+    import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {
         components: {
+            ItemGallery,
+            PhotoGallery,
             Bage,
-            Gallery,
-            Preview,
             UniversalMap,
             Comments,
             Breadcrumbs,

@@ -19,6 +19,7 @@
     import PoiCard from './PoiCard.vue';
 
     export default {
+        name: 'ItemGallery',
         components: { PoiCard },
         props: {
             objects: {

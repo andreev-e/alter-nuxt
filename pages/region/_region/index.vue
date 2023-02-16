@@ -38,7 +38,7 @@
                 :categories="categories"
                 :zoom="tag.zoom"
             />
-            <Gallery
+            <item-gallery
                 :objects="pois"
                 :loading="loadingPois"
             />
@@ -65,12 +65,16 @@
     import TwoPanels from '../../../components/TwoPanels.vue';
     import MapFilter from '../../../components/map/MapFilter.vue';
     import UniversalMap from '../../../components/UniversalMap.vue';
-    import Gallery from '../../../components/Gallery.vue';
+    import ItemGallery from '../../../components/ItemGallery.vue';
 
     export default {
         name: 'Index',
         components: {
-            Gallery, UniversalMap, MapFilter, TwoPanels, Breadcrumbs,
+            ItemGallery,
+            UniversalMap,
+            MapFilter,
+            TwoPanels,
+            Breadcrumbs,
         },
         data() {
             return {

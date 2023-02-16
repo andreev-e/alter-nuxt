@@ -18,7 +18,7 @@
             :zoom="zoom"
             @update="poisChanged"
         />
-        <Gallery
+        <item-gallery
             :objects="pois"
             :loading="loadingPois"
         />
@@ -41,13 +41,13 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
-    import Gallery from '../../components/Gallery.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
+    import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {
         components: {
+            ItemGallery,
             UniversalMap,
-            Gallery,
             Breadcrumbs,
         },
         data() {

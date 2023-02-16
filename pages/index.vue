@@ -19,7 +19,7 @@
             v-model="mapPois"
             :center="center"
         />
-        <Gallery
+        <item-gallery
             :objects="mapPois.length ? mapPois : pois.slice(0,3)"
         />
         <Comments
@@ -36,12 +36,15 @@
     import { TYPES } from '../constants';
     import UniversalMap from '../components/UniversalMap.vue';
     import MapFilter from '../components/map/MapFilter.vue';
-    import Gallery from '../components/Gallery.vue';
     import Comments from '../components/Comments.vue';
+    import ItemGallery from '../components/ItemGallery.vue';
 
     export default {
         components: {
-            Comments, Gallery, MapFilter, UniversalMap,
+            ItemGallery,
+            Comments,
+            MapFilter,
+            UniversalMap,
         },
         data() {
             return {

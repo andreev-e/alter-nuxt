@@ -8,7 +8,7 @@
                     Авторский раздел
                 </h1>
                 <client-only>
-                    <Gallery
+                    <item-gallery
                         :objects="pois"
                         :loading="poiLoading"
                         @reload="fetchPois"
@@ -34,11 +34,11 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import Gallery from '../../components/Gallery.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {
-        components: { Breadcrumbs, Gallery },
+        components: { ItemGallery, Breadcrumbs },
         middleware: 'auth',
         data() {
             return {
