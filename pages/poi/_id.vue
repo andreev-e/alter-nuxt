@@ -8,6 +8,12 @@
                     {{ poi.name }}
                 </h1>
                 <bage
+                    class="bg-warning"
+                    :url="`/user/${poi.author}`"
+                >
+                    {{ poi.author }}
+                </bage>
+                <bage
                     v-for="tag in poi.tags"
                     :key="tag.id"
                     class="bg-primary"
@@ -22,49 +28,123 @@
                     v-if="poi.comments"
                     class="bg-light"
                 >
-                    {{ poi.comments }} комментариев
+                    {{ poi.comments }} отзыва
                 </bage>
             </div>
         </div>
-        <Fastnav />
         <div class="row inner">
-            <div class="col-sm-8 object-full">
-                <div class="near">
-                    <b-tabs>
-                        <b-tab title="Фото">
-                            <div class="d-flex flex-wrap py-3">
-                                <preview
-                                    v-for="image in poi.images"
-                                    :key="image.id"
-                                    :alt="poi.name"
-                                    :url="image.preview"
-                                    :full="image.original"
-                                />
-                                <nuxt-link :to="`/user/${poi.author}`">
-                                    &copy; {{ poi.copyright ? poi.copyright : poi.author }}
-                                </nuxt-link>
-                            </div>
-                        </b-tab>
-                        <b-tab title="Где находится?">
-                            <div class="py-3 px-3">
-                                <client-only>
-                                    <universal-map
-                                        v-if="loaded"
-                                        :center="{ lat: poi.lat, lng: poi.lng }"
-                                        :zoom="10"
-                                        this-is-poi
-                                    />
-                                </client-only>
-                                <h2 id="coord">
-                                    Координаты
+            <div class="col-sm-12 object-full">
+                <b-tabs>
+                    <b-tab title="Фото">
+                        <div class="d-flex flex-wrap py-3">
+                            <preview
+                                v-for="image in poi.images"
+                                :key="image.id"
+                                :alt="poi.name"
+                                :url="image.preview"
+                                :full="image.original"
+                            />
+                        </div>
+                        <nuxt-link :to="`/user/${poi.author}`">
+                            &copy; {{ poi.copyright ? poi.copyright : poi.author }}
+                        </nuxt-link>
+                    </b-tab>
+                    <b-tab
+                        v-if="poi.ytb"
+                        title="Видео"
+                    >
+                        <iframe
+                            width="700"
+                            height="400"
+                            :src="`https://www.youtube.com/embed/${poi.ytb}`"
+                        />
+                    </b-tab>
+                    <b-tab title="Описание">
+                        <div class="py-3">
+                            <p>
+                                {{ poi.description }}
+                            </p>
+                            <template
+                                v-if="poi.route"
+                            >
+                                <h2
+
+                                    id="route"
+                                >
+                                    Как добраться на машине
                                 </h2>
-                                <div class="coords plusplus_sl">
+                                <p>{{ poi.route }}</p>
+                            </template>
+                            <template
+                                v-if="poi.route_o"
+                            >
+                                <h2
+
+                                    id="route_o"
+                                >
+                                    Как добраться на общественном транспорте
+                                </h2>
+                                <p>{{ poi.route_o }}</p>
+                            </template>
+                            <template
+                                v-if="poi.links"
+                            >
+                                <h2 id="links">
+                                    Ссылки
+                                </h2>
+                                <p>
+                                    {{ poi.links }}
+                                </p>
+                            </template>
+                            <template
+                                v-if="poi.addon"
+                            >
+                                <h2 id="addon">
+                                    Примечание
+                                </h2>
+                                <p>{{ poi.addon }}</p>
+                            </template>
+                        </div>
+                    </b-tab>
+                    <b-tab
+                        v-if="loaded && poi.routes.length"
+                        title="Маршруты с точкой"
+                    >
+                        <div class="py-3">
+                            <h2 id="near">
+                                Маршруты
+                            </h2>
+                            <div class="near">
+                                <Gallery
+                                    :objects="poi.routes"
+                                    type="route"
+                                />
+                            </div>
+                        </div>
+                    </b-tab>
+                    <b-tab title="Где находится?">
+                        <div class="py-3 px-3">
+                            <client-only>
+                                <universal-map
+                                    v-if="loaded"
+                                    :center="{ lat: poi.lat, lng: poi.lng }"
+                                    :zoom="10"
+                                    this-is-poi
+                                />
+                            </client-only>
+                            <h2 id="coord">
+                                Координаты
+                            </h2>
+                            <div class="row">
+                                <div class="col-sm-3 coords plusplus_sl">
                                     <div class="qr">
                                         <img
                                             src="https://altertravel.ru/qr.php?lng=43.455948&amp;lat=43.123161"
                                             alt="QR code"
                                         >
                                     </div>
+                                </div>
+                                <div class="col-sm-3 coords plusplus_sl">
                                     <div class="points">
                                         <span>{{ poi.lat }},&nbsp;{{ poi.lng }}</span>
                                         <a href="https://altertravel.ru/generate_kml.php?id=22728">
@@ -74,28 +154,23 @@
                                         </a>
                                     </div>
                                 </div>
+                                <div class="col-sm-6">
+                                    <nuxt-link
+                                        to="/izbannoye"
+                                        class="btn btn-dark mr-2"
+                                    >
+                                        Построить маршрут с данной точкой
+                                    </nuxt-link>
+                                    <a
+                                        id="geo"
+                                        class="btn btn-dark"
+                                        :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
+                                    >Навигация на точку</a>
+                                </div>
                             </div>
-                        </b-tab>
-                        <b-tab
-                            v-if="poi.ytb"
-                            title="Видео"
-                        >
-                            <iframe
-                                width="700"
-                                height="400"
-                                :src="`https://www.youtube.com/embed/${poi.ytb}`"
-                            />
-                        </b-tab>
-                    </b-tabs>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <h2 id="interesting">
-                    Описание
-                </h2>
-                <p>
-                    {{ poi.description }}
-                </p>
+                        </div>
+                    </b-tab>
+                </b-tabs>
             </div>
         </div>
         <div
@@ -106,62 +181,9 @@
                 <h2 id="near">
                     Что еще есть рядом с эти местом
                 </h2>
-                <div class="near">
-                    <Gallery
-                        :objects="poi.nearest"
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <h2
-                    v-if="poi.route"
-                    id="route"
-                >
-                    Как добраться на машине
-                </h2>
-                <p>{{ poi.route }}</p>
-            </div>
-            <div class="col-sm-4">
-                <h2
-                    v-if="poi.route_o"
-                    id="route_o"
-                >
-                    Как добраться на общественном транспорте
-                </h2>
-                <p>{{ poi.route_o }}</p>
-            </div>
-            <div
-                v-if="poi.links"
-                class="col-sm-4"
-            >
-                <h2 id="links">
-                    Ссылки
-                </h2>
-                <p>
-                    {{ poi.links }}
-                </p>
-            </div>
-            <div class="col-sm-12">
-                <h2
-                    v-if="poi.addon"
-                    id="addon"
-                >
-                    Примечание
-                </h2>
-                <p>{{ poi.addon }}</p>
-                <nuxt-link
-                    to="/izbannoye"
-                    class="btn btn-dark"
-                >
-                    Построить маршрут с данной точкой
-                </nuxt-link>
-                <a
-                    id="geo"
-                    class="btn btn-dark"
-                    :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
-                >Навигация на точку</a>
+                <Gallery
+                    :objects="poi.nearest"
+                />
             </div>
         </div>
         <Comments
@@ -177,7 +199,6 @@
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
-    import Fastnav from '../../components/Fastnav.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/UniversalMap.vue';
     import Gallery from '../../components/Gallery.vue';
@@ -191,7 +212,6 @@
             Gallery,
             UniversalMap,
             Breadcrumbs,
-            Fastnav,
             Comments,
         },
         async fetch() {

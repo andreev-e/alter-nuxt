@@ -6,6 +6,7 @@
         <div class="col-sm-12">
             <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
             <div
+                v-if="filteredComments.length"
                 id="comments_list"
                 class="comments-list"
             >
@@ -21,6 +22,14 @@
                     @reload="loadComments"
                 />
             </div>
+            <div
+                v-else
+                class="text-center"
+            >
+                Пока нет. Чтобы написать - <nuxt-link to="/secure/">
+                    войдите
+                </nuxt-link>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <b-pagination
@@ -33,7 +42,7 @@
                 </div>
             </div>
             <comment-form
-                v-if="id"
+                v-if="$auth.loggedIn && id"
                 :id="id"
                 :type="type"
                 @update="getComments"
