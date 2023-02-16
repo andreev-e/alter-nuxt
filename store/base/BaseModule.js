@@ -12,7 +12,7 @@ export default class BaseModule {
         this.defaultState = () => ({
             ...stateParams,
             params: {},
-            endpoint: `/api${endpoint}`,
+            endpoint: `${process.env.API_URL}/api${endpoint}`,
             // endpoint: `https://api.altertravel.ru/api${endpoint}`,
             loading: false,
             data: {},

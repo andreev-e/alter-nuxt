@@ -4,12 +4,10 @@ import fs from 'fs';
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1;
 
 export default {
-    // Target: https://go.nuxtjs.dev/config-target
     target: 'server',
 
-    // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'alter-nuxt',
+        title: 'altertravel.ru',
         htmlAttrs: {
             lang: 'ru',
         },
@@ -69,13 +67,11 @@ export default {
         locales: ['ru'],
     },
 
-    // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
-    // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
-        '@nuxtjs/moment',
         '@nuxtjs/auth-next',
+        '@nuxtjs/moment',
         '@nuxtjs/i18n',
         ['@nuxtjs/component-cache', {
             max: 10000,
@@ -83,7 +79,6 @@ export default {
         }],
     ],
 
-    // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
         transpile: [/^vue2-google-maps($|\/)/],
         babel: {
@@ -121,7 +116,6 @@ export default {
                 provider: 'laravel/sanctum',
                 url: '/api',
             },
-            local: false,
         },
     },
 };

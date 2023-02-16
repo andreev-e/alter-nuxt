@@ -3,7 +3,7 @@
     <div class="header row">
         <div class="col-sm-12 d-flex justify-content-end">
             <div
-                v-if="$auth.user"
+                v-if="$auth.loggedIn"
                 class="d-flex justify-content-between"
             >
                 <router-link
