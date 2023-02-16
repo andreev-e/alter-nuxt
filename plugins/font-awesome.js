@@ -23,6 +23,9 @@ import {
     faCheck,
     faPlusCircle,
     faTimesCircle,
+    faComment,
+    faComments,
+    faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -41,6 +44,9 @@ library.add(
     faCheck,
     faPlusCircle,
     faTimesCircle,
+    faComment,
+    faComments,
+    faEye,
 );
 
 /* add font awesome icon component */

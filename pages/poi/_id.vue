@@ -3,7 +3,10 @@
         <Header />
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
-            <div class="col-sm-12">
+            <div
+                v-if="loaded"
+                class="col-sm-12"
+            >
                 <h1 class="view">
                     {{ poi.name }}
                 </h1>
@@ -22,14 +25,15 @@
                     {{ tag.name }}
                 </bage>
                 <bage class="bg-secondary text-white">
-                    {{ poi.views }} просмотров{{ poi.views_month ? `, за месяц ${poi.views_month}` : '' }}{{ poi.views_today ? `, сегодня ${poi.views_today}` : '' }}
+                    <font-awesome-icon
+                        icon="fa-eye"
+                    />
+                    всего {{ poi.views }}{{ poi.views_month ? `, месяц ${poi.views_month}` : '' }}{{ poi.views_today ? `, сегодня ${poi.views_today}` : '' }}
                 </bage>
-                <bage
-                    v-if="poi.comments"
-                    class="bg-light"
-                >
-                    {{ poi.comments }} отзыва
-                </bage>
+                <comment-bage
+                    v-if="poi && poi.comments"
+                    :count="poi.comments"
+                />
             </div>
         </div>
         <div class="row inner">
@@ -199,9 +203,11 @@
     import Bage from '../../components/ui/Bage.vue';
     import PhotoGallery from '../../components/PhotoGallery.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import CommentBage from '../../components/poi/CommentBage.vue';
 
     export default {
         components: {
+            CommentBage,
             ItemGallery,
             PhotoGallery,
             Bage,
