@@ -4,8 +4,8 @@
             v-for="image in images"
             :key="image.id"
             :alt="alt"
-            :url="image.preview"
-            :full="image.original"
+            :url="full ? image.original : image.preview"
+            :full="!full ? image.original : null"
         />
     </div>
 </template>
@@ -24,6 +24,10 @@
             alt: {
                 type: String,
                 default: '',
+            },
+            full: {
+                type: Boolean,
+                default: false,
             },
         },
     };

@@ -43,6 +43,7 @@
                         <photo-gallery
                             :alt="poi.name"
                             :images="poi.images"
+                            full
                         />
                         <nuxt-link :to="`/user/${poi.author}`">
                             &copy; {{ poi.copyright ? poi.copyright : poi.author }}
