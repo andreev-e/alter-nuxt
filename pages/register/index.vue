@@ -6,7 +6,7 @@
                 <h1>
                     Регистрация
                 </h1>
-                <form @submit.prevent="doLogin">
+                <form @submit.prevent="doRegister">
                     <text-input
                         id="email"
                         v-model="form.email"
@@ -52,14 +52,11 @@
         components: { TextInput },
         data() {
             return {
-                email: null,
-                password: null,
-                username: null,
                 form: new Form({
                     email: null,
                     password: null,
                     username: null,
-                }),
+                }, { resetAfterSend: false }),
             };
         },
         created() {
@@ -68,14 +65,12 @@
             }
         },
         methods: {
-            async doLogin() {
-                try {
-                    // TODO axios
-                    // await this.$auth
-                    //     .loginWith('laravelSanctum', { data });
-                } catch (res) {
-                    console.log(res);
-                }
+            async doRegister() {
+                this.form.submit('/api/register').then(() => {
+                    const data = { email: this.form.email, password: this.form.password };
+                    this.$auth
+                        .loginWith('laravelSanctum', { data });
+                });
             },
         },
     };
