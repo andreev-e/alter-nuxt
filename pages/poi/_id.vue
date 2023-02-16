@@ -195,7 +195,7 @@
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
-    import UniversalMap from '../../components/UniversalMap.vue';
+    import UniversalMap from '../../components/map/UniversalMap.vue';
     import Bage from '../../components/ui/Bage.vue';
     import PhotoGallery from '../../components/PhotoGallery.vue';
     import ItemGallery from '../../components/ItemGallery.vue';

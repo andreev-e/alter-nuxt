@@ -59,7 +59,7 @@
     import { gmapApi } from 'vue2-google-maps';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import { TYPES } from '../constants';
+    import { TYPES } from '../../constants';
 
     export default {
         expose: ['fetchPois'],

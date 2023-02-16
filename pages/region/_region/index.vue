@@ -64,7 +64,7 @@
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import TwoPanels from '../../../components/TwoPanels.vue';
     import MapFilter from '../../../components/map/MapFilter.vue';
-    import UniversalMap from '../../../components/UniversalMap.vue';
+    import UniversalMap from '../../../components/map/UniversalMap.vue';
     import ItemGallery from '../../../components/ItemGallery.vue';
 
     export default {

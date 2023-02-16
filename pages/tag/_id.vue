@@ -41,7 +41,7 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
-    import UniversalMap from '../../components/UniversalMap.vue';
+    import UniversalMap from '../../components/map/UniversalMap.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
 
     export default {

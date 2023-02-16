@@ -1,20 +1,32 @@
 <template>
-    <div class="col-sm-12 p-3 text-center">
-        <b-button
-            v-for="type in types"
-            :key="type.name"
-            class="btn btn-default mr-1 mb-1"
-            :class="{ 'btn-light': !categories.includes(type.name) }"
-            @click="toggle(type.name)"
-        >
-            <font-awesome-icon
-                v-if="categories.includes(type.name)"
-                :icon="paramCase(type.icon)"
-                class="mr-2"
-                :style="{ color: type.color, height: '18px' }"
-            />
-            {{ type.name }}
-        </b-button>
+    <div class="col-sm-12 p-2 text-center">
+        <template v-if="expanded || !expandable">
+            <b-button
+                v-for="type in types"
+                :key="type.name"
+                class="btn btn-default mr-1 mb-1"
+                :class="{ 'btn-light': !categories.includes(type.name) }"
+                @click="toggle(type.name)"
+            >
+                <font-awesome-icon
+                    v-if="categories.includes(type.name)"
+                    :icon="paramCase(type.icon)"
+                    class="mr-2"
+                    :style="{ color: type.color, height: '18px' }"
+                />
+                {{ type.name }}
+            </b-button>
+            <span
+                v-if="expandable"
+                class="expander"
+                @click="expanded = !expanded"
+            ><br>Скрыть фильтры карты</span>
+        </template>
+        <span
+            v-if="expandable && !expanded"
+            class="expander"
+            @click="expanded = !expanded"
+        >Показать фильтры карты</span>
     </div>
 </template>
 
@@ -34,6 +46,8 @@
         data() {
             return {
                 categories: [...TYPES].map((t) => t.name),
+                expanded: false,
+                expandable: true,
             };
         },
         computed: {
@@ -42,6 +56,7 @@
             },
         },
         mounted() {
+            this.expandable = window.innerWidth < 992;
             this.$emit('update', this.categories);
         },
         methods: {
@@ -71,5 +86,12 @@
 </script>
 
 <style scoped>
-
+  .expander {
+    font-size: 16px;
+    line-height: 18px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px dotted #244255;
+  }
 </style>
