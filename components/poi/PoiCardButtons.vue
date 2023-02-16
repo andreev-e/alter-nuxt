@@ -4,7 +4,7 @@
             v-if="canEdit"
             icon="fa-edit"
             class="m-2 h4 text-primary"
-            @click="$emit('edit')"
+            @click.prevent="$emit('edit')"
         />
         <font-awesome-icon
             v-if="canApprove"
