@@ -23,13 +23,6 @@
                 >
                     {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
                 </nuxt-link>
-                <nuxt-link
-                    v-if="$auth.user.username === 'andreev'"
-                    to="/moderation"
-                    class="d-inline-block mr-1 mt-1"
-                >
-                    Модерация
-                </nuxt-link>
                 <button
                     class="btn btn-dark btn-sm"
                     @click="logout"
