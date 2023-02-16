@@ -3,6 +3,7 @@
         <b-col
             md="3"
             cols="12"
+            class="text-right mt-2"
         >
             {{ label }}
             {{ required ? '*' : '' }}

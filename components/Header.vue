@@ -37,6 +37,9 @@
                 <router-link to="/secure/">
                     Вход для авторов
                 </router-link>
+                <router-link to="/register/">
+                    Регистрация
+                </router-link>
             </div>
         </div>
         <div class="logo col-sm-12 col-md-3 text-center">

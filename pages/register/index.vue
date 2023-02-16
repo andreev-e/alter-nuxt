@@ -4,20 +4,29 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
-                    Вход
+                    Регистрация
                 </h1>
                 <form @submit.prevent="doLogin">
                     <text-input
                         id="email"
-                        v-model="email"
+                        v-model="form.email"
                         label="Email"
+                        :form="form"
+                        required
+                    />
+                    <text-input
+                        id="username"
+                        v-model="form.username"
+                        label="Имя пользователя"
+                        :form="form"
                         required
                     />
                     <text-input
                         id="password"
-                        v-model="password"
+                        v-model="form.password"
                         label="Пароль"
                         type="password"
+                        :form="form"
                         required
                     />
                     <div>
@@ -36,14 +45,21 @@
 </template>
 
 <script>
+    import { Form } from 'laravel-request-utils';
     import TextInput from '../../components/ui/TextInput.vue';
 
     export default {
         components: { TextInput },
         data() {
             return {
-                email: '',
-                password: '',
+                email: null,
+                password: null,
+                username: null,
+                form: new Form({
+                    email: null,
+                    password: null,
+                    username: null,
+                }),
             };
         },
         created() {
@@ -54,9 +70,9 @@
         methods: {
             async doLogin() {
                 try {
-                    const data = { email: this.email, password: this.password };
-                    await this.$auth
-                        .loginWith('laravelSanctum', { data });
+                    // TODO axios
+                    // await this.$auth
+                    //     .loginWith('laravelSanctum', { data });
                 } catch (res) {
                     console.log(res);
                 }
