@@ -8,7 +8,7 @@
                     Авторский раздел
                 </h1>
                 <client-only>
-                    <template v-if="pois.lenght">
+                    <template v-if="pois.length">
                         <item-gallery
                             :objects="pois"
                             :loading="poiLoading"
