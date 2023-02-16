@@ -96,12 +96,6 @@ export default {
         baseURL: `${process.env.API_URL}/api/`,
         proxy: true,
         credentials: true,
-        responseInterceptor: (response, { store }) => {
-            if (response.status === 401) {
-                store.$auth.logOut();
-            }
-            return response;
-        },
     },
     proxy: {
         '/api': process.env.API_URL,
