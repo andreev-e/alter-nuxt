@@ -102,6 +102,7 @@
                     user: this.$auth.user.username,
                     page: this.page,
                     latest: 1,
+                    withHidden: true,
                 });
                 this.getPoi();
             },
