@@ -8,22 +8,37 @@
                     Авторский раздел
                 </h1>
                 <client-only>
-                    <item-gallery
-                        :objects="pois"
-                        :loading="poiLoading"
-                        @reload="fetchPois"
-                    />
-                    <div class="row">
-                        <div class="col-12">
-                            <b-pagination
-                                v-if="meta.last_page > 1"
-                                v-model="page"
-                                :total-rows="meta.total"
-                                :per-page="meta.per_page"
-                                aria-controls="my-table"
-                            />
+                    <template v-if="pois.lenght">
+                        <item-gallery
+                            :objects="pois"
+                            :loading="poiLoading"
+                            @reload="fetchPois"
+                        />
+                        <div class="row">
+                            <div class="col-12">
+                                <b-pagination
+                                    v-if="meta.last_page > 1"
+                                    v-model="page"
+                                    :total-rows="meta.total"
+                                    :per-page="meta.per_page"
+                                    aria-controls="my-table"
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </template>
+                    <router-link
+                        v-else
+                        to="/secure/poi/create"
+                        class="d-inline-block mr-1 mt-1"
+                        title="Добавить достопримечательность"
+                    >
+                        <font-awesome-icon
+                            icon="fa-plus-circle"
+                            class="text-success"
+                            role="button"
+                        />
+                        Добавить достопримечательность
+                    </router-link>
                 </client-only>
             </div>
         </div>

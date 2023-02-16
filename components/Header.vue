@@ -21,7 +21,7 @@
                     to="/secure"
                     class="d-inline-block mr-1 mt-1"
                 >
-                    {{ $auth.user.firstname }} {{ $auth.user.lastname }}
+                    {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
                 </nuxt-link>
                 <button
                     class="btn btn-dark btn-sm"
