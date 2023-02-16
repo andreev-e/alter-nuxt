@@ -3,7 +3,7 @@
         :to="`/${type}/${poi.id}`"
         class="poi__card"
     >
-        <div :class="loading ? 'poi_card loading' : 'poi__content'">
+        <div :class="{ 'poi_card loading' :loading, 'poi__content' : !loading, 'disproved' : !poi.show }">
             <div
                 v-if="loading || loadingOne"
                 class="spinner"
@@ -33,38 +33,17 @@
             </div>
             <div
                 class="author"
-                style="opacity: 0.8"
             >
                 <client-only>
-                    <div class="bg-white">
-                        <nuxt-link
-                            v-if="canEdit"
-                            :to="`/secure/${type}/${poi.id}`"
-                        >
-                            <font-awesome-icon
-                                icon="fa-edit"
-                                class="m-2 h4 text-primary"
-                            />
-                        </nuxt-link>
-                        <font-awesome-icon
-                            v-if="canApprove"
-                            icon="fa-check"
-                            class="m-2 h4 text-success"
-                            @click.prevent="approve"
-                        />
-                        <font-awesome-icon
-                            v-if="canDisprove"
-                            icon="fa-times-circle"
-                            class="m-2 h4 text-warning"
-                            @click.prevent="disprove"
-                        />
-                        <font-awesome-icon
-                            v-if="canEdit"
-                            icon="fa-trash"
-                            class="m-2 h4 text-danger"
-                            @click.prevent="del"
-                        />
-                    </div>
+                    <poi-card-buttons
+                        :can-edit="canEdit"
+                        :can-approve="canApprove"
+                        :can-disprove="canDisprove"
+                        @edit="$router.push(`/secure/${type}/${poi.id}`)"
+                        @approve="approve"
+                        @disprove="disprove"
+                        @delete="del"
+                    />
                 </client-only>
             </div>
         </div>
@@ -75,9 +54,11 @@
     import { Request } from 'laravel-request-utils';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapMutations } from 'vuex';
+    import PoiCardButtons from './poi/PoiCardButtons.vue';
 
     export default {
         name: 'PoiCard',
+        components: { PoiCardButtons },
         props: {
             poi: {
                 type: Object,
@@ -199,14 +180,19 @@
     color: rgba(255, 255, 255, 0.8);
     text-shadow: #000 2px 3px 5px;
   }
+
   .author {
     position: absolute;
     z-index: 1;
-    top:15px;
-    right:15px;
+    top: 15px;
+    right: 15px;
     text-align: right;
     font-size: 1em;
     color: rgba(255, 255, 255, 1);
     text-shadow: #000 2px 3px 5px;
+  }
+
+  .disproved {
+    opacity: 0.6;
   }
 </style>

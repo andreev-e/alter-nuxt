@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
-                    Авторский раздел
+                    Модерация
                 </h1>
                 <client-only>
                     <template v-if="pois.length">
@@ -60,14 +60,14 @@
                 page: 1,
                 breadCrumbs: [
                     {
-                        name: 'Авторский раздел',
+                        name: 'Модерация',
                         url: '',
                     },
                 ],
             };
         },
         head: {
-            title: 'Авторский раздел',
+            title: 'Модерация',
         },
         computed: {
             ...mapGetters({
@@ -93,10 +93,9 @@
             fetchPois() {
                 this.clear();
                 this.setParams({
-                    user: this.$auth.user.username,
                     page: this.page,
                     latest: 1,
-                    withHidden: 1,
+                    onlyHidden: 1,
                 });
                 this.getPoi();
             },
