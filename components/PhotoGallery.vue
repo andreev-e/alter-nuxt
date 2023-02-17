@@ -34,5 +34,12 @@
 </script>
 
 <style scoped>
-
+  section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  section::after {
+    content: '';
+    flex-grow: 999999999;
+  }
 </style>

@@ -40,10 +40,9 @@
             <div class="col-sm-12 object-full">
                 <b-tabs>
                     <b-tab title="Фото">
-                        <photo-gallery
+                        <super-gallery
                             :alt="poi.name"
                             :images="poi.images"
-                            full
                         />
                         <nuxt-link :to="`/user/${poi.author}`">
                             &copy; {{ poi.copyright ? poi.copyright : poi.author }}
@@ -202,15 +201,15 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
     import Bage from '../../components/ui/Bage.vue';
-    import PhotoGallery from '../../components/PhotoGallery.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
     import CommentBage from '../../components/poi/CommentBage.vue';
+    import SuperGallery from '../../components/SuperGallery.vue';
 
     export default {
         components: {
+            SuperGallery,
             CommentBage,
             ItemGallery,
-            PhotoGallery,
             Bage,
             UniversalMap,
             Breadcrumbs,
