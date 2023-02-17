@@ -77,7 +77,7 @@
                         class="route_photoes"
                     >
                         <h2>Фото</h2>
-                        <photo-gallery
+                        <super-gallery
                             :alt="route.name"
                             :images="route.images"
                         />
@@ -101,13 +101,13 @@
     import Comments from '../../components/Comments.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
     import Bage from '../../components/ui/Bage.vue';
-    import PhotoGallery from '../../components/PhotoGallery.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import SuperGallery from '../../components/SuperGallery.vue';
 
     export default {
         components: {
+            SuperGallery,
             ItemGallery,
-            PhotoGallery,
             Bage,
             UniversalMap,
             Comments,

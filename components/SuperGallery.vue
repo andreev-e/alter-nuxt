@@ -3,7 +3,7 @@
         <div
             v-for="img in images"
             :key="img.id"
-            :style="`width:${img.width*275/img.height}px;flex-grow:${img.width*275/img.height}`"
+            :style="`width:${img.width*heightOfRow/img.height}px;flex-grow:${img.width*heightOfRow/img.height}`"
         >
             <i :style="`padding-bottom:${img.height/img.width*100}%`" />
             <a :href="img.original">
@@ -29,6 +29,11 @@
                 default: '',
             },
         },
+        computed: {
+            heightOfRow() {
+                return Math.max(900 / this.images.length, 200);
+            },
+        },
     };
 </script>
 
@@ -44,8 +49,8 @@
   }
 
   div {
-    margin: 2px;
-    background-color: violet;
+    margin: 3px;
+    background-color: darkslategrey;
     position: relative;
   }
 

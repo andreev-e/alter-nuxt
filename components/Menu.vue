@@ -70,12 +70,14 @@
         <!--          <span>строим маршрут с точками</span>-->
         <!--        </a>-->
         <!--      </li>-->
-        <li v-if="$auth.loggedIn && $auth.user.username === 'andreev'">
-            <nuxt-link to="/moderation">
-                Модерация
-                <span class="d-none d-sm-block">объектов</span>
-            </nuxt-link>
-        </li>
+        <client-only>
+            <li v-if="$auth.loggedIn && $auth.user.username === 'andreev'">
+                <nuxt-link to="/moderation">
+                    Модерация
+                    <span class="d-none d-sm-block">объектов</span>
+                </nuxt-link>
+            </li>
+        </client-only>
     </ul>
 </template>
 
