@@ -31,7 +31,7 @@
         },
         computed: {
             heightOfRow() {
-                return Math.max(900 / this.images.length, 200);
+                return Math.max(900 / this.images.length, 250);
             },
         },
     };
