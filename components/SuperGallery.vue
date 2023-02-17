@@ -50,7 +50,7 @@
 
   div {
     margin: 3px;
-    background-color: darkslategrey;
+    background-color: #606084;
     position: relative;
   }
 
