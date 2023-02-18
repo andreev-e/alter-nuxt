@@ -82,17 +82,26 @@
                 page: 1,
             };
         },
-        fetch() {
-            this.load();
+        async fetch() {
+            await this.load();
         },
-        head: {
-            title: 'Карта достопримечательностей для самостоятельных путешественников',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!',
-                },
-            ],
+        head() {
+            return {
+                title: `${this.$route.params.tag ? `${this.$route.params.tag}: ` : ''}${this.tag.name_rod_ed ? 'Т' : `${this.tag.name}: т`}оп 10 достопримечательностей${this.tag.name_rod_ed ? ` ${this.tag.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
+                meta: [
+                    {
+                        name: 'description',
+                        content: `${this.tag.name_predlozh_ed ? `${this.titleType} в путеводителе по ${this.tag.name_predlozh_ed}.`
+                            : `${this.tag.name} в путеводителе.`} Фотографии мест, карты, отзывы`,
+                    },
+                ],
+                link: [
+                    {
+                        rel: 'canonical',
+                        href: `/region/${this.$route.params.region}${this.$route.params.tag ? `/${this.$route.params.tag}` : ''}`,
+                    },
+                ],
+            };
         },
         computed: {
             ...mapGetters({
@@ -102,28 +111,25 @@
                 tag: 'location/model',
                 tagLoaded: 'location/isEmpty',
             }),
-
             h1() {
-                if (this.$route.params.type && this.$route.params.tag) {
-                    console.log('double');
+                if (this.tag.name_rod_ed) {
+                    return `${this.titleType} ${this.tag.name_rod_ed}`;
                 }
-                if (this.type) {
-                    if (this.tag.NAME_ROD_ED) {
-                        return `${this.type} ${this.tag.NAME_ROD_ED}`;
-                    }
-                    return `${this.type}: ${this.tag.name}`;
-                }
-                return this.tag.name;
+
+                return `${this.titleType}: ${this.tag.name}`;
             },
             crumbs() {
-                const crumbs = [...this.tag.parents ?? []];
-                if (this.type) {
+                const crumbs = [...this.tag.parents?.map((tag) => ({
+                    name: tag.name,
+                    url: `/region/${tag.url}`,
+                })) ?? []];
+                if (this.$route.params.tag) {
                     crumbs.push({
                         name: this.tag.name,
-                        url: this.tag.url,
+                        url: `/region/${this.tag.url}`,
                     });
                     crumbs.push({
-                        name: this.type,
+                        name: this.$route.params.tag,
                         url: '',
                     });
                 } else {
@@ -144,7 +150,28 @@
                         lng: this.tag.lng,
                     };
                 }
-                return { lat: 0, lng: 0 };
+                return {
+                    lat: 0,
+                    lng: 0,
+                };
+            },
+            titleType() {
+                switch (this.$route.params.tag) {
+                case 'Природа':
+                    return 'Природные достопримечательности';
+                case 'Архитектура':
+                    return 'Архитектурные достопримечательности';
+                case 'Музей':
+                    return 'Музеи';
+                case 'Памятник':
+                    return 'Памятники';
+                case 'История-Культура':
+                    return 'Исторические и культурные достопримечательности';
+                case 'Техноген':
+                    return 'Техногенные достопримечательности';
+                default:
+                    return 'Достопримечательности';
+                }
             },
         },
         watch: {
@@ -159,9 +186,9 @@
                 setId: 'location/setId',
                 getTag: 'location/get',
             }),
-            load() {
-                this.setId(this.$route.params.region);
-                this.getTag();
+            async load() {
+                await this.setId(this.$route.params.region);
+                await this.getTag();
                 this.type = this.$route.params.type;
                 this.fetchPois();
             },

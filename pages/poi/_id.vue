@@ -221,11 +221,17 @@
         },
         head() {
             return {
-                title: this.poi.name,
+                title: `${this.poi.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[0]?.name}` : ''}`,
                 meta: [
                     {
                         name: 'description',
-                        content: 'todo',
+                        content: `${this.poi.name} - как добраться проезда на машине и общественным транспортом. Координаты, отзывы, фотографии`,
+                    },
+                ],
+                link: [
+                    {
+                        rel: 'canonical',
+                        href: `/poi/${this.poi.id}`,
                     },
                 ],
             };
