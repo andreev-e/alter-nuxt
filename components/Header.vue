@@ -1,47 +1,49 @@
 <!-- Please remove this file from your project -->
 <template>
     <div class="header row">
-        <div class="col-sm-12 d-flex justify-content-end">
-            <div
-                v-if="$auth.loggedIn"
-                class="d-flex justify-content-between"
-            >
-                <router-link
-                    to="/secure/poi/create"
-                    class="d-inline-block mr-1 mt-1"
-                    title="Добавить достопримечательность"
+        <client-only>
+            <div class="col-sm-12 d-flex justify-content-end">
+                <div
+                    v-if="$auth.loggedIn"
+                    class="d-flex justify-content-between"
                 >
-                    <font-awesome-icon
-                        icon="fa-plus-circle"
-                        class="text-success"
-                        role="button"
-                    />
-                </router-link>
-                <nuxt-link
-                    to="/secure"
-                    class="d-inline-block mr-1 mt-1"
+                    <router-link
+                        to="/secure/poi/create"
+                        class="d-inline-block mr-1 mt-1"
+                        title="Добавить достопримечательность"
+                    >
+                        <font-awesome-icon
+                            icon="fa-plus-circle"
+                            class="text-success"
+                            role="button"
+                        />
+                    </router-link>
+                    <nuxt-link
+                        to="/secure"
+                        class="d-inline-block mr-1 mt-1"
+                    >
+                        {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
+                    </nuxt-link>
+                    <button
+                        class="btn btn-dark btn-sm"
+                        @click="logout"
+                    >
+                        Выход
+                    </button>
+                </div>
+                <div
+                    v-else
+                    class="col-sm-4 text-right"
                 >
-                    {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
-                </nuxt-link>
-                <button
-                    class="btn btn-dark btn-sm"
-                    @click="logout"
-                >
-                    Выход
-                </button>
+                    <router-link to="/register/">
+                        Регистрация
+                    </router-link>
+                    <router-link to="/secure/">
+                        Вход для авторов
+                    </router-link>
+                </div>
             </div>
-            <div
-                v-else
-                class="col-sm-4 text-right"
-            >
-                <router-link to="/secure/">
-                    Вход для авторов
-                </router-link>
-                <router-link to="/register/">
-                    Регистрация
-                </router-link>
-            </div>
-        </div>
+        </client-only>
         <div class="logo col-sm-12 col-md-3 text-center">
             <nuxt-link :to="'/'">
                 <img
