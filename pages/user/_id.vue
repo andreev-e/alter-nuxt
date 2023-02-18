@@ -35,13 +35,16 @@
                 </p>
             </div>
         </div>
-        <universal-map
-            ref="mapComponent"
-            v-model="mapPois"
-            :user="$route.params.id"
-            :zoom="5"
-            fit-content
-        />
+        <client-only>
+            <universal-map
+                ref="mapComponent"
+                v-model="mapPois"
+                :user="$route.params.id"
+                :zoom="5"
+                fit-content
+            />
+        </client-only>
+
         <Footer />
     </div>
 </template>

@@ -94,7 +94,13 @@ export default {
     server: {
     },
 
-    serverMiddleware: ['~/server-middleware/logger'],
+    serverMiddleware: [
+        '~/server-middleware/logger',
+        {
+            path: '/',
+            handler: '~/server-middleware/redirect',
+        },
+    ],
 
     auth: {
         redirect: {
