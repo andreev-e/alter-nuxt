@@ -1,59 +1,58 @@
 <template>
     <div class="container page">
         <Header />
-        <template v-if="tag">
-            <Breadcrumbs
-                :list="crumbs"
-            />
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>
-                        <country-flag
-                            v-if="tag.code"
-                            class="d-inline-block mr-1"
-                            :country="tag.code"
-                            size="normal"
-                        />
-                        {{ h1 }}
-                    </h1>
-                </div>
+        <Breadcrumbs
+            :list="crumbs"
+        />
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>
+                    <country-flag
+                        v-if="location.code"
+                        class="d-inline-block mr-1"
+                        :country="location.code"
+                        size="normal"
+                    />
+                    {{ h1 }}
+                </h1>
             </div>
-            <TwoPanels
-                v-if="tag.children && !($route.params.tag && $route.params.region)"
-                :left="tag.children"
-                :right="tag.tags"
-                :tag="tag"
+        </div>
+        <TwoPanels
+            v-if="location.children && !($route.params.tag && $route.params.region)"
+            :left="location.children"
+            :right="location.tags"
+            :tag="location"
+        />
+        <div class="row nopadding">
+            <MapFilter
+                v-if="!isCategory"
+                v-model="categories"
+                @update="filterChanged"
             />
-            <div class="row nopadding">
-                <MapFilter
-                    v-model="categories"
-                    @update="filterChanged"
+        </div>
+        <universal-map
+            ref="mapComponent"
+            :center="center"
+            :location="$route.params.region"
+            :tag="!isCategory ? $route.params.tag : null"
+            :categories="isCategory ? [$route.params.tag] : categories"
+            :zoom="location.zoom"
+        />
+        <item-gallery
+            :objects="pois"
+            :loading="loadingPois"
+        />
+        <div class="row">
+            <div class="col-12">
+                <b-pagination
+                    v-if="meta.last_page > 1"
+                    v-model="page"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
+                    aria-controls="my-table"
                 />
             </div>
-            <universal-map
-                ref="mapComponent"
-                :center="center"
-                :location="$route.params.region"
-                :tag="$route.params.tag"
-                :categories="categories"
-                :zoom="tag.zoom"
-            />
-            <item-gallery
-                :objects="pois"
-                :loading="loadingPois"
-            />
-            <div class="row">
-                <div class="col-12">
-                    <b-pagination
-                        v-if="meta.last_page > 1"
-                        v-model="page"
-                        :total-rows="meta.total"
-                        :per-page="meta.per_page"
-                        aria-controls="my-table"
-                    />
-                </div>
-            </div>
-        </template>
+        </div>
         <Footer />
     </div>
 </template>
@@ -66,6 +65,7 @@
     import MapFilter from '../../../components/map/MapFilter.vue';
     import UniversalMap from '../../../components/map/UniversalMap.vue';
     import ItemGallery from '../../../components/ItemGallery.vue';
+    import { TYPES } from '../../../constants/index';
 
     export default {
         name: 'Index',
@@ -78,8 +78,8 @@
         },
         data() {
             return {
-                type: null,
                 page: 1,
+                types: [...TYPES],
             };
         },
         async fetch() {
@@ -87,12 +87,11 @@
         },
         head() {
             return {
-                title: `${this.$route.params.tag ? `${this.$route.params.tag}: ` : ''}${this.tag.name_rod_ed ? 'Т' : `${this.tag.name}: т`}оп 10 достопримечательностей${this.tag.name_rod_ed ? ` ${this.tag.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
+                title: `${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
                 meta: [
                     {
                         name: 'description',
-                        content: `${this.tag.name_predlozh_ed ? `${this.titleType} в путеводителе по ${this.tag.name_predlozh_ed}.`
-                            : `${this.tag.name} в путеводителе.`} Фотографии мест, карты, отзывы`,
+                        content: this.description,
                     },
                 ],
                 link: [
@@ -108,46 +107,64 @@
                 loadingPois: 'poisPaginated/loading',
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
-                tag: 'location/model',
-                tagLoaded: 'location/isEmpty',
+                location: 'location/model',
+                locationLoaded: 'location/isEmpty',
+                tag: 'tag/model',
+                tagLoaded: 'tag/isEmpty',
             }),
             h1() {
-                if (this.tag.name_rod_ed) {
-                    return `${this.titleType} ${this.tag.name_rod_ed}`;
+                if (this.location && this.location.name_rod_ed) {
+                    return `${this.titleType} ${this.location.name_rod_ed}`;
                 }
 
-                return `${this.titleType}: ${this.tag.name}`;
+                return `${this.titleType}: ${this.location.name}`;
+            },
+            description() {
+                let result = '';
+                if (this.location.name_predlozh_ed) {
+                    result = `${this.titleType} в путеводителе по ${this.location.name_dat_ed}.`;
+                } else {
+                    result = `${this.location.name} в путеводителе.`;
+                }
+                return `${result} Фотографии мест, карты, отзывы`;
             },
             crumbs() {
-                const crumbs = [...this.tag.parents?.map((tag) => ({
-                    name: tag.name,
-                    url: `/region/${tag.url}`,
+                const crumbs = [...this.location.parents?.map((location) => ({
+                    name: location.name,
+                    url: `/region/${location.url}`,
                 })) ?? []];
                 if (this.$route.params.tag) {
                     crumbs.push({
-                        name: this.tag.name,
-                        url: `/region/${this.tag.url}`,
+                        name: this.location.name,
+                        url: `/region/${this.location.url}`,
                     });
-                    crumbs.push({
-                        name: this.$route.params.tag,
-                        url: '',
-                    });
+                    if (this.isCategory) {
+                        crumbs.push({
+                            name: this.$route.params.tag,
+                            url: '',
+                        });
+                    } else {
+                        crumbs.push({
+                            name: this.tag.name,
+                            url: '',
+                        });
+                    }
                 } else {
                     crumbs.push({
-                        name: this.tag.name,
+                        name: this.location.name,
                         url: '',
                     });
                 }
                 return crumbs;
             },
             categories() {
-                return this.type ? [this.type] : null;
+                return this.$route.params.type ? [this.$route.params.type] : null;
             },
             center() {
-                if (this.tagLoaded) {
+                if (this.locationLoaded) {
                     return {
-                        lat: this.tag.lat,
-                        lng: this.tag.lng,
+                        lat: this.location.lat,
+                        lng: this.location.lng,
                     };
                 }
                 return {
@@ -155,23 +172,32 @@
                     lng: 0,
                 };
             },
+            isCategory() {
+                return this.types.map((type) => type.name).includes(this.$route.params.tag);
+            },
             titleType() {
-                switch (this.$route.params.tag) {
-                case 'Природа':
-                    return 'Природные достопримечательности';
-                case 'Архитектура':
-                    return 'Архитектурные достопримечательности';
-                case 'Музей':
-                    return 'Музеи';
-                case 'Памятник':
-                    return 'Памятники';
-                case 'История-Культура':
-                    return 'Исторические и культурные достопримечательности';
-                case 'Техноген':
-                    return 'Техногенные достопримечательности';
-                default:
-                    return 'Достопримечательности';
+                if (this.isCategory) {
+                    switch (this.$route.params.tag) {
+                    case 'Природа':
+                        return 'Природные достопримечательности';
+                    case 'Архитектура':
+                        return 'Архитектурные достопримечательности';
+                    case 'Музей':
+                        return 'Музеи';
+                    case 'Памятник':
+                        return 'Памятники';
+                    case 'История-Культура':
+                        return 'Исторические и культурные достопримечательности';
+                    case 'Техноген':
+                        return 'Техногенные достопримечательности';
+                    default:
+                        return 'Достопримечательности';
+                    }
                 }
+                if (this.tag.name) {
+                    return this.tag.NAME_ROD ?? `${this.tag.name}:`;
+                }
+                return 'Достопримечательности';
             },
         },
         watch: {
@@ -183,20 +209,27 @@
             ...mapActions({
                 getPoi: 'poisPaginated/get',
                 setPoiParams: 'poisPaginated/setParams',
-                setId: 'location/setId',
-                getTag: 'location/get',
+                setLocationId: 'location/setId',
+                getLocation: 'location/get',
+                setTagId: 'tag/setId',
+                getTag: 'tag/get',
             }),
             async load() {
-                await this.setId(this.$route.params.region);
-                await this.getTag();
-                this.type = this.$route.params.type;
-                this.fetchPois();
+                await this.setLocationId(this.$route.params.region);
+                await this.getLocation();
+                if (!this.isCategory) {
+                    if (this.$route.params.tag) {
+                        await this.setTagId(this.$route.params.tag);
+                        await this.getTag();
+                    }
+                }
+                await this.fetchPois();
             },
             fetchPois() {
                 this.setPoiParams({
                     location: this.$route.params.region,
-                    tag: this.$route.params.tag,
-                    categories: this.categories,
+                    tag: !this.isCategory ? this.$route.params.tag : null,
+                    categories: this.isCategory ? [this.$route.params.tag] : this.categories,
                     page: this.page,
                 });
                 this.getPoi();
