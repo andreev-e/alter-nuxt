@@ -97,10 +97,10 @@ export default {
     },
 
     server: {
-        https: {
-            key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
-            cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt')),
-        },
+        // https: {
+        //     key: fs.readFileSync(path.resolve(__dirname, 'localhost.key')),
+        //     cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt')),
+        // },
     },
 
     serverMiddleware: ['~/server-middleware/logger'],
