@@ -67,6 +67,8 @@
                     password: null,
                 }, {
                     removeNullValues: false,
+                    resetAfterSend: false,
+                    method: 'PATCH',
                 }),
             };
         },
@@ -80,19 +82,9 @@
         },
         methods: {
             onSubmit() {
-                let url = '/api/user';
-                if (this.$route.params.id) {
-                    url = `${url}/${this.$route.params.id}`;
-                    this.form.addField('_method', 'PATCH');
-                }
-
-                this.form.submit(url)
-                    .then((result) => {
-                        if (this.$route.params.id) {
-                            // this.$router.push('/secure/');
-                        } else {
-                            // this.$router.push(`/secure/user/${result.data.id}`);
-                        }
+                this.form.submit(`/api/user/${this.$route.params.id}`)
+                    .then(() => {
+                        // this.$router.push('/secure/');
                     });
             },
         },
