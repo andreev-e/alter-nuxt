@@ -72,6 +72,12 @@
             label="Youtube: https://www.youtube.com/watch?v="
             :form="form"
         />
+        <text-input
+            id="copyright"
+            v-model="form.copyright"
+            label="Автор фотографий (если используются не свои фотографии) "
+            :form="form"
+        />
         <h2>Метки</h2>
         <div class="d-flex flex-wrap">
             <input-checkbox
@@ -169,9 +175,10 @@
         },
         watch: {
             poi(poi) {
-                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb'].forEach((field) => {
-                    this.form[field] = poi[field];
-                });
+                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright']
+                    .forEach((field) => {
+                        this.form[field] = poi[field];
+                    });
                 ['tags'].forEach((field) => {
                     this.form[field] = poi[field].map((tag) => tag.id);
                 });
