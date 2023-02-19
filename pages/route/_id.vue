@@ -17,7 +17,7 @@
                     {{ route.days }} дней
                 </badge>
                 <badge class="bg-warning">
-                    {{ route.cost }} рублей
+                    {{ route.cost }} руб.
                 </badge>
                 <client-only>
                     <badge
@@ -70,7 +70,7 @@
                 >
                     Ссылки
                 </h2>
-                <p v-html="route.links" />
+                <text-with-links :text="route.links" />
             </div>
             <div class="col-sm-12">
                 <div
@@ -78,7 +78,7 @@
                     style="height: auto !important;"
                 >
                     <div
-                        v-if="route.images"
+                        v-if="route.images?.length"
                         class="route_photoes"
                     >
                         <h2>Фото</h2>
@@ -109,9 +109,11 @@
     import ItemGallery from '../../components/ItemGallery.vue';
     import SuperGallery from '../../components/SuperGallery.vue';
     import ViewsBadge from '../../components/badges/ViewsBadge.vue';
+    import TextWithLinks from '../../components/ui/TextWithLinks.vue';
 
     export default {
         components: {
+            TextWithLinks,
             ViewsBadge,
             SuperGallery,
             ItemGallery,

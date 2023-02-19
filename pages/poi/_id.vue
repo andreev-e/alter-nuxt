@@ -89,9 +89,7 @@
                                 <h2 id="links">
                                     Ссылки
                                 </h2>
-                                <p>
-                                    {{ poi.links }}
-                                </p>
+                                <text-with-links :text="poi.links" />
                             </template>
                             <template
                                 v-if="poi.addon"
@@ -203,9 +201,11 @@
     import SuperGallery from '../../components/SuperGallery.vue';
     import Badge from '../../components/ui/Badge.vue';
     import ViewsBadge from '../../components/badges/ViewsBadge.vue';
+    import TextWithLinks from '../../components/ui/TextWithLinks.vue';
 
     export default {
         components: {
+            TextWithLinks,
             ViewsBadge,
             SuperGallery,
             CommentBage,
