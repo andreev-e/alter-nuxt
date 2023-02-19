@@ -24,6 +24,7 @@
                 <photo-form
                     :images="user.images"
                     :path="`user/${$route.params.id}`"
+                    @images="setImages"
                 />
             </div>
         </div>
@@ -73,10 +74,14 @@
             ...mapActions({
                 get: 'user/get',
                 setId: 'user/setId',
+                setProperty: 'user/setProperty',
             }),
             async fetchUser() {
                 await this.setId(this.$route.params.id);
                 await this.get();
+            },
+            setImages(value) {
+                this.setProperty({ property: 'images', value });
             },
         },
     };
