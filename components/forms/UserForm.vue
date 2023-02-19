@@ -29,6 +29,7 @@
             v-model="form.password"
             label="Пароль"
             :form="form"
+            type="password"
         />
         <button
             type="submit"
@@ -84,7 +85,11 @@
             onSubmit() {
                 this.form.submit(`/api/user/${this.$route.params.id}`)
                     .then(() => {
-                        // this.$router.push('/secure/');
+                        if (this.$auth.user.username === this.user.username) {
+                            this.$auth.fetchUser();
+                        } else {
+                            this.$router.push('/user');
+                        }
                     });
             },
         },
