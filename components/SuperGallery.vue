@@ -78,6 +78,7 @@
 
   .position-absolute {
     background-color: #FFFFFF;
+    color: #244255;
     top: -3px;
     right: -3px;
     z-index: 2;
