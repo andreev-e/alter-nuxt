@@ -68,7 +68,7 @@
                 }, {
                     removeNullValues: false,
                     resetAfterSend: false,
-                    method: 'PATCH',
+                    method: 'patch',
                 }),
             };
         },
