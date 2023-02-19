@@ -63,6 +63,9 @@
                 user: 'user/model',
             }),
         },
+        mounted() {
+            this.fetch();
+        },
         methods: {
             ...mapActions({
                 get: 'user/get',
