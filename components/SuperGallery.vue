@@ -3,10 +3,12 @@
         <div
             v-for="img in images"
             :key="img.id"
+            class="frame"
             :style="`width:${img.width*heightOfRow/img.height}px;flex-grow:${img.width*heightOfRow/img.height}`"
         >
             <i :style="`padding-bottom:${img.height/img.width*100}%`" />
             <a :href="img.original">
+                <div class="position-absolute">Автор {{ img.copyright }}</div>
                 <img
                     :src="img.original"
                     :alt="alt"
@@ -64,5 +66,22 @@
     top: 0;
     width: 100%;
     vertical-align: bottom;
+  }
+
+  .frame .position-absolute {
+    display: none;
+  }
+
+  .frame:hover .position-absolute {
+    display: block;
+  }
+
+  .position-absolute {
+    background-color: #FFFFFF;
+    top: -3px;
+    right: -3px;
+    z-index: 2;
+    opacity: 0.8;
+    padding: 3px 10px;
   }
 </style>
