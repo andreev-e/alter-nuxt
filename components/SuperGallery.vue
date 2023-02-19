@@ -41,6 +41,7 @@
   section {
     display: flex;
     flex-wrap: wrap;
+    margin: -3px;
   }
 
   section::after {

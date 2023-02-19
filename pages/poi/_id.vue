@@ -34,7 +34,10 @@
         <div class="row inner">
             <div class="col-sm-12 object-full">
                 <b-tabs>
-                    <b-tab title="Фото">
+                    <b-tab
+                        title="Фото"
+                        class="my-3"
+                    >
                         <super-gallery
                             :alt="poi.name"
                             :images="poi.images"

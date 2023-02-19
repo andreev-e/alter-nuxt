@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    {{ tag.NAME_ROD ?? tag.name }}. Достопримечательности на карте
+                    {{ tag.NAME_ROD ? tag.NAME_ROD : tag.name }}. Достопримечательности на карте
                 </h1>
             </div>
         </div>
