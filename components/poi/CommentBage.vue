@@ -1,5 +1,5 @@
 <template>
-    <bage class="bg-light text-black-50">
+    <badge class="bg-light text-black-50">
         <font-awesome-icon
             v-if="count === 1"
             icon="fa-comment"
@@ -9,15 +9,15 @@
             icon="fa-comments"
         />
         {{ count }}
-    </bage>
+    </badge>
 </template>
 
 <script>
-    import Bage from '../ui/Bage.vue';
+    import Badge from '../ui/Badge.vue';
 
     export default {
         name: 'CommentBage',
-        components: { Bage },
+        components: { Badge },
         props: {
             count: { type: Number, required: true },
         },

@@ -10,26 +10,21 @@
                 <h1 class="view">
                     {{ poi.name }}
                 </h1>
-                <bage
+                <badge
                     class="bg-warning"
                     :url="`/user/${poi.author}`"
                 >
                     {{ poi.author }}
-                </bage>
-                <bage
+                </badge>
+                <badge
                     v-for="tag in poi.tags"
                     :key="tag.id"
                     class="bg-primary"
                     :url="`/tag/${tag.url}`"
                 >
                     {{ tag.name }}
-                </bage>
-                <bage class="bg-secondary text-white">
-                    <font-awesome-icon
-                        icon="fa-eye"
-                    />
-                    всего {{ poi.views }}{{ poi.views_month ? `, месяц ${poi.views_month}` : '' }}{{ poi.views_today ? `, сегодня ${poi.views_today}` : '' }}
-                </bage>
+                </badge>
+                <views-badge :views="poi.views" />
                 <comment-bage
                     v-if="poi && poi.comments"
                     :count="poi.comments"
@@ -200,17 +195,19 @@
     import Comments from '../../components/Comments.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
-    import Bage from '../../components/ui/Bage.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
     import CommentBage from '../../components/poi/CommentBage.vue';
     import SuperGallery from '../../components/SuperGallery.vue';
+    import Badge from '../../components/ui/Badge.vue';
+    import ViewsBadge from '../../components/badges/ViewsBadge.vue';
 
     export default {
         components: {
+            ViewsBadge,
             SuperGallery,
             CommentBage,
             ItemGallery,
-            Bage,
+            Badge,
             UniversalMap,
             Breadcrumbs,
             Comments,

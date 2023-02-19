@@ -7,36 +7,41 @@
                 <h1 class="view">
                     {{ route.name }}
                 </h1>
-                <bage
+                <badge
                     class="bg-warning"
                     :url="`/user/${route.author}`"
                 >
                     {{ route.author }}
-                </bage>
-                <bage class="bg-primary text-white">
+                </badge>
+                <badge class="bg-primary text-white">
                     {{ route.days }} дней
-                </bage>
-                <bage class="bg-warning">
+                </badge>
+                <badge class="bg-warning">
                     {{ route.cost }} рублей
-                </bage>
-                <bage class="bg-primary text-white">
-                    391.6 км TODO
-                </bage>
-                <bage class="bg-warning">
+                </badge>
+                <client-only>
+                    <badge
+                        v-if="routeLength"
+                        class="bg-primary text-white"
+                    >
+                        {{ routeLength }}
+                    </badge>
+                </client-only>
+                <badge class="bg-warning">
                     Опубликовано - {{ route.date }}
-                </bage>
-                <bage class="bg-primary text-white">
-                    Просмотров - {{ route.views }}
-                </bage>
+                </badge>
+                <views-badge :views="route.views" />
             </div>
         </div>
         <b-row>
             <div class="col-sm-12">
                 <client-only>
                     <universal-map
+                        ref="routeMap"
                         :zoom="6"
                         :route="route"
                         fit-content
+                        @update="mapUpdated"
                     />
                 </client-only>
             </div>
@@ -81,7 +86,7 @@
                             :alt="route.name"
                             :images="route.images"
                         />
-                        <p>© Все права на опубликованные фотографии принадлежат автору публикации.</p>
+                        <p>&copy; Все права на опубликованные фотографии принадлежат автору публикации.</p>
                     </div>
                 </div>
             </div>
@@ -100,15 +105,17 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import Comments from '../../components/Comments.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
-    import Bage from '../../components/ui/Bage.vue';
+    import Badge from '../../components/ui/Badge.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
     import SuperGallery from '../../components/SuperGallery.vue';
+    import ViewsBadge from '../../components/badges/ViewsBadge.vue';
 
     export default {
         components: {
+            ViewsBadge,
             SuperGallery,
             ItemGallery,
-            Bage,
+            Badge,
             UniversalMap,
             Comments,
             Breadcrumbs,
@@ -116,6 +123,7 @@
         data() {
             return {
                 page: 1,
+                routeLength: 0,
             };
         },
         async fetch() {
@@ -128,7 +136,7 @@
                 meta: [
                     {
                         name: 'description',
-                        content: 'todo',
+                        content: `Готовый маршрут с достопримечательностями ${this.route.days ? `на ${this.route.days} дней` : ''}${this.route.cost ? `, за ${this.route.cost} рублей` : ''}`,
                     },
                 ],
             };
@@ -155,6 +163,9 @@
                 get: 'route/get',
                 setId: 'route/setId',
             }),
+            mapUpdated() {
+                this.routeLength = this.$refs.routeMap.getRouteLength();
+            },
         },
     };
 </script>

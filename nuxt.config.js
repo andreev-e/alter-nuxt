@@ -1,6 +1,3 @@
-import path from 'path';
-import fs from 'fs';
-
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1;
 
 export default {

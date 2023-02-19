@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: 'Bage',
+        name: 'Badge',
         props: {
             url: { type: String, default: null },
         },

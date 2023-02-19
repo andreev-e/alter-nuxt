@@ -2,12 +2,12 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: 'Метка: '+tag.name, url: '' }]"
+            :list="[{ name: `Метка: ${tag.name} `, url: '' }]"
         />
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    {{ tag.name }}
+                    {{ tag.NAME_ROD ?? tag.name }}. Достопримечательности на карте
                 </h1>
             </div>
         </div>
@@ -64,14 +64,16 @@
             await this.setId(this.$route.params.id);
             await this.getTag();
         },
-        head: {
-            title: 'Карта достопримечательностей для самостоятельных путешественников',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Каталог достопримечательностей на карте . Для самостоятельной организации путешествия!',
-                },
-            ],
+        head() {
+            return {
+                title: `Все ${this.tag.NAME_ROD ?? this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                meta: [
+                    {
+                        name: 'description',
+                        content: `Все ${this.tag.NAME_ROD ?? this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                    },
+                ],
+            };
         },
         computed: {
             ...mapGetters({
@@ -109,11 +111,11 @@
                 getTag: 'tag/get',
             }),
             async fetchPois() {
-                this.setParams({
+                await this.setParams({
                     tag: this.$route.params.id,
                     page: this.page,
                 });
-                this.getPoi();
+                await this.getPoi();
             },
             poisChanged(pois) {
                 if (pois.length === 0

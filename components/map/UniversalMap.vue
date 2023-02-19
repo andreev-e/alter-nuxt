@@ -27,6 +27,7 @@
                 />
                 <gmap-polyline
                     v-if="route && route.encoded_route"
+                    ref="polyline"
                     :path="path"
                     :options="{ strokeColor: '#FF0000' }"
                 />
@@ -213,10 +214,19 @@
                 }
                 return false;
             },
+            routeLength() {
+                if (process.client && this.google && this.route && this.route.encoded_route) {
+                    return `${Math.round(this.google.maps.geometry.spherical.computeLength(this.path) / 1000)} км`;
+                }
+                return null;
+            },
         },
         watch: {
             pois() {
                 this.$emit('update', [...this.pois]);
+            },
+            routeLength() {
+                this.$emit('update');
             },
         },
         mounted() {
@@ -228,6 +238,9 @@
                 setParams: 'pois/setParams',
                 clear: 'pois/clear',
             }),
+            getRouteLength() {
+                return this.routeLength;
+            },
             idle() {
                 if (!this.route && !this.poisExist) {
                     this.fetchPois();
