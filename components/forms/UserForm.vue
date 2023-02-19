@@ -1,11 +1,28 @@
 <template>
     <form @submit.prevent="onSubmit">
         <text-input
-            id="name"
-            v-model="form.name"
-            label="Название"
+            id="firstname"
+            v-model="form.firstname"
+            label="Имя"
             :form="form"
-            required
+        />
+        <text-input
+            id="lastname"
+            v-model="form.lastname"
+            label="Фамилия"
+            :form="form"
+        />
+        <text-input
+            id="about"
+            v-model="form.about"
+            label="Обо мне"
+            :form="form"
+        />
+        <text-input
+            id="homepage"
+            v-model="form.homepage"
+            label="Сайт https://"
+            :form="form"
         />
         <button
             type="submit"
@@ -37,7 +54,10 @@
         data() {
             return {
                 form: new Form({
-                    name: null,
+                    firstname: null,
+                    lastname: null,
+                    about: null,
+                    homepage: null,
                 }, {
                     removeNullValues: false,
                 }),
@@ -45,7 +65,7 @@
         },
         watch: {
             user(user) {
-                ['name']
+                ['about', 'firstname', 'lastname', 'homepage']
                     .forEach((field) => {
                         this.form[field] = user[field];
                     });

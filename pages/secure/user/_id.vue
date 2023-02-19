@@ -14,6 +14,19 @@
                 />
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <h2>Фото</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <photo-form
+                    :images="user.image"
+                    :path="`user/${$route.params.id}`"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -22,9 +35,10 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import UserForm from '../../../components/forms/UserForm.vue';
+    import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
-        components: { UserForm, Breadcrumbs },
+        components: { PhotoForm, UserForm, Breadcrumbs },
         middleware: 'auth',
         data() {
             return {
