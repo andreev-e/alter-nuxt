@@ -169,7 +169,7 @@
         },
         watch: {
             poi(poi) {
-                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links'].forEach((field) => {
+                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb'].forEach((field) => {
                     this.form[field] = poi[field];
                 });
                 ['tags'].forEach((field) => {
