@@ -78,7 +78,7 @@
                     style="height: auto !important;"
                 >
                     <div
-                        v-if="route.images?.length"
+                        v-if="route.images && route.image.length"
                         class="route_photoes"
                     >
                         <h2>Фото</h2>
