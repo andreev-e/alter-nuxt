@@ -66,6 +66,12 @@
             multiline
             :form="form"
         />
+        <text-input
+            id="ytb"
+            v-model="form.ytb"
+            label="Youtube: https://www.youtube.com/watch?v="
+            :form="form"
+        />
         <h2>Метки</h2>
         <div class="d-flex flex-wrap">
             <input-checkbox
@@ -125,6 +131,7 @@
                     lng: null,
                     type: null,
                     links: null,
+                    ytb: null,
                     tags: [],
                 }, {
                     removeNullValues: false,
