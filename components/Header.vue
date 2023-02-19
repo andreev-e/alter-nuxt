@@ -24,6 +24,17 @@
                     >
                         {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
                     </nuxt-link>
+                    <router-link
+                        :to="`/secure/user/${$auth.user.username}`"
+                        class="d-inline-block mr-1 mt-1"
+                        title="Профиль"
+                    >
+                        <font-awesome-icon
+                            icon="fa-edit"
+                            class="text-warning"
+                            role="button"
+                        />
+                    </router-link>
                     <button
                         class="btn btn-dark btn-sm"
                         @click="logout"

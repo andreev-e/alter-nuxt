@@ -49,9 +49,12 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    import Breadcrumbs from '../../components/Breadcrumbs.vue';
+    import UserCard from '../../components/user/UserCard.vue';
 
     export default {
         name: 'Index',
+        components: { UserCard, Breadcrumbs },
         data() {
             return {
                 page: 1,
