@@ -110,7 +110,8 @@
                 countries: 'locations/items',
             }),
             menuTags() {
-                return this.tags.slice(0, 20);
+                return [...this.tags].sort((a, b) => a.count < b.count)
+                    .slice(0, 20);
             },
             menuCountries() {
                 return this.countries;

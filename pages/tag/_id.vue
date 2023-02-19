@@ -66,11 +66,11 @@
         },
         head() {
             return {
-                title: `Все ${this.tag.NAME_ROD ?? this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                title: `Все ${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
                 meta: [
                     {
                         name: 'description',
-                        content: `Все ${this.tag.NAME_ROD ?? this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                        content: `Все ${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
                     },
                 ],
             };
