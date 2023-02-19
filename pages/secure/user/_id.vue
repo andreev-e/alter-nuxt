@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <user-form
-                    :user="poi.images"
+                    :user="user"
                 />
             </div>
         </div>
@@ -19,7 +19,7 @@
 
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
     import UserForm from '../../../components/forms/UserForm.vue';
 
@@ -45,7 +45,9 @@
             await this.get();
         },
         computed: {
-
+            ...mapGetters({
+                user: 'user/model',
+            }),
         },
         methods: {
             ...mapActions({
