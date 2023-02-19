@@ -89,9 +89,9 @@
                 this.form.submit(url)
                     .then((result) => {
                         if (this.$route.params.id) {
-                            this.$router.push('/secure/');
+                            // this.$router.push('/secure/');
                         } else {
-                            this.$router.push(`/secure/user/${result.data.id}`);
+                            // this.$router.push(`/secure/user/${result.data.id}`);
                         }
                     });
             },
