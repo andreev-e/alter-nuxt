@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-12">
                 <photo-form
-                    :images="user.image"
+                    :images="user.images"
                     :path="`user/${$route.params.id}`"
                 />
             </div>
