@@ -24,6 +24,12 @@
             label="Сайт https://"
             :form="form"
         />
+        <text-input
+            id="password"
+            v-model="form.password"
+            label="Пароль"
+            :form="form"
+        />
         <button
             type="submit"
             class="btn btn-success"
@@ -58,6 +64,7 @@
                     lastname: null,
                     about: null,
                     homepage: null,
+                    password: null,
                 }, {
                     removeNullValues: false,
                 }),
