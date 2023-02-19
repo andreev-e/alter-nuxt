@@ -38,7 +38,11 @@
     import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
-        components: { PhotoForm, UserForm, Breadcrumbs },
+        components: {
+            PhotoForm,
+            UserForm,
+            Breadcrumbs,
+        },
         middleware: 'auth',
         data() {
             return {
@@ -55,8 +59,7 @@
             };
         },
         async fetch() {
-            await this.setId(this.$route.params.id);
-            await this.get();
+            await this.fetchUser();
         },
         computed: {
             ...mapGetters({
@@ -64,13 +67,17 @@
             }),
         },
         mounted() {
-            this.fetch();
+            this.fetchUser();
         },
         methods: {
             ...mapActions({
                 get: 'user/get',
                 setId: 'user/setId',
             }),
+            async fetchUser() {
+                await this.setId(this.$route.params.id);
+                await this.get();
+            },
         },
     };
 </script>
