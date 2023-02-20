@@ -1,21 +1,22 @@
 <template>
     <div>
-        <item-gallery
-            :objects="items"
-            :loading="loading"
-            @reload="fetchItems"
-        />
-        <div class="row">
-            <div class="col-12">
-                <b-pagination
-                    v-if="meta.last_page > 1"
-                    v-model="page"
-                    :total-rows="meta.total"
-                    :per-page="meta.per_page"
-                    aria-controls="my-table"
-                />
-            </div>
-        </div>
+        {{ meta }}
+        <!--        <item-gallery-->
+        <!--            :objects="items"-->
+        <!--            :loading="loading"-->
+        <!--            @reload="fetchItems"-->
+        <!--        />-->
+        <!--        <div class="row">-->
+        <!--            <div class="col-12">-->
+        <!--                <b-pagination-->
+        <!--                    v-if="meta.last_page > 1"-->
+        <!--                    v-model="page"-->
+        <!--                    :total-rows="meta.total"-->
+        <!--                    :per-page="meta.per_page"-->
+        <!--                    aria-controls="my-table"-->
+        <!--                />-->
+        <!--            </div>-->
+        <!--        </div>-->
         <router-link
             :to="`/secure/${type}/create`"
             class="d-inline-block mr-1 mt-1"
@@ -34,11 +35,11 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions } from 'vuex';
-    import ItemGallery from './ItemGallery.vue';
+    // import ItemGallery from './ItemGallery.vue';
 
     export default {
         name: 'PaginatedGallery',
-        components: { ItemGallery },
+        // components: { ItemGallery },
         props: {
             type: {
                 type: String,
