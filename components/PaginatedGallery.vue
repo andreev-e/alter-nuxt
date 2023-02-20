@@ -4,6 +4,7 @@
             v-if="items.length"
             :objects="items"
             :loading="loading"
+            :type="type"
             @reload="fetchItems"
         />
         <router-link
@@ -94,7 +95,7 @@
                 },
             }),
             fetchItems() {
-                this.clear();
+                // this.clear();
                 this.setParams();
                 this.get();
             },
