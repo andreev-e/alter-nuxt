@@ -8,10 +8,10 @@
         <div class="row">
             <div class="col-12">
                 <b-pagination
-                    v-if="meta?.last_page > 1"
+                    v-if="meta.last_page > 1"
                     v-model="page"
-                    :total-rows="meta?.total"
-                    :per-page="meta?.per_page"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
                     aria-controls="my-table"
                 />
             </div>
@@ -28,7 +28,11 @@
         name: 'PaginatedGallery',
         components: { ItemGallery },
         props: {
-            type: { type: String, required: true, default: 'pois' },
+            type: {
+                type: String,
+                required: true,
+                default: 'pois',
+            },
         },
         data() {
             return {
@@ -37,9 +41,9 @@
         },
         computed: {
             ...mapGetters({
-                loading: `${this?.type}Paginated/loading`,
-                items: `${this?.type}Paginated/items`,
-                meta: `${this?.type}Paginated/meta`,
+                loading: `${this?.type ? 'pois' : this.type}Paginated/loading`,
+                items: `${this?.type ? 'pois' : this.type}Paginated/items`,
+                meta: `${this?.type ? 'pois' : this.type}Paginated/meta`,
             }),
         },
         watch: {
@@ -52,9 +56,9 @@
         },
         methods: {
             ...mapActions({
-                get: `${this?.type}Paginated/get`,
-                setParams: `${this?.type}Paginated/setParams`,
-                clear: `${this?.type}Paginated/clear`,
+                get: `${this?.type ? 'pois' : this.type}Paginated/get`,
+                setParams: `${this?.type ? 'pois' : this.type}Paginated/setParams`,
+                clear: `${this?.type ? 'pois' : this.type}Paginated/clear`,
             }),
             fetchItems() {
                 this.clear();
