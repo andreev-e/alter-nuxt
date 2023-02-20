@@ -1,22 +1,13 @@
 <template>
     <div>
         <item-gallery
+            v-if="items.length"
             :objects="items"
             :loading="loading"
             @reload="fetchItems"
         />
-        <div class="row">
-            <div class="col-12">
-                <b-pagination
-                    v-if="meta.last_page > 1"
-                    v-model="page"
-                    :total-rows="meta.total"
-                    :per-page="meta.per_page"
-                    aria-controls="my-table"
-                />
-            </div>
-        </div>
         <router-link
+            v-else
             :to="`/secure/${type}/create`"
             class="d-inline-block mr-1 mt-1"
             :title="`Добавить ${name}`"
@@ -28,6 +19,17 @@
             />
             Добавить {{ name }}
         </router-link>
+        <div class="row">
+            <div class="col-12">
+                <b-pagination
+                    v-if="meta.last_page > 1"
+                    v-model="page"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
+                    aria-controls="my-table"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
