@@ -31,7 +31,7 @@
                     >
                         <font-awesome-icon
                             icon="fa-edit"
-                            class="text-warning"
+                            class="text-primary"
                             role="button"
                         />
                     </router-link>

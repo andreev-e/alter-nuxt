@@ -5,6 +5,20 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1 class="view">
+                    <client-only>
+                        <router-link
+                            v-if="canEdit"
+                            :to="`/secure/route/${route.id}`"
+                            class="d-inline-block mr-1 mt-1"
+                            title="Редактировать"
+                        >
+                            <font-awesome-icon
+                                icon="fa-edit"
+                                class="text-primary"
+                                role="button"
+                            />
+                        </router-link>
+                    </client-only>
                     {{ route.name }}
                 </h1>
                 <badge
@@ -158,6 +172,15 @@
                         name: this.route.name,
                     },
                 ];
+            },
+            canEdit() {
+                return this.$auth.user && (this.isAdmin || this.isOwner);
+            },
+            isOwner() {
+                return this.$auth.user && this.$auth.user.username === this.route.author;
+            },
+            isAdmin() {
+                return this.$auth.user && this.$auth.user.username === 'andreev';
             },
         },
         methods: {

@@ -77,6 +77,12 @@
                     <span class="d-none d-sm-block">объектов</span>
                 </nuxt-link>
             </li>
+            <li v-if="$auth.loggedIn">
+                <nuxt-link to="/secure">
+                    Мои
+                    <span class="d-none d-sm-block">Публикации</span>
+                </nuxt-link>
+            </li>
         </client-only>
     </ul>
 </template>

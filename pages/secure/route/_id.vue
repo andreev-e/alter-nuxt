@@ -4,7 +4,7 @@
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
             <div class="col-12">
-                <h1>Редактирование точки</h1>
+                <h1>Редактирование маршрута</h1>
             </div>
         </div>
         <div class="row">
@@ -20,9 +20,9 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <photo-form
-                        :images="poi.images"
-                        :path="`poi/${$route.params.id}`"
+                    <route-form
+                        :images="route.images"
+                        :path="`route/${$route.params.id}`"
                         @images="setImages"
                     />
                 </div>
@@ -39,11 +39,11 @@
     // eslint-disable-next-line import/extensions
     import { TYPES } from '../../../constants/index.js';
     import PoiForm from '../../../components/forms/PoiForm.vue';
-    import PhotoForm from '../../../components/forms/PhotoForm.vue';
+    import RouteForm from '../../../components/forms/RouteForm.vue';
 
     export default {
         components: {
-            PhotoForm,
+            RouteForm,
             PoiForm,
             Breadcrumbs,
         },
@@ -54,30 +54,15 @@
         },
         head() {
             return {
-                title: this.poi.name,
+                title: this.route.name,
             };
         },
         computed: {
             ...mapGetters({
-                poi: 'poi/model',
-                loaded: 'poi/isEmpty',
-                endpoint: 'poi/endpoint',
+                poi: 'route/model',
+                loaded: 'route/isEmpty',
+                endpoint: 'route/endpoint',
             }),
-            center: {
-                get() {
-                    if (this.poi) {
-                        return { lat: this.poi.lat, lng: this.poi.lng };
-                    }
-                    return { lat: 0, lng: 0 };
-                },
-                set(val) {
-                    this.form.lat = val.lat;
-                    this.form.lng = val.lng;
-                },
-            },
-            types() {
-                return TYPES;
-            },
             breadCrumbs() {
                 return [
                     {
@@ -85,7 +70,7 @@
                         url: '/secure/',
                     },
                     {
-                        name: this.poi.name ? `Редактирование: ${this.poi.name}` : '',
+                        name: this.route.name ? `Редактирование: ${this.route.name}` : '',
                         url: '',
                     },
                 ];
@@ -93,9 +78,9 @@
         },
         methods: {
             ...mapActions({
-                get: 'poi/get',
-                setId: 'poi/setId',
-                setProperty: 'poi/setProperty',
+                get: 'route/get',
+                setId: 'route/setId',
+                setProperty: 'route/setProperty',
             }),
             setImages(value) {
                 this.setProperty({ property: 'images', value });
