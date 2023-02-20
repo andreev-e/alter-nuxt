@@ -77,14 +77,14 @@
                     Особенности
                 </h2>
                 <p v-html="route.route" />
-
-                <h2
+                <template
                     v-if="route.links"
-                    id="links"
                 >
-                    Ссылки
-                </h2>
-                <text-with-links :text="route.links" />
+                    <h2 id="links">
+                        Ссылки
+                    </h2>
+                    <text-with-links :text="route.links" />
+                </template>
             </div>
             <div class="col-sm-12">
                 <div
