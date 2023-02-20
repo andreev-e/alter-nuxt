@@ -59,13 +59,13 @@
         },
         computed: {
             items() {
-                return this.$store.getters[`${this.type}Paginated/items`];
+                return this.$store.getters[`${this.type}sPaginated/items`];
             },
             meta() {
-                return this.$store.getters[`${this.type}Paginated/meta`];
+                return this.$store.getters[`${this.type}sPaginated/meta`];
             },
             loading() {
-                return this.$store.getters[`${this.type}Paginated/loading`];
+                return this.$store.getters[`${this.type}sPaginated/loading`];
             },
         },
         watch: {
@@ -78,16 +78,20 @@
         },
         methods: {
             ...mapActions({
-                get() { this.$store.dispatch(`${this.type}Paginated/get`); },
+                get() {
+                    this.$store.dispatch(`${this.type}sPaginated/get`);
+                },
                 setParams() {
-                    this.$store.dispatch(`${this.type}Paginated/setParams`, {
+                    this.$store.dispatch(`${this.type}sPaginated/setParams`, {
                         user: this.$auth.user.username,
                         page: this.page,
                         latest: 1,
                         withHidden: 1,
                     });
                 },
-                clear() { this.$store.dispatch(`${this.type}Paginated/clear`); },
+                clear() {
+                    this.$store.dispatch(`${this.type}sPaginated/clear`);
+                },
             }),
             fetchItems() {
                 this.clear();

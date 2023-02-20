@@ -18,7 +18,7 @@
                     >
                         <client-only>
                             <paginated-gallery
-                                type="pois"
+                                type="poi"
                                 name="точку"
                             />
                         </client-only>
@@ -29,7 +29,7 @@
                     >
                         <client-only>
                             <paginated-gallery
-                                type="routes"
+                                type="route"
                                 name="маршрут"
                             />
                         </client-only>
