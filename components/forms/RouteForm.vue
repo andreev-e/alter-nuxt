@@ -6,7 +6,18 @@
                 :zoom="12"
                 map-type-id="terrain"
                 :center="center"
-            />
+            >
+                <gmap-marker
+                    v-if="start"
+                    :position="start"
+                    :icon="iconStart"
+                />
+                <gmap-marker
+                    v-if="finish"
+                    :position="finish"
+                    :icon="iconFinish"
+                />
+            </gmap-map>
         </client-only>
         <text-input
             id="name"
@@ -28,7 +39,6 @@
             v-model="form.cost"
             label="Бюджет, руб"
             :form="form"
-            required
             type="number"
         />
         <text-input
@@ -36,7 +46,6 @@
             v-model="form.days"
             label="Длительность, дней"
             :form="form"
-            required
             type="number"
         />
         <text-input
@@ -44,7 +53,6 @@
             v-model="form.route"
             label="Особенности"
             multiline
-            required
             :form="form"
         />
         <button
@@ -95,6 +103,26 @@
                         lng: 0,
                     };
                 },
+            },
+            start() {
+                if (this.route && this.route.start) {
+                    const start = this.route.start.split(';');
+                    return {
+                        lat: parseFloat(start[0]),
+                        lng: parseFloat(start[1]),
+                    };
+                }
+                return false;
+            },
+            finish() {
+                if (this.route && this.route.finish) {
+                    const finish = this.route.finish.split(';');
+                    return {
+                        lat: parseFloat(finish[0]),
+                        lng: parseFloat(finish[1]),
+                    };
+                }
+                return false;
             },
         },
         watch: {

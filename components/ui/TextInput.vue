@@ -15,6 +15,7 @@
             <b-textarea
                 v-if="multiline"
                 v-model="val"
+                rows="5"
                 class="w-100"
                 @input="$emit('input', val)"
             />
