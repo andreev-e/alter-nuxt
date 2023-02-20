@@ -8,6 +8,21 @@
                 class="col-sm-12"
             >
                 <h1 class="view">
+                    <client-only>
+                        <router-link
+                            v-if="canEdit"
+                            :to="`/secure/poi/${poi.id}`"
+                            class="d-inline-block mr-1 mt-1"
+                            title="Редактировать"
+                        >
+                            <font-awesome-icon
+                                icon="fa-edit"
+                                class="text-warning"
+                                role="button"
+                            />
+                        </router-link>
+                    </client-only>
+
                     {{ poi.name }}
                 </h1>
                 <badge
@@ -256,6 +271,15 @@
                     });
                 }
                 return breadCrumbs;
+            },
+            canEdit() {
+                return this.$auth.user && (this.isAdmin || this.isOwner);
+            },
+            isOwner() {
+                return this.$auth.user && this.$auth.user.username === this.poi.author;
+            },
+            isAdmin() {
+                return this.$auth.user && this.$auth.user.username === 'andreev';
             },
         },
         methods: {
