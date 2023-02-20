@@ -28,17 +28,18 @@
             <b-col
                 md="3"
                 cols="12"
-                class="text-right mt-2"
+                class="mt-2"
+            />
+            <b-col
+                cols="12"
+                md="9"
             >
-                Сменить пароль
-            </b-col>
-            <b-col>
                 <b-form-checkbox
                     v-model="changePassword"
                     :value="true"
                     :unchecked-value="false"
                 >
-                    Да
+                    Сменить пароль
                 </b-form-checkbox>
             </b-col>
         </b-row>
