@@ -14,7 +14,7 @@
                     :per-page="meta.per_page"
                     aria-controls="my-table"
                 />
-                {{ meta }}
+                {{ meta1 }}
             </div>
         </div>
     </div>
@@ -41,10 +41,10 @@
         },
         computed: {
             ...mapGetters({
-                // loading: `${this.type}Paginated/loading`,
-                // items: `${this.type}Paginated/items`,
-                // meta: `${this.type}Paginated/meta`,
-                meta: this.$store.dispatch(`${this.type}Paginated/meta`),
+                loading: 'poiPaginated/loading',
+                items: 'poiPaginated/items',
+                meta: 'poiPaginated/meta',
+                meta1: this.$store.dispatch(`${this.type}Paginated/meta`),
             }),
         },
         watch: {
