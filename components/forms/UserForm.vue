@@ -24,13 +24,24 @@
             label="Сайт https://"
             :form="form"
         />
-        <b-form-checkbox
-            v-model="changePassword"
-            :value="true"
-            :unchecked-value="false"
-        >
-            Сменить пароль
-        </b-form-checkbox>
+        <b-row class="my-2">
+            <b-col
+                md="3"
+                cols="12"
+                class="text-right mt-2"
+            >
+                Сменить пароль
+            </b-col>
+            <b-col>
+                <b-form-checkbox
+                    v-model="changePassword"
+                    :value="true"
+                    :unchecked-value="false"
+                >
+                    Да
+                </b-form-checkbox>
+            </b-col>
+        </b-row>
         <text-input
             v-if="changePassword"
             id="password"
