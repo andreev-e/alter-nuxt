@@ -39,6 +39,9 @@
                 page: 1,
             };
         },
+        async fetch() {
+            await this.fetchItems();
+        },
         computed: {
             ...mapGetters({
                 loading: `${this?.type ? 'pois' : this.type}Paginated/loading`,
@@ -50,9 +53,6 @@
             page() {
                 this.fetchItems();
             },
-        },
-        mounted() {
-            this.fetchItems();
         },
         methods: {
             ...mapActions({
