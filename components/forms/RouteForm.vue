@@ -24,12 +24,6 @@
             :form="form"
             required
         />
-        <select-input
-            v-model="form.type"
-            label="Категория"
-            :options="types"
-            required
-        />
         <text-input
             id="description"
             v-model="form.description"
@@ -90,18 +84,11 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form } from 'laravel-request-utils';
-    // eslint-disable-next-line import/no-extraneous-dependencies
-    import { mapGetters } from 'vuex';
-    import { TYPES } from '../../constants/index';
     import TextInput from '../ui/TextInput.vue';
-    import SelectInput from '../ui/SelectInput.vue';
-    import InputCheckbox from '../ui/InputCheckbox.vue';
 
     export default {
         name: 'RouteForm',
         components: {
-            InputCheckbox,
-            SelectInput,
             TextInput,
         },
         props: {
@@ -151,9 +138,6 @@
                     };
                 },
                 set() { },
-            },
-            types() {
-                return TYPES;
             },
         },
         watch: {

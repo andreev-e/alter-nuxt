@@ -36,8 +36,6 @@
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
-    // eslint-disable-next-line import/extensions
-    import { TYPES } from '../../../constants/index.js';
     import PoiForm from '../../../components/forms/PoiForm.vue';
     import RouteForm from '../../../components/forms/RouteForm.vue';
 
