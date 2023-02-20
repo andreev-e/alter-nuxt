@@ -14,7 +14,6 @@
                     :per-page="meta.per_page"
                     aria-controls="my-table"
                 />
-                {{ meta1 }}
             </div>
         </div>
     </div>
@@ -44,7 +43,6 @@
                 loading: 'poiPaginated/loading',
                 items: 'poiPaginated/items',
                 meta: 'poiPaginated/meta',
-                meta1: this.$store.dispatch(`${this.type}Paginated/meta`),
             }),
         },
         watch: {
