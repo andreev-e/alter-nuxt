@@ -16,11 +16,36 @@
             required
         />
         <text-input
-            id="name"
+            id="description"
             v-model="form.description"
             label="Описание"
+            multiline
+            required
+            :form="form"
+        />
+        <text-input
+            id="cost"
+            v-model="form.cost"
+            label="Бюджет, руб"
             :form="form"
             required
+            type="number"
+        />
+        <text-input
+            id="days"
+            v-model="form.days"
+            label="Длительность, дней"
+            :form="form"
+            required
+            type="number"
+        />
+        <text-input
+            id="route"
+            v-model="form.route"
+            label="Особенности"
+            multiline
+            required
+            :form="form"
         />
         <button
             type="submit"
@@ -54,6 +79,9 @@
                 form: new Form({
                     name: null,
                     description: null,
+                    cost: null,
+                    days: null,
+                    route: null,
                 }, {
                     removeNullValues: false,
                 }),
@@ -71,7 +99,7 @@
         },
         watch: {
             route(route) {
-                ['name', 'description']
+                ['name', 'description', 'cost', 'days', 'route']
                     .forEach((field) => {
                         this.form[field] = route[field];
                     });
