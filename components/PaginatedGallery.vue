@@ -7,6 +7,7 @@
         />
         <div class="row">
             <div class="col-12">
+                {{ meta }}
                 <b-pagination
                     v-if="meta.last_page > 1"
                     v-model="page"
@@ -56,7 +57,7 @@
         methods: {
             ...mapActions({
                 get() { this.$store.dispatch(`${this.type}Paginated/get`); },
-                setParams(data) { this.$store.dispatch(`${this.type}Paginated/setParams`, data); },
+                setParams() { this.$store.dispatch(`${this.type}Paginated/setParams`); },
                 clear() { this.$store.dispatch(`${this.type}Paginated/clear`); },
             }),
             fetchItems() {
