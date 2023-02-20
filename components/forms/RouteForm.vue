@@ -55,6 +55,13 @@
             multiline
             :form="form"
         />
+        <text-input
+            id="links"
+            v-model="form.links"
+            label="Ссылки"
+            multiline
+            :form="form"
+        />
         <button
             type="submit"
             class="btn btn-success"
@@ -90,6 +97,7 @@
                     cost: null,
                     days: null,
                     route: null,
+                    links: null,
                 }, {
                     removeNullValues: false,
                 }),
@@ -127,7 +135,7 @@
         },
         watch: {
             route(route) {
-                ['name', 'description', 'cost', 'days', 'route']
+                ['name', 'description', 'cost', 'days', 'route', 'links']
                     .forEach((field) => {
                         this.form[field] = route[field];
                     });
