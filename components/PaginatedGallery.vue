@@ -57,9 +57,15 @@
             };
         },
         computed: {
-            items: this.$store.getters[`${this.type}Paginated/items`],
-            meta: this.$store.getters[`${this.type}Paginated/meta`],
-            loading: this.$store.getters[`${this.type}Paginated/loading`],
+            items() {
+                return this.$store.getters[`${this.type}Paginated/items`];
+            },
+            meta() {
+                return this.$store.getters[`${this.type}Paginated/meta`];
+            },
+            loading() {
+                return this.$store.getters[`${this.type}Paginated/loading`];
+            },
         },
         watch: {
             page() {
