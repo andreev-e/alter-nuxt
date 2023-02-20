@@ -17,40 +17,22 @@
                         class="my-3"
                     >
                         <client-only>
-                            <paginated-gallery type="pois" />
-                        </client-only>
-                        <router-link
-                            to="/secure/poi/create"
-                            class="d-inline-block mr-1 mt-1"
-                            title="Добавить достопримечательность"
-                        >
-                            <font-awesome-icon
-                                icon="fa-plus-circle"
-                                class="text-success"
-                                role="button"
+                            <paginated-gallery
+                                type="pois"
+                                name="точку"
                             />
-                            Добавить достопримечательность
-                        </router-link>
+                        </client-only>
                     </b-tab>
                     <b-tab
                         title="Маршруты"
                         class="my-3"
                     >
                         <client-only>
-                            <paginated-gallery type="routes" />
-                        </client-only>
-                        <router-link
-                            to="/secure/route/create"
-                            class="d-inline-block mr-1 mt-1"
-                            title="Добавить маршрут"
-                        >
-                            <font-awesome-icon
-                                icon="fa-plus-circle"
-                                class="text-success"
-                                role="button"
+                            <paginated-gallery
+                                type="routes"
+                                name="маршрут"
                             />
-                            Добавить маршрут
-                        </router-link>
+                        </client-only>
                     </b-tab>
                 </b-tabs>
             </div>

@@ -17,6 +17,18 @@
             </div>
         </div>
     </div>
+    <router-link
+        :to="`/secure/${type}/create`"
+        class="d-inline-block mr-1 mt-1"
+        :title="`Добавить ${name}`"
+    >
+        <font-awesome-icon
+            icon="fa-plus-circle"
+            class="text-success"
+            role="button"
+        />
+        Добавить {{ name }}
+    </router-link>
 </template>
 
 <script>
@@ -32,6 +44,11 @@
                 type: String,
                 required: true,
             },
+            name: {
+                type: String,
+                required: false,
+                default: '',
+            },
         },
         data() {
             return {
@@ -40,13 +57,13 @@
         },
         computed: {
             items() {
-                return this.$store.getters[`${this.type}Paginated/items`];
+                return this.$store.getters[`${this.type}Paginated/items`]();
             },
             meta() {
-                return this.$store.getters[`${this.type}Paginated/meta`];
+                return this.$store.getters[`${this.type}Paginated/meta`]();
             },
             loading() {
-                return this.$store.getters[`${this.type}Paginated/loading`];
+                return this.$store.getters[`${this.type}Paginated/loading`]();
             },
         },
         watch: {
