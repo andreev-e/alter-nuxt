@@ -47,7 +47,7 @@
             v-if="changePassword"
             id="password"
             v-model="form.password"
-            label="Пароль"
+            label="Новый пароль"
             :form="form"
             type="password"
         />
@@ -107,6 +107,7 @@
                 this.form.submit(`/api/user/${this.$route.params.id}`)
                     .then(() => {
                         if (this.$auth.user.username === this.user.username) {
+                            this.$alert('Сохранено');
                             this.$auth.fetchUser();
                         } else {
                             this.$router.push('/user');
