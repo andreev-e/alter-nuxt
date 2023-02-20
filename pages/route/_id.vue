@@ -27,10 +27,16 @@
                 >
                     {{ route.author }}
                 </badge>
-                <badge class="bg-primary text-white">
+                <badge
+                    v-if="route.days"
+                    class="bg-primary text-white"
+                >
                     {{ route.days }} дней
                 </badge>
-                <badge class="bg-warning">
+                <badge
+                    v-if="route.cost"
+                    class="bg-warning"
+                >
                     {{ route.cost }} руб.
                 </badge>
                 <client-only>
