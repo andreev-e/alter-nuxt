@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <poi-form :poi="poi" />
+                <route-form :route="route" />
             </div>
         </div>
         <template v-if="$route.params.id">
@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <route-form
+                    <photo-form
                         :images="route.images"
                         :path="`route/${$route.params.id}`"
                         @images="setImages"
@@ -36,13 +36,13 @@
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../../components/Breadcrumbs.vue';
-    import PoiForm from '../../../components/forms/PoiForm.vue';
     import RouteForm from '../../../components/forms/RouteForm.vue';
+    import PhotoForm from '../../../components/forms/PhotoForm.vue';
 
     export default {
         components: {
+            PhotoForm,
             RouteForm,
-            PoiForm,
             Breadcrumbs,
         },
         middleware: 'auth',
@@ -57,7 +57,7 @@
         },
         computed: {
             ...mapGetters({
-                poi: 'route/model',
+                route: 'route/model',
                 loaded: 'route/isEmpty',
                 endpoint: 'route/endpoint',
             }),

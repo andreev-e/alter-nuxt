@@ -92,7 +92,7 @@
             TextInput,
         },
         props: {
-            poi: {
+            route: {
                 type: Object,
                 required: false,
                 default: () => {
