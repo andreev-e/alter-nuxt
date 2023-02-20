@@ -40,9 +40,9 @@
         },
         computed: {
             ...mapGetters({
-                items() { this.$store.dispatch(`${this.type}Paginated/items`); },
-                loading() { this.$store.dispatch(`${this.type}Paginated/loading`); },
-                meta() { this.$store.dispatch(`${this.type}Paginated/meta`); },
+                loading: `${this.type}Paginated/loading`,
+                items: `${this.type}Paginated/items`,
+                meta: `${this.type}Paginated/meta`,
             }),
         },
         watch: {
