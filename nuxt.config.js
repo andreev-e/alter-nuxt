@@ -42,6 +42,11 @@ export default {
         },
         '~/plugins/font-awesome',
         '~/plugins/country-flag',
+        {
+            src: '~/plugins/simple-alert',
+            mode: 'client',
+            ssr: false,
+        },
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

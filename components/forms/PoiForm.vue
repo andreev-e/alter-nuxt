@@ -214,6 +214,7 @@
                         if (this.$route.params.id) {
                             this.$router.push('/secure/');
                         } else {
+                            this.$alert('Сохранено. Теперь вы можете добавить фото');
                             this.$router.push(`/secure/poi/${result.data.id}`);
                         }
                     });

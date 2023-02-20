@@ -24,7 +24,15 @@
             label="Сайт https://"
             :form="form"
         />
+        <b-form-checkbox
+            v-model="changePassword"
+            :value="true"
+            :unchecked-value="false"
+        >
+            Сменить пароль
+        </b-form-checkbox>
         <text-input
+            v-if="changePassword"
             id="password"
             v-model="form.password"
             label="Пароль"
@@ -71,6 +79,7 @@
                     resetAfterSend: false,
                     method: 'patch',
                 }),
+                changePassword: false,
             };
         },
         watch: {
