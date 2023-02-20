@@ -15,7 +15,7 @@
                     v-if="comment.user"
                     :to="'/user/' + comment.user.username"
                 >
-                    {{ comment.user.firstname }} {{ comment.user.lastname }}
+                    {{ comment.user.firstname || comment.user.lastname ? `${comment.user.firstname} ${comment.user.lastname}` : comment.user.username }}
                 </router-link>
                 <a
                     v-else-if="comment.email"
