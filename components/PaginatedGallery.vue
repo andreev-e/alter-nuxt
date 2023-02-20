@@ -31,7 +31,6 @@
             type: {
                 type: String,
                 required: true,
-                default: 'pois',
             },
         },
         data() {
@@ -39,14 +38,11 @@
                 page: 1,
             };
         },
-        async fetch() {
-            await this.fetchItems();
-        },
         computed: {
             ...mapGetters({
-                loading: `${this?.type ? 'pois' : this.type}Paginated/loading`,
-                items: `${this?.type ? 'pois' : this.type}Paginated/items`,
-                meta: `${this?.type ? 'pois' : this.type}Paginated/meta`,
+                loading: `${this.type}Paginated/loading`,
+                items: `${this.type}Paginated/items`,
+                meta: `${this.type}Paginated/meta`,
             }),
         },
         watch: {
@@ -54,11 +50,14 @@
                 this.fetchItems();
             },
         },
+        mounted() {
+            this.fetchItems();
+        },
         methods: {
             ...mapActions({
-                get: `${this?.type ? 'pois' : this.type}Paginated/get`,
-                setParams: `${this?.type ? 'pois' : this.type}Paginated/setParams`,
-                clear: `${this?.type ? 'pois' : this.type}Paginated/clear`,
+                get() { this.$store.dispatch(`${this.type}Paginated/get`); },
+                setParams() { this.$store.dispatch(`${this.type}Paginated/setParams`); },
+                clear() { this.$store.dispatch(`${this.type}Paginated/clear`); },
             }),
             fetchItems() {
                 this.clear();
