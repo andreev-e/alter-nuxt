@@ -8,10 +8,10 @@
         <div class="row">
             <div class="col-12">
                 <b-pagination
-                    v-if="meta.last_page > 1"
+                    v-if="meta?.last_page > 1"
                     v-model="page"
-                    :total-rows="meta.total"
-                    :per-page="meta.per_page"
+                    :total-rows="meta?.total"
+                    :per-page="meta?.per_page"
                     aria-controls="my-table"
                 />
             </div>
