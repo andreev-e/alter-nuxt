@@ -6,16 +6,7 @@
                 :zoom="12"
                 map-type-id="terrain"
                 :center="center"
-            >
-                <gmap-marker
-                    :position="center"
-                    draggable
-                    @dragend="markerMoved"
-                />
-            </gmap-map>
-            <div class="text-center">
-                {{ form.lat }};{{ form.lng }}
-            </div>
+            />
         </client-only>
         <text-input
             id="name"
@@ -25,52 +16,11 @@
             required
         />
         <text-input
-            id="description"
+            id="name"
             v-model="form.description"
             label="Описание"
-            multiline
+            :form="form"
             required
-            :form="form"
-        />
-        <text-input
-            id="route"
-            v-model="form.route"
-            label="Как добраться на машине"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="route_o"
-            v-model="form.route_o"
-            label="Как добраться на общественном транспорте"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="addon"
-            v-model="form.addon"
-            label="Примечание"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="links"
-            v-model="form.links"
-            label="Ссылки"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="ytb"
-            v-model="form.ytb"
-            label="Youtube: https://www.youtube.com/watch?v="
-            :form="form"
-        />
-        <text-input
-            id="copyright"
-            v-model="form.copyright"
-            label="Автор фотографий (если используются не свои фотографии) "
-            :form="form"
         />
         <button
             type="submit"
@@ -104,14 +54,6 @@
                 form: new Form({
                     name: null,
                     description: null,
-                    route: null,
-                    route_o: null,
-                    addon: null,
-                    lat: null,
-                    lng: null,
-                    type: null,
-                    links: null,
-                    ytb: null,
                 }, {
                     removeNullValues: false,
                 }),
@@ -120,31 +62,18 @@
         computed: {
             center: {
                 get() {
-                    if (this.poi && this.poi.lat && this.poi.lng) {
-                        return {
-                            lat: this.poi.lat,
-                            lng: this.poi.lng,
-                        };
-                    }
-                    if (this.form && this.form.lat && this.form.lng) {
-                        return {
-                            lat: this.form.lat,
-                            lng: this.form.lng,
-                        };
-                    }
                     return {
                         lat: 0,
                         lng: 0,
                     };
                 },
-                set() { },
             },
         },
         watch: {
-            poi(poi) {
-                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright']
+            route(route) {
+                ['name', 'description']
                     .forEach((field) => {
-                        this.form[field] = poi[field];
+                        this.form[field] = route[field];
                     });
             },
         },
