@@ -64,6 +64,12 @@
                 <span class="d-none d-sm-block">места</span>
             </nuxt-link>
         </li>
+        <li>
+            <nuxt-link to="/updated">
+                Последние
+                <span class="d-none d-sm-block">обновления</span>
+            </nuxt-link>
+        </li>
         <!--      <li>-->
         <!--        <a href="/catalog/?order=order">-->
         <!--          Планирование-->

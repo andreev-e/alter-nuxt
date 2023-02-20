@@ -1,18 +1,17 @@
 <template>
     <div>
         <item-gallery
-            :objects="items"
-            :loading="loading"
+            :objects="`${type}Items`"
+            :loading="`${type}Loading`"
             @reload="fetchItems"
         />
         <div class="row">
             <div class="col-12">
-                {{ meta }}
                 <b-pagination
-                    v-if="meta.last_page > 1"
+                    v-if="`${type}Meta`.last_page > 1"
                     v-model="page"
-                    :total-rows="meta.total"
-                    :per-page="meta.per_page"
+                    :total-rows="`${type}Meta`.total"
+                    :per-page="`${type}Meta`.per_page"
                     aria-controls="my-table"
                 />
             </div>
@@ -41,9 +40,12 @@
         },
         computed: {
             ...mapGetters({
-                loading: 'poiPaginated/loading',
-                items: 'poiPaginated/items',
-                meta: 'poiPaginated/meta',
+                poiLoading: 'poiPaginated/loading',
+                poiItems: 'poiPaginated/items',
+                poiMeta: 'poiPaginated/meta',
+                routesLoading: 'routesPaginated/loading',
+                routesItems: 'routesPaginated/items',
+                routesMeta: 'routesPaginated/meta',
             }),
         },
         watch: {
