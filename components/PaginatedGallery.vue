@@ -16,19 +16,19 @@
                 />
             </div>
         </div>
+        <router-link
+            :to="`/secure/${type}/create`"
+            class="d-inline-block mr-1 mt-1"
+            :title="`Добавить ${name}`"
+        >
+            <font-awesome-icon
+                icon="fa-plus-circle"
+                class="text-success"
+                role="button"
+            />
+            Добавить {{ name }}
+        </router-link>
     </div>
-    <router-link
-        :to="`/secure/${type}/create`"
-        class="d-inline-block mr-1 mt-1"
-        :title="`Добавить ${name}`"
-    >
-        <font-awesome-icon
-            icon="fa-plus-circle"
-            class="text-success"
-            role="button"
-        />
-        Добавить {{ name }}
-    </router-link>
 </template>
 
 <script>
