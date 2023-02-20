@@ -77,17 +77,19 @@
         methods: {
             ...mapActions({
                 get() { this.$store.dispatch(`${this.type}Paginated/get`); },
-                setParams(data) { this.$store.dispatch(`${this.type}Paginated/setParams`, data); },
+                setParams() {
+                    this.$store.dispatch(`${this.type}Paginated/setParams`, {
+                        user: this.$auth.user.username,
+                        page: this.page,
+                        latest: 1,
+                        withHidden: 1,
+                    });
+                },
                 clear() { this.$store.dispatch(`${this.type}Paginated/clear`); },
             }),
             fetchItems() {
                 this.clear();
-                this.setParams({
-                    user: this.$auth.user.username,
-                    page: this.page,
-                    latest: 1,
-                    withHidden: 1,
-                });
+                this.setParams();
                 this.get();
             },
         },
