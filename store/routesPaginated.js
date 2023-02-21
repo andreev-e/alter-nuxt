@@ -2,7 +2,7 @@ import PaginatedItemsListModule from './base/PaginatedItemsListModule';
 
 class RoutesPaginated extends PaginatedItemsListModule {
     constructor() {
-        super('/route');
+        super('/route', { cache: true });
     }
 }
 

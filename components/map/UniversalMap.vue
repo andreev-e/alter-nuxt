@@ -17,9 +17,9 @@
                 @idle="idle"
             >
                 <gmap-marker
-                    v-if="mylocation"
-                    :position="mylocation"
-                    :icon="mylocationMarker"
+                    v-if="myLocation"
+                    :position="myLocation"
+                    :icon="myLocationMarker"
                 />
                 <gmap-marker
                     v-if="thisIsPoi"
@@ -30,6 +30,15 @@
                     ref="polyline"
                     :path="path"
                     :options="{ strokeColor: '#FF0000' }"
+                />
+                <directions-renderer
+                    v-if="route && !route.encoded_route"
+                    travel-mode="DRIVING"
+                    :origin="start"
+                    :waypoints="waypoints"
+                    :optimize-waypoints="true"
+                    :destination="finish"
+                    @routeFound="routeFound"
                 />
                 <gmap-marker
                     v-if="start"
@@ -61,9 +70,11 @@
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../../constants';
+    import DirectionsRenderer from './DirectionsRenderer.vue';
 
     export default {
         expose: ['fetchPois'],
+        components: { DirectionsRenderer },
         props: {
             model: {
                 type: Array,
@@ -109,8 +120,9 @@
         emits: ['update'],
         data() {
             return {
-                mylocation: false,
-                mylocationMarker: {
+                myLocation: false,
+                directionsLength: null,
+                myLocationMarker: {
                     url: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
                     size: {
                         width: 32,
@@ -171,7 +183,10 @@
                     this.path.forEach((point) => bounds = bounds.extend(point));
                     if (this.mapPois) {
                         // eslint-disable-next-line no-return-assign
-                        this.mapPois.forEach((poi) => bounds = bounds.extend({ lat: poi.lat, lng: poi.lng }));
+                        this.mapPois.forEach((poi) => bounds = bounds.extend({
+                            lat: poi.lat,
+                            lng: poi.lng,
+                        }));
                     }
                     return bounds;
                 }
@@ -212,7 +227,14 @@
             },
             routeLength() {
                 if (process.client && this.google && this.route && this.route.encoded_route) {
-                    return `${Math.round(this.google.maps.geometry.spherical.computeLength(this.path) / 1000)} км`;
+                    return `${Math.round(this.google.maps.geometry.spherical.computeLength(this.path) / 1000)}`;
+                }
+                return null;
+            },
+            waypoints() {
+                if (process.client && this.mapPois && this.mapPois.length > 0) {
+                    return this.mapPois.slice(0, 8)
+                        .map((poi) => ({ location: { lat: poi.lat, lng: poi.lng }, stopover: true }));
                 }
                 return null;
             },
@@ -235,7 +257,7 @@
                 clear: 'pois/clear',
             }),
             getRouteLength() {
-                return this.routeLength;
+                return this.routeLength ?? this.directionsLength;
             },
             idle() {
                 if (!this.route && !this.poisExist) {
@@ -286,6 +308,10 @@
                 if (!this.fitContent) {
                     this.fetchPois();
                 }
+            },
+            routeFound(val) {
+                this.directionsLength = val;
+                this.$emit('update');
             },
         },
     };

@@ -44,7 +44,7 @@
                         v-if="routeLength"
                         class="bg-primary text-white"
                     >
-                        {{ routeLength }}
+                        {{ routeLength }} км
                     </badge>
                 </client-only>
                 <badge class="bg-warning">
