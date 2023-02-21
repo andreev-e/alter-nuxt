@@ -93,9 +93,6 @@ export default {
         '/api': process.env.API_URL,
     },
 
-    server: {
-    },
-
     serverMiddleware: [
         '~/server-middleware/logger',
         {

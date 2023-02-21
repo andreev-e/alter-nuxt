@@ -3,7 +3,7 @@
         <client-only>
             <gmap-map
                 ref="map"
-                :zoom="12"
+                :zoom="zoom"
                 map-type-id="terrain"
                 :center="center"
             >
@@ -128,6 +128,12 @@
             google: gmapApi,
             center: {
                 get() {
+                    if (this.route && ((this.route.start && this.route.finish) || this.route.encoded_route)) {
+                        return {
+                            lat: (this.start.lat + this.finish.lat) / 2,
+                            lng: (this.start.lng + this.finish.lng) / 2,
+                        };
+                    }
                     return {
                         lat: 0,
                         lng: 0,
@@ -137,6 +143,10 @@
                     console.log('senter', val);
                 },
             },
+            zoom() {
+                // console.log(this.distance(this.start, this.finish));
+                return 9;
+            },
             start() {
                 if (this.route && this.route.start) {
                     const start = this.route.start.split(';');
@@ -144,6 +154,9 @@
                         lat: parseFloat(start[0]),
                         lng: parseFloat(start[1]),
                     };
+                }
+                if (this.route && this.route.encoded_route && this.path.length > 1) {
+                    return this.path[0];
                 }
                 return false;
             },
@@ -154,6 +167,9 @@
                         lat: parseFloat(finish[0]),
                         lng: parseFloat(finish[1]),
                     };
+                }
+                if (this.route && this.route.encoded_route && this.path.length > 1) {
+                    return this.path[this.path.length - 1];
                 }
                 return false;
             },
@@ -216,6 +232,18 @@
             },
             polylineChanged(e) {
                 console.log(e);
+            },
+            distance(p1, p2) {
+                const R = 6378137; // Earth’s mean radius in meter
+                const dLat = this.rad(p2.lat() - p1.lat());
+                const dLong = this.rad(p2.lng() - p1.lng());
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                    + Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat()))
+                    * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            },
+            rad(x) {
+                return (x * Math.PI) / 180;
             },
         },
     };
