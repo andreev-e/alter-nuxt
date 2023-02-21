@@ -126,20 +126,10 @@
                     },
                 },
                 iconStart: {
-                    path: Icons.faFlag.icon[4].toString(),
-                    fillColor: '#000',
-                    fillOpacity: 1,
-                    strokeColor: '#fff',
-                    scale: 0.05,
-                    strokeWeight: 1,
+                    url: '/start.png',
                 },
                 iconFinish: {
-                    path: Icons.faFlagCheckered.icon[4].toString(),
-                    fillColor: '#000',
-                    fillOpacity: 1,
-                    strokeColor: '#fff',
-                    scale: 0.05,
-                    strokeWeight: 1,
+                    url: '/end.png',
                 },
             };
         },
@@ -202,6 +192,9 @@
                         lng: parseFloat(start[1]),
                     };
                 }
+                if (this.route && this.route.encoded_route) {
+                    return this.path[0];
+                }
                 return false;
             },
             finish() {
@@ -211,6 +204,9 @@
                         lat: parseFloat(finish[0]),
                         lng: parseFloat(finish[1]),
                     };
+                }
+                if (this.route && this.route.encoded_route) {
+                    return this.path[this.path.length - 1];
                 }
                 return false;
             },

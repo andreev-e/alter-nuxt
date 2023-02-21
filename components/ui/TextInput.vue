@@ -48,7 +48,7 @@
                 required: true,
             },
             value: {
-                type: String,
+                type: [String, Number],
                 required: false,
                 default: null,
             },

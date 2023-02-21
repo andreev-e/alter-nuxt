@@ -11,11 +11,23 @@
                     v-if="start"
                     :position="start"
                     :icon="iconStart"
+                    draggable
+                    @dragend="startMoved"
                 />
                 <gmap-marker
                     v-if="finish"
                     :position="finish"
                     :icon="iconFinish"
+                    draggable
+                    @dragend="finishMoved"
+                />
+                <gmap-polyline
+                    v-if="route && route.encoded_route"
+                    ref="polyline"
+                    :path="path"
+                    :options="{ strokeColor: '#FF0000' }"
+                    editable
+                    @dragend="polylineChanged"
                 />
             </gmap-map>
         </client-only>
@@ -74,6 +86,7 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form } from 'laravel-request-utils';
+    import { gmapApi } from 'vue2-google-maps';
     import TextInput from '../ui/TextInput.vue';
 
     export default {
@@ -98,18 +111,30 @@
                     days: null,
                     route: null,
                     links: null,
+                    start: null,
+                    finish: null,
                 }, {
                     removeNullValues: false,
                 }),
+                iconStart: {
+                    url: '/start.png',
+                },
+                iconFinish: {
+                    url: '/end.png',
+                },
             };
         },
         computed: {
+            google: gmapApi,
             center: {
                 get() {
                     return {
                         lat: 0,
                         lng: 0,
                     };
+                },
+                set(val) {
+                    console.log('senter', val);
                 },
             },
             start() {
@@ -131,6 +156,13 @@
                     };
                 }
                 return false;
+            },
+            path() {
+                if (this.google && this.route && this.route.encoded_route) {
+                    return this.google.maps.geometry.encoding
+                        .decodePath(this.route.encoded_route);
+                }
+                return [];
             },
         },
         watch: {
@@ -175,6 +207,15 @@
                             this.$router.push(`/secure/route/${result.data.id}`);
                         }
                     });
+            },
+            startMoved(e) {
+                this.form.start = `${e.latLng.lat()};${e.latLng.lng()}`;
+            },
+            finishMoved(e) {
+                this.form.finish = `${e.latLng.lat()};${e.latLng.lng()}`;
+            },
+            polylineChanged(e) {
+                console.log(e);
             },
         },
     };
