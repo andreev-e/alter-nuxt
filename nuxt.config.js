@@ -70,6 +70,7 @@ export default {
         '@nuxtjs/auth-next',
         '@nuxtjs/moment',
         '@nuxtjs/i18n',
+        '@nuxtjs/sitemap',
         ['@nuxtjs/component-cache', {
             max: 10000,
             maxAge: 1000 * 60 * 60,
@@ -113,5 +114,15 @@ export default {
                 url: '/api',
             },
         },
+    },
+
+    sitemap: {
+        exclude: [
+            '/secure/**',
+            '/secure',
+            '/login',
+            '/register',
+            '/izbrannoye',
+        ],
     },
 };
