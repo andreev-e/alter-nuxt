@@ -20,6 +20,7 @@
             :center="center"
         />
         <item-gallery
+            :loading="loadingPois"
             :objects="mapPois.length ? mapPois : pois.slice(0,3)"
         />
         <Comments

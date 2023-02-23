@@ -1,38 +1,48 @@
 <template>
     <div class="container page">
         <Header />
-        <Breadcrumbs
-            :list="[{ name: `Метка: ${tag.name} `, url: '' }]"
-        />
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>
-                    {{ tag.NAME_ROD ? tag.NAME_ROD : tag.name }}. Достопримечательности на карте
-                </h1>
+        <div
+            v-if="loading"
+            class="row"
+        >
+            <div class="spinner">
+                <b-spinner />
             </div>
         </div>
-        <universal-map
-            ref="mapComponent"
-            :center="center"
-            :tag="$route.params.id"
-            :zoom="zoom"
-            @update="poisChanged"
-        />
-        <item-gallery
-            :objects="pois"
-            :loading="loadingPois"
-        />
-        <div class="row">
-            <div class="col-12">
-                <b-pagination
-                    v-if="meta.last_page > 1"
-                    v-model="page"
-                    :total-rows="meta.total"
-                    :per-page="meta.per_page"
-                    aria-controls="my-table"
-                />
+        <template v-else>
+            <Breadcrumbs
+                :list="[{ name: `Метка: ${tag.name} `, url: '' }]"
+            />
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>
+                        {{ tag.NAME_ROD ? tag.NAME_ROD : tag.name }}. Достопримечательности на карте
+                    </h1>
+                </div>
             </div>
-        </div>
+            <universal-map
+                ref="mapComponent"
+                :center="center"
+                :tag="$route.params.id"
+                :zoom="zoom"
+                @update="poisChanged"
+            />
+            <item-gallery
+                :objects="pois"
+                :loading="loadingPois"
+            />
+            <div class="row">
+                <div class="col-12">
+                    <b-pagination
+                        v-if="meta.last_page > 1"
+                        v-model="page"
+                        :total-rows="meta.total"
+                        :per-page="meta.per_page"
+                        aria-controls="my-table"
+                    />
+                </div>
+            </div>
+        </template>
         <Footer />
     </div>
 </template>
@@ -52,7 +62,6 @@
         },
         data() {
             return {
-                loadingTag: true,
                 center: { lat: 0, lng: 0 },
                 page: 1,
                 zoom: 12,
@@ -81,6 +90,7 @@
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
                 tag: 'tag/model',
+                loading: 'tag/loading',
             }),
         },
         watch: {
