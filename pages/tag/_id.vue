@@ -2,7 +2,7 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: `Метка: ${tag.name??''} `, url: '' }]"
+            :list="[{ name: `Метка: ${tag.name ? tag.name : ''} `, url: '' }]"
         />
         <div class="row">
             <div class="col-sm-12">
@@ -55,7 +55,10 @@
         },
         data() {
             return {
-                center: { lat: 0, lng: 0 },
+                center: {
+                    lat: 0,
+                    lng: 0,
+                },
                 page: 1,
                 zoom: 12,
                 reZoomInitialized: false,
