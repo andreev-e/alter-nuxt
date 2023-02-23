@@ -79,7 +79,6 @@
                 previewImage: null,
                 loading: false,
                 uploadedImages: [],
-                drag: false,
             };
         },
         watch: {

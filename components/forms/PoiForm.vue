@@ -14,7 +14,12 @@
                 />
             </gmap-map>
             <div class="text-center">
-                {{ form.lat }};{{ form.lng }}
+                <p
+                    v-if="form.errors.errors.lat || form.errors.errors.lng"
+                    class="text-danger mt-1 text-sm"
+                >
+                    Укажите точку на карте
+                </p>
             </div>
         </client-only>
         <text-input
@@ -220,6 +225,8 @@
                     });
             },
             markerMoved(e) {
+                this.form.errors.errors.lat = undefined;
+                this.form.errors.errors.lng = undefined;
                 this.center = {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng(),
