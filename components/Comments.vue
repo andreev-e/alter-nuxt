@@ -18,7 +18,7 @@
                     :index="index"
                     :total="comments.length"
                     :link-objects="linkObjects"
-                    :type="type"
+                    :type="comment.object_type"
                     @reload="loadComments"
                 />
             </div>

@@ -27,7 +27,7 @@
             <i>{{ $moment(comment.time * 1000).format('LLLL') }}</i>
             <router-link
                 v-if="linkObjects"
-                :to="'/poi/' + comment.backlink"
+                :to="`${type ? type : comment.object_type}/${comment.object_id}`"
             >
                 об объекте
                 {{ comment.object_name }}
