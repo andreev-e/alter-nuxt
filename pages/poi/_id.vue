@@ -70,12 +70,15 @@
                         <b-tab
                             v-if="poi.ytb"
                             title="Видео"
+                            class="my-3"
                         >
-                            <iframe
-                                width="700"
-                                height="400"
-                                :src="`https://www.youtube.com/embed/${poi.ytb}`"
-                            />
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe
+                                    width="560"
+                                    height="315"
+                                    :src="`https://www.youtube.com/embed/${poi.ytb}`"
+                                />
+                            </div>
                         </b-tab>
                         <b-tab title="Описание">
                             <div class="py-3">

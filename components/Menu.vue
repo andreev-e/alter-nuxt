@@ -122,7 +122,7 @@
   .header-menu li a {
     color: #244255;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 16px;
     display: block;
     padding: 4px 4px;
     border-top-left-radius: 9px;

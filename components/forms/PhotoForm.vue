@@ -10,7 +10,7 @@
                 <div
                     v-for="image in uploadedImages"
                     :key="image.id"
-                    class="col-3"
+                    class="col-4"
                 >
                     <preview
                         :alt="`${image.id}`"
@@ -22,7 +22,7 @@
                     />
                 </div>
             </draggable>
-            <div class="col-3">
+            <div class="col-4">
                 <preview
                     v-if="previewImage"
                     :url="previewImage"
