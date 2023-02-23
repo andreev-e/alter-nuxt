@@ -12,6 +12,7 @@
                 v-for="subMenuItem in item.submenu.menu"
                 :key="subMenuItem.name"
                 :item="subMenuItem"
+                :base-href="item.submenu.baseHref"
             />
         </ul>
     </li>

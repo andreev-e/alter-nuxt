@@ -58,6 +58,7 @@
                         submenu: {
                             menu: this.countries,
                             component: 'drop-down-menu-item',
+                            baseHref: '/region',
                         },
                     },
                     {
@@ -68,6 +69,7 @@
                         submenu: {
                             menu: this.menuTags,
                             component: 'drop-down-menu-item',
+                            baseHref: '/tag',
                         },
                     },
                     {

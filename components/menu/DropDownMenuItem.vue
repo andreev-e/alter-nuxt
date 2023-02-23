@@ -1,6 +1,6 @@
 <template>
     <li v-if="item">
-        <nuxt-link :to="`/region/${item.url}`">
+        <nuxt-link :to="`${baseHref}/${item.url}`">
             <country-flag
                 v-if="item.code"
                 :country="item.code"
@@ -23,6 +23,11 @@
             item: {
                 type: Object,
                 required: true,
+            },
+            baseHref: {
+                type: String,
+                required: false,
+                default: '',
             },
         },
     };
