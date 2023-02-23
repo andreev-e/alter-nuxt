@@ -1,48 +1,41 @@
 <template>
     <div class="container page">
         <Header />
-        <div
-            v-if="loading"
-            class="row"
-        >
-            <div class="spinner">
-                <b-spinner />
+        <Breadcrumbs
+            :list="[{ name: `Метка: ${tag.name??''} `, url: '' }]"
+        />
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>
+                    <template v-if="h1">
+                        {{ h1 }}
+                    </template>
+                    <b-spinner v-else />
+                </h1>
             </div>
         </div>
-        <template v-else>
-            <Breadcrumbs
-                :list="[{ name: `Метка: ${tag.name} `, url: '' }]"
-            />
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>
-                        {{ tag.NAME_ROD ? tag.NAME_ROD : tag.name }}. Достопримечательности на карте
-                    </h1>
-                </div>
+        <universal-map
+            ref="mapComponent"
+            :center="center"
+            :tag="$route.params.id"
+            :zoom="zoom"
+            @update="poisChanged"
+        />
+        <item-gallery
+            :objects="pois"
+            :loading="loadingPois"
+        />
+        <div class="row">
+            <div class="col-12">
+                <b-pagination
+                    v-if="meta.last_page > 1"
+                    v-model="page"
+                    :total-rows="meta.total"
+                    :per-page="meta.per_page"
+                    aria-controls="my-table"
+                />
             </div>
-            <universal-map
-                ref="mapComponent"
-                :center="center"
-                :tag="$route.params.id"
-                :zoom="zoom"
-                @update="poisChanged"
-            />
-            <item-gallery
-                :objects="pois"
-                :loading="loadingPois"
-            />
-            <div class="row">
-                <div class="col-12">
-                    <b-pagination
-                        v-if="meta.last_page > 1"
-                        v-model="page"
-                        :total-rows="meta.total"
-                        :per-page="meta.per_page"
-                        aria-controls="my-table"
-                    />
-                </div>
-            </div>
-        </template>
+        </div>
         <Footer />
     </div>
 </template>
@@ -69,9 +62,7 @@
             };
         },
         async fetch() {
-            await this.fetchPois();
-            await this.setId(this.$route.params.id);
-            await this.getTag();
+            await this.load();
         },
         head() {
             return {
@@ -91,7 +82,14 @@
                 meta: 'poisPaginated/meta',
                 tag: 'tag/model',
                 loading: 'tag/loading',
+                tagLoaded: 'tag/isEmpty',
             }),
+            h1() {
+                if (this.tagLoaded) {
+                    return `${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name}. Достопримечательности на карте`;
+                }
+                return null;
+            },
         },
         watch: {
             page() {
@@ -117,9 +115,14 @@
             ...mapActions({
                 getPoi: 'poisPaginated/get',
                 setParams: 'poisPaginated/setParams',
-                setId: 'tag/setId',
+                setTagId: 'tag/setId',
                 getTag: 'tag/get',
             }),
+            async load() {
+                await this.setTagId(this.$route.params.id);
+                await this.getTag();
+                await this.fetchPois();
+            },
             async fetchPois() {
                 await this.setParams({
                     tag: this.$route.params.id,

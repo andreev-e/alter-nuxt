@@ -1,94 +1,17 @@
 <!-- Please remove this file from your project -->
 <template>
     <ul>
-        <li class="region_select">
-            <a href="#">
-                Регион
-                <span class="d-none d-sm-block">выбрать</span>
-            </a>
-            <ul>
-                <li
-                    v-for="region in menuCountries"
-                    :key="region.id"
-                >
-                    <nuxt-link :to="`/region/${region.url}`">
-                        <country-flag
-                            v-if="region.code"
-                            :country="region.code"
-                            size="small"
-                            class="d-inline-block"
-                        />
-                        <short :val="region.name" />({{ region.count }})
-                    </nuxt-link>
-                </li>
-            </ul>
-        </li>
-        <li class="region_select">
-            <a href="#">
-                Метки
-                <span class="d-none d-sm-block">выбрать</span>
-            </a>
-            <ul>
-                <li
-                    v-for="tag in menuTags"
-                    :key="tag.id"
-                >
-                    <nuxt-link :to="`/tag/${tag.url}`">
-                        {{ tag.name }} ({{ tag.count }})
-                    </nuxt-link>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <nuxt-link to="/route">
-                Маршруты
-                <span class="d-none d-sm-block">готовые треки</span>
-            </nuxt-link>
-        </li>
-        <li>
-            <nuxt-link to="/user">
-                Авторы
-                <span class="d-none d-sm-block">путеводителя</span>
-            </nuxt-link>
-        </li>
-
-        <!--            <li>-->
-        <!--                <a href="/catalog/">-->
-        <!--                    Популярные-->
-        <!--                    <span>в августе</span>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <li>
-            <nuxt-link to="/latest">
-                Новые
-                <span class="d-none d-sm-block">места</span>
-            </nuxt-link>
-        </li>
-        <li>
-            <nuxt-link to="/updated">
-                Последние
-                <span class="d-none d-sm-block">обновления</span>
-            </nuxt-link>
-        </li>
-        <!--      <li>-->
-        <!--        <a href="/catalog/?order=order">-->
-        <!--          Планирование-->
-        <!--          <span>строим маршрут с точками</span>-->
-        <!--        </a>-->
-        <!--      </li>-->
-        <client-only>
-            <li v-if="$auth.loggedIn && $auth.user.username === 'andreev'">
-                <nuxt-link to="/moderation">
-                    Модерация
-                    <span class="d-none d-sm-block">объектов</span>
-                </nuxt-link>
-            </li>
-            <li v-if="$auth.loggedIn">
-                <nuxt-link to="/secure">
-                    Мои
-                    <span class="d-none d-sm-block">Публикации</span>
-                </nuxt-link>
-            </li>
+        <main-menu-item
+            v-for="item in menu"
+            :key="item.name"
+            :item="item"
+        />
+        <client-only v-if="$auth.loggedIn">
+            <main-menu-item
+                v-for="item in clientMenu"
+                :key="item.name"
+                :item="item"
+            />
         </client-only>
     </ul>
 </template>
@@ -96,11 +19,11 @@
 <script>
   // eslint-disable-next-line no-unused-vars,import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import Short from './Short.vue';
+    import MainMenuItem from './menu/MainMenuItem.vue';
 
     export default {
         name: 'Menu',
-        components: { Short },
+        components: { MainMenuItem },
         data() {
             return {};
         },
@@ -125,8 +48,63 @@
                 return [...this.tags].sort((a, b) => a.count < b.count)
                     .slice(0, 20);
             },
-            menuCountries() {
-                return this.countries;
+            menu() {
+                return [
+                    {
+                        name: 'Регионы',
+                        href: '/#',
+                        sub: 'выбрать',
+                        class: 'region_select',
+                        submenu: {
+                            menu: this.countries,
+                            component: 'drop-down-menu-item',
+                        },
+                    },
+                    {
+                        name: 'Метки',
+                        href: '/#',
+                        sub: 'выбрать',
+                        class: 'region_select',
+                        submenu: {
+                            menu: this.menuTags,
+                            component: 'drop-down-menu-item',
+                        },
+                    },
+                    {
+                        name: 'Маршруты',
+                        href: '/route',
+                        sub: 'готовые треки',
+                    },
+                    {
+                        name: 'Авторы',
+                        href: '/user',
+                        sub: 'путеводителя',
+                    },
+                    {
+                        name: 'Новые',
+                        href: '/latest',
+                        sub: 'места',
+                    },
+                    {
+                        name: 'Последние',
+                        href: '/updated',
+                        sub: 'обновления',
+                    },
+                ];
+            },
+            clientMenu() {
+                return [
+                    this.$auth.user.username === 'andreev' ? {
+                        name: 'Модерация',
+                        href: '/moderation',
+                        sub: 'объектов',
+                    } : null,
+                    {
+                        name: 'Мои',
+                        href: '/secure',
+                        sub: 'публикации',
+                    },
+                ];
             },
         },
         methods: {
@@ -138,25 +116,33 @@
     };
 </script>
 
-<style scoped>
-  .header-menu li:hover {
-    background-color: rgba(255, 255, 255, .90);
+<style>
+  .header-menu li a {
+    color: #244255;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    padding: 4px 4px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+  }
+
+  .header-menu li a:hover, .header-menu li a.nuxt-link-exact-active {
+    background-color: #fff;
     border: 0 solid;
     box-shadow: inset 0 1px rgb(255, 255, 255);
   }
 
-  .header-menu ul li {
+  .header-menu > ul > li {
     text-align: center;
     float: left;
-    margin: 0;
     background-color: #A2B9C8;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
-    padding: 4px 4px;
     margin-left: 1px;
   }
 
-  .region_select ul {
+  .region_select > ul {
     display: none;
     position: absolute;
     z-index: 999;
@@ -171,13 +157,6 @@
     border-bottom-right-radius: 6px;
     border: 1px solid #cbd6ee;
     border-top: none;
-  }
-
-  .header-menu a {
-    color: #244255;
-    text-decoration: none;
-    list-style: none;
-    font-size: 20px;
   }
 
   .region_select:hover ul {
@@ -196,27 +175,9 @@
     padding-left: 4px;
   }
 
-  .header-menu ul li.region_select ul li {
-    height: 26px;
-    text-align: left;
-    padding-left: 4px;
-  }
-
-  .region_select a {
-    overflow: hidden;
-  }
-
-  ul, li {
-    list-style-type: none;
-  }
-
   .header-menu ul li a span {
     font-size: 14px;
     display: block;
   }
 
-  .region_select img {
-    margin-bottom: -4px;
-    margin-right: 5px;
-  }
 </style>
