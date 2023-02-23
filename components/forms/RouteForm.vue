@@ -22,15 +22,31 @@
                     @dragend="finishMoved"
                 />
                 <gmap-polyline
-                    v-if="route && route.encoded_route"
+                    v-if="manual"
                     ref="polyline"
                     :path="path"
                     :options="{ strokeColor: '#FF0000' }"
                     editable
                     @dragend="polylineChanged"
                 />
+                <directions-renderer
+                    v-else
+                    travel-mode="DRIVING"
+                    :origin="start"
+                    :waypoints="waypoints"
+                    :optimize-waypoints="true"
+                    :destination="finish"
+                    @routeFound="routeFound"
+                />
             </gmap-map>
         </client-only>
+        <toggler
+            id="manual"
+            v-model="manual"
+            :variants="[{ name: 'Автоматически', value: false }, { name: 'Вручную', value: true }]"
+            label="Построение маршрута"
+            required
+        />
         <text-input
             id="name"
             v-model="form.name"
@@ -88,11 +104,15 @@
     import { Form } from 'laravel-request-utils';
     import { gmapApi } from 'vue2-google-maps';
     import TextInput from '../ui/TextInput.vue';
+    import Toggler from '../ui/Toggler.vue';
+    import DirectionsRenderer from '../map/DirectionsRenderer.vue';
 
     export default {
         name: 'RouteForm',
         components: {
+            Toggler,
             TextInput,
+            DirectionsRenderer,
         },
         props: {
             route: {
@@ -113,6 +133,7 @@
                     links: null,
                     start: null,
                     finish: null,
+                    encoded_route: null,
                 }, {
                     removeNullValues: false,
                 }),
@@ -122,13 +143,14 @@
                 iconFinish: {
                     url: '/end.png',
                 },
+                manual: false,
             };
         },
         computed: {
             google: gmapApi,
             center: {
                 get() {
-                    if (this.route && ((this.route.start && this.route.finish) || this.route.encoded_route)) {
+                    if (this.form.start && this.form.finish) {
                         return {
                             lat: (this.start.lat + this.finish.lat) / 2,
                             lng: (this.start.lng + this.finish.lng) / 2,
@@ -144,31 +166,30 @@
                 },
             },
             zoom() {
-                // console.log(this.distance(this.start, this.finish));
-                return 9;
+                return 8;
             },
             start() {
-                if (this.route && this.route.start) {
-                    const start = this.route.start.split(';');
+                if (this.form.start) {
+                    const start = this.form.start.split(';');
                     return {
                         lat: parseFloat(start[0]),
                         lng: parseFloat(start[1]),
                     };
                 }
-                if (this.route && this.route.encoded_route && this.path.length > 1) {
+                if (this.form.encoded_route && this.path.length > 1) {
                     return this.path[0];
                 }
                 return false;
             },
             finish() {
-                if (this.route && this.route.finish) {
-                    const finish = this.route.finish.split(';');
+                if (this.form.finish) {
+                    const finish = this.form.finish.split(';');
                     return {
                         lat: parseFloat(finish[0]),
                         lng: parseFloat(finish[1]),
                     };
                 }
-                if (this.route && this.route.encoded_route && this.path.length > 1) {
+                if (this.form.encoded_route && this.path.length > 1) {
                     return this.path[this.path.length - 1];
                 }
                 return false;
@@ -180,13 +201,22 @@
                 }
                 return [];
             },
+            waypoints() {
+                return [];
+            },
         },
         watch: {
             route(route) {
-                ['name', 'description', 'cost', 'days', 'route', 'links']
+                ['name', 'description', 'cost', 'days', 'route', 'links', 'encoded_route', 'start', 'finish']
                     .forEach((field) => {
                         this.form[field] = route[field];
                     });
+                if (route.encoded_route) {
+                    this.manual = true;
+                }
+            },
+            manual(val) {
+                console.log(val);
             },
         },
         created() {
@@ -231,7 +261,7 @@
                 this.form.finish = `${e.latLng.lat()};${e.latLng.lng()}`;
             },
             polylineChanged(e) {
-                console.log(e);
+                console.log('polylineChanged', e);
             },
             distance(p1, p2) {
                 const R = 6378137; // Earth’s mean radius in meter
@@ -244,6 +274,9 @@
             },
             rad(x) {
                 return (x * Math.PI) / 180;
+            },
+            routeFound() {
+                console.log('Route found');
             },
         },
     };
