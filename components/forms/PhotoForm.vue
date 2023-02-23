@@ -1,21 +1,33 @@
 <template>
     <div class="row">
         <div class="col-12 mb-2">
-            <div class="d-flex flex-wrap">
-                <preview
-                    v-for="image in images"
+            <draggable
+                v-model="uploadedImages"
+                class="row"
+                group="images"
+                @end="dragEnd"
+            >
+                <div
+                    v-for="image in uploadedImages"
                     :key="image.id"
-                    :alt="`${image.id}`"
-                    :url="image.preview"
-                    :full="image.original"
-                    can-delete
-                    :loading="loading"
-                    @delete="remove(image.id)"
-                />
+                    class="col-2"
+                >
+                    <preview
+                        :alt="`${image.id}`"
+                        :url="image.preview"
+                        :full="image.original"
+                        can-delete
+                        :loading="loading"
+                        @delete="remove(image.id)"
+                    />
+                </div>
+            </draggable>
+            <div class="col-2">
                 <preview
                     v-if="previewImage"
                     :url="previewImage"
                     alt="preview"
+
                     loading
                 />
             </div>
@@ -43,11 +55,13 @@
 
 <script>
     import { Form, Request } from 'laravel-request-utils';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import Draggable from 'vuedraggable';
     import Preview from '../Preview.vue';
 
     export default {
         name: 'PhotoForm',
-        components: { Preview },
+        components: { Preview, Draggable },
         props: {
             images: { type: Array, false: true, default: () => [] },
             path: { type: String, required: true },
@@ -64,7 +78,14 @@
                 currentImage: null,
                 previewImage: null,
                 loading: false,
+                uploadedImages: [],
+                drag: false,
             };
+        },
+        watch: {
+            images(val) {
+                this.uploadedImages = val;
+            },
         },
         methods: {
             selectImage() {
@@ -92,6 +113,17 @@
             remove(id) {
                 this.loading = true;
                 Request.getInstance().delete(`/api/${this.path}/image/${id}`)
+                    .then((response) => {
+                        this.$emit('images', response.data);
+                        this.loading = false;
+                    });
+            },
+            dragEnd() {
+                this.loading = true;
+                const order = this.uploadedImages.map((image) => (image.id));
+                Request.getInstance().post(`/api/${this.path}/sort-images`, {
+                    order,
+                })
                     .then((response) => {
                         this.$emit('images', response.data);
                         this.loading = false;
