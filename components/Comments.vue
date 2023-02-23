@@ -26,9 +26,7 @@
                 v-else
                 class="text-center"
             >
-                Пока нет. Чтобы написать - <nuxt-link to="/secure/">
-                    войдите
-                </nuxt-link>
+                Пока нет ни одного комментария
             </div>
             <div class="row">
                 <div class="col-12">
@@ -47,6 +45,10 @@
                 :type="type"
                 @update="getComments"
             />
+            <span v-if="!$auth.loggedIn">
+                Чтобы написать - <nuxt-link to="/secure/"> войдите
+                </nuxt-link>
+            </span>
         </div>
     </div>
 </template>
@@ -58,7 +60,10 @@
     import CommentForm from './comments/CommentForm.vue';
 
     export default {
-        components: { CommentForm, Comment },
+        components: {
+            CommentForm,
+            Comment,
+        },
         props: {
             id: {
                 type: [Number, String],
