@@ -183,7 +183,7 @@
                 return TYPES;
             },
             filteredTags() {
-                return this.tags.filter((tag) => !this.tagSearch || tag.name.includes(this.tagSearch));
+                return this.tags.filter((tag) => !this.tagSearch || tag.name.toLowerCase().includes(this.tagSearch.toLowerCase()));
             },
         },
         watch: {
