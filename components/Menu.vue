@@ -51,7 +51,7 @@
             menu() {
                 return [
                     {
-                        name: 'Регионы',
+                        name: 'Страны',
                         href: '/#',
                         sub: 'выбрать',
                         class: 'region_select',
@@ -76,11 +76,6 @@
                         name: 'Маршруты',
                         href: '/route',
                         sub: 'готовые треки',
-                    },
-                    {
-                        name: 'Авторы',
-                        href: '/user',
-                        sub: 'путеводителя',
                     },
                     {
                         name: 'Новые',
@@ -122,7 +117,7 @@
   .header-menu li a {
     color: #244255;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     display: block;
     padding: 4px 4px;
     border-top-left-radius: 9px;
@@ -148,16 +143,14 @@
     display: none;
     position: absolute;
     z-index: 999;
-    box-shadow: 10px 72px 72px -10px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 36px 36px -10px rgba(0, 0, 0, 0.9);
     width: 350px;
     margin: 0;
     margin-top: -1px;
-    margin-left: -7px;
     background: #FFF;
     color: #244255;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    border: 1px solid #cbd6ee;
     border-top: none;
   }
 
