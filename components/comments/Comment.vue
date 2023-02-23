@@ -24,7 +24,7 @@
                 <span v-else>{{ comment.name }}
                 </span>
             </b>
-            <i>{{ $moment(comment.time * 1000).format('LLLL') }}</i>
+            <i>{{ $moment(comment.created_at).format('LLLL') }}</i>
             <router-link
                 v-if="linkObjects"
                 :to="`${type ? type : comment.object_type}/${comment.object_id}`"
