@@ -1,8 +1,8 @@
 <template>
     <label
         :for="id"
-        :class="$attrs.class"
-        class="d-flex items-center font-light text-gray-700 space-x-2"
+        class="btn btn-sm  d-flex items-center font-light text-gray-700 mr-2"
+        :class="{ 'btn-success' : model, 'btn-light':!model }"
     >
         <input
             :id="id"
@@ -11,7 +11,11 @@
             class="form-checkbox h-4 w-4"
         >
         <div>
-            <div>{{ label }}</div>
+            <div
+                class=""
+                style="font-size: 18px;"
+            >{{ label }}
+            </div>
             <div
                 v-if="description"
                 class="text-xs text-gray-500"
@@ -27,10 +31,23 @@
         name: 'InputCheckbox',
         inheritAttrs: false,
         props: {
-            id: { type: String, required: true },
-            label: { type: String, default: '' },
-            modelValue: { type: [String, Number, Boolean], required: true },
-            description: { type: String, default: '', required: false },
+            id: {
+                type: String,
+                required: true,
+            },
+            label: {
+                type: String,
+                default: '',
+            },
+            modelValue: {
+                type: [String, Number, Boolean],
+                required: true,
+            },
+            description: {
+                type: String,
+                default: '',
+                required: false,
+            },
         },
         emits: ['update'],
         computed: {

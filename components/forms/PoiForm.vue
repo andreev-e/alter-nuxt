@@ -84,12 +84,16 @@
             :form="form"
         />
         <h2>Метки</h2>
+        <b-input
+            v-model="tagSearch"
+            placeholder="Поиск меток"
+            class="w-100 my-3"
+        />
         <div class="d-flex flex-wrap">
             <input-checkbox
-                v-for="tag in tags"
+                v-for="tag in filteredTags"
                 :id="tag.name"
                 :key="tag.id"
-                class="px-1 py-1 cursor-pointer"
                 :class="{ 'bg-secondary': tag.active }"
                 :label="tag.name"
                 :model-value="isChecked(tag.id)"
@@ -147,6 +151,7 @@
                 }, {
                     removeNullValues: false,
                 }),
+                tagSearch: null,
             };
         },
         computed: {
@@ -176,6 +181,9 @@
             },
             types() {
                 return TYPES;
+            },
+            filteredTags() {
+                return this.tags.filter((tag) => !this.tagSearch || tag.name.includes(this.tagSearch));
             },
         },
         watch: {
