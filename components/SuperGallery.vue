@@ -7,8 +7,12 @@
             :style="`width:${img.width*heightOfRow/img.height}px;flex-grow:${img.width*heightOfRow/img.height}`"
         >
             <i :style="`padding-bottom:${img.height/img.width*100}%`" />
-            <a :href="img.original">
-                <div class="position-absolute">Автор {{ img.copyright }}</div>
+            <a
+                @click.prevent="view(img.original)"
+            >
+                <div class="position-absolute">
+                    Автор {{ img.copyright }}
+                </div>
                 <img
                     :src="img.original"
                     :alt="alt"
@@ -34,6 +38,20 @@
         computed: {
             heightOfRow() {
                 return Math.max(900 / this.images.length, 250);
+            },
+        },
+        methods: {
+            view(img) {
+                this.$alert('', '', '',
+                            {
+                                imageUrl: img,
+                                width: '100%',
+                                padding: 0,
+                                background: '#606084',
+                                showConfirmButton: false,
+                                showCloseButton: true,
+                                animation: false,
+                            });
             },
         },
     };
