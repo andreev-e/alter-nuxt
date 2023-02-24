@@ -1,27 +1,25 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <client-only>
-            <gmap-map
-                ref="map"
-                :zoom="12"
-                map-type-id="terrain"
-                :center="center"
+        <gmap-map
+            ref="map"
+            :zoom="12"
+            map-type-id="terrain"
+            :center="center"
+        >
+            <gmap-marker
+                :position="center"
+                draggable
+                @dragend="markerMoved"
+            />
+        </gmap-map>
+        <div class="text-center">
+            <p
+                v-if="form.errors.errors.lat || form.errors.errors.lng"
+                class="text-danger mt-1 text-sm"
             >
-                <gmap-marker
-                    :position="center"
-                    draggable
-                    @dragend="markerMoved"
-                />
-            </gmap-map>
-            <div class="text-center">
-                <p
-                    v-if="form.errors.errors.lat || form.errors.errors.lng"
-                    class="text-danger mt-1 text-sm"
-                >
-                    Укажите точку на карте
-                </p>
-            </div>
-        </client-only>
+                Укажите точку на карте
+            </p>
+        </div>
         <text-input
             id="name"
             v-model="form.name"

@@ -9,7 +9,9 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <route-form />
+                <client-only>
+                    <route-form />
+                </client-only>
             </div>
         </div>
         <Footer />

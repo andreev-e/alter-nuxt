@@ -9,7 +9,9 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <poi-form />
+                <client-only>
+                    <poi-form />
+                </client-only>
             </div>
         </div>
         <Footer />

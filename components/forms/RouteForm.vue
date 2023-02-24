@@ -1,44 +1,42 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <client-only>
-            <gmap-map
-                ref="map"
-                :zoom="zoom"
-                map-type-id="terrain"
-                :center="center"
-            >
-                <gmap-marker
-                    v-if="start"
-                    :position="start"
-                    :icon="iconStart"
-                    draggable
-                    @dragend="startMoved"
-                />
-                <gmap-marker
-                    v-if="finish"
-                    :position="finish"
-                    :icon="iconFinish"
-                    draggable
-                    @dragend="finishMoved"
-                />
-                <gmap-polyline
-                    v-if="manual"
-                    ref="polyline"
-                    :path="path"
-                    :options="{ strokeColor: '#FF0000' }"
-                    editable
-                    @path_changed="polylineChanged"
-                />
-                <directions-renderer
-                    v-else
-                    :origin="start"
-                    :waypoints="waypoints"
-                    :optimize-waypoints="true"
-                    :destination="finish"
-                    @routeFound="routeFound"
-                />
-            </gmap-map>
-        </client-only>
+        <gmap-map
+            ref="map"
+            :zoom="zoom"
+            map-type-id="terrain"
+            :center="center"
+        >
+            <gmap-marker
+                v-if="start"
+                :position="start"
+                :icon="iconStart"
+                draggable
+                @dragend="startMoved"
+            />
+            <gmap-marker
+                v-if="finish"
+                :position="finish"
+                :icon="iconFinish"
+                draggable
+                @dragend="finishMoved"
+            />
+            <gmap-polyline
+                v-if="manual"
+                ref="polyline"
+                :path="path"
+                :options="{ strokeColor: '#FF0000' }"
+                editable
+                @path_changed="polylineChanged"
+            />
+            <directions-renderer
+                v-else
+                :origin="start"
+                :waypoints="waypoints"
+                :optimize-waypoints="true"
+                :destination="finish"
+                @routeFound="routeFound"
+            />
+        </gmap-map>
         {{ path }}<br>
         <toggler
             id="manual"
@@ -209,7 +207,7 @@
                 }
             },
             manual(val) {
-                if (val) {
+                if (val && this.google) {
                     this.form.encoded_route = this.google.maps.geometry.encoding
                         .encodePath([this.start, this.finish]);
                 }

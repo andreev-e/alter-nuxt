@@ -4,7 +4,7 @@
     export default MapElementFactory({
         name: 'DirectionsRenderer',
         ctr() {
-            return window.google.maps.DirectionsRenderer;
+            return window.google ? window.google.maps.DirectionsRenderer : null;
         },
         events: ['routeFound'],
         mappedProps: {},
@@ -31,7 +31,7 @@
         },
         methods: {
             rebuildRoute() {
-                const directionsService = new window.google.maps.DirectionsService();
+                const directionsService = window.google ? new window.google.maps.DirectionsService() : null;
                 const {
                     origin,
                     destination,
