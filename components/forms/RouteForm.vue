@@ -34,6 +34,7 @@
                 :waypoints="waypoints"
                 :optimize-waypoints="true"
                 :destination="finish"
+                :travel-mode="travelMode"
                 @routeFound="routeFound"
             />
             <template v-if="route">
@@ -53,6 +54,13 @@
             v-model="manual"
             :variants="[{ name: 'Автоматически', value: false }, { name: 'Вручную', value: true }]"
             label="Построение маршрута"
+        />
+        <toggler
+            v-if="!manual"
+            id="map_type"
+            v-model="travelMode"
+            :variants="[{ name: 'Пешком', value: 'WALKING' }, { name: 'Машина', value: 'DRIVING' }, { name: 'Мотоцикл', value: 'TWO_WHEELER' }]"
+            label="Вид транспорта"
         />
         <text-input
             id="name"
@@ -153,6 +161,7 @@
                     url: '/end.png',
                 },
                 manual: false,
+                travelMode: 'DRIVING',
             };
         },
         computed: {
@@ -205,7 +214,7 @@
                 return [];
             },
             waypoints() {
-                if (process.client && this.route.pois && this.route.pois.length > 0) {
+                if (process.client && this.route && this.route.pois && this.route.pois.length > 0) {
                     return this.route.pois.slice(0, 8)
                         .map((poi) => ({ location: { lat: poi.lat, lng: poi.lng }, stopover: true }));
                 }
@@ -218,16 +227,9 @@
                     .forEach((field) => {
                         this.form[field] = route[field];
                     });
-                if (route.encoded_route) {
+                if (this.form.encoded_route) {
                     this.manual = true;
                 }
-            },
-            manual(val) {
-                if (val && this.google) {
-                    this.form.encoded_route = this.google.maps.geometry.encoding
-                        .encodePath([this.start, this.finish]);
-                }
-                this.form.encoded_route = null;
             },
         },
         mounted() {
