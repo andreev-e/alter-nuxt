@@ -231,6 +231,12 @@
                 if (this.form.encoded_route) {
                     this.manual = true;
                 }
+                if (!this.form.start || !this.form.finish) {
+                    const path = this.google && this.form.encoded_route ? this.google.maps.geometry.encoding
+                        .decodePath(this.form.encoded_route) : [];
+                    this.form.start = `${path[0].lat()};${path[0].lng()}`;
+                    this.form.finish = `${path[path.length - 1].lat()};${path[path.length - 1].lng()}`;
+                }
             },
         },
         mounted() {
