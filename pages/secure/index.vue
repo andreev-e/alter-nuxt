@@ -5,6 +5,28 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
+                    <router-link
+                        to="/secure/poi/create"
+                        class="d-inline-block mr-2 mt-1"
+                        title="Добавить достопримечательность"
+                    >
+                        <font-awesome-icon
+                            icon="fa-location-pin"
+                            class="text-primary"
+                            role="button"
+                        />
+                    </router-link>
+                    <router-link
+                        to="/secure/route/create"
+                        class="d-inline-block mr-2 mt-1"
+                        title="Добавить маршрут"
+                    >
+                        <font-awesome-icon
+                            icon="fa-route"
+                            class="text-primary"
+                            role="button"
+                        />
+                    </router-link>
                     Авторский раздел
                 </h1>
             </div>

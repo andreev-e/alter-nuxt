@@ -26,7 +26,7 @@
                 dR: null,
             };
         },
-        mounted() {
+        created() {
             this.rebuildRoute();
         },
         methods: {
@@ -51,15 +51,19 @@
                         optimizeWaypoints,
                     },
                     (response, status) => {
-                        if (status !== 'OK') {
+                        if (status === 'OK') {
+                            this.dR.setDirections(response);
+                            const myroute = this.dR.directions.routes[0];
+                            let total = 0;
+                            myroute.legs.forEach((leg) => { total += leg.distance.value; });
+                            this.$emit('routeFound', Math.round(total / 1000));
                             return;
                         }
-                        this.dR.setDirections(response);
-
-                        const myroute = this.dR.directions.routes[0];
-                        let total = 0;
-                        myroute.legs.forEach((leg) => { total += leg.distance.value; });
-                        this.$emit('routeFound', Math.round(total / 1000));
+                        if (status === 'ZERO_RESULTS') {
+                            this.$emit('routeFound', 0);
+                            return;
+                        }
+                        console.log(status);
                     },
                 );
             },

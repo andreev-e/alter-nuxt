@@ -26,6 +26,8 @@ import {
     faComment,
     faComments,
     faEye,
+    faRoute,
+    faLocationPin,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -47,6 +49,8 @@ library.add(
     faComment,
     faComments,
     faEye,
+    faRoute,
+    faLocationPin,
 );
 
 /* add font awesome icon component */

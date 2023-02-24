@@ -39,12 +39,12 @@
                 />
             </gmap-map>
         </client-only>
+        {{ path }}<br>
         <toggler
             id="manual"
             v-model="manual"
             :variants="[{ name: 'Автоматически', value: false }, { name: 'Вручную', value: true }]"
             label="Построение маршрута"
-            required
         />
         <text-input
             id="name"
@@ -175,9 +175,6 @@
                         lng: parseFloat(start[1]),
                     };
                 }
-                if (this.form.encoded_route && this.path.length > 1) {
-                    return this.path[0];
-                }
                 return false;
             },
             finish() {
@@ -188,13 +185,10 @@
                         lng: parseFloat(finish[1]),
                     };
                 }
-                if (this.form.encoded_route && this.path.length > 1) {
-                    return this.path[this.path.length - 1];
-                }
                 return false;
             },
             path() {
-                if (this.google && this.route && this.route.encoded_route) {
+                if (this.google && this.form.encoded_route) {
                     return this.google.maps.geometry.encoding
                         .decodePath(this.form.encoded_route);
                 }
@@ -215,8 +209,22 @@
                 }
             },
             manual(val) {
-                console.log(val);
+                if (val) {
+                    this.form.encoded_route = this.google.maps.geometry.encoding
+                        .encodePath([this.start, this.finish]);
+                }
+                this.form.encoded_route = null;
             },
+        },
+        mounted() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        this.form.start = `${position.coords.latitude};${position.coords.longitude}`;
+                        this.form.finish = `${position.coords.latitude};${position.coords.longitude + 0.5}`;
+                    },
+                );
+            }
         },
         created() {
             const center = {
@@ -256,8 +264,8 @@
             startMoved(e) {
                 this.form.start = `${e.latLng.lat()};${e.latLng.lng()}`;
                 if (this.google) {
-                    let path = this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route);
+                    let path = this.form.encoded_route ? this.google.maps.geometry.encoding
+                        .decodePath(this.form.encoded_route) : [];
                     path = [
                         this.start,
                         ...path.slice(1, -1),
@@ -270,8 +278,8 @@
             finishMoved(e) {
                 this.form.finish = `${e.latLng.lat()};${e.latLng.lng()}`;
                 if (this.google) {
-                    let path = this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route);
+                    let path = this.form.encoded_route ? this.google.maps.geometry.encoding
+                        .decodePath(this.form.encoded_route) : [];
                     path = [
                         this.start,
                         ...path.slice(1, -1),
@@ -301,6 +309,9 @@
                 return (x * Math.PI) / 180;
             },
             routeFound(length) {
+                if (length === 0) {
+                    this.$alert('Маршрут не найден, переместите старт или финиш');
+                }
                 console.log('Route found', length);
             },
         },

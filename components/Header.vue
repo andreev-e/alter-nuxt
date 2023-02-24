@@ -9,24 +9,35 @@
                 >
                     <router-link
                         to="/secure/poi/create"
-                        class="d-inline-block mr-1 mt-1"
+                        class="d-inline-block mr-2 mt-1"
                         title="Добавить достопримечательность"
                     >
                         <font-awesome-icon
-                            icon="fa-plus-circle"
-                            class="text-success"
+                            icon="fa-location-pin"
+                            class="text-primary"
+                            role="button"
+                        />
+                    </router-link>
+                    <router-link
+                        to="/secure/route/create"
+                        class="d-inline-block mr-2 mt-1"
+                        title="Добавить маршрут"
+                    >
+                        <font-awesome-icon
+                            icon="fa-route"
+                            class="text-primary"
                             role="button"
                         />
                     </router-link>
                     <nuxt-link
                         to="/secure"
-                        class="d-inline-block mr-1 mt-1"
+                        class="d-inline-block mr-2 mt-1"
                     >
                         {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
                     </nuxt-link>
                     <router-link
                         :to="`/secure/user/${$auth.user.username}`"
-                        class="d-inline-block mr-1 mt-1"
+                        class="d-inline-block mr-2 mt-1"
                         title="Профиль"
                     >
                         <font-awesome-icon
@@ -59,7 +70,7 @@
             <nuxt-link :to="'/'">
                 <img
                     class="img-fluid mb-3"
-                    src="https://altertravel.ru/i/logo.png"
+                    src="/logo.png"
                     alt="Альтернативный путеводитель"
                 >
             </nuxt-link>
