@@ -54,6 +54,7 @@
             v-model="manual"
             :variants="[{ name: 'Автоматически', value: false }, { name: 'Вручную', value: true }]"
             label="Построение маршрута"
+            @input="manualChanged"
         />
         <toggler
             v-if="!manual"
@@ -329,6 +330,18 @@
                     this.$alert('Маршрут не найден, переместите старт или финиш');
                 }
                 console.log('Route found', length);
+            },
+            manualChanged(val) {
+                if (val) {
+                    const path = [
+                        this.start,
+                        this.finish,
+                    ];
+                    this.form.encoded_route = this.google.maps.geometry.encoding
+                        .encodePath(path);
+                    return;
+                }
+                this.form.encoded_route = null;
             },
         },
     };

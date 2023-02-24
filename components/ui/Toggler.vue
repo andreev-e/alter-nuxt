@@ -80,15 +80,13 @@
             value(val) {
                 this.val = val;
             },
-            val(val) {
-                this.$emit('input', val);
-            },
         },
         mounted() {
             this.val = this.value;
         },
         methods: {
             click(val) {
+                this.$emit('input', val);
                 this.val = val;
             },
         },
