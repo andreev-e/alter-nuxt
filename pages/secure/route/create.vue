@@ -26,6 +26,7 @@
             RouteForm,
             Breadcrumbs,
         },
+        middleware: 'auth',
         data() {
             return {
                 breadCrumbs: [
