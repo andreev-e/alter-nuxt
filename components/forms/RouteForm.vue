@@ -36,8 +36,18 @@
                 :destination="finish"
                 @routeFound="routeFound"
             />
+            <template v-if="route">
+                <gmap-marker
+                    v-for="poi in route.pois"
+                    :key="`poi_`+poi.id"
+                    :position="{ lat: poi.lat, lng: poi.lng }"
+                    clickable
+                    :title="poi.name"
+                    :icon="getIcon(poi.type)"
+                    @click="$router.push('/poi/' + poi.id)"
+                />
+            </template>
         </gmap-map>
-        {{ path }}<br>
         <toggler
             id="manual"
             v-model="manual"
@@ -103,6 +113,7 @@
     import TextInput from '../ui/TextInput.vue';
     import Toggler from '../ui/Toggler.vue';
     import DirectionsRenderer from '../map/DirectionsRenderer.vue';
+    import map from '../../mixins/map';
 
     export default {
         name: 'RouteForm',
@@ -111,6 +122,7 @@
             TextInput,
             DirectionsRenderer,
         },
+        mixins: [map],
         props: {
             route: {
                 type: Object,
@@ -193,7 +205,11 @@
                 return [];
             },
             waypoints() {
-                return [];
+                if (process.client && this.route.pois && this.route.pois.length > 0) {
+                    return this.route.pois.slice(0, 8)
+                        .map((poi) => ({ location: { lat: poi.lat, lng: poi.lng }, stopover: true }));
+                }
+                return null;
             },
         },
         watch: {

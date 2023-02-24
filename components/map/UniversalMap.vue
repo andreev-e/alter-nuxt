@@ -65,16 +65,16 @@
 </template>
 
 <script>
-    import * as Icons from '@fortawesome/free-solid-svg-icons';
     import { gmapApi } from 'vue2-google-maps';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import { TYPES } from '../../constants';
     import DirectionsRenderer from './DirectionsRenderer.vue';
+    import map from '../../mixins/map';
 
     export default {
         expose: ['fetchPois'],
         components: { DirectionsRenderer },
+        mixins: [map],
         props: {
             model: {
                 type: Array,
@@ -152,9 +152,6 @@
                 poisExist: 'pois/itemsExist',
             }),
             google: gmapApi,
-            types() {
-                return TYPES;
-            },
             mapPois() {
                 if (this.route) {
                     return this.route.pois;
@@ -283,26 +280,6 @@
                     this.setParams(params);
                     this.getPoi();
                 }
-            },
-            getTypeByName(name) {
-                // eslint-disable-next-line consistent-return
-                return this.types.reduce((acc, type) => {
-                    if (type.name === name) {
-                        return type;
-                    }
-                    return acc;
-                });
-            },
-            getIcon(name) {
-                const type = this.getTypeByName(name);
-                return {
-                    path: (type ? Icons[type.icon] : Icons.faCircleExclamation).icon[4].toString(),
-                    fillColor: type.color ?? '#FF0000',
-                    fillOpacity: 1,
-                    strokeColor: '#ffffff',
-                    scale: 0.05,
-                    strokeWeight: 1,
-                };
             },
             userManipulates() {
                 if (!this.fitContent) {
