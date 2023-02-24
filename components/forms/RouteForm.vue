@@ -27,11 +27,10 @@
                     :path="path"
                     :options="{ strokeColor: '#FF0000' }"
                     editable
-                    @dragend="polylineChanged"
+                    @path_changed="polylineChanged"
                 />
                 <directions-renderer
                     v-else
-                    travel-mode="DRIVING"
                     :origin="start"
                     :waypoints="waypoints"
                     :optimize-waypoints="true"
@@ -197,7 +196,7 @@
             path() {
                 if (this.google && this.route && this.route.encoded_route) {
                     return this.google.maps.geometry.encoding
-                        .decodePath(this.route.encoded_route);
+                        .decodePath(this.form.encoded_route);
                 }
                 return [];
             },
@@ -256,12 +255,38 @@
             },
             startMoved(e) {
                 this.form.start = `${e.latLng.lat()};${e.latLng.lng()}`;
+                if (this.google) {
+                    let path = this.google.maps.geometry.encoding
+                        .decodePath(this.form.encoded_route);
+                    path = [
+                        this.start,
+                        ...path.slice(1, -1),
+                        this.finish,
+                    ];
+                    this.form.encoded_route = this.google.maps.geometry.encoding
+                        .encodePath(path);
+                }
             },
             finishMoved(e) {
                 this.form.finish = `${e.latLng.lat()};${e.latLng.lng()}`;
+                if (this.google) {
+                    let path = this.google.maps.geometry.encoding
+                        .decodePath(this.form.encoded_route);
+                    path = [
+                        this.start,
+                        ...path.slice(1, -1),
+                        this.finish,
+                    ];
+                    this.form.encoded_route = this.google.maps.geometry.encoding
+                        .encodePath(path);
+                }
             },
             polylineChanged(e) {
-                console.log('polylineChanged', e);
+                const arr = e.getArray();
+                this.form.encoded_route = this.google.maps.geometry.encoding
+                    .encodePath(arr);
+                this.form.start = `${arr[0].lat()};${arr[0].lng()}`;
+                this.form.finish = `${arr[arr.length - 1].lat()};${arr[arr.length - 1].lng()}`;
             },
             distance(p1, p2) {
                 const R = 6378137; // Earth’s mean radius in meter
@@ -275,8 +300,8 @@
             rad(x) {
                 return (x * Math.PI) / 180;
             },
-            routeFound() {
-                console.log('Route found');
+            routeFound(length) {
+                console.log('Route found', length);
             },
         },
     };

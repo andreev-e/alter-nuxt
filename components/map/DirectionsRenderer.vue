@@ -2,7 +2,7 @@
     import { MapElementFactory } from 'vue2-google-maps';
 
     export default MapElementFactory({
-        name: 'directionsRenderer',
+        name: 'DirectionsRenderer',
         ctr() {
             return window.google.maps.DirectionsRenderer;
         },
@@ -19,45 +19,59 @@
                 type: Boolean,
                 default: false,
             },
-            travelMode: { type: String },
+            travelMode: { type: String, default: 'DRIVING' },
         },
-        afterCreate(directionsRenderer) {
-            const directionsService = new window.google.maps.DirectionsService();
-            this.$watch(
-                () => [this.origin, this.destination, this.travelMode, this.waypoints, this.optimizeWaypoints],
-                () => {
-                    const {
+        data() {
+            return {
+                dR: null,
+            };
+        },
+        mounted() {
+            this.rebuildRoute();
+        },
+        methods: {
+            rebuildRoute() {
+                const directionsService = new window.google.maps.DirectionsService();
+                const {
+                    origin,
+                    destination,
+                    travelMode,
+                    waypoints,
+                    optimizeWaypoints,
+                } = this;
+                if (!origin || !destination) {
+                    return;
+                }
+                directionsService.route(
+                    {
                         origin,
                         destination,
                         travelMode,
                         waypoints,
                         optimizeWaypoints,
-                    } = this;
-                    if (!origin || !destination || !travelMode) {
-                        return;
-                    }
-                    directionsService.route(
-                        {
-                            origin,
-                            destination,
-                            travelMode,
-                            waypoints,
-                            optimizeWaypoints,
-                        },
-                        (response, status) => {
-                            if (status !== 'OK') {
-                                return;
-                            }
-                            directionsRenderer.setOptions({ suppressMarkers: true });
+                    },
+                    (response, status) => {
+                        if (status !== 'OK') {
+                            return;
+                        }
+                        this.dR.setDirections(response);
 
-                            directionsRenderer.setDirections(response);
+                        const myroute = this.dR.directions.routes[0];
+                        let total = 0;
+                        myroute.legs.forEach((leg) => { total += leg.distance.value; });
+                        this.$emit('routeFound', Math.round(total / 1000));
+                    },
+                );
+            },
+        },
+        afterCreate(directionsRenderer) {
+            directionsRenderer.setOptions({ suppressMarkers: true });
+            this.dR = directionsRenderer;
 
-                            const myroute = directionsRenderer.directions.routes[0];
-                            let total = 0;
-                            myroute.legs.forEach((leg) => { total += leg.distance.value; });
-                            this.$emit('routeFound', Math.round(total / 1000));
-                        },
-                    );
+            this.$watch(
+                () => [this.origin, this.destination, this.travelMode, this.waypoints, this.optimizeWaypoints],
+                () => {
+                    this.rebuildRoute();
                 },
             );
         },
