@@ -31,13 +31,15 @@
             >
                 {{ distance }}
             </div>
-            <div class="favorite">
+            <div
+                v-if="$auth.loggedIn"
+                class="favorite"
+            >
                 <font-awesome-icon
-                    v-if="$auth.loggedIn"
                     icon="fa-star"
                     :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
                     role="button"
-                    @click="toggleFav(poi.id)"
+                    @click.prevent="toggleFav(poi.id)"
                 />
             </div>
             <div class="author">
