@@ -19,7 +19,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: cd /var/www/altertravel.ru/data/www/test.altertravel.ru
             && git reset --hard
-            && git pull origin master
+            && git pull alter_nuxt master
             && npm install --production
             && npm run build
             && pm2 restart test-alter
