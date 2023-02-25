@@ -8,6 +8,18 @@
                     class="d-flex justify-content-between"
                 >
                     <router-link
+                        to="/secure/favorite"
+                        class="d-inline-block mr-2 mt-1"
+                        title="Избранное"
+                    >
+                        <font-awesome-icon
+                            v-if="$auth.user && $auth.user.favorites"
+                            icon="fa-star"
+                            role="button"
+                            class="text-danger"
+                        />
+                    </router-link>
+                    <router-link
                         to="/secure/poi/create"
                         class="d-inline-block mr-2 mt-1"
                         title="Добавить достопримечательность"

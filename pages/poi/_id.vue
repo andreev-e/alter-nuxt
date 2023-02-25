@@ -9,10 +9,15 @@
                     <h1 class="view">
                         <client-only>
                             <font-awesome-icon
+                                v-if="$auth.loggedIn"
                                 icon="fa-star"
-                                class="text-danger"
+                                :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
                                 role="button"
+                                @click="toggleFav(poi.id)"
                             />
+                        </client-only>
+                        {{ poi.name }}
+                        <client-only>
                             <router-link
                                 v-if="canEdit"
                                 :to="`/secure/poi/${poi.id}`"
@@ -26,7 +31,6 @@
                                 />
                             </router-link>
                         </client-only>
-                        {{ poi.name }}
                     </h1>
                     <badge
                         class="bg-warning"
@@ -224,6 +228,7 @@
     import Badge from '../../components/ui/Badge.vue';
     import ViewsBadge from '../../components/badges/ViewsBadge.vue';
     import TextWithLinks from '../../components/ui/TextWithLinks.vue';
+    import fav from '../../mixins/fav';
 
     export default {
         components: {
@@ -237,6 +242,7 @@
             Breadcrumbs,
             Comments,
         },
+        mixins: [fav],
         async fetch() {
             await this.setId(this.$route.params.id);
             await this.get();

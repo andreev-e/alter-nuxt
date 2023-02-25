@@ -31,9 +31,16 @@
             >
                 {{ distance }}
             </div>
-            <div
-                class="author"
-            >
+            <div class="favorite">
+                <font-awesome-icon
+                    v-if="$auth.loggedIn"
+                    icon="fa-star"
+                    :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
+                    role="button"
+                    @click="toggleFav(poi.id)"
+                />
+            </div>
+            <div class="author">
                 <client-only>
                     <poi-card-buttons
                         :can-edit="canEdit"
@@ -55,10 +62,12 @@
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapMutations } from 'vuex';
     import PoiCardButtons from './poi/PoiCardButtons.vue';
+    import fav from '../mixins/fav';
 
     export default {
         name: 'PoiCard',
         components: { PoiCardButtons },
+        mixins: [fav],
         props: {
             poi: {
                 type: Object,
@@ -166,6 +175,18 @@
     overflow: hidden;
     line-height: 22px;
     border: 1px solid #888;
+  }
+
+  .favorite {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin-left: 20px;
+    margin-top: 15px;
+    font-size: 2em;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: #000 2px 3px 5px;
   }
 
   .above_img {
