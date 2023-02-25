@@ -1,16 +1,9 @@
 <template>
     <div class="container page">
         <Header />
-        <Breadcrumbs :list="breadCrumbs" />
-        <div
-            v-if="loading"
-            class="row"
-        >
-            <div class="spinner">
-                <b-spinner />
-            </div>
-        </div>
+        <b-spinner v-if="loading" />
         <template v-else>
+            <Breadcrumbs :list="breadCrumbs" />
             <div class="row">
                 <div class="col-sm-12">
                     <h1 class="view">
