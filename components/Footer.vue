@@ -1,6 +1,8 @@
 <template>
     <div class="row footer">
-        <div class="first_menu col-sm-4" />
+        <div class="first_menu col-sm-4">
+            &nbsp;
+        </div>
         <div class="copyright col-sm-4">
             2009-{{ year }} © Альтернативный путеводитель
         </div>
