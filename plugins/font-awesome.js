@@ -28,6 +28,7 @@ import {
     faEye,
     faRoute,
     faLocationPin,
+    faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -51,6 +52,7 @@ library.add(
     faEye,
     faRoute,
     faLocationPin,
+    faStar,
 );
 
 /* add font awesome icon component */

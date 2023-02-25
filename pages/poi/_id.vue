@@ -8,6 +8,11 @@
                 <div class="col-sm-12">
                     <h1 class="view">
                         <client-only>
+                            <font-awesome-icon
+                                icon="fa-star"
+                                class="text-danger"
+                                role="button"
+                            />
                             <router-link
                                 v-if="canEdit"
                                 :to="`/secure/poi/${poi.id}`"
@@ -21,7 +26,6 @@
                                 />
                             </router-link>
                         </client-only>
-
                         {{ poi.name }}
                     </h1>
                     <badge
