@@ -71,6 +71,13 @@ export default {
         '@nuxtjs/moment',
         '@nuxtjs/i18n',
         '@nuxtjs/sitemap',
+        ['@nuxtjs/yandex-metrika', {
+            id: 10896850,
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true,
+        }],
         ['@nuxtjs/component-cache', {
             max: 10000,
             maxAge: 1000 * 60 * 60,
