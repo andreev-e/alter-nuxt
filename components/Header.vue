@@ -13,7 +13,7 @@
                         title="Избранное"
                     >
                         <font-awesome-icon
-                            v-if="$auth.user && $auth.user.favorites"
+                            v-if="$auth.user && $auth.user.favorites.length"
                             icon="fa-star"
                             role="button"
                             class="text-danger"

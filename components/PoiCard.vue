@@ -31,19 +31,19 @@
             >
                 {{ distance }}
             </div>
-            <div
-                v-if="$auth.loggedIn"
-                class="favorite"
-            >
-                <font-awesome-icon
-                    icon="fa-star"
-                    :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
-                    role="button"
-                    @click.prevent="toggleFav(poi.id)"
-                />
-            </div>
-            <div class="author">
-                <client-only>
+            <client-only>
+                <div
+                    v-if="$auth.loggedIn"
+                    class="favorite"
+                >
+                    <font-awesome-icon
+                        icon="fa-star"
+                        :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
+                        role="button"
+                        @click.prevent="toggleFav(poi.id)"
+                    />
+                </div>
+                <div class="author">
                     <poi-card-buttons
                         :can-edit="canEdit"
                         :can-approve="canApprove"
@@ -53,8 +53,8 @@
                         @disprove="disprove"
                         @delete="del"
                     />
-                </client-only>
-            </div>
+                </div>
+            </client-only>
         </div>
     </nuxt-link>
 </template>

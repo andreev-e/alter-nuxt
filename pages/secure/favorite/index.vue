@@ -63,15 +63,21 @@
         },
         methods: {
             ...mapActions({
-                getPoi: 'poisPaginated/get',
+                getPois: 'poisPaginated/get',
+                clearPois: 'poisPaginated/clear',
                 setParams: 'poisPaginated/setParams',
             }),
             async fetchPois() {
-                await this.setParams({
-                    list: this.$auth.user.favorites,
-                    page: this.page,
-                });
-                await this.getPoi();
+                console.log(this.$auth.user.favorites.length);
+                if (this.$auth.user.favorites.length) {
+                    await this.setParams({
+                        list: this.$auth.user.favorites,
+                        page: this.page,
+                    });
+                    await this.getPois();
+                    return;
+                }
+                this.clearPois();
             },
         },
     };
