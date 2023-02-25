@@ -22,4 +22,4 @@ jobs:
             && git pull alter_nuxt master
             && npm install --production
             && npm run build
-            && pm2 restart all
+            && pm2 restart new-alter

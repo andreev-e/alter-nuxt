@@ -22,4 +22,4 @@ jobs:
             && git pull origin master
             && npm install --production
             && npm run build
-            && pm2 restart all
+            && pm2 restart test-alter
