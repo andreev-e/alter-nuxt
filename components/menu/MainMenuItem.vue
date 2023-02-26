@@ -3,8 +3,16 @@
         :class="item.class"
     >
         <router-link :to="item.href">
-            {{ item.name }}
-            <span class="d-none d-sm-block">{{ item.sub }}</span>
+            <font-awesome-icon
+                v-if="item.icon"
+                :icon="item.icon"
+                role="button"
+                class="d-md-inline d-lg-none d-xl-inline"
+            />
+            <div class="d-none d-md-inline-block">
+                {{ item.name }}
+            </div>
+            <span class="d-none d-lg-block">{{ item.sub }}</span>
         </router-link>
         <ul v-if="item.submenu">
             <component

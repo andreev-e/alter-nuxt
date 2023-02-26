@@ -55,6 +55,7 @@
                         href: '/#',
                         sub: 'выбрать',
                         class: 'region_select',
+                        icon: 'fa-globe',
                         submenu: {
                             menu: this.countries,
                             component: 'drop-down-menu-item',
@@ -66,6 +67,7 @@
                         href: '/#',
                         sub: 'выбрать',
                         class: 'region_select',
+                        icon: 'fa-tags',
                         submenu: {
                             menu: this.menuTags,
                             component: 'drop-down-menu-item',
@@ -76,30 +78,35 @@
                         name: 'Маршруты',
                         href: '/route',
                         sub: 'готовые треки',
+                        icon: 'fa-route',
                     },
                     {
                         name: 'Новые',
                         href: '/latest',
                         sub: 'места',
+                        icon: 'fa-plus',
                     },
                     {
                         name: 'Последние',
                         href: '/updated',
                         sub: 'обновления',
+                        icon: 'fa-refresh',
                     },
                 ];
             },
             clientMenu() {
                 return [
-                    this.$auth.loggedIn && this.$auth.user && this.$auth.user.username === 'andreev' ? {
-                        name: 'Модерация',
+                    this.$auth.loggedIn && this.$auth.user && this.$auth.user.to_moderate ? {
+                        name: `Модерация (${this.$auth.user.to_moderate})`,
                         href: '/moderation',
                         sub: 'объектов',
+                        icon: 'fa-hammer',
                     } : null,
                     {
                         name: 'Мои',
                         href: '/secure',
                         sub: 'публикации',
+                        icon: 'fa-user',
                     },
                 ].filter((item) => item);
             },
@@ -122,6 +129,22 @@
     padding: 4px 4px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
+  }
+
+  @media only screen and (max-width: 992px) {
+    .header-menu li a, .header-menu > ul > li {
+      border-radius: 9px;
+    }
+    .header-menu > ul > li {
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .header-menu > ul > li > a {
+      font-size: 35px;
+    }
   }
 
   .header-menu li a:hover, .header-menu li a.nuxt-link-exact-active {

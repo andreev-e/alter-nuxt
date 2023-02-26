@@ -98,6 +98,11 @@
 
     export default {
         components: { Menu },
+        mounted() {
+            if (process.client) {
+                this.$auth.fetchUser();
+            }
+        },
         methods: {
             logout() {
                 this.$auth.logout();

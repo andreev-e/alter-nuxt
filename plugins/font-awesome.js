@@ -21,6 +21,7 @@ import {
     faHome,
     faTrash,
     faCheck,
+    faPlus,
     faPlusCircle,
     faTimesCircle,
     faComment,
@@ -29,6 +30,11 @@ import {
     faRoute,
     faLocationPin,
     faStar,
+    faGlobe,
+    faTags,
+    faRefresh,
+    faHammer,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -46,6 +52,7 @@ library.add(
     faTrash,
     faCheck,
     faPlusCircle,
+    faPlus,
     faTimesCircle,
     faComment,
     faComments,
@@ -53,6 +60,11 @@ library.add(
     faRoute,
     faLocationPin,
     faStar,
+    faGlobe,
+    faTags,
+    faRefresh,
+    faHammer,
+    faUser,
 );
 
 /* add font awesome icon component */

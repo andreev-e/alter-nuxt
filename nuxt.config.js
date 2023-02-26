@@ -119,9 +119,6 @@ export default {
             laravelSanctum: {
                 provider: 'laravel/sanctum',
                 url: '/api',
-                user: {
-                    autoFetch: true,
-                },
             },
 
         },
