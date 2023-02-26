@@ -2,7 +2,7 @@
 <template>
     <div class="header row">
         <client-only>
-            <div class="col-sm-12 d-flex justify-content-end">
+            <div class="user-panel mb-2 col-sm-12 d-flex justify-content-end">
                 <div
                     v-if="$auth.loggedIn"
                     class="d-flex justify-content-between"
@@ -16,7 +16,7 @@
                             v-if="$auth.user.favorites && $auth.user.favorites.length"
                             icon="fa-star"
                             role="button"
-                            class="text-danger"
+                            class="text-warning"
                         />
                     </router-link>
                     <router-link
@@ -123,8 +123,10 @@
   }
 
   .header-menu {
-    color: #fff;
-    font-size: 20px;
     line-height: 22px;
+  }
+
+  .user-panel {
+    font-size: 22px;
   }
 </style>

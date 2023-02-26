@@ -34,6 +34,10 @@
                 type: String,
                 default: '',
             },
+            dominateColor: {
+                type: String,
+                default: '',
+            },
         },
         computed: {
             heightOfRow() {
@@ -47,7 +51,7 @@
                                 imageUrl: img,
                                 width: '100%',
                                 padding: 0,
-                                background: '#606084',
+                                background: this.dominateColor ? this.dominateColor : '#606084',
                                 showConfirmButton: false,
                                 showCloseButton: true,
                                 animation: false,

@@ -11,7 +11,7 @@
                             <font-awesome-icon
                                 v-if="$auth.loggedIn"
                                 icon="fa-star"
-                                :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
+                                :class="inFav(poi.id) ? 'text-warning' : 'text-light'"
                                 role="button"
                                 @click="toggleFav(poi.id)"
                             />
@@ -63,6 +63,7 @@
                             <super-gallery
                                 :alt="poi.name"
                                 :images="poi.images"
+                                :dominate-color="poi.dominatecolor"
                             />
                             <nuxt-link :to="`/user/${poi.author}`">
                                 &copy; {{ poi.copyright ? poi.copyright : poi.author }}

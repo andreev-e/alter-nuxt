@@ -35,6 +35,8 @@ import {
     faRefresh,
     faHammer,
     faUser,
+    faArrowUp,
+    faHandHoldingDollar,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -65,6 +67,8 @@ library.add(
     faRefresh,
     faHammer,
     faUser,
+    faArrowUp,
+    faHandHoldingDollar,
 );
 
 /* add font awesome icon component */

@@ -38,7 +38,7 @@
                 >
                     <font-awesome-icon
                         icon="fa-star"
-                        :class="inFav(poi.id) ? 'text-danger' : 'text-muted'"
+                        :class="inFav(poi.id) ? 'text-warning' : 'text-light'"
                         role="button"
                         @click.prevent="toggleFav(poi.id)"
                     />

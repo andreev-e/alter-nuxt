@@ -84,12 +84,12 @@
                         name: 'Новые',
                         href: '/latest',
                         sub: 'места',
-                        icon: 'fa-plus',
+                        icon: 'fa-arrow-up',
                     },
                     {
-                        name: 'Последние',
+                        name: 'Обновленные',
                         href: '/updated',
-                        sub: 'обновления',
+                        sub: 'публикации',
                         icon: 'fa-refresh',
                     },
                 ];
@@ -97,9 +97,9 @@
             clientMenu() {
                 return [
                     this.$auth.loggedIn && this.$auth.user && this.$auth.user.to_moderate ? {
-                        name: `Модерация (${this.$auth.user.to_moderate})`,
+                        name: 'Модерация',
                         href: '/moderation',
-                        sub: 'объектов',
+                        sub: `(${this.$auth.user.to_moderate}) объектов`,
                         icon: 'fa-hammer',
                     } : null,
                     {
@@ -143,7 +143,7 @@
 
   @media only screen and (max-width: 768px) {
     .header-menu > ul > li > a {
-      font-size: 35px;
+      font-size: 30px;
     }
   }
 
