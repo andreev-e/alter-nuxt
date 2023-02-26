@@ -15,7 +15,9 @@
                     v-if="comment.user"
                     :to="'/user/' + comment.user.username"
                 >
-                    {{ comment.user.firstname || comment.user.lastname ? `${comment.user.firstname} ${comment.user.lastname}` : comment.user.username }}
+                    {{
+                        comment.user.firstname || comment.user.lastname ? `${comment.user.firstname} ${comment.user.lastname}` : comment.user.username
+                    }}
                 </router-link>
                 <a
                     v-else-if="comment.email"
@@ -40,7 +42,7 @@
                     @click="edit(comment.commentid)"
                 />
                 <font-awesome-icon
-                    v-if="canDelete"
+                    v-if="canEdit"
                     icon="fa-trash"
                     role="button"
                     @click="del(comment.commentid)"
@@ -104,14 +106,17 @@
             };
         },
         computed: {
-            canApprove() {
-                return !this.comment.approved && this.$auth.user && this.$auth.user.username === 'andreev';
+            isAdmin() {
+                return process.client && this.$auth.user && this.$auth.user.username === 'andreev';
             },
-            canDelete() {
-                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+            canApprove() {
+                return process.client && !this.comment.approved && this.isAdmin;
             },
             canEdit() {
-                return this.$auth.user && (this.$auth.user.username === 'andreev' || this.$auth.user.username === this.comment.user.username);
+                return process.client
+                    && this.$auth.user
+                    && (this.$auth.user.username === 'andreev'
+                        || this.$auth.user.username === this.comment.user.username);
             },
         },
         methods: {

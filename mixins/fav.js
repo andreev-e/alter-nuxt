@@ -10,7 +10,11 @@ export default {
             setProperty: 'user/setProperty',
         }),
         inFav(id) {
-            return this.$auth && this.$auth.user.favorites.includes(id);
+            return process.client
+                && this.$auth
+                && this.$auth.user
+                && this.$auth.user.favorites
+                && this.$auth.user.favorites.includes(id);
         },
         toggleFav(id) {
             Request.getInstance().patch(`/api/poi/${id}/toggle-favorite`).then(() => {

@@ -120,7 +120,7 @@
                     id: this.id,
                     type: this.type,
                     page: this.page,
-                    pending: this.$auth.user && this.$auth.user.username === 'andreev',
+                    pending: this.$auth.user && this.$auth.user && this.$auth.user.username === 'andreev',
                 });
                 await this.getComments();
             },

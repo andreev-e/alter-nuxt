@@ -91,7 +91,7 @@
             },
             clientMenu() {
                 return [
-                    this.$auth.user.username === 'andreev' ? {
+                    this.$auth.loggedIn && this.$auth.user && this.$auth.user.username === 'andreev' ? {
                         name: 'Модерация',
                         href: '/moderation',
                         sub: 'объектов',
@@ -101,7 +101,7 @@
                         href: '/secure',
                         sub: 'публикации',
                     },
-                ];
+                ].filter((item) => item);
             },
         },
         methods: {
