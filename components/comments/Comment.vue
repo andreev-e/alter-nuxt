@@ -116,7 +116,7 @@
                 return process.client
                     && this.$auth.user
                     && (this.$auth.user.username === 'andreev'
-                        || this.$auth.user.username === this.comment.user.username);
+                        || (this.comment.user && this.$auth.user.username === this.comment.user.username));
             },
         },
         methods: {
