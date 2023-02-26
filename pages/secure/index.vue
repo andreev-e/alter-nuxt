@@ -11,7 +11,7 @@
                         title="Добавить достопримечательность"
                     >
                         <font-awesome-icon
-                            icon="fa-location-pin"
+                            icon="fa-map-marker"
                             class="text-primary"
                             role="button"
                         />

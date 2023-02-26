@@ -25,7 +25,7 @@
                         title="Добавить достопримечательность"
                     >
                         <font-awesome-icon
-                            icon="fa-location-pin"
+                            icon="fa-map-marker"
                             class="text-primary"
                             role="button"
                         />
@@ -58,12 +58,13 @@
                             role="button"
                         />
                     </router-link>
-                    <button
-                        class="btn btn-dark btn-sm"
-                        @click="logout"
-                    >
-                        Выход
-                    </button>
+                    <div class="d-inline-block mr-2 mt-1">
+                        <font-awesome-icon
+                            icon="fa-sign-out"
+                            role="button"
+                            @click="logout"
+                        />
+                    </div>
                 </div>
                 <div
                     v-else

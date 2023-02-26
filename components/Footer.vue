@@ -1,5 +1,5 @@
 <template>
-    <div class="row footer">
+    <div class="row footer text-center">
         <div class="copyright col-sm-6">
             2009-{{ year }} © Альтернативный путеводитель
         </div>
