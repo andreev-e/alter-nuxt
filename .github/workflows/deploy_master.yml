@@ -21,7 +21,7 @@ jobs:
             && git init
             && git remote remove origin
             && git remote add origin https://github.com/andreev-e/alter-nuxt.git
-            && git pull
+            && git pull origin master
             && npm install --production
             && npm run build
             && pm2 stop altertravel.pro
