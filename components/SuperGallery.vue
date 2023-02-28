@@ -12,7 +12,6 @@
             >
                 <div class="position-absolute">
                     {{ img.copyright ? `Автор${img.copyright}`: '' }}
-                    {{ img }}
                 </div>
                 <img
                     :src="img.original"

@@ -24,7 +24,7 @@
                 </p>
             </div>
             <div class="col-sm-12">
-                <div class="row">
+                <div class="row p-2">
                     <super-gallery :images="images" />
                 </div>
             </div>
