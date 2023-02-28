@@ -19,8 +19,10 @@ jobs:
           port: ${{ secrets.PORT }}
           script: cd /var/www/altertravel.ru/data/www/altertravel.pro
             && git init
+            && git init git remote set-url origin git@github.com:andreev-e/alter-nuxt.git
             && git reset --hard HEAD
-            && git pull alter_nuxt master
+            && git checkout master
+            && git pull origin:master master
             && npm install --production
             && npm run build
             && pm2 restart new-alter
