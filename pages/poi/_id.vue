@@ -192,7 +192,10 @@
                             </div>
                         </b-tab>
                         <b-tab title="Здесь побывали">
-                            <checkins :poi="poi" />
+                            <checkins
+                                :poi="poi"
+                                @change="get"
+                            />
                         </b-tab>
                     </b-tabs>
                 </div>

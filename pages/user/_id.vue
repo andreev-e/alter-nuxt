@@ -19,14 +19,14 @@
                 <h1>
                     {{ user.firstname }} {{ user.lastname }}
                 </h1>
-                <bage
+                <badge
                     class="bg-primary text-white"
                 >
                     опубликовано {{ user.publications }}
-                </bage>
-                <bage class="bg-warning">
+                </badge>
+                <badge class="bg-warning">
                     C нами с {{ user.regdate }}
-                </bage>
+                </badge>
                 <p
                     v-if="user.about"
                     class="description"
@@ -44,7 +44,7 @@
                 fit-content
             />
         </client-only>
-
+        <user-checkins :user="user" />
         <Footer />
     </div>
 </template>
@@ -54,10 +54,16 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
-    import Bage from '../../components/ui/Badge.vue';
+    import Badge from '../../components/ui/Badge.vue';
+    import UserCheckins from '../../components/user/UserCheckins.vue';
 
     export default {
-        components: { Bage, UniversalMap, Breadcrumbs },
+        components: {
+            UserCheckins,
+            Badge,
+            UniversalMap,
+            Breadcrumbs,
+        },
         data() {
             return {
                 location: { lat: 0, lng: 0 },
@@ -65,8 +71,15 @@
             };
         },
         async fetch() {
-            await this.setId(this.$route.params.id);
-            await this.getUser();
+            try {
+                await this.setId(this.$route.params.id);
+                await this.getUser();
+            } catch (error) {
+                this.$nuxt.context.error({
+                    status: 404,
+                    message: error.message,
+                });
+            }
         },
         head: {
             title: 'Карта достопримечательностей для самостоятельных путешественников',

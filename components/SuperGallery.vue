@@ -51,7 +51,7 @@
         methods: {
             view(img) {
                 if (img.href) {
-                    window.open(img.href);
+                    this.$router.push(img.href);
                 } else {
                     this.$alert('', '', '',
                                 {
