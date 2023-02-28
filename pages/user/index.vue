@@ -78,7 +78,17 @@
                 meta: 'users/meta',
             }),
             images() {
-                return this.users.map((user) => user.images[0])
+                return this.users.map((user) => {
+                    const image = user.images[0] ? user.images[0] : {
+                        id: user.id,
+                        width: 600,
+                        height: 600,
+                        original: 'https://via.placeholder.com/600',
+                    };
+                    image.copyright = user.username;
+                    image.href = `/user/${user.username}`;
+                    return image;
+                })
                     .filter((item) => item);
             },
         },

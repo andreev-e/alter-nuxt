@@ -8,10 +8,14 @@
         >
             <i :style="`padding-bottom:${img.height/img.width*100}%`" />
             <a
-                @click.prevent="view(img.original)"
+                style="cursor:pointer"
+                @click.prevent="view(img)"
             >
-                <div class="position-absolute">
-                    {{ img.copyright ? `Автор${img.copyright}`: '' }}
+                <div
+                    v-if="img.copyright"
+                    class="position-absolute"
+                >
+                    {{ img.copyright ? `Автор ${img.copyright}`: '' }}
                 </div>
                 <img
                     :src="img.original"
@@ -46,16 +50,20 @@
         },
         methods: {
             view(img) {
-                this.$alert('', '', '',
-                            {
-                                imageUrl: img,
-                                width: '100%',
-                                padding: 0,
-                                background: this.dominateColor ? this.dominateColor : '#606084',
-                                showConfirmButton: false,
-                                showCloseButton: true,
-                                animation: false,
-                            });
+                if (img.href) {
+                    window.open(img.href);
+                } else {
+                    this.$alert('', '', '',
+                                {
+                                    imageUrl: img.original,
+                                    width: '100%',
+                                    padding: 0,
+                                    background: this.dominateColor ? this.dominateColor : '#606084',
+                                    showConfirmButton: false,
+                                    showCloseButton: true,
+                                    animation: false,
+                                });
+                }
             },
         },
     };
