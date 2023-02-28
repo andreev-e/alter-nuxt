@@ -24,4 +24,4 @@ jobs:
             && git pull origin master
             && npm install --production
             && npm run build
-            && pm2 start npm --name "altertravel.pro" run start
+            && pm2 start npm --name "altertravel.pro" -- run start
