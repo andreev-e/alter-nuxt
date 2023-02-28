@@ -1,0 +1,7 @@
+User-agent: *
+Sitemap: https://altertravel.pro/sitemap.xml
+
+User-agent: Yandex
+Host: https://altertravel.pro
+Clean-Param: stat&d
+Sitemap: https://altertravel.pro/sitemap.xml
