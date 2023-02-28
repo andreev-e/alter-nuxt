@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row nopadding">
-            <MapFilter
+            <map-filter
                 v-model="categories"
                 @update="filterChanged"
             />
@@ -18,6 +18,7 @@
             ref="mapComponent"
             v-model="mapPois"
             :center="center"
+            :categories="selectedCategories"
         />
         <item-gallery
             :loading="loadingPois"
@@ -51,6 +52,7 @@
                 mapPois: [],
                 center: { lat: 0, lng: 0 },
                 categories: [...TYPES],
+                selectedCategories: [],
             };
         },
         fetch() {
@@ -92,9 +94,7 @@
                 setParams: 'pois/setParams',
             }),
             filterChanged(val) {
-                if (this.$refs.mapComponent.$refs.map?.$mapObject) {
-                    this.$refs.mapComponent.fetchPois(val);
-                }
+                this.selectedCategories = val;
             },
         },
     };

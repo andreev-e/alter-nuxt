@@ -5,28 +5,36 @@
     >
         <div class="col-sm-12">
             <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
-            <div
-                v-if="filteredComments.length"
-                id="comments_list"
-                class="comments-list"
-            >
-                <comment
-                    v-for="(comment, index) in filteredComments"
-                    :key="comment.id"
-                    class="comment"
-                    :comment="comment"
-                    :index="index"
-                    :total="comments.length"
-                    :link-objects="linkObjects"
-                    :type="comment.object_type"
-                    @reload="loadComments"
-                />
-            </div>
+            <template v-if="!loading">
+                <div
+                    v-if="filteredComments.length"
+                    id="comments_list"
+                    class="comments-list"
+                >
+                    <comment
+                        v-for="(comment, index) in filteredComments"
+                        :key="comment.id"
+                        class="comment"
+                        :comment="comment"
+                        :index="index"
+                        :total="comments.length"
+                        :link-objects="linkObjects"
+                        :type="comment.object_type"
+                        @reload="loadComments"
+                    />
+                </div>
+                <div
+                    v-else
+                    class="text-center"
+                >
+                    Пока нет ни одного комментария
+                </div>
+            </template>
             <div
                 v-else
                 class="text-center"
             >
-                Пока нет ни одного комментария
+                <b-spinner small />
             </div>
             <div class="row">
                 <div class="col-12">
@@ -45,10 +53,14 @@
                 :type="type"
                 @update="getComments"
             />
-            <span v-if="!$auth.loggedIn">
-                Чтобы написать - <nuxt-link to="/secure/"> войдите
+            <div
+                v-if="!$auth.loggedIn"
+                class="text-center"
+            >
+                Чтобы написать комментарий - <nuxt-link to="/secure/">
+                    войдите
                 </nuxt-link>
-            </span>
+            </div>
         </div>
     </div>
 </template>
@@ -98,6 +110,7 @@
             ...mapGetters({
                 comments: 'commentsPaginated/items',
                 meta: 'commentsPaginated/meta',
+                loading: 'commentsPaginated/loading',
             }),
             filteredComments() {
                 return this.last ? [...this.comments].splice(0, this.last) : this.comments;
@@ -115,7 +128,6 @@
                 setParams: 'commentsPaginated/setParams',
             }),
             async loadComments() {
-                await this.clear();
                 await this.setParams({
                     id: this.id,
                     type: this.type,

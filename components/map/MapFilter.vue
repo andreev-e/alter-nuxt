@@ -57,7 +57,7 @@
         },
         mounted() {
             this.expandable = window.innerWidth < 992;
-            this.$emit('update', this.categories);
+            this.$emit('update', [...this.categories]);
         },
         methods: {
             toggle(type) {

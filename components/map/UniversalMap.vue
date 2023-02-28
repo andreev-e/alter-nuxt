@@ -231,7 +231,13 @@
             waypoints() {
                 if (process.client && this.mapPois && this.mapPois.length > 0) {
                     return this.mapPois.slice(0, 8)
-                        .map((poi) => ({ location: { lat: poi.lat, lng: poi.lng }, stopover: true }));
+                        .map((poi) => ({
+                            location: {
+                                lat: poi.lat,
+                                lng: poi.lng,
+                            },
+                            stopover: true,
+                        }));
                 }
                 return null;
             },
@@ -242,6 +248,9 @@
             },
             routeLength() {
                 this.$emit('update');
+            },
+            categories() {
+                this.fetchPois();
             },
         },
         mounted() {
@@ -261,16 +270,16 @@
                     this.fetchPois();
                 }
             },
-            fetchPois(categories = null) {
+            fetchPois() {
                 if (!this.thisIsPoi) {
                     let params = {
                         tag: this.tag,
                         location: this.location,
-                        categories: categories ?? this.categories,
+                        categories: this.categories,
                         user: this.user,
                         route: this.route ? this.route.id : null,
                     };
-                    const bounds = this.$refs.map.$mapObject.getBounds();
+                    const bounds = this.$refs.map && this.$refs.map.$mapObject.getBounds();
                     if (bounds && !this.route && !this.user) {
                         params = {
                             ...params,

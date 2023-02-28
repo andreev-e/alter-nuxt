@@ -23,13 +23,22 @@
                     Главное, что вся представленная информация проверена на личном опыте. <br>
                 </p>
             </div>
-            <div class="col-sm-12">
-                <div class="row p-2">
-                    <super-gallery :images="images" />
-                </div>
-            </div>
         </div>
         <div class="row">
+            <div class="col-sm-12">
+                <div
+                    v-if="!usersLoading"
+                    class="row p-2"
+                >
+                    <super-gallery :images="images" />
+                </div>
+                <div
+                    v-else
+                    class="text-center"
+                >
+                    <b-spinner />
+                </div>
+            </div>
             <div class="col-12">
                 <b-pagination
                     v-if="meta.last_page > 1"
@@ -83,7 +92,7 @@
                         id: user.id,
                         width: 600,
                         height: 600,
-                        original: 'https://via.placeholder.com/600',
+                        original: `https://robohash.org/${user.username}`,
                     };
                     image.copyright = user.username;
                     image.href = `/user/${user.username}`;

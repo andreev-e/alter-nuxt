@@ -45,9 +45,9 @@
                         to="/secure"
                         class="d-inline-block mr-2 mt-1"
                     >
-                        {{
-                            $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username
-                        }}
+                        {{ $auth.user.firstname || $auth.user.lastname
+                            ? `${$auth.user.firstname}  ${$auth.user.lastname}`
+                            : $auth.user.username }}
                     </nuxt-link>
                     <router-link
                         :to="`/secure/user/${$auth.user.username}`"
@@ -70,7 +70,6 @@
                 </div>
                 <div
                     v-else
-                    class="col-sm-4 text-right"
                 >
                     <router-link to="/register/">
                         Регистрация
