@@ -19,8 +19,9 @@ jobs:
           port: ${{ secrets.PORT }}
           script: cd /var/www/altertravel.ru/data/www/altertravel.pro
             && git init
-            && git remote add origin git@github.com:andreev-e/alter-nuxt.git
-            || git pull
+            && git remote remove origin
+            && git remote add origin https://github.com/andreev-e/alter-nuxt.git
+            && git pull
             && npm install --production
             && npm run build
             && pm2 stop altertravel.pro
