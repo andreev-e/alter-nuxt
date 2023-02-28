@@ -11,30 +11,32 @@
                         Altertravel
                     </router-link>
                 </li>
-                <li
-                    v-for="crumb in list"
-                    :key="`crumb_${crumb.name}`"
-                >
-                    <font-awesome-icon
-                        icon="fa-arrow-right"
-                        class="mr-1"
-                        :style="{ height: '14px' }"
-                    />
-                    <router-link
-                        v-if="crumb.url"
-                        :to="crumb.url"
-                    >
-                        {{ crumb.name }}
-                    </router-link>
-                    <span v-else>
-                        {{ crumb.name }}
-                    </span>
-                </li>
                 <li v-if="loading">
                     <span>
                         <b-spinner small />
                     </span>
                 </li>
+                <template v-else>
+                    <li
+                        v-for="(crumb, index) in list"
+                        :key="`crumb_${index}`"
+                    >
+                        <font-awesome-icon
+                            icon="fa-arrow-right"
+                            class="mr-1"
+                            :style="{ height: '14px' }"
+                        />
+                        <router-link
+                            v-if="crumb.url"
+                            :to="crumb.url"
+                        >
+                            {{ crumb.name }}
+                        </router-link>
+                        <span v-else>
+                            {{ crumb.name }}
+                        </span>
+                    </li>
+                </template>
             </ul>
         </div>
     </div>

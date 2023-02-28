@@ -1,7 +1,7 @@
 <template>
     <badge class="bg-secondary text-white">
         <font-awesome-icon
-            icon="fa-eye"
+            icon="icon fa-eye"
         />
         {{ views }}
     </badge>
@@ -23,5 +23,7 @@
 </script>
 
 <style scoped>
-
+  .icon {
+    max-height: 18px;
+  }
 </style>

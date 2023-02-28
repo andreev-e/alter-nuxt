@@ -218,4 +218,8 @@
   .disproved {
     opacity: 0.6;
   }
+
+  .poi_card {
+    position: relative;
+  }
 </style>

@@ -3,6 +3,7 @@
         <Header />
         <Breadcrumbs
             :list="[{ name: `Метка: ${tag.name ? tag.name : ''} `, url: '' }]"
+            :loading="loading"
         />
         <div class="row">
             <div class="col-sm-12">
@@ -65,7 +66,14 @@
             };
         },
         async fetch() {
-            await this.load();
+            try {
+                await this.load();
+            } catch (error) {
+                this.$nuxt.context.error({
+                    status: 404,
+                    message: error.message,
+                });
+            }
         },
         head() {
             return {

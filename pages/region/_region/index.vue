@@ -3,6 +3,7 @@
         <Header />
         <Breadcrumbs
             :list="crumbs"
+            :loading="tagLoading || locationLoading"
         />
         <div class="row">
             <div class="col-sm-12">
@@ -13,7 +14,10 @@
                         :country="location.code"
                         size="normal"
                     />
-                    {{ h1 }}
+                    <template v-if="!tagLoading && !locationLoading">
+                        {{ h1 }}
+                    </template>
+                    <b-spinner v-else />
                 </h1>
             </div>
         </div>
@@ -83,7 +87,14 @@
             };
         },
         async fetch() {
-            await this.load();
+            try {
+                await this.load();
+            } catch (error) {
+                this.$nuxt.context.error({
+                    status: 404,
+                    message: error.message,
+                });
+            }
         },
         head() {
             return {
@@ -108,6 +119,8 @@
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
                 location: 'location/model',
+                locationLoading: 'location/loading',
+                tagLoading: 'tag/loading',
                 locationLoaded: 'location/isEmpty',
                 tag: 'tag/model',
                 tagLoaded: 'tag/isEmpty',
@@ -213,8 +226,10 @@
                 getLocation: 'location/get',
                 setTagId: 'tag/setId',
                 getTag: 'tag/get',
+                clearTag: 'tag/clear',
             }),
             async load() {
+                await this.clearTag();
                 await this.setLocationId(this.$route.params.region);
                 await this.getLocation();
                 if (!this.isCategory) {

@@ -102,7 +102,7 @@
     export default {
         components: { Menu },
         mounted() {
-            if (process.client) {
+            if (process.client && this.$auth.loggedIn) {
                 this.$auth.fetchUser();
             }
         },

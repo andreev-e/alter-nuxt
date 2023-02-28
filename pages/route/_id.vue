@@ -149,8 +149,15 @@
             };
         },
         async fetch() {
-            await this.setId(this.$route.params.id);
-            await this.get();
+            try {
+                await this.setId(this.$route.params.id);
+                await this.get();
+            } catch (error) {
+                this.$nuxt.context.error({
+                    status: 404,
+                    message: error.message,
+                });
+            }
         },
         head() {
             return {

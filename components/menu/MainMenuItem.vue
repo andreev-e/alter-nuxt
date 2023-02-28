@@ -7,7 +7,7 @@
                 v-if="item.icon"
                 :icon="item.icon"
                 role="button"
-                class="d-md-inline d-lg-none d-xl-inline"
+                class="menu-icon d-md-inline d-lg-none d-xl-inline"
             />
             <div class="d-none d-md-inline-block">
                 {{ item.name }}
@@ -42,5 +42,7 @@
 </script>
 
 <style scoped>
-
+  .menu-icon {
+    max-height: 30px;
+  }
 </style>
