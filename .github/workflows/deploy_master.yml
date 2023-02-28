@@ -20,8 +20,6 @@ jobs:
           script: cd /var/www/altertravel.ru/data/www/altertravel.pro
             && git init
             && git remote add origin git@github.com:andreev-e/alter-nuxt.git
-            && git reset --hard HEAD
-            && git checkout master
             && git pull origin:master master
             && npm install --production
             && npm run build
