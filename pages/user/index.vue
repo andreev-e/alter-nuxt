@@ -10,7 +10,7 @@
                     Авторы
                 </h1>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
                 <p>
                     Альтернативный путеводитель — проект авторский.
                     Все достопримечательности добавляются только членами нашего творческого коллектива.
@@ -23,12 +23,10 @@
                     Главное, что вся представленная информация проверена на личном опыте. <br>
                 </p>
             </div>
-            <div class="col-sm-9">
-                <user-card
-                    v-for="user in users"
-                    :key="user.username"
-                    :user="user"
-                />
+            <div class="col-sm-12">
+                <div class="row">
+                    <super-gallery :images="images" />
+                </div>
             </div>
         </div>
         <div class="row">
@@ -50,11 +48,11 @@
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
-    import UserCard from '../../components/user/UserCard.vue';
+    import SuperGallery from '../../components/SuperGallery.vue';
 
     export default {
         name: 'Index',
-        components: { UserCard, Breadcrumbs },
+        components: { SuperGallery, Breadcrumbs },
         data() {
             return {
                 page: 1,
@@ -79,6 +77,10 @@
                 users: 'users/items',
                 meta: 'users/meta',
             }),
+            images() {
+                return this.users.map((user) => user.images[0])
+                    .filter((item) => item);
+            },
         },
         methods: {
             ...mapActions({

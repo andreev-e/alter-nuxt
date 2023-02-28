@@ -191,6 +191,9 @@
                                 </div>
                             </div>
                         </b-tab>
+                        <b-tab title="Здесь побывали">
+                            <checkins :poi="poi" />
+                        </b-tab>
                     </b-tabs>
                 </div>
             </div>
@@ -230,9 +233,11 @@
     import ViewsBadge from '../../components/badges/ViewsBadge.vue';
     import TextWithLinks from '../../components/ui/TextWithLinks.vue';
     import fav from '../../mixins/fav';
+    import Checkins from '../../components/poi/Checkins.vue';
 
     export default {
         components: {
+            Checkins,
             TextWithLinks,
             ViewsBadge,
             SuperGallery,

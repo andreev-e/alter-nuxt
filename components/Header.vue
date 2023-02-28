@@ -2,7 +2,7 @@
 <template>
     <div class="header row">
         <client-only>
-            <div class="user-panel mb-2 col-sm-12 d-flex justify-content-end">
+            <div class="user-panel col-sm-12 d-flex justify-content-end">
                 <div
                     v-if="$auth.loggedIn"
                     class="d-flex justify-content-between"
@@ -45,7 +45,9 @@
                         to="/secure"
                         class="d-inline-block mr-2 mt-1"
                     >
-                        {{ $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username }}
+                        {{
+                            $auth.user.firstname || $auth.user.lastname ? `${$auth.user.firstname}  ${$auth.user.lastname}` : $auth.user.username
+                        }}
                     </nuxt-link>
                     <router-link
                         :to="`/secure/user/${$auth.user.username}`"
@@ -130,4 +132,11 @@
   .user-panel {
     font-size: 20px;
   }
+
+  @media only screen and (min-width: 992px) {
+    .user-panel {
+      margin-bottom: -20px;
+    }
+  }
+
 </style>

@@ -11,11 +11,12 @@
                 @click.prevent="view(img.original)"
             >
                 <div class="position-absolute">
-                    Автор {{ img.copyright }}
+                    {{ img.copyright ? `Автор${img.copyright}`: '' }}
+                    {{ img }}
                 </div>
                 <img
                     :src="img.original"
-                    :alt="alt"
+                    :alt="img.alt ? img.alt : alt"
                 >
             </a>
         </div>
