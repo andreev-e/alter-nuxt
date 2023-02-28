@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab title="Здесь побывали">
+                        <b-tab :title="`Здесь побывали (${poi.checkins ? poi.checkins.length: 0})`">
                             <checkins
                                 :poi="poi"
                                 @change="get"
