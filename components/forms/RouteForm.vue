@@ -2,7 +2,7 @@
     <form @submit.prevent="onSubmit">
         <gmap-map
             ref="map"
-            :zoom="zoom"
+            :zoom="8"
             map-type-id="terrain"
             :center="center"
         >
@@ -49,6 +49,41 @@
                 />
             </template>
         </gmap-map>
+        <el-row
+            :gutter="30"
+            class="mt-3"
+        >
+            <el-col
+                :xs="24"
+                :sm="6"
+                class="text-md-right text-sm-center mt-2"
+            >
+                Точки
+            </el-col>
+            <el-col
+                :xs="24"
+                :sm="18"
+            >
+                <el-select
+                    v-model="form.pois"
+                    multiple
+                    filterable
+                    remote
+                    :multiple-limit="8"
+                    reserve-keyword
+                    placeholder="Поиск объектов"
+                    :remote-method="remoteSearch"
+                    :loading="loading"
+                >
+                    <el-option
+                        v-for="poi in pois"
+                        :key="poi.id"
+                        :label="poi.name"
+                        :value="poi.id"
+                    />
+                </el-select>
+            </el-col>
+        </el-row>
         <toggler
             id="manual"
             v-model="manual"
@@ -117,8 +152,10 @@
 
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
-    import { Form } from 'laravel-request-utils';
+    import { Form, Request } from 'laravel-request-utils';
     import { gmapApi } from 'vue2-google-maps';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import { mapGetters } from 'vuex';
     import TextInput from '../ui/TextInput.vue';
     import Toggler from '../ui/Toggler.vue';
     import DirectionsRenderer from '../map/DirectionsRenderer.vue';
@@ -152,6 +189,7 @@
                     start: null,
                     finish: null,
                     encoded_route: null,
+                    pois: [],
                 }, {
                     removeNullValues: false,
                 }),
@@ -163,9 +201,15 @@
                 },
                 manual: false,
                 travelMode: 'DRIVING',
+                loading: false,
+                pois: [],
+                selectedPois: [],
             };
         },
         computed: {
+            ...mapGetters({
+                poiEndpoint: 'poisPaginated/endpoint',
+            }),
             google: gmapApi,
             center: {
                 get() {
@@ -183,9 +227,6 @@
                 set(val) {
                     console.log('senter', val);
                 },
-            },
-            zoom() {
-                return 8;
             },
             start() {
                 if (this.form.start) {
@@ -217,7 +258,23 @@
             waypoints() {
                 if (process.client && this.route && this.route.pois && this.route.pois.length > 0) {
                     return this.route.pois.slice(0, 8)
-                        .map((poi) => ({ location: { lat: poi.lat, lng: poi.lng }, stopover: true }));
+                        .map((poi) => ({
+                            location: {
+                                lat: poi.lat,
+                                lng: poi.lng,
+                            },
+                            stopover: true,
+                        }));
+                }
+                if (process.client && this.pois && this.pois.length > 0) {
+                    return this.pois.slice(0, 8)
+                        .map((poi) => ({
+                            location: {
+                                lat: poi.lat,
+                                lng: poi.lng,
+                            },
+                            stopover: true,
+                        }));
                 }
                 return null;
             },
@@ -319,18 +376,6 @@
                 this.form.start = `${arr[0].lat()};${arr[0].lng()}`;
                 this.form.finish = `${arr[arr.length - 1].lat()};${arr[arr.length - 1].lng()}`;
             },
-            distance(p1, p2) {
-                const R = 6378137; // Earth’s mean radius in meter
-                const dLat = this.rad(p2.lat() - p1.lat());
-                const dLong = this.rad(p2.lng() - p1.lng());
-                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                    + Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat()))
-                    * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            },
-            rad(x) {
-                return (x * Math.PI) / 180;
-            },
             routeFound(length) {
                 if (length === 0) {
                     this.$alert('Маршрут не найден, переместите старт или финиш');
@@ -348,6 +393,19 @@
                     return;
                 }
                 this.form.encoded_route = null;
+            },
+            remoteSearch(keyword) {
+                this.loading = true;
+                Request.getInstance().get(this.poiEndpoint, {
+                    params: {
+                        keyword,
+                    },
+                }).then(({ data }) => {
+                    console.log(data.data);
+                    this.pois = data.data;
+                    this.selectedPois = [...this.selectedPois, this.pois];
+                    this.loading = true;
+                });
             },
         },
     };

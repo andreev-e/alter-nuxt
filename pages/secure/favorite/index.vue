@@ -68,7 +68,6 @@
                 setParams: 'poisPaginated/setParams',
             }),
             async fetchPois() {
-                console.log(this.$auth.user.favorites.length);
                 if (this.$auth.user.favorites.length) {
                     await this.setParams({
                         list: this.$auth.user.favorites,
