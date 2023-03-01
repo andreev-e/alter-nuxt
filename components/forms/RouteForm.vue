@@ -238,6 +238,10 @@
                 }
                 return false;
             },
+            poisForRoute() {
+                console.log(this.selectedPois[0]);
+                return this.selectedPois.filter((poi) => this.form.pois.includes(poi.id));
+            },
             finish() {
                 if (this.form.finish) {
                     const finish = this.form.finish.split(';');
@@ -266,8 +270,8 @@
                             stopover: true,
                         }));
                 }
-                if (process.client && this.pois && this.pois.length > 0) {
-                    return this.pois.slice(0, 8)
+                if (process.client && this.poisForRoute.length > 0) {
+                    return this.poisForRoute.slice(0, 8)
                         .map((poi) => ({
                             location: {
                                 lat: poi.lat,
@@ -401,10 +405,9 @@
                         keyword,
                     },
                 }).then(({ data }) => {
-                    console.log(data.data);
                     this.pois = data.data;
-                    this.selectedPois = [...this.selectedPois, this.pois];
-                    this.loading = true;
+                    this.selectedPois = [...this.selectedPois, ...this.pois];
+                    this.loading = false;
                 });
             },
         },
