@@ -4,7 +4,7 @@ export default {
     target: 'server',
 
     head: {
-        title: 'altertravel.ru',
+        title: 'Altertravel',
         htmlAttrs: {
             lang: 'ru',
         },
@@ -31,6 +31,10 @@ export default {
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~assets/css/common',
+        {
+            src: 'element-ui/lib/theme-chalk/index.css',
+            lang: 'scss',
+        },
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -40,13 +44,13 @@ export default {
             mode: 'client',
             ssr: false,
         },
-        '~/plugins/font-awesome',
-        '~/plugins/country-flag',
         {
             src: '~/plugins/simple-alert',
             mode: 'client',
             ssr: false,
         },
+        '~/plugins/font-awesome',
+        '~/plugins/country-flag',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -82,7 +86,13 @@ export default {
             max: 10000,
             maxAge: 1000 * 60 * 60,
         }],
+        'nuxt-element-ui',
     ],
+
+    elementUI: {
+        components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem'],
+        locale: 'ru-RU',
+    },
 
     build: {
         transpile: [/^vue2-google-maps($|\/)/],
@@ -93,7 +103,7 @@ export default {
     },
 
     axios: {
-        // baseURL: `${process.env.API_URL}/api/`,
+    // baseURL: `${process.env.API_URL}/api/`,
         proxy: true,
         credentials: true,
     },
@@ -132,6 +142,7 @@ export default {
             '/login',
             '/register',
             '/izbrannoye',
+            '/moderation',
         ],
     },
 

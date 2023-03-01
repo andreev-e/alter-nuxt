@@ -107,23 +107,33 @@
             label="Автор фотографий (если используются не свои фотографии) "
             :form="form"
         />
-        <h2>Метки</h2>
-        <b-input
-            v-model="tagSearch"
-            placeholder="Поиск меток"
-            class="w-100 my-3"
-        />
-        <div class="d-flex flex-wrap">
-            <input-checkbox
-                v-for="tag in filteredTags"
-                :id="tag.name"
-                :key="tag.id"
-                :class="{ 'bg-secondary': tag.active }"
-                :label="tag.name"
-                :model-value="isChecked(tag.id)"
-                @update="onInput($event, tag.id)"
-            />
-        </div>
+        <el-row :gutter="30">
+            <el-col
+                :xs="24"
+                :sm="6"
+                class="text-md-right text-sm-center mt-2"
+            >
+                Метки
+            </el-col>
+            <el-col
+                :xs="24"
+                :sm="18"
+            >
+                <el-select
+                    v-model="form.tags"
+                    multiple
+                    filterable
+                    placeholder="Метки"
+                >
+                    <el-option
+                        v-for="tag in tags"
+                        :key="tag.id"
+                        :label="tag.name"
+                        :value="tag.id"
+                    />
+                </el-select>
+            </el-col>
+        </el-row>
         <button
             type="submit"
             class="btn btn-success"
@@ -141,12 +151,10 @@
     import { TYPES } from '../../constants/index';
     import TextInput from '../ui/TextInput.vue';
     import SelectInput from '../ui/SelectInput.vue';
-    import InputCheckbox from '../ui/InputCheckbox.vue';
 
     export default {
         name: 'PoiForm',
         components: {
-            InputCheckbox,
             SelectInput,
             TextInput,
         },
@@ -184,12 +192,6 @@
             }),
             center: {
                 get() {
-                    if (this.poi && this.poi.lat && this.poi.lng) {
-                        return {
-                            lat: this.poi.lat,
-                            lng: this.poi.lng,
-                        };
-                    }
                     if (this.form && this.form.lat && this.form.lng) {
                         return {
                             lat: this.form.lat,
@@ -197,8 +199,8 @@
                         };
                     }
                     return {
-                        lat: 0,
-                        lng: 0,
+                        lat: 33,
+                        lng: 45,
                     };
                 },
                 set() { },
@@ -220,6 +222,16 @@
                     this.form[field] = poi[field].map((tag) => tag.id);
                 });
             },
+        },
+        mounted() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        this.form.lat = position.coords.latitude;
+                        this.form.lng = position.coords.longitude;
+                    },
+                );
+            }
         },
         created() {
             const center = {
@@ -284,5 +296,7 @@
 </script>
 
 <style scoped>
-
+  .el-select {
+    width: 100%;
+  }
 </style>
