@@ -135,6 +135,7 @@
   @media only screen and (min-width: 992px) {
     .user-panel {
       margin-bottom: -20px;
+      z-index: 10;
     }
   }
 
