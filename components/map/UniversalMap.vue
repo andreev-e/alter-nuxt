@@ -270,6 +270,14 @@
                     this.fetchPois();
                 }
             },
+            mounted() {
+                this.$watch(
+                    () => this.$refs.counter,
+                    () => {
+                        this.fetchPois();
+                    },
+                );
+            },
             fetchPois() {
                 if (!this.thisIsPoi) {
                     let params = {
@@ -279,7 +287,7 @@
                         user: this.user,
                         route: this.route ? this.route.id : null,
                     };
-                    const bounds = this.$refs.map && this.$refs.map.$mapObject.getBounds();
+                    const bounds = this.$refs.map && this.$refs.map.$mapObject && this.$refs.map.$mapObject.getBounds();
                     if (bounds && !this.route && !this.user) {
                         params = {
                             ...params,

@@ -52,7 +52,7 @@
         emits: ['change'],
         computed: {
             vasHere() {
-                return this.poi.checkins && this.poi.checkins.reduce((acc, checkin) => acc || checkin.user.username === this.$auth.user.username, false);
+                return this.$auth.loggedIn && this.poi.checkins && this.poi.checkins.reduce((acc, checkin) => acc || checkin.user.username === this.$auth.user.username, false);
             },
             images() {
                 if (this.poi && this.poi.checkins && this.poi.checkins.length) {
