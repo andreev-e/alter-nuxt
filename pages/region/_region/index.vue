@@ -243,14 +243,14 @@
                 }
                 await this.fetchPois();
             },
-            fetchPois() {
-                this.setPoiParams({
+            async fetchPois() {
+                await this.setPoiParams({
                     location: this.$route.params.region,
                     tag: !this.isCategory ? this.$route.params.tag : null,
                     categories: this.isCategory ? [this.$route.params.tag] : this.categories,
                     page: this.page,
                 });
-                this.getPoi();
+                await this.getPoi();
             },
             filterChanged(val) {
                 if (this.$refs.mapComponent.$refs.map?.$mapObject) {

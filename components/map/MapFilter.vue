@@ -77,9 +77,12 @@
                 this.$emit('update', [...this.categories]);
             },
             paramCase(str) {
-                return str
-                    .replace(/\B([A-Z])/gu, '-$1')
-                    .toLowerCase();
+                if (str) {
+                    return str
+                        .replace(/\B([A-Z])/gu, '-$1')
+                        .toLowerCase();
+                }
+                return str;
             },
         },
     };
