@@ -40,7 +40,7 @@ export default class BaseModule {
                 commit,
             }) {
                 if (state.cached) {
-                    const item = this.$auth.$storage.getUniversal(state.endpoint);
+                    const item = this.$auth.$storage.getLocalStorage(state.endpoint);
                     if (item) {
                         if (item.time && item.time > new Date().getTime() - (24 * 60 * 60 * 1000)) {
                             commit('setData', item.data);
@@ -58,7 +58,7 @@ export default class BaseModule {
                         if (!Object.prototype.hasOwnProperty.call(state.params, 'page') || (state.params.page !== undefined && state.params.page !== null)) {
                             commit('setData', response.data);
                             if (state.cached) {
-                                this.$auth.$storage.setUniversal(state.endpoint, {
+                                this.$auth.$storage.setLocalStorage(state.endpoint, {
                                     time: new Date().getTime(),
                                     data: response.data,
                                 });
@@ -83,7 +83,7 @@ export default class BaseModule {
                 commit,
             }) {
                 if (state.cached) {
-                    this.$auth.$storage.removeUniversal(state.endpoint);
+                    this.$auth.$storage.removeLocalStorage(state.endpoint);
                 }
 
                 commit('setData', {});
