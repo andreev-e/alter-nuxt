@@ -19,10 +19,10 @@
 <script>
   // eslint-disable-next-line no-unused-vars,import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    import MainMenuItem from './menu/MainMenuItem.vue';
+    import MainMenuItem from './MainMenuItem.vue';
 
     export default {
-        name: 'Menu',
+        name: 'MainMenu',
         components: { MainMenuItem },
         data() {
             return {};
@@ -52,7 +52,6 @@
                 return [
                     {
                         name: 'Страны',
-                        href: '/#',
                         sub: 'выбрать',
                         class: 'region_select',
                         icon: 'fa-globe',
@@ -64,7 +63,6 @@
                     },
                     {
                         name: 'Метки',
-                        href: '/#',
                         sub: 'выбрать',
                         class: 'region_select',
                         icon: 'fa-tags',
@@ -121,7 +119,7 @@
 </script>
 
 <style>
-  .header-menu li a {
+  .header-menu li a, .header-menu li > span {
     color: #244255;
     text-decoration: none;
     font-size: 20px;

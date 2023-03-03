@@ -2,7 +2,10 @@
     <li
         :class="item.class"
     >
-        <router-link :to="item.href">
+        <router-link
+            v-if="item.href"
+            :to="item.href"
+        >
             <font-awesome-icon
                 v-if="item.icon"
                 :icon="item.icon"
@@ -14,6 +17,18 @@
             </div>
             <span class="d-none d-lg-block">{{ item.sub }}</span>
         </router-link>
+        <span v-else>
+            <font-awesome-icon
+                v-if="item.icon"
+                :icon="item.icon"
+                role="button"
+                class="menu-icon d-md-inline d-lg-none d-xl-inline"
+            />
+            <div class="d-none d-md-inline-block">
+                {{ item.name }}
+            </div>
+            <span class="d-none d-lg-block">{{ item.sub }}</span>
+        </span>
         <ul v-if="item.submenu">
             <component
                 :is="item.submenu.component"

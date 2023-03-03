@@ -26,7 +26,7 @@
                     >
                         <font-awesome-icon
                             icon="fa-map-marker"
-                            class="text-primary"
+                            class="text-success"
                             role="button"
                         />
                     </router-link>
@@ -37,7 +37,7 @@
                     >
                         <font-awesome-icon
                             icon="fa-route"
-                            class="text-primary"
+                            class="text-success"
                             role="button"
                         />
                     </router-link>
@@ -90,16 +90,16 @@
             </nuxt-link>
         </div>
         <div class="header-menu col-sm-12 col-md-9 d-flex text-center justify-content-around">
-            <Menu class="align-self-end " />
+            <main-menu class="align-self-end " />
         </div>
     </div>
 </template>
 
 <script>
-    import Menu from './Menu.vue';
+    import MainMenu from './menu/MainMenu.vue';
 
     export default {
-        components: { Menu },
+        components: { MainMenu },
         mounted() {
             if (process.client && this.$auth.loggedIn) {
                 this.$auth.fetchUser();
