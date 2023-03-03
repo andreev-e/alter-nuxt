@@ -82,7 +82,7 @@
         },
         data() {
             return {
-                page: this.$route.query.p ?? 1,
+                page: 1,
                 types: [...TYPES],
             };
         },
