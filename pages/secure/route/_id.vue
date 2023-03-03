@@ -9,7 +9,9 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <route-form :route="route" />
+                <route-form
+                    :route="route"
+                />
             </div>
         </div>
         <template v-if="$route.params.id">
@@ -46,19 +48,15 @@
             Breadcrumbs,
         },
         middleware: 'auth',
-        async fetch() {
-            await this.setId(this.$route.params.id);
-            await this.get();
-        },
         head() {
             return {
-                title: this.route.name,
+                title: 'Редактор маршрута',
             };
         },
         computed: {
             ...mapGetters({
                 route: 'route/model',
-                loaded: 'route/isEmpty',
+                loading: 'route/loading',
                 endpoint: 'route/endpoint',
             }),
             breadCrumbs() {
@@ -74,9 +72,13 @@
                 ];
             },
         },
+        created() {
+            this.setId(this.$route.params.id);
+            this.getRoute();
+        },
         methods: {
             ...mapActions({
-                get: 'route/get',
+                getRoute: 'route/get',
                 setId: 'route/setId',
                 setProperty: 'route/setProperty',
             }),

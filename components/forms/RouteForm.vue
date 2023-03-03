@@ -1,45 +1,58 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <gmap-map
-            ref="map"
-            :zoom="8"
-            map-type-id="terrain"
-            :center="center"
-        >
-            <gmap-marker
-                v-if="start"
-                :position="start"
-                :icon="iconStart"
-                draggable
-                @dragend="startMoved"
-            />
-            <gmap-marker
-                v-if="finish"
-                :position="finish"
-                :icon="iconFinish"
-                draggable
-                @dragend="finishMoved"
-            />
-            <gmap-polyline
-                v-if="manual"
-                ref="polyline"
-                :path="path"
-                :options="{ strokeColor: '#FF0000' }"
-                editable
-                @path_changed="polylineChanged"
-            />
-            <directions-renderer
-                v-else
-                :origin="start"
-                :waypoints="waypoints"
-                :optimize-waypoints="true"
-                :destination="finish"
-                :travel-mode="travelMode"
-                @routeFound="routeFound"
-            />
-            <template v-if="route">
+        <client-only>
+            <badge
+                v-if="routeLength"
+                class="bg-primary text-white"
+            >
+                {{ routeLength }} км
+            </badge>
+            <badge
+                v-if="form.pois.length"
+                class="bg-warning"
+            >
+                {{ form.pois.length }} точек по пути
+            </badge>
+
+            <gmap-map
+                ref="map"
+                :zoom="8"
+                map-type-id="terrain"
+                :center="center"
+            >
                 <gmap-marker
-                    v-for="poi in route.pois"
+                    v-if="start"
+                    :position="start"
+                    :icon="iconStart"
+                    draggable
+                    @dragend="startMoved"
+                />
+                <gmap-marker
+                    v-if="finish"
+                    :position="finish"
+                    :icon="iconFinish"
+                    draggable
+                    @dragend="finishMoved"
+                />
+                <gmap-polyline
+                    v-if="manual"
+                    ref="polyline"
+                    :path="path"
+                    :options="{ strokeColor: '#FF0000' }"
+                    editable
+                    @path_changed="polylineChanged"
+                />
+                <directions-renderer
+                    v-else
+                    :origin="start"
+                    :waypoints="waypoints"
+                    :optimize-waypoints="true"
+                    :destination="finish"
+                    :travel-mode="travelMode"
+                    @routeFound="routeFound"
+                />
+                <gmap-marker
+                    v-for="poi in poisForRoute"
                     :key="`poi_`+poi.id"
                     :position="{ lat: poi.lat, lng: poi.lng }"
                     clickable
@@ -47,8 +60,8 @@
                     :icon="getIcon(poi.type)"
                     @click="$router.push('/poi/' + poi.id)"
                 />
-            </template>
-        </gmap-map>
+            </gmap-map>
+        </client-only>
         <el-row
             :gutter="30"
             class="mt-3"
@@ -58,7 +71,7 @@
                 :sm="6"
                 class="text-md-right text-sm-center mt-2"
             >
-                Точки
+                Точки (до 8 шт)
             </el-col>
             <el-col
                 :xs="24"
@@ -76,7 +89,7 @@
                     :loading="loading"
                 >
                     <el-option
-                        v-for="poi in pois"
+                        v-for="poi in selectedPois"
                         :key="poi.id"
                         :label="poi.name"
                         :value="poi.id"
@@ -99,47 +112,15 @@
             label="Вид транспорта"
         />
         <text-input
-            id="name"
-            v-model="form.name"
-            label="Название"
+            v-for="field in fields"
+            :id="field.id"
+            :key="field.id"
+            v-model="form[field.id]"
+            :label="field.label"
             :form="form"
-            required
-        />
-        <text-input
-            id="description"
-            v-model="form.description"
-            label="Описание"
-            multiline
-            required
-            :form="form"
-        />
-        <text-input
-            id="cost"
-            v-model="form.cost"
-            label="Бюджет, руб"
-            :form="form"
-            type="number"
-        />
-        <text-input
-            id="days"
-            v-model="form.days"
-            label="Длительность, дней"
-            :form="form"
-            type="number"
-        />
-        <text-input
-            id="route"
-            v-model="form.route"
-            label="Особенности"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="links"
-            v-model="form.links"
-            label="Ссылки"
-            multiline
-            :form="form"
+            :required="field.required"
+            :multiline="field.multiline"
+            :type="field.type"
         />
         <button
             type="submit"
@@ -160,10 +141,12 @@
     import Toggler from '../ui/Toggler.vue';
     import DirectionsRenderer from '../map/DirectionsRenderer.vue';
     import map from '../../mixins/map';
+    import Badge from '../ui/Badge.vue';
 
     export default {
         name: 'RouteForm',
         components: {
+            Badge,
             Toggler,
             TextInput,
             DirectionsRenderer,
@@ -179,6 +162,16 @@
         },
         data() {
             return {
+                fields: [
+                    { id: 'name', label: 'Название', required: true },
+                    {
+                        id: 'description', label: 'Описание', required: true, multiline: true,
+                    },
+                    { id: 'cost', label: 'Бюджет, руб', type: 'number' },
+                    { id: 'days', label: 'Длительность, дней', type: 'number' },
+                    { id: 'route', label: 'Особенности', multiline: true },
+                    { id: 'links', label: 'Ссылки', multiline: true },
+                ],
                 form: new Form({
                     name: null,
                     description: null,
@@ -204,6 +197,7 @@
                 loading: false,
                 pois: [],
                 selectedPois: [],
+                routeLength: 0,
             };
         },
         computed: {
@@ -239,7 +233,6 @@
                 return false;
             },
             poisForRoute() {
-                console.log(this.selectedPois[0]);
                 return this.selectedPois.filter((poi) => this.form.pois.includes(poi.id));
             },
             finish() {
@@ -260,18 +253,18 @@
                 return [];
             },
             waypoints() {
-                if (process.client && this.route && this.route.pois && this.route.pois.length > 0) {
-                    return this.route.pois.slice(0, 8)
-                        .map((poi) => ({
-                            location: {
-                                lat: poi.lat,
-                                lng: poi.lng,
-                            },
-                            stopover: true,
-                        }));
-                }
+                // if (process.client && this.route && this.route.pois && this.route.pois.length > 0) {
+                //     return this.route.pois.slice(0, 8)
+                //         .map((poi) => ({
+                //             location: {
+                //                 lat: poi.lat,
+                //                 lng: poi.lng,
+                //             },
+                //             stopover: true,
+                //         }));
+                // }
                 if (process.client && this.poisForRoute.length > 0) {
-                    return this.poisForRoute.slice(0, 8)
+                    return this.poisForRoute
                         .map((poi) => ({
                             location: {
                                 lat: poi.lat,
@@ -285,6 +278,12 @@
         },
         watch: {
             route(route) {
+                console.log('watch route');
+                this.selectedPois = [...this.selectedPois, ...route.pois]
+                    .filter((value, index, self) => index === self.findIndex((t) => (
+                        t.id === value.id
+                    )));
+                this.form.pois = route.pois.map((poi) => poi.id);
                 ['name', 'description', 'cost', 'days', 'route', 'links', 'encoded_route', 'start', 'finish']
                     .forEach((field) => {
                         this.form[field] = route[field];
@@ -382,9 +381,10 @@
             },
             routeFound(length) {
                 if (length === 0) {
-                    this.$alert('Маршрут не найден, переместите старт или финиш');
+                    this.$alert('Маршрут не найден, переместите старт, финиш или точки по маршруту');
+                    this.routeLength = 0;
                 }
-                console.log('Route found', length);
+                this.routeLength = length;
             },
             manualChanged(val) {
                 if (val) {
@@ -399,16 +399,23 @@
                 this.form.encoded_route = null;
             },
             remoteSearch(keyword) {
-                this.loading = true;
-                Request.getInstance().get(this.poiEndpoint, {
-                    params: {
-                        keyword,
-                    },
-                }).then(({ data }) => {
-                    this.pois = data.data;
-                    this.selectedPois = [...this.selectedPois, ...this.pois];
-                    this.loading = false;
-                });
+                if (keyword) {
+                    this.loading = true;
+                    Request.getInstance().get(this.poiEndpoint, {
+                        params: {
+                            keyword,
+                        },
+                    }).then(({ data }) => {
+                        this.pois = data.data;
+                        this.selectedPois = [...this.selectedPois, ...this.pois]
+                            .filter((value, index, self) => index === self.findIndex((t) => (
+                                t.id === value.id
+                            )));
+                        this.loading = false;
+                    });
+                    return;
+                }
+                this.pois = [];
             },
         },
     };

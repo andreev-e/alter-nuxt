@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab title="Где находится?">
+                        <b-tab title="Локация">
                             <div class="py-3 px-3">
                                 <client-only>
                                     <universal-map
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab :title="`Здесь побывали (${poi.checkins ? poi.checkins.length: 0})`">
+                        <b-tab :title="`Посетили (${poi.checkins ? poi.checkins.length: 0})`">
                             <checkins
                                 :poi="poi"
                                 @change="get"
@@ -210,6 +210,7 @@
                     </h2>
                     <item-gallery
                         :objects="poi.nearest"
+                        small
                     />
                 </div>
             </div>
