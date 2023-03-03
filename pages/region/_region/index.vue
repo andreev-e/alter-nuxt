@@ -82,7 +82,7 @@
         },
         data() {
             return {
-                page: 1,
+                page: this.$route.query.p,
                 types: [...TYPES],
             };
         },
@@ -98,7 +98,7 @@
         },
         head() {
             return {
-                title: `${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
+                title: `${this.page ? `Стр. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
                 meta: [
                     {
                         name: 'description',
@@ -214,7 +214,10 @@
             },
         },
         watch: {
-            page() {
+            page(p) {
+                if (p) {
+                    this.$router.push({ query: { p } });
+                }
                 this.fetchPois();
             },
         },
