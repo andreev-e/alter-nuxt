@@ -88,12 +88,7 @@
             }),
             images() {
                 return this.users.map((user) => {
-                    const image = user.images[0] ? user.images[0] : {
-                        id: user.id,
-                        width: 600,
-                        height: 600,
-                        original: `https://robohash.org/${user.username}`,
-                    };
+                    const image = user.images[0];
                     image.copyright = user.username;
                     image.href = `/user/${user.username}`;
                     return image;

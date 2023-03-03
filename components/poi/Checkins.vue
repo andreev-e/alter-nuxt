@@ -59,6 +59,7 @@
                     return this.poi.checkins.map((checkin) => {
                         const image = checkin.user.images[0];
                         image.href = `/user/${checkin.user.username}`;
+                        image.copyright = checkin.user.username;
                         return image;
                     })
                         .filter((item) => item);
@@ -67,6 +68,7 @@
                     return this.user.checkins.map((checkin) => {
                         const image = checkin.poi.images[0];
                         image.href = `/poi/${checkin.poi.id}`;
+                        image.place = checkin.poi.name;
                         return image;
                     })
                         .filter((item) => item);

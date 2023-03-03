@@ -8,14 +8,20 @@
         >
             <i :style="`padding-bottom:${img.height/img.width*100}%`" />
             <a
-                style="cursor:pointer"
+                class="cursor-pointer"
                 @click.prevent="view(img)"
             >
                 <div
                     v-if="img.copyright"
                     class="position-absolute"
                 >
-                    {{ img.copyright ? `Автор ${img.copyright}`: '' }}
+                    {{ `Автор ${img.copyright}` }}
+                </div>
+                <div
+                    v-if="img.place"
+                    class="position-absolute"
+                >
+                    {{ img.place }}
                 </div>
                 <img
                     :src="img.original"

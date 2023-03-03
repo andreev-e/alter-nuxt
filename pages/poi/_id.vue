@@ -129,7 +129,7 @@
                         </b-tab>
                         <b-tab
                             v-if="loaded && poi.routes.length"
-                            title="Маршруты с точкой"
+                            title="Маршруты"
                         >
                             <div class="py-3">
                                 <h2 id="near">
