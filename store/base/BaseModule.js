@@ -1,5 +1,4 @@
 import { Request } from 'laravel-request-utils';
-import LocalStorage from '../utils/LocalStorage';
 
 Request.setConfig({
     autoRequestCsrfCookie: true,
@@ -40,9 +39,9 @@ export default class BaseModule {
                 state,
                 commit,
             }) {
-                if (process.client && state.cached) {
-                    if (LocalStorage.has(state.endpoint)) {
-                        const item = LocalStorage.get(state.endpoint);
+                if (state.cached) {
+                    const item = this.$auth.$storage.getUniversal(state.endpoint);
+                    if (item) {
                         if (item.time && item.time > new Date().getTime() - (24 * 60 * 60 * 1000)) {
                             commit('setData', item.data);
                             commit('setInitiallyLoaded', true);
@@ -58,12 +57,11 @@ export default class BaseModule {
                     .then((response) => {
                         if (!Object.prototype.hasOwnProperty.call(state.params, 'page') || (state.params.page !== undefined && state.params.page !== null)) {
                             commit('setData', response.data);
-                            if (process.client && state.cached) {
-                                LocalStorage
-                                    .set(state.endpoint, {
-                                        time: new Date().getTime(),
-                                        data: response.data,
-                                    });
+                            if (state.cached) {
+                                this.$auth.$storage.setUniversal(state.endpoint, {
+                                    time: new Date().getTime(),
+                                    data: response.data,
+                                });
                             }
                         } else {
                             commit('appendData', response.data);
@@ -84,8 +82,8 @@ export default class BaseModule {
                 state,
                 commit,
             }) {
-                if (process.client && state.cached) {
-                    LocalStorage.remove(state.endpoint);
+                if (state.cached) {
+                    this.$auth.$storage.removeUniversal(state.endpoint);
                 }
 
                 commit('setData', {});

@@ -6,6 +6,18 @@ export default function (req, res, next) {
             to: '/route',
         },
         {
+            from: '/news.php',
+            to: '/',
+        },
+        {
+            from: '/register_altertravel.php',
+            to: '/register',
+        },
+        {
+            from: '/secure.php',
+            to: '/secure',
+        },
+        {
             from: '/catalog/&stat=time',
             to: '/latest',
         },

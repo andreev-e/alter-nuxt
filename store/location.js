@@ -2,7 +2,7 @@ import ModelModule from './base/ModelModule';
 
 class Location extends ModelModule {
     constructor() {
-        super('/location');
+        super('/location', { cached: true });
     }
 }
 

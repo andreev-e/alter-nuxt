@@ -1,4 +1,3 @@
-<!-- Please remove this file from your project -->
 <template>
     <ul>
         <main-menu-item
@@ -24,21 +23,12 @@
     export default {
         name: 'MainMenu',
         components: { MainMenuItem },
-        data() {
-            return {};
-        },
         async fetch() {
-            if (!this.countriesExist) {
-                await this.getCountries();
-            }
-            if (!this.tagsExist) {
-                await this.getTags();
-            }
+            await this.getCountries();
+            await this.getTags();
         },
         computed: {
             ...mapGetters({
-                tagsExist: 'tags/itemsExist',
-                countriesExist: 'locations/itemsExist',
                 tagsLoading: 'tags/loading',
                 countriesLoading: 'locations/loading',
                 tags: 'tags/items',

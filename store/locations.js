@@ -2,7 +2,7 @@ import ItemsListModule from './base/ItemsListModule';
 
 class Locations extends ItemsListModule {
     constructor() {
-        super('/location');
+        super('/location', { cached: true });
     }
 }
 
