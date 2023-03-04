@@ -9,9 +9,6 @@
             </router-link>
         </div>
         <div class="second_menu col-sm-3">
-            <font-awesome-icon
-                icon="fa-hand-holding-dollar"
-            />
             <a
                 target="_blank"
                 href="https://t.me/Altertravel_bot"
@@ -19,6 +16,9 @@
                 Телеграм бот
             </a>
             |
+            <font-awesome-icon
+                icon="fa-hand-holding-dollar"
+            />
             <a
                 target="_blank"
                 href="https://www.patreon.com/altertravel"
