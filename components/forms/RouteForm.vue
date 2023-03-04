@@ -300,28 +300,11 @@
             },
         },
         mounted() {
-            if (navigator.geolocation) {
+            if (process.client && navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         this.form.start = `${position.coords.latitude};${position.coords.longitude}`;
                         this.form.finish = `${position.coords.latitude};${position.coords.longitude + 0.5}`;
-                    },
-                );
-            }
-        },
-        created() {
-            const center = {
-                lat: 0,
-                lng: 0,
-            };
-            if (process.client && navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        center.lat = position.coords.latitude;
-                        center.lng = position.coords.longitude;
-                        this.center = center;
-                    },
-                    () => {
                     },
                 );
             }

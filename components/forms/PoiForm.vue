@@ -224,28 +224,11 @@
             },
         },
         mounted() {
-            if (navigator.geolocation) {
+            if (process.client && navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         this.form.lat = position.coords.latitude;
                         this.form.lng = position.coords.longitude;
-                    },
-                );
-            }
-        },
-        created() {
-            const center = {
-                lat: 0,
-                lng: 0,
-            };
-            if (process.client && navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        center.lat = position.coords.latitude;
-                        center.lng = position.coords.longitude;
-                        this.center = center;
-                    },
-                    () => {
                     },
                 );
             }
