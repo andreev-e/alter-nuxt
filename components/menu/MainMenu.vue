@@ -36,7 +36,7 @@
             }),
             menuTags() {
                 return [...this.tags].sort((a, b) => a.count < b.count)
-                    .slice(0, 20);
+                    .slice(0, 40);
             },
             menu() {
                 return [
