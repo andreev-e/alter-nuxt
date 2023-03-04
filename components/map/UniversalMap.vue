@@ -116,6 +116,10 @@
                 type: Boolean,
                 default: false,
             },
+            rememberPosition: {
+                type: String,
+                default: null,
+            },
         },
         emits: ['update'],
         data() {
@@ -162,6 +166,9 @@
                 return [];
             },
             computedCenter() {
+                if (this.rememberPosition && this.$auth.$storage.getLocalStorage(`position:${this.rememberPosition}`)) {
+                    return this.$auth.$storage.getLocalStorage(`position:${this.rememberPosition}`);
+                }
                 if (this.fitContent && this.bounds) {
                     return this.bounds.getCenter();
                 }
@@ -299,6 +306,9 @@
                 }
             },
             userManipulates() {
+                if (this.rememberPosition) {
+                    this.$auth.$storage.setLocalStorage(`position:${this.rememberPosition}`, this.$refs.map.$mapObject.getCenter());
+                }
                 if (!this.fitContent) {
                     this.fetchPois();
                 }

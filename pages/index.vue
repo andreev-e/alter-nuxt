@@ -19,6 +19,7 @@
             v-model="mapPois"
             :center="center"
             :categories="selectedCategories"
+            remember-position="index"
         />
         <item-gallery
             :loading="loadingPois"
