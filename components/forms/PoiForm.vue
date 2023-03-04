@@ -191,7 +191,7 @@
             },
         },
         mounted() {
-            if (process.client && navigator.geolocation) {
+            if (process.client && navigator.geolocation && !(this.poi && this.poi.lat)) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         this.form.lat = position.coords.latitude;
