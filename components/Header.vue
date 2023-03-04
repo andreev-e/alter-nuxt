@@ -2,7 +2,7 @@
 <template>
     <div class="header row">
         <client-only>
-            <div class="user-panel col-sm-12 d-flex justify-content-end">
+            <div class="user-panel col-sm-12 d-flex justify-content-center justify-content-md-end">
                 <div
                     v-if="$auth.loggedIn"
                     class="d-flex justify-content-between"

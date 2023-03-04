@@ -130,8 +130,8 @@
   }
 
   @media only screen and (max-width: 768px) {
-    .header-menu > ul > li > a {
-      font-size: 30px;
+    .header-menu > ul > li > a, .header-menu > ul > li > span {
+      font-size: 40px;
     }
   }
 
