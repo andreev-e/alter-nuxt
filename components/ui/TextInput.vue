@@ -12,15 +12,7 @@
             cols="12"
             md="9"
         >
-            <b-textarea
-                v-if="multiline"
-                v-model="val"
-                rows="5"
-                class="w-100"
-                @input="$emit('input', val)"
-            />
-            <b-input
-                v-else
+            <el-input
                 v-model="val"
                 class="w-100"
                 :type="type"

@@ -20,13 +20,6 @@
                 Укажите точку на карте
             </p>
         </div>
-        <text-input
-            id="name"
-            v-model="form.name"
-            label="Название"
-            :form="form"
-            required
-        />
         <select-input
             v-model="form.type"
             label="Категория"
@@ -34,47 +27,17 @@
             required
         />
         <text-input
-            id="description"
-            v-model="form.description"
-            label="Описание"
-            multiline
-            required
+            v-for="field in fields"
+            :id="field.id"
+            :key="field.id"
+            v-model="form[field.id]"
+            :label="field.label"
             :form="form"
+            :required="field.required"
+            :multiline="field.multiline"
+            :type="field.type"
         />
-        <text-input
-            id="route"
-            v-model="form.route"
-            label="Как добраться на машине"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="route_o"
-            v-model="form.route_o"
-            label="Как добраться на общественном транспорте"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="addon"
-            v-model="form.addon"
-            label="Примечание"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="links"
-            v-model="form.links"
-            label="Ссылки"
-            multiline
-            :form="form"
-        />
-        <text-input
-            id="ytb"
-            v-model="form.ytb"
-            label="Youtube: https://www.youtube.com/watch?v="
-            :form="form"
-        />
+        <hr>
         <b-row
             v-if="form.ytb"
             class="my-2"
@@ -100,13 +63,6 @@
                 </div>
             </b-col>
         </b-row>
-
-        <text-input
-            id="copyright"
-            v-model="form.copyright"
-            label="Автор фотографий (если используются не свои фотографии) "
-            :form="form"
-        />
         <el-row :gutter="30">
             <el-col
                 :xs="24"
@@ -122,11 +78,10 @@
                 <el-select
                     v-model="form.tags"
                     multiple
-                    filterable
                     placeholder="Метки"
                 >
                     <el-option
-                        v-for="tag in tags"
+                        v-for="tag in orderedTags"
                         :key="tag.id"
                         :label="tag.name"
                         :value="tag.id"
@@ -168,6 +123,18 @@
         },
         data() {
             return {
+                fields: [
+                    { id: 'name', label: 'Название', required: true },
+                    {
+                        id: 'description', label: 'Описание', required: true, type: 'textarea',
+                    },
+                    { id: 'route', label: 'Как добраться на машине', type: 'textarea' },
+                    { id: 'route_o', label: 'Как добраться на общественном транспорте', type: 'textarea' },
+                    { id: 'addon', label: 'Примечание', type: 'textarea' },
+                    { id: 'links', label: 'Ссылки', type: 'textarea' },
+                    { id: 'copyright', label: 'Автор фотографий (если используются не свои фотографии)' },
+                    { id: 'ytb', label: 'Youtube: https://www.youtube.com/watch?v=' },
+                ],
                 form: new Form({
                     name: null,
                     description: null,
@@ -208,8 +175,8 @@
             types() {
                 return TYPES;
             },
-            filteredTags() {
-                return this.tags.filter((tag) => !this.tagSearch || tag.name.toLowerCase().includes(this.tagSearch.toLowerCase()));
+            orderedTags() {
+                return [...this.tags].sort((a, b) => a.name.localeCompare(b.name));
             },
         },
         watch: {
@@ -273,6 +240,9 @@
                     const index = this.form.tags.findIndex((item) => item == value);
                     this.form.tags.splice(index, 1);
                 }
+            },
+            filterTags(query) {
+                this.filteredTags = this.tags.filter((item) => item.name.includes(query));
             },
         },
     };

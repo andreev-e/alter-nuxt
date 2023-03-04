@@ -165,12 +165,12 @@
                 fields: [
                     { id: 'name', label: 'Название', required: true },
                     {
-                        id: 'description', label: 'Описание', required: true, multiline: true,
+                        id: 'description', label: 'Описание', required: true, type: 'textarea',
                     },
                     { id: 'cost', label: 'Бюджет, руб', type: 'number' },
                     { id: 'days', label: 'Длительность, дней', type: 'number' },
-                    { id: 'route', label: 'Особенности', multiline: true },
-                    { id: 'links', label: 'Ссылки', multiline: true },
+                    { id: 'route', label: 'Особенности', type: 'textarea' },
+                    { id: 'links', label: 'Ссылки', type: 'textarea' },
                 ],
                 form: new Form({
                     name: null,
