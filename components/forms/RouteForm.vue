@@ -253,16 +253,6 @@
                 return [];
             },
             waypoints() {
-                // if (process.client && this.route && this.route.pois && this.route.pois.length > 0) {
-                //     return this.route.pois.slice(0, 8)
-                //         .map((poi) => ({
-                //             location: {
-                //                 lat: poi.lat,
-                //                 lng: poi.lng,
-                //             },
-                //             stopover: true,
-                //         }));
-                // }
                 if (process.client && this.poisForRoute.length > 0) {
                     return this.poisForRoute
                         .map((poi) => ({
@@ -273,16 +263,12 @@
                             stopover: true,
                         }));
                 }
-                return null;
+                return [];
             },
         },
         watch: {
             route(route) {
-                console.log('watch route');
-                this.selectedPois = [...this.selectedPois, ...route.pois]
-                    .filter((value, index, self) => index === self.findIndex((t) => (
-                        t.id === value.id
-                    )));
+                this.selectedPois = [...route.pois];
                 this.form.pois = route.pois.map((poi) => poi.id);
                 ['name', 'description', 'cost', 'days', 'route', 'links', 'encoded_route', 'start', 'finish']
                     .forEach((field) => {
@@ -390,7 +376,7 @@
                         },
                     }).then(({ data }) => {
                         this.pois = data.data;
-                        this.selectedPois = [...this.selectedPois, ...this.pois]
+                        this.selectedPois = [...this.poisForRoute, ...this.pois]
                             .filter((value, index, self) => index === self.findIndex((t) => (
                                 t.id === value.id
                             )));
