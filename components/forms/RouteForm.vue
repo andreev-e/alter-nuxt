@@ -373,6 +373,7 @@
                     Request.getInstance().get(this.poiEndpoint, {
                         params: {
                             keyword,
+                            near: this.form.start,
                         },
                     }).then(({ data }) => {
                         this.pois = data.data;
