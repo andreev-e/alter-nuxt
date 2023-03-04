@@ -1,14 +1,14 @@
 <template>
     <div class="row footer text-center">
-        <div class="copyright col-sm-6">
+        <div class="copyright col-sm-5">
             2009-{{ year }} © Альтернативный путеводитель
         </div>
-        <div class="second_menu col-sm-3">
+        <div class="second_menu col-sm-2">
             <router-link to="/user/">
                 Авторы
             </router-link>
         </div>
-        <div class="second_menu col-sm-3">
+        <div class="second_menu col-sm-5">
             <a
                 target="_blank"
                 href="https://t.me/Altertravel_bot"
