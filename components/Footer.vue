@@ -14,6 +14,13 @@
             />
             <a
                 target="_blank"
+                href="https://t.me/Altertravel_bot"
+            >
+                Телеграм бот
+            </a>
+            |
+            <a
+                target="_blank"
                 href="https://www.patreon.com/altertravel"
             >
                 Patreon
@@ -44,6 +51,6 @@
 
 <style>
   .footer {
-    font-size:20px;
+    font-size: 20px;
   }
 </style>
