@@ -153,20 +153,17 @@
                                         this-is-poi
                                     />
                                 </client-only>
-                                <h2 id="coord">
-                                    Координаты
-                                </h2>
-                                <div class="row">
+                                <div class="row pt-3">
                                     <div class="col-sm-12">
                                         <nuxt-link
                                             to="/izbannoye"
-                                            class="btn btn-dark mr-2"
+                                            class="btn btn-secondary mr-2"
                                         >
                                             Построить маршрут с данной точкой
                                         </nuxt-link>
                                         <a
                                             id="geo"
-                                            class="btn btn-dark"
+                                            class="btn btn-secondary"
                                             :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
                                         >Навигация на точку</a>
                                     </div>

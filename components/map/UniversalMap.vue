@@ -6,61 +6,59 @@
         >
             <b-spinner />
         </div>
-        <client-only>
-            <gmap-map
-                ref="map"
-                :center="computedCenter"
-                :zoom="zoom"
-                map-type-id="terrain"
-                @dragend="userManipulates"
-                @zoom_changed="userManipulates"
-                @idle="idle"
-            >
-                <gmap-marker
-                    v-if="myLocation"
-                    :position="myLocation"
-                    :icon="myLocationMarker"
-                />
-                <gmap-marker
-                    v-if="thisIsPoi"
-                    :position="center"
-                />
-                <gmap-polyline
-                    v-if="route && route.encoded_route"
-                    ref="polyline"
-                    :path="path"
-                    :options="{ strokeColor: '#FF0000' }"
-                />
-                <directions-renderer
-                    v-if="route && !route.encoded_route"
-                    travel-mode="DRIVING"
-                    :origin="start"
-                    :waypoints="waypoints"
-                    :optimize-waypoints="true"
-                    :destination="finish"
-                    @routeFound="routeFound"
-                />
-                <gmap-marker
-                    v-if="start"
-                    :position="start"
-                    :icon="iconStart"
-                />
-                <gmap-marker
-                    v-if="finish"
-                    :position="finish"
-                    :icon="iconFinish"
-                />
-                <gmap-marker
-                    v-for="poi in mapPois"
-                    :key="`poi_`+poi.id"
-                    :position="{ lat: poi.lat, lng: poi.lng }"
-                    clickable
-                    :title="poi.name"
-                    :icon="getIcon(poi.type)"
-                    @click="$router.push('/poi/' + poi.id)"
-                />
-            </gmap-map>
-        </client-only>
+        <gmap-map
+            ref="map"
+            :center="computedCenter"
+            :zoom="zoom"
+            map-type-id="terrain"
+            @dragend="userManipulates"
+            @zoom_changed="userManipulates"
+            @idle="idle"
+        >
+            <gmap-marker
+                v-if="myLocation"
+                :position="myLocation"
+                :icon="myLocationMarker"
+            />
+            <gmap-marker
+                v-if="thisIsPoi"
+                :position="center"
+            />
+            <gmap-polyline
+                v-if="route && route.encoded_route"
+                ref="polyline"
+                :path="path"
+                :options="{ strokeColor: '#FF0000' }"
+            />
+            <directions-renderer
+                v-if="route && !route.encoded_route"
+                travel-mode="DRIVING"
+                :origin="start"
+                :waypoints="waypoints"
+                :optimize-waypoints="true"
+                :destination="finish"
+                @routeFound="routeFound"
+            />
+            <gmap-marker
+                v-if="start"
+                :position="start"
+                :icon="iconStart"
+            />
+            <gmap-marker
+                v-if="finish"
+                :position="finish"
+                :icon="iconFinish"
+            />
+            <gmap-marker
+                v-for="poi in mapPois"
+                :key="`poi_`+poi.id"
+                :position="{ lat: poi.lat, lng: poi.lng }"
+                clickable
+                :title="poi.name"
+                :icon="getIcon(poi.type)"
+                @click="$router.push('/poi/' + poi.id)"
+            />
+        </gmap-map>
     </div>
 </template>
 

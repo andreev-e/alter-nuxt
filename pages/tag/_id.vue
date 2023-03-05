@@ -15,13 +15,15 @@
                 </h1>
             </div>
         </div>
-        <universal-map
-            ref="mapComponent"
-            :center="center"
-            :tag="$route.params.id"
-            :zoom="zoom"
-            @update="poisChanged"
-        />
+        <client-only>
+            <universal-map
+                ref="mapComponent"
+                :center="center"
+                :tag="$route.params.id"
+                :zoom="zoom"
+                @update="poisChanged"
+            />
+        </client-only>
         <item-gallery
             :objects="pois"
             :loading="loadingPois"

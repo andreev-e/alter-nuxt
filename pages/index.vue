@@ -14,13 +14,16 @@
                 @update="filterChanged"
             />
         </div>
-        <universal-map
-            ref="mapComponent"
-            v-model="mapPois"
-            :center="center"
-            :categories="selectedCategories"
-            remember-position="index"
-        />
+        <client-only>
+            <universal-map
+                ref="mapComponent"
+                v-model="mapPois"
+                :center="center"
+                :categories="selectedCategories"
+                remember-position="index"
+            />
+        </client-only>
+
         <item-gallery
             :loading="loadingPois"
             :objects="mapPois.length ? mapPois : pois.slice(0,3)"

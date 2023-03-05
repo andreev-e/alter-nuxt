@@ -34,14 +34,16 @@
                 @update="filterChanged"
             />
         </div>
-        <universal-map
-            ref="mapComponent"
-            :center="center"
-            :location="$route.params.region"
-            :tag="!isCategory ? $route.params.tag : null"
-            :categories="isCategory ? [$route.params.tag] : categories"
-            :zoom="location.zoom"
-        />
+        <client-only>
+            <universal-map
+                ref="mapComponent"
+                :center="center"
+                :location="$route.params.region"
+                :tag="!isCategory ? $route.params.tag : null"
+                :categories="isCategory ? [$route.params.tag] : categories"
+                :zoom="location.zoom"
+            />
+        </client-only>
         <item-gallery
             :objects="pois"
             :loading="loadingPois"
