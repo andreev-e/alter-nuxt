@@ -160,7 +160,7 @@
                                     <div class="col-sm-3 coords plusplus_sl">
                                         <div class="qr">
                                             <img
-                                                src="https://altertravel.ru/qr.php?lng=43.455948&amp;lat=43.123161"
+                                                src="https://api.altertravel.ru/api/qr?lng=43.455948&amp;lat=43.123161"
                                                 alt="QR code"
                                             >
                                         </div>

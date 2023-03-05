@@ -15,7 +15,6 @@
             >
                 Телеграм бот
             </a>
-            |
             <font-awesome-icon
                 icon="fa-hand-holding-dollar"
             />
