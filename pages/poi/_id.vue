@@ -159,23 +159,14 @@
                                 <div class="row">
                                     <div class="col-sm-3 coords plusplus_sl">
                                         <div class="qr">
-                                            <img
-                                                src="https://api.altertravel.ru/api/qr?lng=43.455948&amp;lat=43.123161"
-                                                alt="QR code"
-                                            >
+                                            <VueQRCodeComponent
+                                                :size="150"
+                                                :text="`GEO:${poi.lat},${poi.lng}`"
+                                                color="#27475c"
+                                            />
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 coords plusplus_sl">
-                                        <div class="points">
-                                            <span>{{ poi.lat }},&nbsp;{{ poi.lng }}</span>
-                                            <a href="https://altertravel.ru/generate_kml.php?id=22728">
-                                                <div class="dwnl-kml">
-                                                    <span>скачать KML файл</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-9">
                                         <nuxt-link
                                             to="/izbannoye"
                                             class="btn btn-dark mr-2"
@@ -226,6 +217,8 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    import VueQRCodeComponent from 'vue-qrcode-component';
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
@@ -251,6 +244,7 @@
             UniversalMap,
             Breadcrumbs,
             Comments,
+            VueQRCodeComponent,
         },
         mixins: [fav],
         async fetch() {
