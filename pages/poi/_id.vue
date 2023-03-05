@@ -159,11 +159,13 @@
                                 <div class="row">
                                     <div class="col-sm-3 coords plusplus_sl">
                                         <div class="qr">
-                                            <VueQRCodeComponent
-                                                :size="150"
-                                                :text="`GEO:${poi.lat},${poi.lng}`"
-                                                color="#27475c"
-                                            />
+                                            <client-only>
+                                                <VueQRCodeComponent
+                                                    :size="150"
+                                                    :text="`GEO:${poi.lat},${poi.lng}`"
+                                                    color="#27475c"
+                                                />
+                                            </client-only>
                                         </div>
                                     </div>
                                     <div class="col-sm-9">
