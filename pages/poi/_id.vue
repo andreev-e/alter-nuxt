@@ -157,18 +157,7 @@
                                     Координаты
                                 </h2>
                                 <div class="row">
-                                    <div class="col-sm-3 coords plusplus_sl">
-                                        <div class="qr">
-                                            <!--                                            <client-only>-->
-                                            <!--                                                <VueQRCodeComponent-->
-                                            <!--                                                    :size="150"-->
-                                            <!--                                                    :text="`GEO:${poi.lat},${poi.lng}`"-->
-                                            <!--                                                    color="#27475c"-->
-                                            <!--                                                />-->
-                                            <!--                                            </client-only>-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <nuxt-link
                                             to="/izbannoye"
                                             class="btn btn-dark mr-2"
@@ -219,8 +208,6 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
-    // eslint-disable-next-line import/no-extraneous-dependencies
-    import VueQRCodeComponent from 'vue-qrcode-component';
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
@@ -246,7 +233,6 @@
             UniversalMap,
             Breadcrumbs,
             Comments,
-            VueQRCodeComponent,
         },
         mixins: [fav],
         async fetch() {
