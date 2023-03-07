@@ -1,8 +1,16 @@
 <template>
     <div class="content row">
         <div class="navigation col-12">
-            <ul>
-                <li class="first">
+            <ul
+                itemscope
+                itemtype="https://schema.org/BreadcrumbList"
+            >
+                <li
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class="first"
+                >
                     <router-link to="/">
                         <font-awesome-icon
                             icon="fa-home"
@@ -20,6 +28,9 @@
                     <li
                         v-for="(crumb, index) in list"
                         :key="`crumb_${index}`"
+                        itemprop="itemListElement"
+                        itemscope
+                        itemtype="https://schema.org/ListItem"
                     >
                         <font-awesome-icon
                             icon="fa-arrow-right"

@@ -30,7 +30,10 @@
                     v-if="!usersLoading"
                     class="row p-2"
                 >
-                    <super-gallery :images="images" />
+                    <super-gallery
+                        :images="images"
+                        :max-height-of-row="150"
+                    />
                 </div>
                 <div
                     v-else

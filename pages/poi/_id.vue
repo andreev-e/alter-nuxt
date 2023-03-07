@@ -33,15 +33,26 @@
                         </client-only>
                     </h1>
                     <badge
-                        class="bg-warning"
+                        class="bg-secondary"
                         :url="`/user/${poi.author}`"
                     >
                         {{ poi.author }}
                     </badge>
                     <badge
+                        class="bg-primary text-white"
+                    >
+                        Опубликовано {{ $moment(poi.created_at).format('LL') }}
+                    </badge>
+                    <badge
+                        v-if="poi.updated_at"
+                        class="bg-success text-white"
+                    >
+                        Обновлено {{ $moment(poi.updated_at).format('LL') }}
+                    </badge>
+                    <badge
                         v-for="tag in poi.tags"
                         :key="tag.id"
-                        class="bg-primary"
+                        class="bg-info"
                         :url="`/tag/${tag.url}`"
                     >
                         {{ tag.name }}

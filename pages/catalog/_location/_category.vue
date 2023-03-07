@@ -1,6 +1,6 @@
 <template>
     <div>
-        2Redirecting...
+        Redirecting...
         {{ $route.params }}
         to: {{ to }}
     </div>

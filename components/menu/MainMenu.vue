@@ -80,6 +80,12 @@
                         sub: 'публикации',
                         icon: 'fa-refresh',
                     },
+                    {
+                        name: 'Авторы',
+                        href: '/user',
+                        sub: 'участники',
+                        icon: 'fa-user',
+                    },
                 ];
             },
             clientMenu() {
@@ -132,6 +138,9 @@
   @media only screen and (max-width: 768px) {
     .header-menu > ul > li > a, .header-menu > ul > li > span {
       font-size: 40px;
+    }
+    .tabs .nav-link {
+      padding: 2px 4px ;
     }
   }
 

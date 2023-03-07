@@ -15,7 +15,7 @@
                     v-if="img.copyright"
                     class="position-absolute"
                 >
-                    {{ `Автор ${img.copyright}` }}
+                    {{ `Участник ${img.copyright}` }}
                 </div>
                 <div
                     v-if="img.place"
@@ -48,10 +48,14 @@
                 type: String,
                 default: '',
             },
+            maxHeightOfRow: {
+                type: Number,
+                default: 250,
+            },
         },
         computed: {
             heightOfRow() {
-                return Math.max(900 / this.images.length, 250);
+                return Math.max(900 / this.images.length, this.maxHeightOfRow);
             },
         },
         methods: {

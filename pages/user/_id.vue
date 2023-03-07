@@ -40,7 +40,7 @@
                 ref="mapComponent"
                 v-model="mapPois"
                 :user="$route.params.id"
-                :zoom="5"
+                :zoom="4"
                 fit-content
             />
         </client-only>
