@@ -12,7 +12,7 @@
                     </nuxt-link>
                 </li>
                 <li
-                    v-if="left.length > limit"
+                    v-if="left.length > limitLeft"
                     class="more"
                     @click="limitedLeft = !limitedLeft"
                 >
@@ -32,7 +32,7 @@
                     </nuxt-link>
                 </li>
                 <li
-                    v-if="right.length > limit"
+                    v-if="right.length > limitRight"
                     class="more"
                     @click="limitedRight = !limitedRight"
                 >
@@ -67,12 +67,32 @@
         },
         data() {
             return {
-                limit: 7,
                 limitedLeft: true,
                 limitedRight: true,
+                lineLength: 60,
             };
         },
         computed: {
+            limitLeft() {
+                let sum = 0;
+                for (let i = 0; i < this.left.length; i += 1) {
+                    sum += this.left[i].name.length;
+                    if (sum > this.lineLength) {
+                        return i;
+                    }
+                }
+                return 7;
+            },
+            limitRight() {
+                let sum = 0;
+                for (let i = 0; i < this.right.length; i += 1) {
+                    sum += this.right[i].name.length;
+                    if (sum > this.lineLength) {
+                        return i;
+                    }
+                }
+                return 7;
+            },
             urlPrefix() {
                 if (this.tag) {
                     return `/region/${this.tag.url}`;
@@ -81,13 +101,13 @@
             },
             dataLeft() {
                 if (this.limitedLeft) {
-                    return [...this.left].splice(0, this.limit);
+                    return [...this.left].splice(0, this.limitLeft);
                 }
                 return this.left;
             },
             dataRight() {
                 if (this.limitedRight) {
-                    return [...this.right].splice(0, this.limit);
+                    return [...this.right].splice(0, this.limitRight);
                 }
                 return this.right;
             },

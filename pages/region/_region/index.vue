@@ -255,7 +255,10 @@
                 await this.getPoi();
             },
             filterChanged(val) {
-                if (this.$refs.mapComponent.$refs.map?.$mapObject) {
+                if (this.$refs
+                    && this.$refs.mapComponent
+                    && this.$refs.mapComponent.$refs.map
+                    && this.$refs.mapComponent.$refs.map.$mapObject) {
                     this.$refs.mapComponent.fetchPois(val);
                 }
             },

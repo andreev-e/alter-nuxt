@@ -40,6 +40,7 @@ import {
     faHandHoldingDollar,
     faSignOut,
     faMapMarker,
+    faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -75,6 +76,7 @@ library.add(
     faHandHoldingDollar,
     faSignOut,
     faMapMarker,
+    faUsers,
 );
 
 /* add font awesome icon component */

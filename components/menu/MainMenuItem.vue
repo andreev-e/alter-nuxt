@@ -57,7 +57,10 @@
 </script>
 
 <style scoped>
-  .menu-icon {
-    max-height: 30px;
+  @media only screen and (max-width: 768px) {
+    .menu-icon {
+      height: 30px;
+      width: 30px;
+    }
   }
 </style>

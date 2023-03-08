@@ -84,7 +84,7 @@
                         name: 'Авторы',
                         href: '/user',
                         sub: 'участники',
-                        icon: 'fa-user',
+                        icon: 'fa-users',
                     },
                 ];
             },

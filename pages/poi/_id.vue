@@ -41,13 +41,13 @@
                     <badge
                         class="bg-primary text-white"
                     >
-                        Опубликовано {{ $moment(poi.created_at).format('LL') }}
+                        Опубликовано&nbsp;{{ $moment(poi.created_at).format('LL') }}
                     </badge>
                     <badge
                         v-if="poi.updated_at"
                         class="bg-success text-white"
                     >
-                        Обновлено {{ $moment(poi.updated_at).format('LL') }}
+                        Обновлено&nbsp;{{ $moment(poi.updated_at).format('LL') }}
                     </badge>
                     <badge
                         v-for="tag in poi.tags"

@@ -26,6 +26,7 @@
         <super-gallery
             v-if="images.length"
             :images="images"
+            :max-height-of-row="100"
         />
     </div>
 </template>
