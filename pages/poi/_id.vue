@@ -68,6 +68,7 @@
                 <div class="col-sm-12 object-full">
                     <b-tabs>
                         <b-tab
+                            v-if="poi.images && poi.images.length"
                             title="Фото"
                             class="my-3"
                         >
