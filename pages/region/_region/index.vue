@@ -89,6 +89,7 @@
             };
         },
         async fetch() {
+            this.page = this.$route.query.p ? this.$route.query.p : 1;
             try {
                 await this.load();
             } catch (error) {

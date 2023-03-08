@@ -2,7 +2,7 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: 'Авторы', url: '' }]"
+            :list="[{ name: 'авторы', url: '' }]"
         />
         <div class="row">
             <div class="col-sm-12">

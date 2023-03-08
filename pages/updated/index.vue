@@ -68,7 +68,12 @@
                 meta: 'poisPaginated/meta',
             }),
             crumbs() {
-                return [];
+                return [
+                    {
+                        name: 'недавно обновленные',
+                        url: '',
+                    },
+                ];
             },
         },
         watch: {
