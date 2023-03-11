@@ -63,16 +63,15 @@
                 if (img.href) {
                     this.$router.push(img.href);
                 } else {
-                    this.$alert('', '', '',
-                                {
-                                    imageUrl: img.original,
-                                    width: '100%',
-                                    padding: 0,
-                                    background: this.dominateColor ? this.dominateColor : '#606084',
-                                    showConfirmButton: false,
-                                    showCloseButton: true,
-                                    animation: false,
-                                });
+                    this.$msgbox({
+                        dangerouslyUseHTMLString: true,
+                        message: `<div style="background-color: ${this.dominateColor ? this.dominateColor : '#606084'}"><img src="${img.original}"></div>`,
+                        showConfirmButton: false,
+                        center: true,
+                        lockScroll: false,
+                        customClass: 'show-photo',
+                        closeOnClickModal: true,
+                    });
                 }
             },
         },

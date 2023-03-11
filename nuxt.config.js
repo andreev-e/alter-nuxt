@@ -44,11 +44,6 @@ export default {
             mode: 'client',
             ssr: false,
         },
-        {
-            src: '~/plugins/simple-alert',
-            mode: 'client',
-            ssr: false,
-        },
         '~/plugins/font-awesome',
         '~/plugins/country-flag',
     ],
@@ -90,7 +85,7 @@ export default {
     ],
 
     elementUI: {
-        components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem'],
+        components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem', 'Message', 'MessageBox'],
         locale: 'ru-RU',
     },
 

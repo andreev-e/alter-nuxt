@@ -107,7 +107,7 @@
                 this.form.submit(`/api/user/${this.$route.params.id}`)
                     .then(() => {
                         if (this.$auth.user.username === this.user.username) {
-                            this.$alert('Сохранено');
+                            this.$message.success('Сохранено');
                             this.$auth.fetchUser();
                         } else {
                             this.$router.push('/user');

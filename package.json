@@ -33,7 +33,6 @@
     "nuxt-element-ui": "^1.0.10",
     "vue-country-flag": "^2.3.2",
     "vue-qrcode-component": "^2.1.1",
-    "vue-simple-alert": "^1.1.1",
     "vue2-google-maps": "^0.10.7",
     "vuedraggable": "^2.24.3"
   },

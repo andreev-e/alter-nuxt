@@ -64,5 +64,17 @@ h2 {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.el-message-box {
+  width: 95% !important;
+  max-width: 1200px !important;
+  border: none !important;
+}
 
+
+.show-photo .el-message-box__content,
+.show-photo .el-message-box--center .el-message-box__content,
+.show-photo.el-message-box--center,
+.show-photo .el-message-box__btns {
+  padding: 0 !important;
+}
 

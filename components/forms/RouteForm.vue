@@ -308,7 +308,7 @@
                         if (this.$route.params.id) {
                             this.$router.push('/secure/');
                         } else {
-                            this.$alert('Сохранено. Теперь вы можете добавить фото');
+                            this.$message.success('Сохранено. Теперь вы можете добавить фото');
                             this.$router.push(`/secure/route/${result.data.id}`);
                         }
                     });
@@ -350,7 +350,7 @@
             },
             routeFound(length) {
                 if (length === 0) {
-                    this.$alert('Маршрут не найден, переместите старт, финиш или точки по маршруту');
+                    this.$message.error('Маршрут не найден, переместите старт, финиш или точки по маршруту');
                     this.routeLength = 0;
                 }
                 this.routeLength = length;
