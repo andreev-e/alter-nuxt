@@ -65,8 +65,7 @@ h2 {
 }
 
 .el-message-box {
-  width: 95% !important;
-  max-width: 1200px !important;
+  width: auto !important;
   border: none !important;
 }
 
