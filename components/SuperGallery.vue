@@ -68,6 +68,7 @@
                         message: `<div style="background-color: ${this.dominateColor ? this.dominateColor : '#606084'}"><img class="img-fluid" src="${img.original}"></div>`,
                         showConfirmButton: false,
                         center: true,
+                        lockScroll: false,
                         customClass: 'show-photo',
                         closeOnClickModal: true,
                     }).catch(() => {
