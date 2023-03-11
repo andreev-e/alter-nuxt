@@ -257,7 +257,7 @@
         },
         head() {
             return {
-                title: `${this.poi.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[0]?.name}` : ''}`,
+                title: `${this.poi.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[this.poi.locations.length - 1]?.name}` : ''}`,
                 meta: [
                     {
                         name: 'description',
