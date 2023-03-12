@@ -263,7 +263,9 @@ export default function (req, res, next) {
     }
 
     if (!to && req.url.includes('/catalog/')) {
-        const path = decodeURI(req.url.replace('/catalog/', '')).split('/');
+        let path = req.url.replace('/catalog/', '');
+        path = path.substr(0, path.indexOf('?'));
+        path = decodeURI(path).split('/');
         to = catalogTo({
             location: path[0],
             category: path[1],
