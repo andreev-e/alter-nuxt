@@ -69,7 +69,6 @@ export default {
         '@nuxtjs/auth-next',
         '@nuxtjs/moment',
         '@nuxtjs/i18n',
-        '@nuxtjs/sitemap',
         ['@nuxtjs/yandex-metrika', {
             id: 10896850,
             clickmap: true,
@@ -128,17 +127,6 @@ export default {
 
         },
 
-    },
-
-    sitemap: {
-        exclude: [
-            '/secure/**',
-            '/secure',
-            '/login',
-            '/register',
-            '/izbrannoye',
-            '/moderation',
-        ],
     },
 
     server: {
