@@ -41,8 +41,8 @@
             menu() {
                 return [
                     {
-                        name: 'Страны',
-                        sub: 'выбрать',
+                        name: this.$t('MENU.COUNTRIES'),
+                        sub: this.$t('UI.SELECT').toLowerCase(),
                         class: 'region_select',
                         icon: 'fa-globe',
                         submenu: {
@@ -52,8 +52,8 @@
                         },
                     },
                     {
-                        name: 'Метки',
-                        sub: 'выбрать',
+                        name: this.$t('MENU.TAGS'),
+                        sub: this.$t('UI.SELECT').toLowerCase(),
                         class: 'region_select',
                         icon: 'fa-tags',
                         submenu: {
@@ -63,27 +63,27 @@
                         },
                     },
                     {
-                        name: 'Маршруты',
+                        name: this.$t('MENU.ROUTES'),
                         href: '/route',
-                        sub: 'готовые треки',
+                        sub: this.$t('MENU.ROUTES_SUB'),
                         icon: 'fa-route',
                     },
                     {
-                        name: 'Новые',
+                        name: this.$t('MENU.NEW'),
                         href: '/latest',
-                        sub: 'места',
+                        sub: this.$t('MENU.NEW_SUB'),
                         icon: 'fa-arrow-up',
                     },
                     {
-                        name: 'Обновленные',
+                        name: this.$t('MENU.UPDATED'),
                         href: '/updated',
-                        sub: 'публикации',
+                        sub: this.$t('MENU.UPDATED_SUB'),
                         icon: 'fa-refresh',
                     },
                     {
-                        name: 'Авторы',
+                        name: this.$t('MENU.AUTHORS'),
                         href: '/user',
-                        sub: 'участники',
+                        sub: this.$t('MENU.AUTHORS_SUB'),
                         icon: 'fa-users',
                     },
                 ];
@@ -91,15 +91,15 @@
             clientMenu() {
                 return [
                     this.$auth.loggedIn && this.$auth.user && this.$auth.user.to_moderate ? {
-                        name: 'Модерация',
+                        name: this.$t('MENU.MODERATION'),
                         href: '/moderation',
-                        sub: `(${this.$auth.user.to_moderate}) объектов`,
+                        sub: `(${this.$auth.user.to_moderate}) ${this.$t('MENU.MODERATION_SUB')}`,
                         icon: 'fa-hammer',
                     } : null,
                     {
-                        name: 'Мои',
+                        name: this.$t('MENU.MY'),
                         href: '/secure',
-                        sub: 'публикации',
+                        sub: this.$t('MENU.MY_SUB'),
                         icon: 'fa-user',
                     },
                 ].filter((item) => item);

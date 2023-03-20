@@ -1,7 +1,7 @@
 <template>
     <div class="row footer text-center">
         <div class="copyright col-sm-5">
-            2009-{{ year }} © Альтернативный путеводитель
+            2009-{{ year }} © {{ $t('ALTERTRAVEL') }}
         </div>
         <div class="second_menu col-sm-3">
             <a

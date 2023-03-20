@@ -1,5 +1,30 @@
 export default {
-    COMMON: {
-        REGISTER: 'Registration',
+    ALTERTRAVEL: 'Altertravel',
+    HEADER: {
+        REGISTER: 'Register',
+        LOGIN: 'Login',
+    },
+    MENU: {
+        FAVORITE: 'Favorite',
+        ADD_POINT: 'Add point',
+        ADD_ROUTE: 'Add route',
+        EDIT_PROFILE: 'Edit profile',
+        COUNTRIES: 'Countries',
+        TAGS: 'Tags',
+        ROUTES: 'Routes',
+        ROUTES_SUB: '& tracks',
+        NEW: 'New',
+        NEW_SUB: 'point',
+        UPDATED: 'Recently',
+        UPDATED_SUB: 'updated',
+        AUTHORS: 'Authors',
+        AUTHORS_SUB: '& users',
+        MODERATION: 'Moderation',
+        MODERATION_SUB: 'points',
+        MY: 'My',
+        MY_SUB: 'points',
+    },
+    UI: {
+        SELECT: 'Select',
     },
 };

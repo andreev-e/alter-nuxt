@@ -11,7 +11,7 @@
                     <router-link
                         to="/secure/favorite"
                         class="d-inline-block mr-2 mt-1"
-                        title="Избранное"
+                        :title="$t('MENU.FAVORITE')"
                     >
                         <font-awesome-icon
                             v-if="$auth.user.favorites && $auth.user.favorites.length"
@@ -23,7 +23,7 @@
                     <router-link
                         to="/secure/poi/create"
                         class="d-inline-block mr-2 mt-1"
-                        title="Добавить достопримечательность"
+                        :title="$t('MENU.ADD_POINT')"
                     >
                         <font-awesome-icon
                             icon="fa-map-marker"
@@ -34,7 +34,7 @@
                     <router-link
                         to="/secure/route/create"
                         class="d-inline-block mr-2 mt-1"
-                        title="Добавить маршрут"
+                        :title="$t('MENU.ADD_ROUTE')"
                     >
                         <font-awesome-icon
                             icon="fa-route"
@@ -53,7 +53,7 @@
                     <router-link
                         :to="`/secure/user/${$auth.user.username}`"
                         class="d-inline-block mr-2 mt-1"
-                        title="Профиль"
+                        :title="$t('MENU.EDIT_PROFILE')"
                     >
                         <font-awesome-icon
                             icon="fa-edit"
@@ -73,11 +73,11 @@
                     v-else
                 >
                     <router-link to="/register/">
-                        {{ $t('COMMON.REGISTER') }}
+                        {{ $t('HEADER.REGISTER') }}
                     </router-link>
                     |
                     <router-link to="/secure/">
-                        Вход
+                        {{ $t('HEADER.LOGIN') }}
                     </router-link>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <img
                     class="img-fluid mb-3"
                     src="/logo.png"
-                    alt="Альтернативный путеводитель"
+                    :alt="$t('ALTERTRAVEL')"
                 >
             </nuxt-link>
         </div>
