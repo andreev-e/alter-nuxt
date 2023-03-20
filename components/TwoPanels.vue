@@ -29,7 +29,7 @@
                 >
                     <nuxt-link :to="`${urlPrefix}/${child.url}`">
                         <template v-if="$i18n.locale === 'en'">
-                            {{ item.name_en }}
+                            {{ child.name_en }}
                         </template>
                         <template v-else>
                             {{ child.NAME_ROD ? child.NAME_ROD : child.name }}
