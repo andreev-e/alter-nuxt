@@ -11,14 +11,14 @@
             v-else
             :to="`/secure/${type}/create`"
             class="d-inline-block mr-1 mt-1"
-            :title="`Добавить ${name}`"
+            :title="`${$t('UI.ADD')} ${name}`"
         >
             <font-awesome-icon
                 icon="fa-plus-circle"
                 class="text-success"
                 role="button"
             />
-            Добавить {{ name }}
+            {{ $t('UI.ADD') }} {{ name }}
         </router-link>
         <div class="row">
             <div class="col-12">

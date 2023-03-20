@@ -1,7 +1,7 @@
 <template>
     <b-row>
         <b-col v-if="left.length">
-            <b>Выберите регион {{ tag.NAME_ROD_ED }}</b>
+            <b>{{ $t('TWO_PANELS.SELECT_REGION') }} {{ tag.NAME_ROD_ED }}</b>
             <ul class="additional_cities">
                 <li
                     v-for="child in dataLeft"
@@ -16,19 +16,24 @@
                     class="more"
                     @click="limitedLeft = !limitedLeft"
                 >
-                    {{ limitedLeft ? 'Показать все' : 'Свернуть' }}
+                    {{ limitedRight ? $t('UI.DISPLAY_ALL') : $t('UI.HIDE') }}
                 </li>
             </ul>
         </b-col>
         <b-col v-if="right.length">
-            <b>Объекты {{ tag.NAME_ROD_ED }} по видам</b>
+            <b>{{ $t('TWO_PANELS.POINTS') }} {{ tag.NAME_ROD_ED }} {{ $t('TWO_PANELS.BY_TYPE') }}</b>
             <ul class="pravaya_kolonka">
                 <li
                     v-for="child in dataRight"
                     :key="child.id"
                 >
                     <nuxt-link :to="`${urlPrefix}/${child.url}`">
-                        {{ child.NAME_ROD ? child.NAME_ROD : child.name }}
+                        <template v-if="$i18n.locale === 'en'">
+                            {{ item.name_en }}
+                        </template>
+                        <template v-else>
+                            {{ child.NAME_ROD ? child.NAME_ROD : child.name }}
+                        </template>
                     </nuxt-link>
                 </li>
                 <li
@@ -36,7 +41,7 @@
                     class="more"
                     @click="limitedRight = !limitedRight"
                 >
-                    {{ limitedRight ? 'Показать все' : 'Свернуть' }}
+                    {{ limitedRight ? $t('UI.DISPLAY_ALL') : $t('UI.HIDE') }}
                 </li>
             </ul>
         </b-col>
@@ -117,9 +122,10 @@
 
 <style>
   .additional_cities li a, .additional_cities_more li a, .pravaya_kolonka li a, .pravaya_kolonka_more li a {
-      color: #FFF;
-      text-decoration: none;
+    color: #FFF;
+    text-decoration: none;
   }
+
   .additional_cities li, .additional_cities_more li, .pravaya_kolonka li, .pravaya_kolonka_more li {
     background: #7495AA;
     color: #fff;
@@ -130,8 +136,9 @@
     margin-bottom: 3px;
     padding: 1px 3px;
     cursor: pointer;
-    font-size:18px;
+    font-size: 18px;
   }
+
   li.more {
     background: #343a40;
   }

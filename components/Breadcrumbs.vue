@@ -16,7 +16,7 @@
                             icon="fa-home"
                             :style="{ height: '14px' }"
                         />
-                        Altertravel
+                        {{ $t('ALTERTRAVEL') }}
                     </router-link>
                 </li>
                 <li v-if="loading">

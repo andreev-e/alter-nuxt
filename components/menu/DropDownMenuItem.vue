@@ -7,7 +7,7 @@
                 size="small"
                 class="d-inline-block"
             />
-            <short :val="item.name" />
+            <short :val="$i18n.locale === 'en' ? item.name_en : item.name" />
             ({{ item.count }})
         </nuxt-link>
     </li>

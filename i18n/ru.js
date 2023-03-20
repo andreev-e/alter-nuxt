@@ -26,5 +26,19 @@ export default {
     },
     UI: {
         SELECT: 'Выбрать',
+        EDIT: 'Редактировать',
+        SUBMIT: 'Отправить',
+        ADD: 'Добавить',
+        DISPLAY_ALL: 'Показать все',
+        HIDE: 'Скрыть',
+    },
+    COMMENT: {
+        ABOUT: 'об объекте',
+        TEXT: 'Текст комментария',
+    },
+    TWO_PANELS: {
+        SELECT_REGION: 'Выберите регион',
+        POINTS: 'Объекты',
+        BY_TYPE: 'по видам',
     },
 };

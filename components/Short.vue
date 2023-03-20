@@ -1,5 +1,8 @@
 <template>
-    <div class="d-inline">
+    <div
+        v-if="val"
+        class="d-inline"
+    >
         {{ shortVal }}
     </div>
 </template>
@@ -8,7 +11,7 @@
     export default {
         name: 'Short',
         props: {
-            val: { type: String, required: true },
+            val: { type: String, required: false, default: null },
         },
         data() {
             return {
@@ -29,10 +32,12 @@
                     { from: 'поселок', to: 'пос.' },
                     { from: 'посёлок', to: 'пос.' },
                     { from: 'деревня', to: 'д.' },
-                    { from: 'район', to: 'р-н' },
+                    { from: 'айон', to: '-н' },
                     { from: 'село', to: 'с.' },
                     { from: 'край', to: 'кр.' },
                     { from: 'урочище', to: 'ур.' },
+                    { from: 'муниципалитет', to: 'мун.' },
+                    { from: 'втономная', to: 'вт.' },
                 ],
             };
         },

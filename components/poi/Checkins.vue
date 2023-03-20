@@ -84,11 +84,11 @@
                         .then(() => {
                             this.$emit('change');
                             if (!this.vasHere) {
-                                this.$message('Зачекинен. Напишете отзыв?');
+                                this.$message.success('Зачекинен. Напишете отзыв?');
                             }
                         });
                 } else {
-                    this.$message('Пожалуйста, сначала авторизуйтесь');
+                    this.$message.warning('Пожалуйста, сначала авторизуйтесь');
                 }
             },
         },

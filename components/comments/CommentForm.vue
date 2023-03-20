@@ -4,7 +4,7 @@
             <b-form-textarea
                 id="comment"
                 v-model="form.comment"
-                placeholder="Текст комментария"
+                :placeholder="$t('COMMENT.TEXT')"
                 required
                 rows="3"
                 max-rows="6"
@@ -14,7 +14,7 @@
             variant="primary"
             @click.stop="addComment"
         >
-            {{ commentId ? 'Отредактировать' : 'Отправить' }}
+            {{ commentId ? $t('UI.EDIT') : $t('UI.SUBMIT') }}
         </b-button>
     </form>
 </template>
