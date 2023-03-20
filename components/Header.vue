@@ -3,6 +3,7 @@
     <div class="header row">
         <client-only>
             <div class="user-panel col-sm-12 d-flex justify-content-center justify-content-md-end">
+                <lang-switcher class="mr-3" />
                 <div
                     v-if="$auth.loggedIn"
                     class="d-flex justify-content-between"
@@ -97,9 +98,10 @@
 
 <script>
     import MainMenu from './menu/MainMenu.vue';
+    import LangSwitcher from './LangSwitcher.vue';
 
     export default {
-        components: { MainMenu },
+        components: { LangSwitcher, MainMenu },
         mounted() {
             if (process.client && this.$auth.loggedIn) {
                 this.$auth.fetchUser();
