@@ -16,7 +16,7 @@
                     class="more"
                     @click="limitedLeft = !limitedLeft"
                 >
-                    {{ limitedRight ? $t('UI.DISPLAY_ALL') : $t('UI.HIDE') }}
+                    {{ limitedLeft ? $t('UI.DISPLAY_ALL') : $t('UI.HIDE') }}
                 </li>
             </ul>
         </b-col>
