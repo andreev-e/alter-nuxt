@@ -44,7 +44,7 @@
                         Опубликовано&nbsp;{{ $moment(poi.created_at).format('LL') }}
                     </badge>
                     <badge
-                        v-if="poi.updated_at"
+                        v-if="poi.updated_at && $moment(poi.created_at).format('LL') !== $moment(poi.updated_at).format('LL')"
                         class="bg-success text-white"
                     >
                         Обновлено&nbsp;{{ $moment(poi.updated_at).format('LL') }}
@@ -283,7 +283,7 @@
             },
             breadCrumbs() {
                 const breadCrumbs = [...this.poi.locations ?? []].map((location) => ({
-                    name: location.name,
+                    name: this.$i18n.locale === 'en' && location.name_en ? location.name_en : location.name,
                     url: `/region/${location.url}`,
                 }));
                 if (this.poi && this.poi.locations && this.poi.locations.length) {

@@ -1,5 +1,6 @@
 export default {
     ALTERTRAVEL: 'Altertravel',
+    POINTS_OF_INTEREST: 'Points of interest',
     HEADER: {
         REGISTER: 'Register',
         LOGIN: 'Login',
@@ -31,6 +32,7 @@ export default {
         ADD: 'Add',
         DISPLAY_ALL: 'Display all',
         HIDE: 'Hide',
+        PAGE: 'p',
     },
     COMMENT: {
         ABOUT: 'about',

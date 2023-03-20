@@ -1,5 +1,6 @@
 export default {
     ALTERTRAVEL: 'Альтернативный путеводитель',
+    POINTS_OF_INTEREST: 'Достопримечательности',
     HEADER: {
         REGISTER: 'Регистрация',
         LOGIN: 'Вход',
@@ -31,6 +32,7 @@ export default {
         ADD: 'Добавить',
         DISPLAY_ALL: 'Показать все',
         HIDE: 'Скрыть',
+        PAGE: 'Стр',
     },
     COMMENT: {
         ABOUT: 'об объекте',

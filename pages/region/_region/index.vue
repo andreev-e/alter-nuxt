@@ -101,7 +101,7 @@
         },
         head() {
             return {
-                title: `${this.page > 1 ? `Стр. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
+                title: `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
                 meta: [
                     {
                         name: 'description',
@@ -128,12 +128,15 @@
                 tag: 'tag/model',
                 tagLoaded: 'tag/isEmpty',
             }),
+            name() {
+                return this.$i18n.locale === 'en' && this.location.name_en
+                    ? this.location.name_en : this.location.name;
+            },
             h1() {
                 if (this.location && this.location.name_rod_ed) {
                     return `${this.titleType} ${this.location.name_rod_ed}`;
                 }
-
-                return `${this.titleType}: ${this.location.name}`;
+                return `${this.titleType}: ${this.name}`;
             },
             description() {
                 let result = '';
@@ -151,7 +154,7 @@
                 })) ?? []];
                 if (this.$route.params.tag) {
                     crumbs.push({
-                        name: this.location.name,
+                        name: this.name,
                         url: `/region/${this.location.url}`,
                     });
                     if (this.isCategory) {
@@ -167,7 +170,7 @@
                     }
                 } else {
                     crumbs.push({
-                        name: this.location.name,
+                        name: this.name,
                         url: '',
                     });
                 }
@@ -207,13 +210,13 @@
                     case 'Техноген':
                         return 'Техногенные достопримечательности';
                     default:
-                        return 'Достопримечательности';
+                        return this.$t('POINTS_OF_INTEREST');
                     }
                 }
                 if (this.tag.name) {
                     return this.tag.NAME_ROD ?? `${this.tag.name}:`;
                 }
-                return 'Достопримечательности';
+                return this.$t('POINTS_OF_INTEREST');
             },
         },
         watch: {
