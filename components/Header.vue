@@ -73,7 +73,7 @@
                     v-else
                 >
                     <router-link to="/register/">
-                        Регистрация
+                        {{ $t('COMMON.REGISTER') }}
                     </router-link>
                     |
                     <router-link to="/secure/">

@@ -83,6 +83,19 @@ export default {
         'nuxt-element-ui',
     ],
 
+    i18n: {
+        langDir: 'i18n',
+        locales: [
+            {
+                code: 'en', iso: 'en-US', file: 'en.js', domain: 'altertravel.pro',
+            },
+            {
+                code: 'ru', iso: 'ru-RU', file: 'ru.js', domain: 'altertravel.ru',
+            },
+        ],
+        differentDomains: true,
+    },
+
     elementUI: {
         components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem', 'Message', 'MessageBox'],
         locale: 'ru-RU',
