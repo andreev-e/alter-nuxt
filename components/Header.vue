@@ -75,8 +75,9 @@
                     <router-link to="/register/">
                         Регистрация
                     </router-link>
+                    |
                     <router-link to="/secure/">
-                        Вход для авторов
+                        Вход
                     </router-link>
                 </div>
             </div>

@@ -24,5 +24,8 @@
 </script>
 
 <style scoped>
-
+  a {
+    line-height: 24px;
+    font-size: 16px;
+  }
 </style>
