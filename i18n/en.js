@@ -14,7 +14,7 @@ export default {
         ROUTES: 'Routes',
         ROUTES_SUB: 'ready tracks',
         NEW: 'New',
-        NEW_SUB: 'point',
+        NEW_SUB: 'points',
         UPDATED: 'Recently',
         UPDATED_SUB: 'updated',
         AUTHORS: 'Authors',
