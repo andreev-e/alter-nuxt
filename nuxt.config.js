@@ -5,9 +5,6 @@ export default {
 
     head: {
         title: 'Altertravel',
-        htmlAttrs: {
-            lang: 'ru',
-        },
         meta: [
             { charset: 'utf-8' },
             {
