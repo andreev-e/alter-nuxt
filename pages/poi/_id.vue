@@ -22,7 +22,7 @@
                                 v-if="canEdit"
                                 :to="`/secure/poi/${poi.id}`"
                                 class="d-inline-block mr-1 mt-1"
-                                title="Редактировать"
+                                :title="$t('UI.EDIT')"
                             >
                                 <font-awesome-icon
                                     icon="fa-edit"
@@ -41,13 +41,13 @@
                     <badge
                         class="bg-primary text-white"
                     >
-                        Опубликовано&nbsp;{{ $moment(poi.created_at).format('LL') }}
+                        {{ $t('UI.PUBLISHED') }} {{ $moment(poi.created_at).format('LL') }}
                     </badge>
                     <badge
                         v-if="poi.updated_at && $moment(poi.created_at).format('LL') !== $moment(poi.updated_at).format('LL')"
                         class="bg-success text-white"
                     >
-                        Обновлено&nbsp;{{ $moment(poi.updated_at).format('LL') }}
+                        {{ $t('UI.UPDATED') }}&nbsp;{{ $moment(poi.updated_at).format('LL') }}
                     </badge>
                     <badge
                         v-for="tag in poi.tags"
@@ -55,7 +55,7 @@
                         class="bg-info"
                         :url="`/tag/${tag.url}`"
                     >
-                        {{ tag.name }}
+                        {{ $i18n.locale === 'en' ? tag.name_en : tag.name }}
                     </badge>
                     <views-badge :views="poi.views" />
                     <comment-bage
@@ -69,7 +69,7 @@
                     <b-tabs>
                         <b-tab
                             v-if="poi.images && poi.images.length"
-                            title="Фото"
+                            :title="$t('UI.PHOTO')"
                             class="my-3"
                         >
                             <super-gallery
@@ -83,7 +83,7 @@
                         </b-tab>
                         <b-tab
                             v-if="poi.ytb"
-                            title="Видео"
+                            :title="$t('UI.VIDEO')"
                             class="my-3"
                         >
                             <div class="embed-responsive embed-responsive-16by9">
@@ -94,7 +94,7 @@
                                 />
                             </div>
                         </b-tab>
-                        <b-tab title="Описание">
+                        <b-tab :title="$t('UI.DESCRIPTION')">
                             <div class="py-3">
                                 <p>
                                     {{ poi.description }}
@@ -141,11 +141,11 @@
                         </b-tab>
                         <b-tab
                             v-if="loaded && poi.routes.length"
-                            title="Маршруты"
+                            :title="$t('UI.ROUTES')"
                         >
                             <div class="py-3">
                                 <h2 id="near">
-                                    Маршруты
+                                    {{ $t('UI.ROUTES') }}
                                 </h2>
                                 <div class="near">
                                     <item-gallery
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab title="Локация">
+                        <b-tab :title="$t('UI.LOCATION')">
                             <div class="py-3 px-3">
                                 <client-only>
                                     <universal-map
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </b-tab>
-                        <b-tab :title="`Посетили (${poi.checkins ? poi.checkins.length: 0})`">
+                        <b-tab :title="`${$t('UI.VISITED')} (${poi.checkins ? poi.checkins.length: 0})`">
                             <checkins
                                 :poi="poi"
                                 @change="get"
@@ -197,7 +197,7 @@
             >
                 <div class="col-sm-12">
                     <h2 id="near">
-                        Что еще есть рядом с эти местом
+                        {{ $t('UI.NEAR') }}
                     </h2>
                     <item-gallery
                         :objects="poi.nearest"
