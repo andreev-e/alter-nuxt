@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    Карта Альтернативного Путеводителя
+                    {{ $t('ALTERTRAVEL_MAP') }}
                 </h1>
             </div>
         </div>

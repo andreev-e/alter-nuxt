@@ -27,13 +27,14 @@
                 </span>
             </b>
             <i>{{ $moment(comment.created_at).format('LLLL') }}</i>
-            {{ $t('COMMENT.ABOUT') }}
-            <router-link
-                v-if="linkObjects"
-                :to="`${type ? type : comment.object_type}/${comment.object_id}`"
-            >
-                {{ comment.object_name }}
-            </router-link>
+            <template v-if="linkObjects">
+                {{ $t('COMMENT.ABOUT') }}
+                <router-link
+                    :to="`${type ? type : comment.object_type}/${comment.object_id}`"
+                >
+                    {{ comment.object_name }}
+                </router-link>
+            </template>
             <client-only>
                 <font-awesome-icon
                     v-if="canEdit"

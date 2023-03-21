@@ -1,5 +1,6 @@
 export default {
     ALTERTRAVEL: 'Альтернативный путеводитель',
+    ALTERTRAVEL_MAP: 'Карта Альтернативного Путеводителя',
     POINTS_OF_INTEREST: 'Достопримечательности',
     HEADER: {
         REGISTER: 'Регистрация',
@@ -33,10 +34,15 @@ export default {
         DISPLAY_ALL: 'Показать все',
         HIDE: 'Скрыть',
         PAGE: 'Стр',
+        LOG_IN: 'войдите',
     },
     COMMENT: {
+        COMMENTS: 'Комментарии',
+        LATEST: 'Последние отзывы',
         ABOUT: 'об объекте',
         TEXT: 'Текст комментария',
+        EMPTY_COMMENTS: 'Пока нет ни одного комментария',
+        TO_WRITE: 'Чтобы написать комментарий',
     },
     TWO_PANELS: {
         SELECT_REGION: 'Выберите регион',

@@ -1,5 +1,6 @@
 export default {
     ALTERTRAVEL: 'Altertravel',
+    ALTERTRAVEL_MAP: 'Altertravel map',
     POINTS_OF_INTEREST: 'Points of interest',
     HEADER: {
         REGISTER: 'Register',
@@ -33,10 +34,15 @@ export default {
         DISPLAY_ALL: 'Display all',
         HIDE: 'Hide',
         PAGE: 'p',
+        LOG_IN: 'Log in',
     },
     COMMENT: {
+        COMMENTS: 'Comments',
+        LATEST: 'Latest comments',
         ABOUT: 'about',
         TEXT: 'Comment text',
+        EMPTY_COMMENTS: 'No comments yet',
+        TO_WRITE: 'For comment adding',
     },
     TWO_PANELS: {
         SELECT_REGION: 'Select region',

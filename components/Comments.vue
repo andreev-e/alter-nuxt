@@ -4,7 +4,7 @@
         class="row"
     >
         <div class="col-sm-12">
-            <h2>{{ id ? 'Отзывы' : 'Последние отзывы' }}</h2>
+            <h2>{{ id ? $t('COMMENT.COMMENTS') : $t('COMMENT.COMMENTS') }}</h2>
             <template v-if="!loading">
                 <div
                     v-if="filteredComments.length"
@@ -27,7 +27,7 @@
                     v-else
                     class="text-center"
                 >
-                    Пока нет ни одного комментария
+                    {{ $t('COMMENT.EMPTY_COMMENTS') }}
                 </div>
             </template>
             <div
@@ -57,8 +57,8 @@
                 v-if="!$auth.loggedIn"
                 class="text-center"
             >
-                Чтобы написать комментарий - <nuxt-link to="/secure/">
-                    войдите
+                {{ $t('COMMENT.TO_WRITE') }} - <nuxt-link to="/login">
+                    {{ $t('UI.LOG_IN') }}
                 </nuxt-link>
             </div>
         </div>
