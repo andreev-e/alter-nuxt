@@ -288,7 +288,7 @@
                 }));
                 if (this.poi && this.poi.locations && this.poi.locations.length) {
                     breadCrumbs.push({
-                        name: this.poi.type,
+                        name: this.$t(`CATEGORY.${this.poi.type.toUpperCase()}`),
                         url: `/region/${this.poi.locations[this.poi.locations.length - 1].url}/${this.poi.type}`,
                     });
                 }
