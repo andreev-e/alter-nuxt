@@ -60,10 +60,16 @@ export default {
     },
     CATEGORY: {
         NATURE: 'Nature',
+        NATURE_H1: 'Points of interest of nature',
         MAN_MADE: 'Man-made',
+        MAN_MADE_H1: 'Man-made points of interest',
         ARCHITECTURE: 'Architecture',
+        ARCHITECTURE_H1: 'Architectural points of interest',
         HISTORY_CULTURE: 'History-Culture',
+        HISTORY_CULTURE_H1: 'Historical and cultural points of interest',
         MUSEUM: 'Museum',
+        MUSEUM_H1: 'Museums',
         MONUMENT: 'Monument',
+        MONUMENT_H1: 'Monuments',
     },
 };

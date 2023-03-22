@@ -133,7 +133,7 @@
                     ? this.location.name_en : this.location.name;
             },
             h1() {
-                if (this.location && this.location.name_rod_ed) {
+                if (this.location && this.location.name_rod_ed && this.$i18n.locale !== 'en') {
                     return `${this.titleType} ${this.location.name_rod_ed}`;
                 }
                 return `${this.titleType}: ${this.name}`;
@@ -197,18 +197,18 @@
             titleType() {
                 if (this.isCategory) {
                     switch (this.$route.params.tag) {
-                    case 'Природа':
-                        return 'Природные достопримечательности';
-                    case 'Архитектура':
-                        return 'Архитектурные достопримечательности';
-                    case 'Музей':
-                        return 'Музеи';
-                    case 'Памятник':
-                        return 'Памятники';
-                    case 'История-Культура':
-                        return 'Исторические и культурные достопримечательности';
-                    case 'Техноген':
-                        return 'Техногенные достопримечательности';
+                    case 'nature':
+                        return this.$t('CATEGORY.NATURE_H1');
+                    case 'architecture':
+                        return this.$t('CATEGORY.ARCHITECTURE_H1');
+                    case 'museum':
+                        return this.$t('CATEGORY.MUSEUM_H1');
+                    case 'monument':
+                        return this.$t('CATEGORY.MONUMENT_H1');
+                    case 'history_culture':
+                        return this.$t('CATEGORY.HISTORY_CULTURE_H1');
+                    case 'man_made':
+                        return this.$t('CATEGORY.MAN_MADE_H1');
                     default:
                         return this.$t('POINTS_OF_INTEREST');
                     }

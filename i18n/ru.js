@@ -60,10 +60,16 @@ export default {
     },
     CATEGORY: {
         NATURE: 'Природа',
+        NATURE_H1: 'Природные достопримечательности',
         MAN_MADE: 'Техноген',
+        MAN_MADE_H1: 'Техногенные достопримечательности',
         ARCHITECTURE: 'Архитектура',
+        ARCHITECTURE_H1: 'Архитектурные достопримечательности',
         HISTORY_CULTURE: 'История-Культура',
+        HISTORY_CULTURE_H1: 'Исторические и культурные достопримечательности',
         MUSEUM: 'Музей',
+        MUSEUM_H1: 'Музеи',
         MONUMENT: 'Памятник',
+        MONUMENT_H1: 'Памятники',
     },
 };

@@ -8,7 +8,9 @@
                     :key="child.id"
                 >
                     <nuxt-link :to="child.url">
-                        <short :val="child.name" />
+                        <short
+                            :val="$i18n.locale === 'en' && child.name_en ? child.name_en : child.name"
+                        />
                     </nuxt-link>
                 </li>
                 <li
