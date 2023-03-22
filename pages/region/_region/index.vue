@@ -141,7 +141,7 @@
             },
             title() {
                 if (this.$i18n.locale === 'en') {
-                    return `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType} of` : `Top ${this.pois.length > 10 ? 10 : this.pois.length} points of interest of`} ${this.location.name_en}. Route planning.`;
+                    return `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType} of` : `Top ${this.pois.length > 10 ? 10 : this.pois.length} points of interest of`} ${this.name}. Route planning.`;
                 }
                 return `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей ${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`;
             },
@@ -156,12 +156,12 @@
             },
             crumbs() {
                 const crumbs = [...this.location.parents?.map((location) => ({
-                    name: this.$i18n.locale === 'en' && this.name_en ? location.name_en : location.name,
+                    name: this.$i18n.locale === 'en' && location.name_en ? location.name_en : location.name,
                     url: `/region/${location.url}`,
                 })) ?? []];
                 if (this.$route.params.tag) {
                     crumbs.push({
-                        name: this.$i18n.locale === 'en' && this.name_en ? this.name_en : this.name,
+                        name: this.name,
                         url: `/region/${this.location.url}`,
                     });
                     if (this.isCategory) {
