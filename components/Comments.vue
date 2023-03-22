@@ -29,24 +29,25 @@
                 >
                     {{ $t('COMMENT.EMPTY_COMMENTS') }}
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <b-pagination
+                            v-if="meta.last_page > 1 && !last"
+                            v-model="page"
+                            :total-rows="meta.total"
+                            :per-page="meta.per_page"
+                            aria-controls="my-table"
+                        />
+                    </div>
+                </div>
             </template>
             <div
                 v-else
                 class="text-center"
             >
-                <b-spinner small />
+                <b-spinner />
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <b-pagination
-                        v-if="meta.last_page > 1 && !last"
-                        v-model="page"
-                        :total-rows="meta.total"
-                        :per-page="meta.per_page"
-                        aria-controls="my-table"
-                    />
-                </div>
-            </div>
+
             <comment-form
                 v-if="$auth.loggedIn && id"
                 :id="id"

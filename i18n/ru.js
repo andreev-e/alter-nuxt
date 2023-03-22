@@ -58,4 +58,12 @@ export default {
         POINTS: 'Объекты',
         BY_TYPE: 'по видам',
     },
+    CATEGORY: {
+        NATURE: 'Природа',
+        MAN_MADE: 'Техноген',
+        ARCHITECTURE: 'Архитектура',
+        HISTORY_CULTURE: 'История-Культура',
+        museum: 'Музей',
+        monument: 'Памятник',
+    },
 };

@@ -14,7 +14,7 @@
                     class="mr-2"
                     :style="{ color: type.color, height: '18px' }"
                 />
-                {{ type.name }}
+                {{ $t('CATEGORY.' + type.name.toUpperCase()) }}
             </b-button>
             <span
                 v-if="expandable"

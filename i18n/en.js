@@ -51,11 +51,19 @@ export default {
         ABOUT: 'about',
         TEXT: 'Comment text',
         EMPTY_COMMENTS: 'No comments yet',
-        TO_WRITE: 'For comment adding',
+        TO_WRITE: 'To add comment',
     },
     TWO_PANELS: {
         SELECT_REGION: 'Select region',
         POINTS: 'Points',
         BY_TYPE: 'by type',
+    },
+    CATEGORY: {
+        NATURE: 'Nature',
+        MAN_MADE: 'Man-made',
+        ARCHITECTURE: 'Architecture',
+        HISTORY_CULTURE: 'History-Culture',
+        MUSEUM: 'Museum',
+        MONUMENT: 'Monument',
     },
 };
