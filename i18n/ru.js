@@ -72,4 +72,9 @@ export default {
         MONUMENT: 'Памятник',
         MONUMENT_H1: 'Памятники',
     },
+    SEO: {
+        IN_THE_GUIDE_TO: 'в путеводителе по',
+        IN_THE_GUIDE: 'в путеводителе',
+        END_OF_DESCRIPTION: 'Фотографии мест, карта, отзывы',
+    },
 };

@@ -82,6 +82,7 @@
             TwoPanels,
             Breadcrumbs,
         },
+        mixins: ['str'],
         data() {
             return {
                 page: 1,
@@ -101,7 +102,7 @@
         },
         head() {
             return {
-                title: `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`,
+                title: this.title,
                 meta: [
                     {
                         name: 'description',
@@ -138,33 +139,39 @@
                 }
                 return `${this.titleType}: ${this.name}`;
             },
+            title() {
+                if (this.$i18n.locale === 'en') {
+                    return `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType} of` : `Top ${this.pois.length > 10 ? 10 : this.pois.length} points of interest of`} ${this.location.name_en}. Route planning.`;
+                }
+                return `${this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : ''}${this.$route.params.tag ? `${this.titleType}: ` : ''}${this.location.name_rod_ed ? 'Т' : `${this.location.name}: т`}оп ${this.pois.length > 10 ? 10 : this.pois.length} достопримечательностей ${this.location.name_rod_ed ? ` ${this.location.name_rod_ed}` : ''}. Планирование маршрута поездки.`;
+            },
             description() {
                 let result = '';
-                if (this.location.name_predlozh_ed) {
-                    result = `${this.titleType} в путеводителе по ${this.location.name_dat_ed}.`;
+                if (this.location.name_dat_ed) {
+                    result = `${this.titleType} ${this.$t('SEO.IN_THE_GUIDE_TO')} ${this.$i18n.locale !== 'en' ? this.location.name_dat_ed : this.name}.`;
                 } else {
-                    result = `${this.location.name} в путеводителе.`;
+                    result = `${this.name} ${this.$t('SEO.IN_THE_GUIDE')}.`;
                 }
-                return `${result} Фотографии мест, карты, отзывы`;
+                return `${result} ${this.$t('SEO.END_OF_DESCRIPTION')}`;
             },
             crumbs() {
                 const crumbs = [...this.location.parents?.map((location) => ({
-                    name: location.name,
+                    name: this.$i18n.locale === 'en' && this.name_en ? location.name_en : location.name,
                     url: `/region/${location.url}`,
                 })) ?? []];
                 if (this.$route.params.tag) {
                     crumbs.push({
-                        name: this.name,
+                        name: this.$i18n.locale === 'en' && this.name_en ? this.name_en : this.name,
                         url: `/region/${this.location.url}`,
                     });
                     if (this.isCategory) {
                         crumbs.push({
-                            name: this.$route.params.tag,
+                            name: this.$t(`CATEGORY.${this.$route.params.tag.toUpperCase()}`),
                             url: '',
                         });
                     } else {
                         crumbs.push({
-                            name: this.tag.name,
+                            name: this.$i18n.locale === 'en' ? this.tag.name_en : this.tag.name,
                             url: '',
                         });
                     }
@@ -214,7 +221,10 @@
                     }
                 }
                 if (this.tag.name) {
-                    return this.tag.NAME_ROD ?? `${this.tag.name}:`;
+                    if (this.$i18n.locale === 'en') {
+                        return this.ucFirst(this.tag.name_en);
+                    }
+                    return this.ucFirst(this.tag.NAME_ROD ?? `${this.tag.name}:`);
                 }
                 return this.$t('POINTS_OF_INTEREST');
             },
@@ -265,6 +275,9 @@
                     && this.$refs.mapComponent.$refs.map.$mapObject) {
                     this.$refs.mapComponent.fetchPois(val);
                 }
+            },
+            ucFirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             },
         },
     };

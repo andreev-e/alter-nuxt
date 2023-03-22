@@ -72,4 +72,9 @@ export default {
         MONUMENT: 'Monument',
         MONUMENT_H1: 'Monuments',
     },
+    SEO: {
+        IN_THE_GUIDE_TO: 'in the guide to',
+        IN_THE_GUIDE: 'in the guide',
+        END_OF_DESCRIPTION: 'Photos of places, map, reviews',
+    },
 };
