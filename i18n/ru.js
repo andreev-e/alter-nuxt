@@ -63,7 +63,7 @@ export default {
         MAN_MADE: 'Техноген',
         ARCHITECTURE: 'Архитектура',
         HISTORY_CULTURE: 'История-Культура',
-        museum: 'Музей',
-        monument: 'Памятник',
+        MUSEUM: 'Музей',
+        MONUMENT: 'Памятник',
     },
 };
