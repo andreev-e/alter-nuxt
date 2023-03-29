@@ -76,5 +76,13 @@ export default {
         IN_THE_GUIDE_TO: 'in the guide to',
         IN_THE_GUIDE: 'in the guide',
         END_OF_DESCRIPTION: 'Photos of places, map, reviews',
+        HOW_TO_GET_TO: 'how to get there by car or public transport',
+    },
+    POI: {
+        HOW_TO_GET_BY_CAR: 'How to get by car',
+        HOW_TO_GET_BY_PUBLIC_TRANSPORT: 'How to get by public transport',
+        LINKS: 'Links',
+        ADDON: 'Addon',
+        NAVIGATE: 'Navigate',
     },
 };

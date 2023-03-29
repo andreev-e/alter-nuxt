@@ -16,7 +16,7 @@
                                 @click="toggleFav(poi.id)"
                             />
                         </client-only>
-                        {{ $i18n.locale === 'en' && poi.name_en ? poi.name_en : poi.name }}
+                        {{ name }}
                         <client-only>
                             <router-link
                                 v-if="canEdit"
@@ -73,7 +73,7 @@
                             class="my-3"
                         >
                             <super-gallery
-                                :alt="poi.name"
+                                :alt="name"
                                 :images="poi.images"
                                 :dominate-color="poi.dominatecolor"
                             />
@@ -106,7 +106,7 @@
 
                                         id="route"
                                     >
-                                        Как добраться на машине
+                                        {{ $t('POI.HOW_TO_GET_BY_CAR') }}
                                     </h2>
                                     <p>{{ poi.route }}</p>
                                 </template>
@@ -117,7 +117,7 @@
 
                                         id="route_o"
                                     >
-                                        Как добраться на общественном транспорте
+                                        {{ $t('POI.HOW_TO_GET_BY_PUBLIC_TRANSPORT') }}
                                     </h2>
                                     <p>{{ poi.route_o }}</p>
                                 </template>
@@ -125,7 +125,7 @@
                                     v-if="poi.links"
                                 >
                                     <h2 id="links">
-                                        Ссылки
+                                        {{ $t('POI.LINKS') }}
                                     </h2>
                                     <text-with-links :text="poi.links" />
                                 </template>
@@ -133,7 +133,9 @@
                                     v-if="poi.addon"
                                 >
                                     <h2 id="addon">
-                                        Примечание
+                                        <h2 id="links">
+                                            {{ $t('POI.ADDON') }}
+                                        </h2>
                                     </h2>
                                     <p>{{ poi.addon }}</p>
                                 </template>
@@ -167,17 +169,11 @@
                                 </client-only>
                                 <div class="row pt-3">
                                     <div class="col-sm-12">
-                                        <nuxt-link
-                                            to="/izbannoye"
-                                            class="btn btn-secondary mr-2"
-                                        >
-                                            Построить маршрут с данной точкой
-                                        </nuxt-link>
                                         <a
                                             id="geo"
                                             class="btn btn-secondary"
                                             :href="`https://maps.google.com/maps?daddr=${poi.lat},${poi.lng}&amp;ll=`"
-                                        >Навигация на точку</a>
+                                        >{{ $t('POI.NAVIGATE') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -257,11 +253,11 @@
         },
         head() {
             return {
-                title: `${this.poi.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[this.poi.locations.length - 1]?.name}` : ''}`,
+                title: this.title,
                 meta: [
                     {
                         name: 'description',
-                        content: `${this.poi.name} - как добраться проезда на машине и общественным транспортом. Координаты, отзывы, фотографии`,
+                        content: `${this.name} - ${this.$t('SEO.HOW_TO_GET_TO')}. ${this.$t('SEO.END_OF_DESCRIPTION')}`,
                     },
                 ],
                 link: [
@@ -280,6 +276,12 @@
             }),
             types() {
                 return TYPES;
+            },
+            title() {
+                return `${this.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[this.poi.locations.length - 1][this.$i18n.locale === 'en' ? 'name_en' : 'name']}` : ''}`;
+            },
+            name() {
+                return this.$i18n.locale === 'en' && this.poi.name_en ? this.poi.name_en : this.poi.name;
             },
             breadCrumbs() {
                 const breadCrumbs = [...this.poi.locations ?? []].map((location) => ({
