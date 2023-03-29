@@ -14,16 +14,16 @@
                 v-if="poi.thumb"
                 :src="poi.thumb"
                 class="img-fluid"
-                :alt="name"
+                :alt="poi.name"
             >
             <img
                 v-else
                 src="https://via.placeholder.com/600"
                 class="img-fluid"
-                :alt="name"
+                :alt="poi.name"
             >
             <div class="img-title">
-                {{ name }}
+                {{ poi.name }}
             </div>
             <div
                 v-if="poi.dist"
@@ -91,18 +91,15 @@
             };
         },
         computed: {
-            name() {
-                return this.$i18n.locale === 'en' && this.poi.name_en ? this.poi.name_en : this.poi.name;
-            },
             distance() {
                 const dist = Math.round(this.poi.dist);
                 if (dist > 5) {
-                    return `${dist} ${this.$t('UI.KM')}`;
+                    return `${dist} км`;
                 }
                 if (dist === 0) {
-                    return `${Math.round(this.poi.dist * 1000)}  ${this.$t('UI.M')}`;
+                    return `${Math.round(this.poi.dist * 1000)}  м`;
                 }
-                return `${Math.round(dist, 1)} ${this.$t('UI.KM')}`;
+                return `${Math.round(dist, 1)} км`;
             },
             canEdit() {
                 return this.$auth.user && (this.isAdmin || this.isOwner);
