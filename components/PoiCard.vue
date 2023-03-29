@@ -102,7 +102,7 @@
                 if (dist === 0) {
                     return `${Math.round(this.poi.dist * 1000)}  ${this.$t('UI.M')}`;
                 }
-                return `${Math.round(dist, 1)} ${this.$t('UI.KM')}`;
+                return `${Math.round(dist)} ${this.$t('UI.KM')}`;
             },
             canEdit() {
                 return this.$auth.user && (this.isAdmin || this.isOwner);
