@@ -44,6 +44,8 @@ export default {
         LOCATION: 'Location',
         VISITED: 'Visited by',
         NEAR: 'Points of interest near',
+        KM: 'km',
+        M: 'm',
     },
     COMMENT: {
         COMMENTS: 'Comments',

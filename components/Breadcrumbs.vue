@@ -10,6 +10,7 @@
                     itemscope
                     itemtype="https://schema.org/ListItem"
                     class="first"
+                    :name="$t('ALTERTRAVEL')"
                 >
                     <router-link to="/">
                         <font-awesome-icon
@@ -30,6 +31,7 @@
                         :key="`crumb_${index}`"
                         itemprop="itemListElement"
                         itemscope
+                        :name="crumb.name"
                         itemtype="https://schema.org/ListItem"
                     >
                         <font-awesome-icon

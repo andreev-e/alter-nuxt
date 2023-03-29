@@ -44,6 +44,8 @@ export default {
         LOCATION: 'Локация',
         VISITED: 'Посетили',
         NEAR: 'Что еще есть рядом с эти местом',
+        KM: 'км',
+        M: 'м',
     },
     COMMENT: {
         COMMENTS: 'Комментарии',
