@@ -16,7 +16,7 @@
                                 @click="toggleFav(poi.id)"
                             />
                         </client-only>
-                        {{ poi.name }}
+                        {{ $i18n.locale === 'en' && poi.name_en ? poi.name_en : poi.name }}
                         <client-only>
                             <router-link
                                 v-if="canEdit"
