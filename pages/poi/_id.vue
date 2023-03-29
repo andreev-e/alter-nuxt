@@ -113,10 +113,7 @@
                                 <template
                                     v-if="poi.route_o"
                                 >
-                                    <h2
-
-                                        id="route_o"
-                                    >
+                                    <h2 id="route_o">
                                         {{ $t('POI.HOW_TO_GET_BY_PUBLIC_TRANSPORT') }}
                                     </h2>
                                     <p>{{ poi.route_o }}</p>
