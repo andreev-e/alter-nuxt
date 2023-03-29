@@ -130,9 +130,7 @@
                                     v-if="poi.addon"
                                 >
                                     <h2 id="addon">
-                                        <h2 id="links">
-                                            {{ $t('POI.ADDON') }}
-                                        </h2>
+                                        {{ $t('POI.ADDON') }}
                                     </h2>
                                     <p>{{ poi.addon }}</p>
                                 </template>
