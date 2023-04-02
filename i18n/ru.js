@@ -87,4 +87,8 @@ export default {
         ADDON: 'Примечание',
         NAVIGATE: 'Навигация на точку',
     },
+    MAP: {
+        HIDE_FILTER: 'Скрыть фильтры карты',
+        SHOW_FILTER: 'Показать фильтры карты',
+    },
 };

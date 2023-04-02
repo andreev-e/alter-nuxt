@@ -87,4 +87,8 @@ export default {
         ADDON: 'Addon',
         NAVIGATE: 'Navigate',
     },
+    MAP: {
+        HIDE_FILTER: 'Hide map filter',
+        SHOW_FILTER: 'Show map filter',
+    },
 };

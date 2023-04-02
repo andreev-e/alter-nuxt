@@ -20,13 +20,13 @@
                 v-if="expandable"
                 class="expander"
                 @click="expanded = !expanded"
-            ><br>Скрыть фильтры карты</span>
+            ><br>{{ $t('MAP.HIDE_FILTER') }}</span>
         </template>
         <span
             v-if="expandable && !expanded"
             class="expander"
             @click="expanded = !expanded"
-        >Показать фильтры карты</span>
+        >{{ $t('MAP.SHOW_FILTER') }}</span>
     </div>
 </template>
 
