@@ -125,6 +125,7 @@
             return {
                 fields: [
                     { id: 'name', label: 'Название', required: true },
+                    { id: 'name_en', label: 'Название на Английском', required: false },
                     {
                         id: 'description', label: 'Описание', required: true, type: 'textarea',
                     },
@@ -137,6 +138,7 @@
                 ],
                 form: new Form({
                     name: null,
+                    name_en: null,
                     description: null,
                     route: null,
                     route_o: null,
