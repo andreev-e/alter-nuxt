@@ -8,7 +8,7 @@
                     <router-link
                         to="/secure/poi/create"
                         class="d-inline-block mr-2 mt-1"
-                        title="Добавить достопримечательность"
+                        :title="$t('MENU.ADD_POINT')"
                     >
                         <font-awesome-icon
                             icon="fa-map-marker"
@@ -19,7 +19,7 @@
                     <router-link
                         to="/secure/route/create"
                         class="d-inline-block mr-2 mt-1"
-                        title="Добавить маршрут"
+                        title="$t('MENU.ADD_ROUTE')"
                     >
                         <font-awesome-icon
                             icon="fa-route"
@@ -27,7 +27,7 @@
                             role="button"
                         />
                     </router-link>
-                    Авторский раздел
+                    {{ $t('SECURE.TITLE') }}
                 </h1>
             </div>
         </div>
@@ -35,24 +35,24 @@
             <div class="col-sm-12">
                 <b-tabs>
                     <b-tab
-                        title="Точки"
+                        :title="$t('POINTS_OF_INTEREST')"
                         class="my-3"
                     >
                         <client-only>
                             <paginated-gallery
                                 type="poi"
-                                name="точку"
+                                :name="$t('POI.ROD')"
                             />
                         </client-only>
                     </b-tab>
                     <b-tab
-                        title="Маршруты"
+                        :title="$t('ROUTES')"
                         class="my-3"
                     >
                         <client-only>
                             <paginated-gallery
                                 type="route"
-                                name="маршрут"
+                                :name="$t('ROUTE.ROD')"
                             />
                         </client-only>
                     </b-tab>
@@ -74,14 +74,16 @@
             return {
                 breadCrumbs: [
                     {
-                        name: 'Авторский раздел',
+                        name: this.$t('SECURE.TITLE'),
                         url: '',
                     },
                 ],
             };
         },
-        head: {
-            title: 'Авторский раздел',
+        head() {
+            return {
+                title: this.$t('SECURE.TITLE'),
+            };
         },
     };
 </script>

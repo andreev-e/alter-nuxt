@@ -2,6 +2,7 @@ export default {
     ALTERTRAVEL: 'Альтернативный путеводитель',
     ALTERTRAVEL_MAP: 'Карта Альтернативного Путеводителя',
     POINTS_OF_INTEREST: 'Достопримечательности',
+    ROUTES: 'Маршруты',
     HEADER: {
         REGISTER: 'Регистрация',
         LOGIN: 'Вход',
@@ -99,10 +100,17 @@ export default {
             COPYRIGHT: 'Автор фотографий (если используются не свои фотографии)',
             TAGS: 'Метки',
         },
+        ROD: 'точку',
+    },
+    ROUTE: {
+        ROD: 'маршрут',
     },
     MAP: {
         HIDE_FILTER: 'Скрыть фильтры карты',
         SHOW_FILTER: 'Показать фильтры карты',
         SET_LOCATION: 'Укажите точку на карте',
+    },
+    SECURE: {
+        TITLE: 'Авторский раздел',
     },
 };

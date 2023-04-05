@@ -33,11 +33,11 @@
             return {
                 breadCrumbs: [
                     {
-                        name: 'Авторский раздел',
+                        name: this.$t('SECURE.TITLE'),
                         url: '/secure/',
                     },
                     {
-                        name: 'Создание достпоримечательности',
+                        name: this.$t('POI.CREATE'),
                         url: '',
                     },
                 ],

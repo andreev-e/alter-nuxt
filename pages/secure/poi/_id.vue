@@ -54,7 +54,7 @@
         },
         head() {
             return {
-                title: `${this.poi.name}: ${this.$t('POI.EDIT')}`,
+                title: this.$t('POI.EDIT'),
             };
         },
         computed: {
@@ -81,11 +81,11 @@
             breadCrumbs() {
                 return [
                     {
-                        name: 'Авторский раздел',
+                        name: this.$t('SECURE.TITLE'),
                         url: '/secure/',
                     },
                     {
-                        name: this.poi.name ? `Редактирование: ${this.poi.name}` : '',
+                        name: this.$t('POI.EDIT'),
                         url: '',
                     },
                 ];

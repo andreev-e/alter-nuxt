@@ -2,6 +2,7 @@ export default {
     ALTERTRAVEL: 'Altertravel',
     ALTERTRAVEL_MAP: 'Altertravel map',
     POINTS_OF_INTEREST: 'Points of interest',
+    ROUTES: 'Routes',
     HEADER: {
         REGISTER: 'Register',
         LOGIN: 'Login',
@@ -32,7 +33,7 @@ export default {
         SUBMIT: 'Submit',
         SAVE: 'Save',
         ADD: 'Add',
-        DISPLAY_ALL: 'Display all',
+        DISPLAY_ALL: 'Show all',
         HIDE: 'Hide',
         PAGE: 'p',
         LOG_IN: 'Log in',
@@ -99,10 +100,17 @@ export default {
             COPYRIGHT: 'Author of photos name',
             TAGS: 'Tags',
         },
+        ROD: 'point',
+    },
+    ROUTE: {
+        ROD: 'route',
     },
     MAP: {
         HIDE_FILTER: 'Hide map filter',
         SHOW_FILTER: 'Show map filter',
         SET_LOCATION: 'Set location',
+    },
+    SECURE: {
+        TITLE: 'Secure section',
     },
 };
