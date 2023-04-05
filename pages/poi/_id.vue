@@ -206,7 +206,7 @@
 </template>
 
 <script>
-  // eslint-disable-next-line import/no-extraneous-dependencies
+    // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../../constants';
     import Comments from '../../components/Comments.vue';
@@ -273,7 +273,13 @@
                 return TYPES;
             },
             title() {
-                return `${this.name}${this.poi.locations && this.poi.locations.length ? `, ${this.poi.locations[this.poi.locations.length - 1][this.$i18n.locale === 'en' ? 'name_en' : 'name']}` : ''}`;
+                const { locations } = this.poi;
+                if (locations && locations.length) {
+                    const region = `, ${locations[locations.length - 1][this.$i18n.locale === 'en' ? 'name_en' : 'name']}`;
+                    const country = `, ${locations[0][this.$i18n.locale === 'en' ? 'name_en' : 'name']}`;
+                    return `${this.name}${region}${locations.length > 1 ? country : ''}`;
+                }
+                return this.name;
             },
             name() {
                 return this.$i18n.locale === 'en' && this.poi.name_en ? this.poi.name_en : this.poi.name;
