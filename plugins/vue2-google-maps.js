@@ -5,8 +5,6 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 Vue.use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyDVxoYcrB_2arTNlYpFClzzKy9KgFW3_Y8',
-        region: 'RU',
-        language: 'ru',
         libraries: 'geometry',
     },
 });
