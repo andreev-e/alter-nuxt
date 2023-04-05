@@ -27,7 +27,6 @@
                     v-if="previewImage"
                     :url="previewImage"
                     alt="preview"
-
                     loading
                 />
             </div>
@@ -104,7 +103,7 @@
                         this.$refs.file.value = null;
                     })
                     .catch((err) => {
-                        this.message = `Ошибка загрузки! ${err}`;
+                        this.message = `Error! ${err}`;
                         this.currentImage = null;
                         this.$refs.file.value = null;
                     });

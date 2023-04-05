@@ -15,7 +15,7 @@
         <template v-if="$route.params.id">
             <div class="row">
                 <div class="col-12">
-                    <h2>Фото</h2>
+                    <h2>{{ $t('UI.PHOTO') }}</h2>
                 </div>
             </div>
             <div class="row">
