@@ -54,7 +54,7 @@
         },
         head() {
             return {
-                title: `${this.poi.name} ${this.$t('POI.EDIT')}`,
+                title: `${this.poi.name}: ${this.$t('POI.EDIT')}`,
             };
         },
         computed: {

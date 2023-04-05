@@ -209,7 +209,7 @@
             },
             types() {
                 return TYPES.map((item) => ({
-                    ...item,
+                    id: item.name,
                     name: this.$t(`CATEGORY.${item.name.toUpperCase()}`),
                 }));
             },
@@ -224,7 +224,7 @@
         },
         watch: {
             poi(poi) {
-                ['name', 'name_en', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright']
+                ['name', 'name_en', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright', 'type']
                     .forEach((field) => {
                         this.form[field] = poi[field];
                     });

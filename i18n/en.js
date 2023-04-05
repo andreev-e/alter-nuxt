@@ -80,6 +80,8 @@ export default {
         IN_THE_GUIDE: 'in the guide',
         END_OF_DESCRIPTION: 'Photos of places, map, reviews',
         HOW_TO_GET_TO: 'how to get there by car or public transport',
+        INDEX_TITLE: 'Points of interest map for independent travellers',
+        INDEX_DESCRIPTION: 'Catalogue of points of interest on the map for independent organization of journeys!',
     },
     POI: {
         EDIT: 'Point of interest edit',

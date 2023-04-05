@@ -20,7 +20,7 @@
                 <b-form-select-option
                     v-for="option in options"
                     :key="option.name"
-                    :value="option.name"
+                    :value="option.id"
                 >
                     {{ option.name }}
                 </b-form-select-option>

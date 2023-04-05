@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-  // eslint-disable-next-line import/no-extraneous-dependencies
+    // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import { TYPES } from '../constants';
     import UniversalMap from '../components/map/UniversalMap.vue';
@@ -54,7 +54,10 @@
         data() {
             return {
                 mapPois: [],
-                center: { lat: 0, lng: 0 },
+                center: {
+                    lat: 0,
+                    lng: 0,
+                },
                 categories: [...TYPES],
                 selectedCategories: [],
             };
@@ -62,14 +65,16 @@
         fetch() {
             this.getPoi();
         },
-        head: {
-            title: 'Карта достопримечательностей для самостоятельных путешественников',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!',
-                },
-            ],
+        head() {
+            return {
+                title: this.$t('SEO.INDEX_TITLE'),
+                meta: [
+                    {
+                        name: 'description',
+                        content: this.$t('SEO.INDEX_DESCRIPTION'),
+                    },
+                ],
+            };
         },
         computed: {
             ...mapGetters({
