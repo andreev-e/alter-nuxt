@@ -12,19 +12,18 @@
             cols="12"
             md="9"
         >
-            <b-form-select
+            <el-select
                 v-model="val"
                 :required="required"
                 @change="$emit('input', val)"
             >
-                <b-form-select-option
+                <el-option
                     v-for="option in options"
                     :key="option.name"
                     :value="option.id"
-                >
-                    {{ option.name }}
-                </b-form-select-option>
-            </b-form-select>
+                    :label="option.name"
+                />
+            </el-select>
         </b-col>
     </b-row>
 </template>
