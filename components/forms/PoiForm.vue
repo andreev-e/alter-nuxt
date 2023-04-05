@@ -17,12 +17,12 @@
                 v-if="form.errors.errors.lat || form.errors.errors.lng"
                 class="text-danger mt-1 text-sm"
             >
-                Укажите точку на карте
+                {{ $t('MAP.SET_LOCATION') }}
             </p>
         </div>
         <select-input
             v-model="form.type"
-            label="Категория"
+            :label="$t('POI.FORM.CATEGORY')"
             :options="types"
             required
         />
@@ -69,7 +69,7 @@
                 :sm="6"
                 class="text-md-right text-sm-center mt-2"
             >
-                Метки
+                {{ $t('POI.FORM.TAGS') }}
             </el-col>
             <el-col
                 :xs="24"
@@ -78,7 +78,7 @@
                 <el-select
                     v-model="form.tags"
                     multiple
-                    placeholder="Метки"
+                    :placeholder="$t('POI.FORM.TAGS')"
                 >
                     <el-option
                         v-for="tag in orderedTags"
@@ -93,13 +93,12 @@
             type="submit"
             class="btn btn-success"
         >
-            Сохранить
+            {{ $t('UI.SAVE') }}
         </button>
     </form>
 </template>
 
 <script>
-  // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form } from 'laravel-request-utils';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapGetters } from 'vuex';
@@ -124,17 +123,50 @@
         data() {
             return {
                 fields: [
-                    { id: 'name', label: 'Название', required: true },
-                    { id: 'name_en', label: 'Название на Английском', required: false },
                     {
-                        id: 'description', label: 'Описание', required: true, type: 'textarea',
+                        id: 'name',
+                        label: this.$t('POI.FORM.NAME'),
+                        required: true,
                     },
-                    { id: 'route', label: 'Как добраться на машине', type: 'textarea' },
-                    { id: 'route_o', label: 'Как добраться на общественном транспорте', type: 'textarea' },
-                    { id: 'addon', label: 'Примечание', type: 'textarea' },
-                    { id: 'links', label: 'Ссылки', type: 'textarea' },
-                    { id: 'copyright', label: 'Автор фотографий (если используются не свои фотографии)' },
-                    { id: 'ytb', label: 'Youtube: https://www.youtube.com/watch?v=' },
+                    {
+                        id: 'name_en',
+                        label: this.$t('POI.FORM.NAME_EN'),
+                        required: false,
+                    },
+                    {
+                        id: 'description',
+                        label: this.$t('POI.FORM.DESCRIPTION'),
+                        required: true,
+                        type: 'textarea',
+                    },
+                    {
+                        id: 'route',
+                        label: this.$t('POI.FORM.HOW_TO_GET_BY_CAR'),
+                        type: 'textarea',
+                    },
+                    {
+                        id: 'route_o',
+                        label: this.$t('POI.FORM.HOW_TO_GET_BY_PUBLIC_TRANSPORT'),
+                        type: 'textarea',
+                    },
+                    {
+                        id: 'addon',
+                        label: this.$t('POI.FORM.ADDON'),
+                        type: 'textarea',
+                    },
+                    {
+                        id: 'links',
+                        label: this.$t('POI.FORM.LINKS'),
+                        type: 'textarea',
+                    },
+                    {
+                        id: 'copyright',
+                        label: this.$t('POI.FORM.COPYRIGHT'),
+                    },
+                    {
+                        id: 'ytb',
+                        label: 'Youtube: https://www.youtube.com/watch?v=',
+                    },
                 ],
                 form: new Form({
                     name: null,
@@ -172,13 +204,22 @@
                         lng: 45,
                     };
                 },
-                set() { },
+                set() {
+                },
             },
             types() {
-                return TYPES;
+                return TYPES.map((item) => ({
+                    ...item,
+                    name: this.$t(`CATEGORY.${item.name.toUpperCase()}`),
+                }));
             },
             orderedTags() {
-                return [...this.tags].sort((a, b) => a.name.localeCompare(b.name));
+                return [...this.tags]
+                    .map((item) => ({
+                        ...item,
+                        name: this.$i18n.locale === 'en' ? item.name_en : item.name,
+                    }))
+                    .sort((a, b) => a.name.localeCompare(b.name));
             },
         },
         watch: {
@@ -193,7 +234,7 @@
             },
         },
         mounted() {
-            if (process.client && navigator.geolocation && !(this.poi && this.poi.lat)) {
+            if (process.client && navigator.geolocation && !(this.poi)) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         this.form.lat = position.coords.latitude;
@@ -251,7 +292,7 @@
 </script>
 
 <style scoped>
-  .el-select {
-    width: 100%;
-  }
+    .el-select {
+        width: 100%;
+    }
 </style>

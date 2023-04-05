@@ -4,7 +4,7 @@
         <Breadcrumbs :list="breadCrumbs" />
         <div class="row">
             <div class="col-12">
-                <h1>Редактирование точки</h1>
+                <h1>{{ $t('POI.EDIT') }}</h1>
             </div>
         </div>
         <div class="row">
@@ -54,7 +54,7 @@
         },
         head() {
             return {
-                title: this.poi.name,
+                title: `${this.poi.name} ${this.$t('POI.EDIT')}`,
             };
         },
         computed: {

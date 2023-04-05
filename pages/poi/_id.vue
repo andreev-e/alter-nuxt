@@ -106,7 +106,7 @@
 
                                         id="route"
                                     >
-                                        {{ $t('POI.HOW_TO_GET_BY_CAR') }}
+                                        {{ $t('POI.FORM.HOW_TO_GET_BY_CAR') }}
                                     </h2>
                                     <p>{{ poi.route }}</p>
                                 </template>
@@ -114,7 +114,7 @@
                                     v-if="poi.route_o"
                                 >
                                     <h2 id="route_o">
-                                        {{ $t('POI.HOW_TO_GET_BY_PUBLIC_TRANSPORT') }}
+                                        {{ $t('POI.FORM.HOW_TO_GET_BY_PUBLIC_TRANSPORT') }}
                                     </h2>
                                     <p>{{ poi.route_o }}</p>
                                 </template>
@@ -122,7 +122,7 @@
                                     v-if="poi.links"
                                 >
                                     <h2 id="links">
-                                        {{ $t('POI.LINKS') }}
+                                        {{ $t('POI.FORM.LINKS') }}
                                     </h2>
                                     <text-with-links :text="poi.links" />
                                 </template>
@@ -130,7 +130,7 @@
                                     v-if="poi.addon"
                                 >
                                     <h2 id="addon">
-                                        {{ $t('POI.ADDON') }}
+                                        {{ $t('POI.FORM.ADDON') }}
                                     </h2>
                                     <p>{{ poi.addon }}</p>
                                 </template>
