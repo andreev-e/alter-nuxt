@@ -183,7 +183,7 @@
         },
         watch: {
             poi(poi) {
-                ['name', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright']
+                ['name', 'name_en', 'description', 'route', 'route_o', 'addon', 'type', 'lat', 'lng', 'links', 'ytb', 'copyright']
                     .forEach((field) => {
                         this.form[field] = poi[field];
                     });
