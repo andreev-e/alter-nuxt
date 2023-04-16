@@ -3,6 +3,7 @@ export default {
     ALTERTRAVEL_MAP: 'Altertravel map',
     POINTS_OF_INTEREST: 'Points of interest',
     ROUTES: 'Routes',
+    TAG: 'Tag',
     HEADER: {
         REGISTER: 'Register',
         LOGIN: 'Login',
@@ -48,6 +49,7 @@ export default {
         NEAR: 'Points of interest near',
         KM: 'km',
         M: 'm',
+        ALL: 'All',
     },
     COMMENT: {
         COMMENTS: 'Comments',
@@ -83,6 +85,8 @@ export default {
         HOW_TO_GET_TO: 'how to get there by car or public transport',
         INDEX_TITLE: 'Points of interest map for independent travellers',
         INDEX_DESCRIPTION: 'Catalogue of points of interest on the map for independent organization of journeys!',
+        POI_ON_MAP: 'Points of interest on map',
+        IN_GUIDE_WITH: 'in guide with photos, descriptions, reviews, route maps',
     },
     POI: {
         EDIT: 'Point of interest edit',

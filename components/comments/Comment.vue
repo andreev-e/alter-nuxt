@@ -32,7 +32,7 @@
                 <router-link
                     :to="`${type ? type : comment.object_type}/${comment.object_id}`"
                 >
-                    {{ comment.object_name }}
+                    {{ $i18n.locale === 'en' && comment.object_name_en ? comment.object_name_en : comment.object_name }}
                 </router-link>
             </template>
             <client-only>

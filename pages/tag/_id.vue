@@ -2,7 +2,7 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: `Метка: ${tag.name ? tag.name : ''} `, url: '' }]"
+            :list="[{ name: `${$t('TAG')}: ${name ? name : ''} `, url: '' }]"
             :loading="loading"
         />
         <div class="row">
@@ -79,11 +79,11 @@
         },
         head() {
             return {
-                title: `Все ${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                title: `${this.$t('UI.ALL')} ${this.nameRod} ${this.$t('SEO.IN_GUIDE_WITH')}. ${this.$t('POINTS_OF_INTEREST')}.`,
                 meta: [
                     {
                         name: 'description',
-                        content: `Все ${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name} в путеводителе с фото, описаниями, отзывами, картами проезда. Достопримечательности.`,
+                        content: `${this.$t('UI.ALL')} ${this.nameRod} ${this.$t('SEO.IN_GUIDE_WITH')}. ${this.$t('POINTS_OF_INTEREST')}.`,
                     },
                 ],
             };
@@ -97,9 +97,18 @@
                 loading: 'tag/loading',
                 tagLoaded: 'tag/isEmpty',
             }),
+            name() {
+                return this.$i18n.locale === 'en' && this.tag.name_en ? this.tag.name_en : this.tag.name;
+            },
+            nameRod() {
+                return this.$i18n.locale !== 'en' && this.tag.NAME_ROD ? this.tag.NAME_ROD : this.name;
+            },
             h1() {
                 if (this.tagLoaded) {
-                    return `${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name}. Достопримечательности на карте`;
+                    if (this.$i18n.locale === 'en') {
+                        return `${this.name}: ${this.$t('SEO.POI_ON_MAP')}`;
+                    }
+                    return `${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name}. ${this.$t('SEO.POI_ON_MAP')}`;
                 }
                 return null;
             },
