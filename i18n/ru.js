@@ -54,6 +54,7 @@ export default {
         RECENTLY_UPDATED: 'Недавно обновлены',
         NEW_PUBLICATIONS: 'новые публикации',
         LOG_IN_FIRST: 'Пожалуйста, сначала авторизуйтесь',
+        LOGIN: 'Вход',
     },
     COMMENT: {
         COMMENTS: 'Комментарии',

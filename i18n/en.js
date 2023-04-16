@@ -54,6 +54,7 @@ export default {
         RECENTLY_UPDATED: 'Recently updated',
         NEW_PUBLICATIONS: 'new publications',
         LOG_IN_FIRST: 'Please, log in first',
+        LOGIN: 'Login form',
     },
     COMMENT: {
         COMMENTS: 'Comments',

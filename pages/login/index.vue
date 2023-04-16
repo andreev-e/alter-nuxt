@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1>
-                    Вход
+                    {{ $t('UI.LOGIN') }}
                 </h1>
                 <form @submit.prevent="doLogin">
                     <text-input
@@ -16,7 +16,7 @@
                     <text-input
                         id="password"
                         v-model="password"
-                        label="Пароль"
+                        label="Password"
                         type="password"
                         required
                     />
@@ -25,7 +25,7 @@
                             class="btn btn-success"
                             type="submit"
                         >
-                            Войти
+                            {{ $t('UI.LOG_IN') }}
                         </button>
                     </div>
                 </form>
@@ -58,7 +58,7 @@
                     await this.$auth
                         .loginWith('laravelSanctum', { data });
                 } catch (res) {
-                    console.log(res);
+                    // console.log(res);
                 }
             },
         },

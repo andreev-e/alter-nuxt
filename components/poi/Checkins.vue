@@ -84,7 +84,7 @@
                         .then(() => {
                             this.$emit('change');
                             if (!this.vasHere) {
-                                this.$message.success(this.$t('UI.SUCCESS_CHECKIN'));
+                                this.$message.success(this.$t('CHEKINS.SUCCESS_CHECKIN'));
                             }
                         });
                 } else {
