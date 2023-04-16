@@ -2,7 +2,7 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: 'Авторы', url: '/user/' }, { name: $route.params.id, url: '' }]"
+            :list="[{ name: $t('MENU.AUTHORS'), url: '/user/' }, { name: $route.params.id, url: '' }]"
         />
         <div class="row">
             <div
@@ -22,13 +22,13 @@
                 <badge
                     class="bg-primary text-white"
                 >
-                    опубликовано {{ user.publications }}
+                    {{ $t('UI.PUBLISHED') + ' ' + user.publications }}
                 </badge>
                 <badge class="bg-warning">
-                    C нами с {{ user.regdate }}
+                    {{ $t('AUTHORS.WITH_US_FROM') + ' ' + user.regdate }}
                 </badge>
                 <p
-                    v-if="user.about"
+                    v-if="user.about && $i18n.locale === 'ru'"
                     class="description"
                 >
                     <b>{{ user.about }}</b>

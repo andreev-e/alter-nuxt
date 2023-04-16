@@ -13,14 +13,14 @@
                     icon="fa-check-circle"
                     class="text-danger mr-2"
                 />
-                Я не был тут...
+                {{ $t('CHEKINS.I_WASNT_HERE') }}
             </template>
             <template v-else>
                 <font-awesome-icon
                     icon="fa-check-circle"
                     class="text-success mr-2"
                 />
-                Я побывал тут!
+                {{ $t('CHEKINS.I_WAS_HERE') }}!
             </template>
         </div>
         <super-gallery
@@ -84,11 +84,11 @@
                         .then(() => {
                             this.$emit('change');
                             if (!this.vasHere) {
-                                this.$message.success('Зачекинен. Напишете отзыв?');
+                                this.$message.success(this.$t('UI.SUCCESS_CHECKIN'));
                             }
                         });
                 } else {
-                    this.$message.warning('Пожалуйста, сначала авторизуйтесь');
+                    this.$message.warning(this.$t('UI.LOG_IN_FIRST'));
                 }
             },
         },

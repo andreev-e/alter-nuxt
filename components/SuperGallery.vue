@@ -15,7 +15,7 @@
                     v-if="img.copyright"
                     class="position-absolute"
                 >
-                    {{ `Участник ${img.copyright}` }}
+                    {{ `${$t('AUTHORS.PARTICIPANT')} ${img.copyright}` }}
                 </div>
                 <div
                     v-if="img.place"

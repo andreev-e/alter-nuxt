@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    Новое
+                    {{ `${$t('UI.NEW')} ${$t('POINTS_OF_INTEREST').toLowerCase()}` }}
                 </h1>
             </div>
         </div>
@@ -52,14 +52,16 @@
         async fetch() {
             await this.fetchPois();
         },
-        head: {
-            title: 'Карта достопримечательностей для самостоятельных путешественников',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Каталог достопримечательностей на карте. Для самостоятельной организации путешествия!',
-                },
-            ],
+        head() {
+            return {
+                title: `${this.$t('UI.NEW')} ${this.$t('SEO.INDEX_TITLE').toLowerCase()}`,
+                meta: [
+                    {
+                        name: 'description',
+                        content: this.$t('SEO.INDEX_DESCRIPTION'),
+                    },
+                ],
+            };
         },
         computed: {
             ...mapGetters({
@@ -70,7 +72,7 @@
             crumbs() {
                 return [
                     {
-                        name: 'новые публикации',
+                        name: this.$t('UI.NEW_PUBLICATIONS'),
                         url: '',
                     },
                 ];

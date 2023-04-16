@@ -2,15 +2,18 @@
     <div class="container page">
         <Header />
         <Breadcrumbs
-            :list="[{ name: 'авторы', url: '' }]"
+            :list="[{ name: $t('MENU.AUTHORS'), url: '' }]"
         />
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    Авторы
+                    {{ $t('MENU.AUTHORS') }}
                 </h1>
             </div>
-            <div class="col-sm-12">
+            <div
+                v-if="$i18n.locale === 'ru'"
+                class="col-sm-12"
+            >
                 <p>
                     Альтернативный путеводитель — проект авторский.
                     Все достопримечательности добавляются только членами нашего творческого коллектива.

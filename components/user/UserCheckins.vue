@@ -4,7 +4,7 @@
         class="row"
     >
         <div class="col-12">
-            <h2>Побывал в</h2>
+            <h2>{{ $t('CHEKINS.VISITED') }}</h2>
         </div>
         <div class="col-12">
             <checkins :user="user" />

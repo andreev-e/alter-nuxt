@@ -50,6 +50,10 @@ export default {
         KM: 'км',
         M: 'м',
         ALL: 'Все',
+        NEW: 'Новое',
+        RECENTLY_UPDATED: 'Недавно обновлены',
+        NEW_PUBLICATIONS: 'новые публикации',
+        LOG_IN_FIRST: 'Пожалуйста, сначала авторизуйтесь',
     },
     COMMENT: {
         COMMENTS: 'Комментарии',
@@ -116,5 +120,15 @@ export default {
     },
     SECURE: {
         TITLE: 'Авторский раздел',
+    },
+    AUTHORS: {
+        WITH_US_FROM: 'C нами с',
+        PARTICIPANT: 'Участник',
+    },
+    CHEKINS: {
+        VISITED: 'Побывал в',
+        I_WASNT_HERE: 'Я не был тут',
+        I_WAS_HERE: 'Я побывал тут!',
+        SUCCESS_CHECKIN: 'Зачекинен!',
     },
 };

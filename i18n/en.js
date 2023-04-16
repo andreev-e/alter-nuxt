@@ -50,6 +50,10 @@ export default {
         KM: 'km',
         M: 'm',
         ALL: 'All',
+        NEW: 'New',
+        RECENTLY_UPDATED: 'Recently updated',
+        NEW_PUBLICATIONS: 'new publications',
+        LOG_IN_FIRST: 'Please, log in first',
     },
     COMMENT: {
         COMMENTS: 'Comments',
@@ -116,5 +120,15 @@ export default {
     },
     SECURE: {
         TITLE: 'Secure section',
+    },
+    AUTHORS: {
+        WITH_US_FROM: 'With us from',
+        PARTICIPANT: 'Participant',
+    },
+    CHEKINS: {
+        VISITED: 'Visited',
+        I_WASNT_HERE: 'I wasn\'t here',
+        I_WAS_HERE: 'I was here',
+        SUCCESS_CHECKIN: 'Success checkin!',
     },
 };
