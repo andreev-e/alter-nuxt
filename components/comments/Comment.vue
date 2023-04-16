@@ -120,6 +120,9 @@
                         || (this.comment.user && this.$auth.user.username === this.comment.user.username));
             },
         },
+        mounted() {
+            this.$moment.locale(this.$i18n.locale);
+        },
         methods: {
             del(id) {
                 Request.getInstance().delete(`/api/comment/${id}`).then(() => {

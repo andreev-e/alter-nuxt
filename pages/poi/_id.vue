@@ -307,6 +307,9 @@
                 return this.$auth.user && this.$auth.user.username === 'andreev';
             },
         },
+        mounted() {
+            this.$moment.locale(this.$i18n.locale);
+        },
         methods: {
             ...mapActions({
                 get: 'poi/get',
