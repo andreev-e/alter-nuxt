@@ -300,6 +300,7 @@
                         };
                     }
                     this.setParams(params);
+                    this.clear();
                     this.getPoi();
                 }
             },
