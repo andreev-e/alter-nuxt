@@ -268,17 +268,9 @@
                 return this.routeLength ?? this.directionsLength;
             },
             idle() {
-                if (!this.route && !this.poisExist) {
+                if (!this.route) {
                     this.fetchPois();
                 }
-            },
-            mounted() {
-                this.$watch(
-                    () => this.$refs.counter,
-                    () => {
-                        this.fetchPois();
-                    },
-                );
             },
             fetchPois() {
                 if (!this.thisIsPoi && !this.poiLoading) {
@@ -295,9 +287,9 @@
                             ...params,
                             ...bounds.toJSON(),
                         };
+                        this.setParams(params);
+                        this.getPoi();
                     }
-                    this.setParams(params);
-                    this.getPoi();
                 }
             },
             userManipulates() {
