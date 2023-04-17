@@ -132,7 +132,7 @@ export default {
     CHEKINS: {
         VISITED: 'Побывал в',
         I_WASNT_HERE: 'Я не был тут',
-        I_WAS_HERE: 'Я побывал тут!',
-        SUCCESS_CHECKIN: 'Зачекинен!',
+        I_WAS_HERE: 'Я побывал тут',
+        SUCCESS_CHECKIN: 'Зачекинен',
     },
 };

@@ -133,6 +133,6 @@ export default {
         VISITED: 'Visited',
         I_WASNT_HERE: 'I wasn\'t here',
         I_WAS_HERE: 'I was here',
-        SUCCESS_CHECKIN: 'Success checkin!',
+        SUCCESS_CHECKIN: 'Success checkin',
     },
 };
