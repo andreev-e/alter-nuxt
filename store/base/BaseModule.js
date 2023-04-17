@@ -64,7 +64,7 @@ export default class BaseModule {
                                 });
                             }
                         } else {
-                            commit('setData', response.data);
+                            commit('appendData', response.data);
                         }
                     })
                     .finally(() => {
