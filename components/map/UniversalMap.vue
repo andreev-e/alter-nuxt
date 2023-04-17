@@ -258,9 +258,6 @@
                 this.fetchPois();
             },
         },
-        mounted() {
-            this.clear();
-        },
         methods: {
             ...mapActions({
                 getPoi: 'pois/get',
@@ -300,7 +297,6 @@
                         };
                     }
                     this.setParams(params);
-                    this.clear();
                     this.getPoi();
                 }
             },
