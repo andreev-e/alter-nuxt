@@ -59,6 +59,7 @@
                 @click="$router.push('/poi/' + poi.id)"
             />
         </gmap-map>
+        {{ poiLoading }}
     </div>
 </template>
 
@@ -284,7 +285,7 @@
                 );
             },
             fetchPois() {
-                if (!this.thisIsPoi) {
+                if (!this.thisIsPoi && !this.poiLoading) {
                     let params = {
                         tag: this.tag,
                         location: this.location,
