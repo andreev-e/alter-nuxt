@@ -59,7 +59,6 @@
                 @click="$router.push('/poi/' + poi.id)"
             />
         </gmap-map>
-        {{ poiLoading }}
     </div>
 </template>
 

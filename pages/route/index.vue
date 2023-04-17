@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    Путешествия и маршруты с описаниями
+                    {{ $t('ROUTE.ROUTES_AND_VOYAGES_WITH_DESСRIPTION') }}
                 </h1>
             </div>
         </div>
@@ -45,7 +45,7 @@
             return {
                 crumbs: [
                     {
-                        name: 'маршруты',
+                        name: this.$t('ROUTE.ROUTES'),
                         to: '',
                     },
                 ],
@@ -57,7 +57,7 @@
         },
         head() {
             return {
-                title: 'Путешествия',
+                title: this.$t('ROUTE.VOYAGES'),
                 meta: [
                     {
                         name: 'description',

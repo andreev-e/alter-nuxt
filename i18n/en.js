@@ -113,6 +113,9 @@ export default {
     },
     ROUTE: {
         ROD: 'route',
+        ROUTES: 'Routes',
+        VOYAGES: 'Voyages',
+        ROUTES_AND_VOYAGES_WITH_DESСRIPTION: 'Routes and voyages with description',
     },
     MAP: {
         HIDE_FILTER: 'Hide map filter',

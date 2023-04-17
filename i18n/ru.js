@@ -113,6 +113,9 @@ export default {
     },
     ROUTE: {
         ROD: 'маршрут',
+        ROUTES: 'Маршруты',
+        VOYAGES: 'Путешествия',
+        ROUTES_AND_VOYAGES_WITH_DESСRIPTION: 'Путешествия и маршруты с описаниями',
     },
     MAP: {
         HIDE_FILTER: 'Скрыть фильтры карты',
