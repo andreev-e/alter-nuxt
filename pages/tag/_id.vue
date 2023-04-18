@@ -64,7 +64,6 @@
                 },
                 page: 1,
                 zoom: 12,
-                reZoomInitialized: false,
             };
         },
         async fetch() {
@@ -157,7 +156,7 @@
                     && this.$refs.mapComponent.$refs.map
                     && this.$refs.mapComponent.$refs.map.$mapObject
                 ) {
-                    this.zoom -= 2;
+                    // this.zoom -= 2;
                 }
             },
         },

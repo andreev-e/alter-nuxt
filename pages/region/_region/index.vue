@@ -87,6 +87,7 @@
             return {
                 page: 1,
                 types: [...TYPES],
+                categories: [],
             };
         },
         async fetch() {
@@ -183,9 +184,6 @@
                 }
                 return crumbs;
             },
-            categories() {
-                return this.$route.params.type ? [this.$route.params.type] : null;
-            },
             center() {
                 if (this.locationLoaded) {
                     return {
@@ -237,6 +235,9 @@
                 this.fetchPois();
             },
         },
+        mounted() {
+            this.categories = this.$route.params.type ? [this.$route.params.type] : [...TYPES].map((t) => t.name);
+        },
         methods: {
             ...mapActions({
                 getPoi: 'poisPaginated/get',
@@ -269,12 +270,7 @@
                 await this.getPoi();
             },
             filterChanged(val) {
-                if (this.$refs
-                    && this.$refs.mapComponent
-                    && this.$refs.mapComponent.$refs.map
-                    && this.$refs.mapComponent.$refs.map.$mapObject) {
-                    this.$refs.mapComponent.fetchPois(val);
-                }
+                this.categories = val;
             },
             ucFirst(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);

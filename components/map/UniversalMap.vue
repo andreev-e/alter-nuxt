@@ -1,11 +1,5 @@
 <template>
     <div class="row nopadding">
-        <div
-            v-if="poiLoading"
-            class="spinner"
-        >
-            <b-spinner />
-        </div>
         <gmap-map
             ref="map"
             :center="computedCenter"
@@ -13,7 +7,6 @@
             map-type-id="terrain"
             @dragend="userManipulates"
             @zoom_changed="userManipulates"
-            @idle="idle"
         >
             <gmap-marker
                 v-if="myLocation"
@@ -255,11 +248,11 @@
                 this.$emit('update');
             },
             categories() {
-                this.fetchPois();
+                this.fetchPois('categories');
             },
         },
         mounted() {
-            this.clear();
+            this.fetchPois('mounted');
         },
         methods: {
             ...mapActions({
@@ -270,15 +263,10 @@
             getRouteLength() {
                 return this.routeLength ?? this.directionsLength;
             },
-            idle() {
-                if (!this.route) {
-                    this.fetchPois();
-                }
-            },
-            fetchPois() {
+            fetchPois(reason = null) {
                 this.clear();
-                console.log('fetchPois');
-                if (!this.thisIsPoi && !this.poiLoading && !this.route && !this.user) {
+                console.log('fetchPois', reason);
+                if (!this.thisIsPoi && !this.route && !this.user) {
                     let params = {
                         tag: this.tag,
                         location: this.location,
@@ -296,9 +284,8 @@
                         this.setParams(params);
                         this.getPoi();
                     } else {
-                        console.log('await bounds');
                         setTimeout(() => {
-                            this.fetchPois();
+                            this.fetchPois('await bounds');
                         }, 1000);
                     }
                 }
@@ -308,7 +295,7 @@
                     this.$auth.$storage.setLocalStorage(`position:${this.rememberPosition}`, this.$refs.map.$mapObject.getCenter());
                 }
                 if (!this.fitContent) {
-                    this.fetchPois();
+                    this.fetchPois('userManipulates');
                 }
             },
             routeFound(val) {
@@ -320,12 +307,12 @@
 </script>
 
 <style>
-  .vue-map-container {
-    height: 500px;
-    width: 100%;
-  }
+    .vue-map-container {
+        height: 500px;
+        width: 100%;
+    }
 
-  .row.nopadding {
-    position: relative;
-  }
+    .row.nopadding {
+        position: relative;
+    }
 </style>
