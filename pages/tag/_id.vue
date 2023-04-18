@@ -21,6 +21,7 @@
                 :center="center"
                 :tag="$route.params.id"
                 :zoom="zoom"
+                remember-position="index"
                 @update="poisChanged"
             />
         </client-only>
@@ -125,7 +126,6 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-                        this.mylocation = this.center;
                     },
                     () => {
                     },

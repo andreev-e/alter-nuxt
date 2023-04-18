@@ -90,7 +90,6 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude,
                         };
-                        this.mylocation = this.center;
                     },
                     () => {
                     },
