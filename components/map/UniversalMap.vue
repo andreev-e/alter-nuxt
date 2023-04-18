@@ -276,6 +276,8 @@
                 }
             },
             fetchPois() {
+                this.clear();
+                console.log('fetchPois');
                 if (!this.thisIsPoi && !this.poiLoading && !this.route && !this.user) {
                     let params = {
                         tag: this.tag,
