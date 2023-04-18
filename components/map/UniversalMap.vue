@@ -273,7 +273,7 @@
                 }
             },
             fetchPois() {
-                if (!this.thisIsPoi && !this.poiLoading) {
+                if (!this.thisIsPoi && !this.poiLoading && !this.route && !this.user) {
                     let params = {
                         tag: this.tag,
                         location: this.location,
@@ -282,7 +282,8 @@
                         route: this.route ? this.route.id : null,
                     };
                     const bounds = this.$refs.map && this.$refs.map.$mapObject && this.$refs.map.$mapObject.getBounds();
-                    if (bounds && !this.route && !this.user) {
+
+                    if (bounds) {
                         params = {
                             ...params,
                             ...bounds.toJSON(),
