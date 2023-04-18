@@ -258,6 +258,9 @@
                 this.fetchPois();
             },
         },
+        mounted() {
+            this.clear();
+        },
         methods: {
             ...mapActions({
                 getPoi: 'pois/get',
