@@ -289,6 +289,11 @@
                         };
                         this.setParams(params);
                         this.getPoi();
+                    } else {
+                        console.log('await bounds');
+                        setTimeout(() => {
+                            this.fetchPois();
+                        }, 1000);
                     }
                 }
             },
