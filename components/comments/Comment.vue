@@ -3,70 +3,79 @@
         class="text-dark"
         :class="{ 'text-muted': !comment.approved }"
     >
-        <div class="author-date">
-            <font-awesome-icon
-                v-if="canApprove"
-                icon="fa-check"
-                role="button"
-                @click="approve(comment.commentid)"
-            />
-            <b>
-                <router-link
+        <div class="row">
+            <div class="col-1 author-date">
+                <img
                     v-if="comment.user"
-                    :to="'/user/' + comment.user.username"
+                    :src="comment.user.images[0].original"
+                    class="w-75"
                 >
-                    {{
-                        comment.user.firstname || comment.user.lastname ? `${comment.user.firstname} ${comment.user.lastname}` : comment.user.username
-                    }}
-                </router-link>
-                <a
-                    v-else-if="comment.email"
-                    href="mailto:"
-                >{{ comment.name }}</a>
-                <span v-else>{{ comment.name }}
-                </span>
-            </b>
-            <i>{{ $moment(comment.created_at).format('LLLL') }}</i>
-            <template v-if="linkObjects">
-                {{ $t('COMMENT.ABOUT') }}
-                <router-link
-                    :to="`${type ? type : comment.object_type}/${comment.object_id}`"
-                >
-                    {{ $i18n.locale === 'en' && comment.object_name_en ? comment.object_name_en : comment.object_name }}
-                </router-link>
-            </template>
-            <client-only>
-                <font-awesome-icon
-                    v-if="canEdit"
-                    icon="fa-edit"
-                    role="button"
-                    @click="edit(comment.commentid)"
-                />
-                <font-awesome-icon
-                    v-if="canEdit"
-                    icon="fa-trash"
-                    role="button"
-                    @click="del(comment.commentid)"
-                />
-            </client-only>
-        </div>
-        <comment-form
-            v-if="editing"
-            :id="comment.backlink"
-            :comment-id="comment.commentid"
-            :text="comment.comment"
-            :type="type"
-            @update="$emit('reload')"
-        />
-        <div
-            v-else
-            class="comment-text-wrapper"
-        >
-            <div class="comment-text">
-                <p>{{ comment.comment }}</p>
             </div>
+            <div class="col-11 author-date">
+                <font-awesome-icon
+                    v-if="canApprove"
+                    icon="fa-check"
+                    role="button"
+                    @click="approve(comment.commentid)"
+                />
+                <b>
+                    <router-link
+                        v-if="comment.user"
+                        :to="'/user/' + comment.user.username"
+                    >
+                        {{
+                            comment.user.firstname || comment.user.lastname ? `${comment.user.firstname} ${comment.user.lastname}` : comment.user.username
+                        }}
+                    </router-link>
+                    <a
+                        v-else-if="comment.email"
+                        href="mailto:"
+                    >{{ comment.name }}</a>
+                    <span v-else>{{ comment.name }}
+                    </span>
+                </b>
+                <i>{{ $moment(comment.created_at).format('LLLL') }}</i>
+                <template v-if="linkObjects">
+                    {{ $t('COMMENT.ABOUT') }}
+                    <router-link
+                        :to="`${type ? type : comment.object_type}/${comment.object_id}`"
+                    >
+                        {{ $i18n.locale === 'en' && comment.object_name_en ? comment.object_name_en : comment.object_name }}
+                    </router-link>
+                </template>
+                <client-only>
+                    <font-awesome-icon
+                        v-if="canEdit"
+                        icon="fa-edit"
+                        role="button"
+                        @click="edit(comment.commentid)"
+                    />
+                    <font-awesome-icon
+                        v-if="canEdit"
+                        icon="fa-trash"
+                        role="button"
+                        @click="del(comment.commentid)"
+                    />
+                </client-only>
+
+                <comment-form
+                    v-if="editing"
+                    :id="comment.backlink"
+                    :comment-id="comment.commentid"
+                    :text="comment.comment"
+                    :type="type"
+                    @update="$emit('reload')"
+                />
+                <div
+                    v-else
+                    class="comment-text"
+                >
+                    <p>{{ comment.comment }}</p>
+                </div>
+            </div>
+            <hr v-if="index !== total - 1">
         </div>
-        <hr v-if="index !== total - 1">
+        <hr>
     </div>
 </template>
 

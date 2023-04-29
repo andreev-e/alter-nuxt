@@ -3,7 +3,7 @@
         :to="`/${type}/${poi.id}`"
         class="poi__card"
     >
-        <div :class="{ 'poi_card loading' :loading, 'poi__content' : !loading, 'disproved' : !poi.show }">
+        <div :class="{ 'poi_card loading' :loading, 'disproved' : !poi.show }">
             <div
                 v-if="loading || loadingOne"
                 class="spinner"
@@ -158,71 +158,72 @@
 </script>
 
 <style>
-  .loading {
-    opacity: 0.4;
-  }
+    .loading {
+        opacity: 0.4;
+    }
 
-  .poi__card {
-    display: block;
-    padding: 15px 0;
-  }
+    .poi__card {
+        display: block;
+        padding: 15px 0;
+    }
 
-  .img-title {
-    opacity: 0.9;
-    background: #7495AA;
-    color: #FFF;
-    height: 45px;
-    font-size: 18px;
-    text-align: center;
-    z-index: 1;
-    padding: 0;
-    box-shadow: 0 4px 4px -4px rgb(0 0 0);
-    overflow: hidden;
-    line-height: 22px;
-    border: 1px solid #888;
-  }
+    .img-title {
+        opacity: 0.9;
+        background: #7495AA;
+        color: #FFF;
+        height: 45px;
+        font-size: 18px;
+        text-align: center;
+        z-index: 1;
+        padding: 0;
+        box-shadow: 0 4px 4px -4px rgb(0 0 0);
+        overflow: hidden;
+        line-height: 22px;
+        border: 1px solid #888;
+    }
 
-  .favorite {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    margin-left: 20px;
-    margin-top: 15px;
-    font-size: 2em;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: #000 2px 3px 5px;
-  }
+    .favorite {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        margin-left: 20px;
+        margin-top: 15px;
+        font-size: 2em;
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: #000 2px 3px 5px;
+    }
 
-  .above_img {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    width: 100%;
-    margin-top: 50%;
-    margin-left: -15px;
-    text-align: center;
-    font-size: 2em;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: #000 2px 3px 5px;
-  }
+    .above_img {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        width: 100%;
+        margin-top: 50%;
+        margin-left: -15px;
+        text-align: center;
+        font-size: 2em;
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: #000 2px 3px 5px;
+    }
 
-  .author {
-    position: absolute;
-    z-index: 1;
-    top: 15px;
-    right: 15px;
-    text-align: right;
-    font-size: 1em;
-    color: rgba(255, 255, 255, 1);
-    text-shadow: #000 2px 3px 5px;
-  }
+    .author {
+        position: absolute;
+        z-index: 1;
+        top: 15px;
+        right: 15px;
+        text-align: right;
+        font-size: 1em;
+        color: rgba(255, 255, 255, 1);
+        text-shadow: #000 2px 3px 5px;
+    }
 
-  .disproved {
-    opacity: 0.6;
-  }
+    .disproved {
+        opacity: 0.6;
+    }
 
-  .poi_card {
-    position: relative;
-  }
+    .poi_card {
+        position: relative;
+        min-height: 350px;
+    }
 </style>
