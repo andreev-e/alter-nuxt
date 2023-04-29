@@ -7,11 +7,12 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>
-                    {{ `${$t('UI.NEW')} ${$t('POINTS_OF_INTEREST').toLowerCase()}` }}
+                    {{ h1 }}
                 </h1>
             </div>
         </div>
         <item-gallery
+            ref="top"
             :objects="pois"
             :loading="loadingPois"
             @reload="fetchPois"
@@ -50,6 +51,7 @@
             };
         },
         async fetch() {
+            this.page = this.$route.query.p ? this.$route.query.p : 1;
             await this.fetchPois();
         },
         head() {
@@ -69,6 +71,9 @@
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
             }),
+            h1() {
+                return `${this.$t('UI.NEW')} ${this.$t('POINTS_OF_INTEREST').toLowerCase()}`;
+            },
             crumbs() {
                 return [
                     {
@@ -79,7 +84,13 @@
             },
         },
         watch: {
-            page() {
+            page(p) {
+                if (p) {
+                    this.$router.push({ query: { p } });
+                }
+                if (process.client) {
+                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
+                }
                 this.fetchPois();
             },
         },

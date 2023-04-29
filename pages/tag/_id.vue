@@ -26,6 +26,7 @@
             />
         </client-only>
         <item-gallery
+            ref="top"
             :objects="pois"
             :loading="loadingPois"
         />
@@ -68,6 +69,7 @@
             };
         },
         async fetch() {
+            this.page = this.$route.query.p ? this.$route.query.p : 1;
             try {
                 await this.load();
             } catch (error) {
@@ -114,7 +116,13 @@
             },
         },
         watch: {
-            page() {
+            page(p) {
+                if (p) {
+                    this.$router.push({ query: { p } });
+                }
+                if (process.client) {
+                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
+                }
                 this.fetchPois();
             },
         },
