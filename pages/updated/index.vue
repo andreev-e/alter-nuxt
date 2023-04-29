@@ -12,6 +12,7 @@
             </div>
         </div>
         <item-gallery
+            ref="top"
             :objects="pois"
             :loading="loadingPois"
             @reload="fetchPois"
@@ -36,6 +37,7 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import pagination from '../../mixins/pagination';
 
     export default {
         name: 'Index',
@@ -43,6 +45,7 @@
             ItemGallery,
             Breadcrumbs,
         },
+        mixins: [pagination],
         data() {
             return {
                 type: null,
@@ -50,6 +53,7 @@
             };
         },
         async fetch() {
+            this.page = this.$route.query.p ? this.$route.query.p : 1;
             await this.fetchPois();
         },
         head() {
@@ -76,11 +80,6 @@
                         url: '',
                     },
                 ];
-            },
-        },
-        watch: {
-            page() {
-                this.fetchPois();
             },
         },
         methods: {

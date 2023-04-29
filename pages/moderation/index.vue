@@ -10,6 +10,7 @@
                 <client-only>
                     <template v-if="pois.length">
                         <item-gallery
+                            ref="top"
                             :objects="pois"
                             :loading="poiLoading"
                             @reload="fetchPois"
@@ -51,9 +52,11 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import pagination from '../../mixins/pagination';
 
     export default {
         components: { ItemGallery, Breadcrumbs },
+        mixins: [pagination],
         middleware: 'auth',
         data() {
             return {
@@ -75,11 +78,6 @@
                 pois: 'poisPaginated/items',
                 meta: 'poisPaginated/meta',
             }),
-        },
-        watch: {
-            page() {
-                this.fetchPois();
-            },
         },
         mounted() {
             this.fetchPois();

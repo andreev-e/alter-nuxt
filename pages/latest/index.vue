@@ -37,6 +37,7 @@
     import { mapActions, mapGetters } from 'vuex';
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import pagination from '../../mixins/pagination';
 
     export default {
         name: 'Index',
@@ -44,6 +45,7 @@
             ItemGallery,
             Breadcrumbs,
         },
+        mixins: [pagination],
         data() {
             return {
                 type: null,
@@ -81,17 +83,6 @@
                         url: '',
                     },
                 ];
-            },
-        },
-        watch: {
-            page(p) {
-                if (p) {
-                    this.$router.push({ query: { p } });
-                }
-                if (process.client) {
-                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
-                }
-                this.fetchPois();
             },
         },
         methods: {

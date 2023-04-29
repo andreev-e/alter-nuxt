@@ -51,6 +51,7 @@
     import Breadcrumbs from '../../components/Breadcrumbs.vue';
     import UniversalMap from '../../components/map/UniversalMap.vue';
     import ItemGallery from '../../components/ItemGallery.vue';
+    import pagination from '../../mixins/pagination';
 
     export default {
         components: {
@@ -58,6 +59,7 @@
             UniversalMap,
             Breadcrumbs,
         },
+        mixins: [pagination],
         data() {
             return {
                 center: {
@@ -113,17 +115,6 @@
                     return `${this.tag.NAME_ROD ? this.tag.NAME_ROD : this.tag.name}. ${this.$t('SEO.POI_ON_MAP')}`;
                 }
                 return null;
-            },
-        },
-        watch: {
-            page(p) {
-                if (p) {
-                    this.$router.push({ query: { p } });
-                }
-                if (process.client) {
-                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
-                }
-                this.fetchPois();
             },
         },
         mounted() {

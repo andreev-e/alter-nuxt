@@ -1,7 +1,8 @@
 <template>
-    <div ref="top">
+    <div>
         <item-gallery
             v-if="items.length"
+            ref="top"
             :objects="items"
             :loading="loading"
             :type="type"
@@ -70,7 +71,10 @@
             },
         },
         watch: {
-            page() {
+            page(p) {
+                if (p) {
+                    this.$router.push({ query: { p } });
+                }
                 if (process.client) {
                     this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -78,6 +82,7 @@
             },
         },
         mounted() {
+            this.page = this.$route.query.p ? this.$route.query.p : 1;
             this.fetchItems();
         },
         methods: {
@@ -98,7 +103,6 @@
                 },
             }),
             fetchItems() {
-                // this.clear();
                 this.setParams();
                 this.get();
             },

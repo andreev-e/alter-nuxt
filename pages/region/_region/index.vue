@@ -73,6 +73,7 @@
     import UniversalMap from '../../../components/map/UniversalMap.vue';
     import ItemGallery from '../../../components/ItemGallery.vue';
     import { TYPES } from '../../../constants/index';
+    import pagination from '../../../mixins/pagination';
 
     export default {
         name: 'Index',
@@ -83,7 +84,7 @@
             TwoPanels,
             Breadcrumbs,
         },
-        mixins: ['str'],
+        mixins: [pagination],
         data() {
             return {
                 page: 1,
@@ -226,17 +227,6 @@
                     return this.ucFirst(this.tag.NAME_ROD ?? `${this.tag.name}:`);
                 }
                 return this.$t('POINTS_OF_INTEREST');
-            },
-        },
-        watch: {
-            page(p) {
-                if (p) {
-                    this.$router.push({ query: { p } });
-                }
-                if (process.client) {
-                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
-                }
-                this.fetchPois();
             },
         },
         mounted() {
