@@ -45,6 +45,7 @@
             />
         </client-only>
         <item-gallery
+            ref="top"
             :objects="pois"
             :loading="loadingPois"
         />
@@ -231,6 +232,9 @@
             page(p) {
                 if (p) {
                     this.$router.push({ query: { p } });
+                }
+                if (process.client) {
+                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
                 }
                 this.fetchPois();
             },

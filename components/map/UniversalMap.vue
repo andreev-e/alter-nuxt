@@ -264,7 +264,6 @@
                 return this.routeLength ?? this.directionsLength;
             },
             fetchPois(reason = null) {
-                this.clear();
                 console.log('fetchPois', reason);
                 if (!this.thisIsPoi && !this.route && !this.user) {
                     let params = {
@@ -282,6 +281,7 @@
                             ...bounds.toJSON(),
                         };
                         this.setParams(params);
+                        this.clear();
                         this.getPoi();
                     } else {
                         setTimeout(() => {

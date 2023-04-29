@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="top">
         <item-gallery
             v-if="items.length"
             :objects="items"
@@ -71,6 +71,9 @@
         },
         watch: {
             page() {
+                if (process.client) {
+                    this.$refs.top?.$el.scrollIntoView({ behavior: 'smooth' });
+                }
                 this.fetchItems();
             },
         },
