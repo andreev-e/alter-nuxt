@@ -76,6 +76,7 @@ export default {
             maxAge: 1000 * 60 * 60,
         }],
         'nuxt-element-ui',
+        '@nuxtjs/google-adsense',
     ],
 
     i18n: {
@@ -94,6 +95,10 @@ export default {
     elementUI: {
         components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem', 'Message', 'MessageBox'],
         locale: 'ru-RU',
+    },
+
+    'google-adsense': {
+        id: 'ca-pub-6122306535281458',
     },
 
     build: {
