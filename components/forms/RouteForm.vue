@@ -218,8 +218,8 @@
                         lng: 0,
                     };
                 },
-                set(val) {
-                    console.log('senter', val);
+                set() {
+                    // console.log('senter', val);
                 },
             },
             start() {
