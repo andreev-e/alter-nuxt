@@ -264,7 +264,7 @@
                 return this.routeLength ?? this.directionsLength;
             },
             fetchPois(reason = null) {
-                console.log('fetchPois', reason);
+                // console.log('fetchPois', reason);
                 if (!this.thisIsPoi && !this.route && !this.user) {
                     let params = {
                         tag: this.tag,

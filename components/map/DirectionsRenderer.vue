@@ -61,9 +61,8 @@
                         }
                         if (status === 'ZERO_RESULTS') {
                             this.$emit('routeFound', 0);
-                            return;
                         }
-                        console.log(status);
+                        // console.log(status);
                     },
                 );
             },

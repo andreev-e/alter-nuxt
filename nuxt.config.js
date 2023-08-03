@@ -76,7 +76,7 @@ export default {
             maxAge: 1000 * 60 * 60,
         }],
         'nuxt-element-ui',
-        '@nuxtjs/google-adsense',
+        // '@nuxtjs/google-adsense',
     ],
 
     i18n: {
