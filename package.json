@@ -22,7 +22,6 @@
         "@nuxtjs/moment": "^1.6.1",
         "@nuxtjs/sitemap": "^2.4.0",
         "@nuxtjs/yandex-metrika": "1.4.0",
-        "@nuxtjs/google-adsense": "1.4.0",
         "bootstrap": "^4.6.0",
         "bootstrap-vue": "^2.21.2",
         "core-js": "^3.15.1",
