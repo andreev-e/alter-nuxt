@@ -25,5 +25,6 @@ jobs:
             && npm install --production
             && npm run build
             && pm2 restart altertravel.pro
+            && pm2 restart altertravel.ru
 
 
