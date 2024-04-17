@@ -23,9 +23,8 @@
                 remember-position="index"
             />
         </client-only>
-
         <item-gallery
-            style="min-height: 456px;"
+            style="min-height: 455px;"
             :loading="loadingPois"
             :objects="mapPois.length ? mapPois : pois.slice(0,3)"
         />
