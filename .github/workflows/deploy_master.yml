@@ -19,18 +19,29 @@ jobs:
                   port: ${{ secrets.PORT }}
                   script: |
                       cd /var/www/altertravel.ru/data/www/altertravel.pro
+
+                      # Безопасная работа с git
                       git config --global --add safe.directory /var/www/altertravel.ru/data/www/altertravel.pro
                       git pull origin master
 
-                      # Переключаемся на Node.js 16 (если не установлен – устанавливаем)
+                      # Удаляем кеш Nuxt, чтобы избежать проблем с правами доступа
+                      rm -rf .nuxt
+
+                      # (Опционально) Если нужно поменять владельца всей папки на текущего пользователя
+                      # sudo chown -R $(whoami) .   # если есть sudo
+
+                      # Убеждаемся, что используем Node.js 16 (если на сервере стоит другая версия)
                       export NVM_DIR="$HOME/.nvm"
                       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
                       nvm use 16 || nvm install 16
-
-                      # Убедимся, что используется правильная версия
                       node -v
 
+                      # Установка зависимостей и сборка
                       npm install
                       npm run build
+
+                      # Перезапускаем PM2 приложения
                       pm2 restart altertravel.pro
-                      pm2 restart altertravel.ru
+
+                      # Если приложение altertravel.ru не запущено — не падаем
+                      pm2 restart altertravel.ru || echo "altertravel.ru not running, skipping"
