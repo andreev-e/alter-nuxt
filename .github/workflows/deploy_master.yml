@@ -1,31 +1,36 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: cd /var/www/altertravel.ru/data/www/altertravel.pro
-            && git config --global --add safe.directory /var/www/altertravel.ru/data/www/altertravel.pro
-            && git init
-            && git remote remove origin
-            && git remote add origin https://github.com/andreev-e/alter-nuxt.git
-            && git pull origin master
-            && npm install --production
-            && npm run build
-            && pm2 restart altertravel.pro
-            && pm2 restart altertravel.ru
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@v0.1.7
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  password: ${{ secrets.PASSWORD }}
+                  port: ${{ secrets.PORT }}
+                  script: |
+                      cd /var/www/altertravel.ru/data/www/altertravel.pro
+                      git config --global --add safe.directory /var/www/altertravel.ru/data/www/altertravel.pro
+                      git pull origin master
 
+                      # Переключаемся на Node.js 16 (если не установлен – устанавливаем)
+                      export NVM_DIR="$HOME/.nvm"
+                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                      nvm use 16 || nvm install 16
 
+                      # Убедимся, что используется правильная версия
+                      node -v
+
+                      npm install
+                      npm run build
+                      pm2 restart altertravel.pro
+                      pm2 restart altertravel.ru
