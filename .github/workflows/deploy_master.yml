@@ -20,11 +20,21 @@ jobs:
                   script: |
                       # Прерываем деплой на первой ошибке, чтобы не перезапускать pm2 без сборки
                       set -e
-                      cd /var/www/altertravel.ru/data/www/altertravel.pro
+                      APP_DIR=/var/www/altertravel.ru/data/www/altertravel.ru
 
-                      # Безопасная работа с git
-                      git config --global --add safe.directory /var/www/altertravel.ru/data/www/altertravel.pro
-                      git pull origin master
+                      # Если репозитория ещё нет — клонируем, но только в пустую папку
+                      mkdir -p "$APP_DIR"
+                      cd "$APP_DIR"
+                      git config --global --get-all safe.directory | grep -qxF "$APP_DIR" || git config --global --add safe.directory "$APP_DIR"
+                      if [ ! -d .git ]; then
+                          if [ -n "$(ls -A | grep -vxF .env)" ]; then
+                              echo "$APP_DIR не пустая и не git-репозиторий, освободите её"; exit 1
+                          fi
+                          git init
+                          git remote add origin https://github.com/andreev-e/alter-nuxt.git
+                      fi
+                      git fetch origin master
+                      git checkout -f -B master origin/master
 
                       # Удаляем кеш Nuxt, чтобы избежать проблем с правами доступа
                       rm -rf .nuxt
@@ -34,8 +44,10 @@ jobs:
                       sed -i '/^MAPTILER_KEY=/d' .env
                       echo "MAPTILER_KEY=${{ secrets.MAPTILER_KEY }}" >> .env
 
-                      # (Опционально) Если нужно поменять владельца всей папки на текущего пользователя
-                      # sudo chown -R $(whoami) .   # если есть sudo
+                      # API_URL и PORT задаются в .env на сервере вручную
+                      for var in API_URL PORT; do
+                          grep -q "^$var=" .env || { echo "В $APP_DIR/.env не задан $var"; exit 1; }
+                      done
 
                       # Убеждаемся, что используем Node.js 16 (если на сервере стоит другая версия)
                       export NVM_DIR="$HOME/.nvm"
@@ -47,8 +59,9 @@ jobs:
                       npm install
                       npm run build
 
-                      # Перезапускаем PM2 приложения
-                      pm2 restart altertravel.pro
+                      # Старый процесс .pro-версии больше не нужен
+                      pm2 delete altertravel.pro 2>/dev/null || true
 
-                      # Если приложение altertravel.ru не запущено — не падаем
-                      pm2 restart altertravel.ru || echo "altertravel.ru not running, skipping"
+                      # Перезапускаем приложение, а если его ещё нет в pm2 — запускаем
+                      pm2 restart altertravel.ru || pm2 start npm --name altertravel.ru -- run start
+                      pm2 save
