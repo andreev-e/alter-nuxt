@@ -87,6 +87,8 @@ export default {
             },
         ],
         differentDomains: true,
+        // На доменах вне списка (localhost) иначе не загружается ни один язык
+        defaultLocale: 'ru',
     },
 
     elementUI: {
@@ -120,6 +122,7 @@ export default {
 
     serverMiddleware: [
         '~/server-middleware/logger',
+        '~/server-middleware/redirect-www',
         {
             path: '/',
             handler: '~/server-middleware/redirect',

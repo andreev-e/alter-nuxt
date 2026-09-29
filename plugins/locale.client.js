@@ -15,7 +15,8 @@ export default ({ app, $axios, $auth }, inject) => {
 
         try {
             if ($auth.loggedIn && save) {
-                await $axios.patch(`/api/user/${$auth.user.username}`, { locale: code });
+                // Не сохранился выбор в профиле — язык всё равно переключаем
+                await $axios.patch(`/api/user/${$auth.user.username}`, { locale: code }).catch(() => {});
             }
 
             // Локально (localhost) доменов нет — просто меняем язык интерфейса
