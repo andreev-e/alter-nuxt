@@ -326,6 +326,13 @@
 
     .map-poi-icon svg {
         display: block;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        transition: transform 0.15s ease;
+    }
+
+    .map-poi-icon:hover svg {
+        transform: scale(1.15);
     }
 
     .map-loader {

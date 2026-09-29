@@ -2,7 +2,8 @@ import * as Icons from '@fortawesome/free-solid-svg-icons';
 import polyline from '@mapbox/polyline';
 import { TYPES } from '../constants/index';
 
-const ICON_HEIGHT = 24;
+const MARKER_SIZE = 30;
+const GLYPH_SIZE = 15;
 const iconCache = {};
 
 export default {
@@ -13,13 +14,19 @@ export default {
             }
             const type = this.getTypeByName(name);
             const faIcon = type ? Icons[type.icon] : Icons.faCircleExclamation;
+            const color = type?.color ?? '#E0493F';
             const [width, height, , , path] = faIcon.icon;
-            const iconWidth = Math.round((ICON_HEIGHT * width) / height);
+            // Глиф вписываем в квадрат GLYPH_SIZE по центру круглого бейджа
+            const scale = GLYPH_SIZE / Math.max(width, height);
+            const offsetX = (MARKER_SIZE - width * scale) / 2;
+            const offsetY = (MARKER_SIZE - height * scale) / 2;
+            const center = MARKER_SIZE / 2;
             iconCache[name] = {
                 className: 'map-poi-icon',
-                html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${iconWidth}" height="${ICON_HEIGHT}">`
-                    + `<path d="${path.toString()}" fill="${type.color ?? '#FF0000'}" stroke="#ffffff" stroke-width="20"/></svg>`,
-                size: [iconWidth, ICON_HEIGHT],
+                html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MARKER_SIZE} ${MARKER_SIZE}" width="${MARKER_SIZE}" height="${MARKER_SIZE}">`
+                    + `<circle cx="${center}" cy="${center}" r="${center - 1.5}" fill="${color}" stroke="#ffffff" stroke-width="2"/>`
+                    + `<path d="${path.toString()}" fill="#ffffff" transform="translate(${offsetX} ${offsetY}) scale(${scale})"/></svg>`,
+                size: [MARKER_SIZE, MARKER_SIZE],
             };
             return iconCache[name];
         },

@@ -9,13 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* import specific icons */
 import {
-    faLeaf,
+    faMountainSun,
     faIndustry,
     faCircleExclamation,
-    faBuilding,
-    faMuseum,
+    faLandmarkDome,
+    faBuildingColumns,
     faMonument,
-    faSkull,
+    faScroll,
     faEdit,
     faArrowRight,
     faHome,
@@ -44,13 +44,13 @@ import {
 
 /* add icons to the library */
 library.add(
-    faLeaf,
+    faMountainSun,
     faIndustry,
     faCircleExclamation,
-    faBuilding,
-    faMuseum,
+    faLandmarkDome,
+    faBuildingColumns,
     faMonument,
-    faSkull,
+    faScroll,
     faEdit,
     faArrowRight,
     faHome,
