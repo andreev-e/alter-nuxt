@@ -61,10 +61,11 @@
         methods: {
             async finishSocialLogin() {
                 // The session is already authenticated by the social callback;
-                // the auth module also needs the XSRF-TOKEN cookie to trust it.
+                // the auth module also needs the XSRF-TOKEN cookie and its
+                // token marker (what login() sets) to trust it.
                 try {
                     await this.$auth.request(this.$auth.strategy.options.endpoints.csrf);
-                    await this.$auth.fetchUser();
+                    await this.$auth.setUserToken(true);
                 } catch (e) {
                     // handled below: the user stays logged out
                 }
