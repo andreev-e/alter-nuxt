@@ -36,7 +36,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/leaflet.client',
+        '~/plugins/maplibre.client',
         '~/plugins/font-awesome',
         '~/plugins/country-flag',
         '~/plugins/image-fallback.client',

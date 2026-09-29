@@ -2,23 +2,16 @@
     <form @submit.prevent="onSubmit">
         <client-only>
             <div class="map-container">
-                <l-map
-                    ref="map"
+                <mgl-map
                     :zoom="12"
                     :center="center"
-                    @ready="observeMapSize"
                 >
-                    <l-tile-layer
-                        :url="tileUrl"
-                        :attribution="tileAttribution"
-                        :tile-layer-class="createTileLayer"
-                    />
-                    <l-marker
+                    <mgl-marker
                         :lat-lng="center"
                         draggable
                         @dragend="markerMoved"
                     />
-                </l-map>
+                </mgl-map>
             </div>
         </client-only>
         <div class="text-center">
@@ -115,10 +108,14 @@
     import TextInput from '../ui/TextInput.vue';
     import SelectInput from '../ui/SelectInput.vue';
     import map from '../../mixins/map';
+    import MglMap from '../map/MglMap.vue';
+    import MglMarker from '../map/MglMarker.vue';
 
     export default {
         name: 'PoiForm',
         components: {
+            MglMap,
+            MglMarker,
             SelectInput,
             TextInput,
         },
@@ -272,8 +269,7 @@
                         }
                     });
             },
-            markerMoved(e) {
-                const { lat, lng } = e.target.getLatLng();
+            markerMoved({ lat, lng }) {
                 this.form.errors.errors.lat = undefined;
                 this.form.errors.errors.lng = undefined;
                 this.form.lat = lat;

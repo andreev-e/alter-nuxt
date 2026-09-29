@@ -15,25 +15,18 @@
             </badge>
 
             <div class="map-container">
-                <l-map
-                    ref="map"
+                <mgl-map
                     :zoom="8"
                     :center="center"
-                    @ready="observeMapSize"
                 >
-                    <l-tile-layer
-                        :url="tileUrl"
-                        :attribution="tileAttribution"
-                        :tile-layer-class="createTileLayer"
-                    />
-                    <l-marker
+                    <mgl-marker
                         v-if="start"
                         :lat-lng="start"
                         :icon="iconStart"
                         draggable
                         @dragend="startMoved"
                     />
-                    <l-marker
+                    <mgl-marker
                         v-if="finish"
                         :lat-lng="finish"
                         :icon="iconFinish"
@@ -54,15 +47,15 @@
                         :travel-mode="travelMode"
                         @routeFound="routeFound"
                     />
-                    <l-marker
+                    <mgl-marker
                         v-for="poi in poisForRoute"
                         :key="`poi_`+poi.id"
                         :lat-lng="{ lat: poi.lat, lng: poi.lng }"
-                        :options="{ title: poi.name }"
+                        :title="poi.name"
                         :icon="getIcon(poi.type)"
                         @click="$router.push('/poi/' + poi.id)"
                     />
-                </l-map>
+                </mgl-map>
             </div>
         </client-only>
         <el-row
@@ -144,11 +137,15 @@
     import DirectionsRenderer from '../map/DirectionsRenderer.vue';
     import EditablePolyline from '../map/EditablePolyline.vue';
     import map from '../../mixins/map';
+    import MglMap from '../map/MglMap.vue';
+    import MglMarker from '../map/MglMarker.vue';
     import Badge from '../ui/Badge.vue';
 
     export default {
         name: 'RouteForm',
         components: {
+            MglMap,
+            MglMarker,
             Badge,
             Toggler,
             TextInput,
@@ -309,13 +306,11 @@
                         }
                     });
             },
-            startMoved(e) {
-                const { lat, lng } = e.target.getLatLng();
+            startMoved({ lat, lng }) {
                 this.form.start = `${lat};${lng}`;
                 this.updateManualEnds();
             },
-            finishMoved(e) {
-                const { lat, lng } = e.target.getLatLng();
+            finishMoved({ lat, lng }) {
                 this.form.finish = `${lat};${lng}`;
                 this.updateManualEnds();
             },

@@ -1,23 +1,18 @@
 <template>
     <div class="row nopadding">
         <div class="map-container">
-            <l-map
-                ref="map"
+            <mgl-map
                 :center="computedCenter"
                 :zoom="zoom"
                 @ready="mapReady"
+                @shown="fitToContent"
                 @moveend="userManipulates"
             >
-                <l-tile-layer
-                    :url="tileUrl"
-                    :attribution="tileAttribution"
-                    :tile-layer-class="createTileLayer"
-                />
-                <l-marker
+                <mgl-marker
                     v-if="thisIsPoi"
                     :lat-lng="center"
                 />
-                <l-polyline
+                <mgl-polyline
                     v-if="route && route.encoded_route"
                     :lat-lngs="path"
                     color="#FF0000"
@@ -31,25 +26,31 @@
                     :destination="finish"
                     @routeFound="routeFound"
                 />
-                <l-marker
+                <mgl-marker
                     v-if="start"
                     :lat-lng="start"
                     :icon="iconStart"
                 />
-                <l-marker
+                <mgl-marker
                     v-if="finish"
                     :lat-lng="finish"
                     :icon="iconFinish"
                 />
-                <l-marker
+                <mgl-marker
                     v-for="poi in mapPois"
                     :key="`poi_`+poi.id"
                     :lat-lng="{ lat: poi.lat, lng: poi.lng }"
-                    :options="{ title: poi.name }"
+                    :title="poi.name"
                     :icon="getIcon(poi.type)"
                     @click="$router.push('/poi/' + poi.id)"
                 />
-            </l-map>
+            </mgl-map>
+            <div
+                v-if="poiLoading"
+                class="map-loader"
+            >
+                <b-spinner small />
+            </div>
         </div>
     </div>
 </template>
@@ -58,11 +59,16 @@
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapActions, mapGetters } from 'vuex';
     import DirectionsRenderer from './DirectionsRenderer.vue';
+    import MglMap from './MglMap.vue';
+    import MglMarker from './MglMarker.vue';
+    import MglPolyline from './MglPolyline.vue';
     import map from '../../mixins/map';
 
     export default {
         expose: ['fetchPois'],
-        components: { DirectionsRenderer },
+        components: {
+            DirectionsRenderer, MglMap, MglMarker, MglPolyline,
+        },
         mixins: [map],
         props: {
             model: {
@@ -231,7 +237,6 @@
             ...mapActions({
                 getPoi: 'pois/get',
                 setParams: 'pois/setParams',
-                clear: 'pois/clear',
             }),
             getRouteLength() {
                 return this.routeLength ?? this.directionsLength;
@@ -254,8 +259,8 @@
                             ...params,
                             ...bounds,
                         };
+                        // Старые точки не стираем: они остаются на карте, пока грузятся новые
                         this.setParams(params);
-                        this.clear();
                         this.getPoi();
                     } else {
                         setTimeout(() => {
@@ -265,18 +270,18 @@
                 }
             },
             getBoundsParams() {
-                const mapObject = this.$refs.map && this.$refs.map.mapObject;
-                if (!mapObject || !mapObject.getSize().x) {
+                const { mapObject } = this;
+                if (!mapObject || !mapObject.getContainer().clientWidth) {
                     return null;
                 }
                 const bounds = mapObject.getBounds();
-                // Leaflet не нормализует долготу при прокрутке карты через антимеридиан
+                // При прокрутке через антимеридиан долгота выходит за [-180, 180]
                 if (bounds.getEast() - bounds.getWest() >= 360) {
                     return {
                         south: bounds.getSouth(), west: -180, north: bounds.getNorth(), east: 180,
                     };
                 }
-                const wrap = (lng) => this.$L.Util.wrapNum(lng, [-180, 180], true);
+                const wrap = (lng) => ((((lng + 180) % 360) + 360) % 360) - 180;
                 return {
                     south: bounds.getSouth(),
                     west: wrap(bounds.getWest()),
@@ -285,18 +290,21 @@
                 };
             },
             mapReady(mapObject) {
-                this.observeMapSize(mapObject, this.fitToContent);
+                // Не в data, чтобы Vue не делал реактивным объект карты
+                this.mapObject = mapObject;
                 this.fitToContent();
             },
             fitToContent() {
-                const mapObject = this.$refs.map && this.$refs.map.mapObject;
+                const { mapObject } = this;
                 if (this.fitContent && mapObject && this.contentPoints.length) {
-                    mapObject.fitBounds(this.$L.latLngBounds(this.contentPoints), { padding: [20, 20] });
+                    const bounds = new this.$maplibregl.LngLatBounds();
+                    this.contentPoints.forEach(({ lat, lng }) => bounds.extend([lng, lat]));
+                    mapObject.fitBounds(bounds, { padding: 20, duration: 0 });
                 }
             },
             userManipulates() {
                 if (this.rememberPosition) {
-                    const { lat, lng } = this.$refs.map.mapObject.getCenter();
+                    const { lat, lng } = this.mapObject.getCenter();
                     this.$auth.$storage.setLocalStorage(`position:${this.rememberPosition}`, { lat, lng });
                 }
                 if (!this.fitContent) {
@@ -313,8 +321,24 @@
 
 <style>
     .map-poi-icon {
-        background: none;
-        border: none;
+        cursor: pointer;
+    }
+
+    .map-poi-icon svg {
+        display: block;
+    }
+
+    .map-loader {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        padding: 4px 6px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        line-height: 1;
+        pointer-events: none;
     }
 
     .row.nopadding {

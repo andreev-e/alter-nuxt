@@ -1,5 +1,5 @@
 <template>
-    <l-polyline
+    <mgl-polyline
         v-if="path.length"
         :lat-lngs="path"
         :weight="5"
@@ -10,9 +10,11 @@
 <script>
     import polyline from '@mapbox/polyline';
     import { ROUTING_URL, ROUTING_PROFILES } from '../../constants/map';
+    import MglPolyline from './MglPolyline.vue';
 
     export default {
         name: 'DirectionsRenderer',
+        components: { MglPolyline },
         props: {
             origin: { type: [Object, Boolean] },
             destination: { type: [Object, Boolean] },

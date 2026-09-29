@@ -65,6 +65,7 @@ h2 {
 }
 
 .map-container {
+  position: relative;
   height: 500px;
   width: 100%;
   z-index: 0;

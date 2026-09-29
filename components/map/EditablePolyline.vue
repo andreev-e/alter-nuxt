@@ -1,10 +1,10 @@
 <template>
-    <l-feature-group>
-        <l-polyline
+    <div>
+        <mgl-polyline
             :lat-lngs="displayPath"
             :color="color"
         />
-        <l-marker
+        <mgl-marker
             v-for="(point, index) in innerVertices"
             :key="`vertex_${index}`"
             :lat-lng="point"
@@ -14,7 +14,7 @@
             @dragend="emitChange"
             @contextmenu="removeVertex(index + 1)"
         />
-        <l-marker
+        <mgl-marker
             v-for="(point, index) in midpoints"
             :key="`mid_${index}`"
             :lat-lng="point"
@@ -23,12 +23,16 @@
             @drag="midpointDrag(index + 1, $event)"
             @dragend="midpointDragEnd"
         />
-    </l-feature-group>
+    </div>
 </template>
 
 <script>
+    import MglMarker from './MglMarker.vue';
+    import MglPolyline from './MglPolyline.vue';
+
     export default {
         name: 'EditablePolyline',
+        components: { MglMarker, MglPolyline },
         props: {
             latLngs: {
                 type: Array,
@@ -67,10 +71,10 @@
                 }));
             },
             vertexIcon() {
-                return this.$L.divIcon({ className: 'polyline-vertex', iconSize: [12, 12] });
+                return { className: 'polyline-vertex', size: [12, 12] };
             },
             midpointIcon() {
-                return this.$L.divIcon({ className: 'polyline-vertex polyline-vertex--mid', iconSize: [10, 10] });
+                return { className: 'polyline-vertex polyline-vertex--mid', size: [10, 10] };
             },
         },
         watch: {
@@ -79,19 +83,15 @@
             },
         },
         methods: {
-            toPoint(event) {
-                const { lat, lng } = event.target.getLatLng();
-                return { lat, lng };
-            },
-            vertexDrag(index, event) {
-                this.$set(this.points, index, this.toPoint(event));
+            vertexDrag(index, latLng) {
+                this.$set(this.points, index, latLng);
             },
             removeVertex(index) {
                 this.points.splice(index, 1);
                 this.emitChange();
             },
-            midpointDrag(index, event) {
-                this.inserting = { index, latLng: this.toPoint(event) };
+            midpointDrag(index, latLng) {
+                this.inserting = { index, latLng };
             },
             midpointDragEnd() {
                 this.points = this.displayPath;
@@ -110,6 +110,7 @@
         background: #ffffff;
         border: 2px solid #FF0000;
         border-radius: 2px;
+        cursor: move;
     }
 
     .polyline-vertex--mid {
