@@ -123,6 +123,8 @@ export default {
         HIDE_FILTER: 'Скрыть фильтры карты',
         SHOW_FILTER: 'Показать фильтры карты',
         SET_LOCATION: 'Укажите точку на карте',
+        SCHEME: 'Схема',
+        HYBRID: 'Гибрид',
     },
     SECURE: {
         TITLE: 'Авторский раздел',

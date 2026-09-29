@@ -330,7 +330,7 @@
 
     .map-loader {
         position: absolute;
-        top: 10px;
+        top: 45px;
         right: 10px;
         z-index: 2;
         padding: 4px 6px;

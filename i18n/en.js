@@ -123,6 +123,8 @@ export default {
         HIDE_FILTER: 'Hide map filter',
         SHOW_FILTER: 'Show map filter',
         SET_LOCATION: 'Set location',
+        SCHEME: 'Map',
+        HYBRID: 'Hybrid',
     },
     SECURE: {
         TITLE: 'Secure section',
