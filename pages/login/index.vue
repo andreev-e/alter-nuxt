@@ -53,7 +53,30 @@
                 this.$router.push('/secure');
             }
         },
+        mounted() {
+            if (this.$route.query.social_login) {
+                this.finishSocialLogin();
+            }
+        },
         methods: {
+            async finishSocialLogin() {
+                // The session is already authenticated by the social callback;
+                // the auth module also needs the XSRF-TOKEN cookie to trust it.
+                try {
+                    await this.$auth.request(this.$auth.strategy.options.endpoints.csrf);
+                    await this.$auth.fetchUser();
+                } catch (e) {
+                    // handled below: the user stays logged out
+                }
+                if (!this.$auth.loggedIn) {
+                    this.$router.replace({ query: { social_error: 1 } });
+                    return;
+                }
+                // With watchLoggedIn the auth module redirects home by itself
+                if (!this.$auth.options.watchLoggedIn) {
+                    this.$auth.redirect('home');
+                }
+            },
             async doLogin() {
                 try {
                     const data = { email: this.email, password: this.password };
