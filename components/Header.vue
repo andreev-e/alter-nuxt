@@ -2,7 +2,7 @@
 <template>
     <div class="header row">
         <client-only>
-            <div class="user-panel col-sm-12 d-flex justify-content-center justify-content-md-end">
+            <div class="user-panel col-sm-12 d-flex justify-content-center justify-content-md-end align-items-center">
                 <div
                     v-if="$auth.loggedIn"
                     class="d-flex flex-wrap justify-content-center align-items-center"
@@ -79,6 +79,7 @@
                         {{ $t('HEADER.LOGIN') }}
                     </router-link>
                 </div>
+                <locale-switcher class="ml-3 mt-1" />
             </div>
         </client-only>
         <div class="logo col-sm-12 col-md-3 text-center">
@@ -98,9 +99,10 @@
 
 <script>
     import MainMenu from './menu/MainMenu.vue';
+    import LocaleSwitcher from './LocaleSwitcher.vue';
 
     export default {
-        components: { MainMenu },
+        components: { MainMenu, LocaleSwitcher },
         mounted() {
             if (process.client && this.$auth.loggedIn) {
                 this.$auth.fetchUser();

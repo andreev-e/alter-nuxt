@@ -7,6 +7,7 @@ export default {
     HEADER: {
         REGISTER: 'Register',
         LOGIN: 'Login',
+        LANGUAGE: 'Language',
     },
     MENU: {
         FAVORITE: 'Favorite',

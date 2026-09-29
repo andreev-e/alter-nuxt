@@ -40,6 +40,7 @@ export default {
         '~/plugins/font-awesome',
         '~/plugins/country-flag',
         '~/plugins/image-fallback.client',
+        '~/plugins/locale.client',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

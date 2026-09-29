@@ -63,6 +63,13 @@
                 // The session is already authenticated by the social callback;
                 // the auth module also needs the XSRF-TOKEN cookie and its
                 // token marker (what login() sets) to trust it.
+                // After a language switch the user returns to the same page on the other domain
+                const { redirect } = this.$route.query;
+                if (redirect && redirect.startsWith('/') && !redirect.startsWith('//')) {
+                    this.$auth.$storage.setUniversal('redirect', redirect);
+                }
+                // The auth module carries the current query over to the redirect target
+                await this.$router.replace({ query: {} });
                 try {
                     await this.$auth.request(this.$auth.strategy.options.endpoints.csrf);
                     await this.$auth.setUserToken(true);
