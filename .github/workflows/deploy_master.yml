@@ -17,20 +17,36 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
+                  command_timeout: 30m
                   script: |
+                      set -e
+                      SITE_USER=altertravel.ru
+
+                      # Старый процесс .pro-версии в pm2 root-а больше не нужен
+                      if [ "$(id -un)" = root ] && command -v pm2 >/dev/null; then
+                          pm2 delete altertravel.pro 2>/dev/null || true
+                          pm2 save --force >/dev/null 2>&1 || true
+                      fi
+
+                      # Всё остальное выполняем от пользователя сайта, а не от root
+                      if [ "$(id -un)" = "$SITE_USER" ]; then
+                          RUN="bash -se"
+                      else
+                          RUN="su - $SITE_USER -s /bin/bash -c 'bash -se'"
+                      fi
+
+                      eval "$RUN" <<'DEPLOY'
                       # Прерываем деплой на первой ошибке, чтобы не перезапускать pm2 без сборки
                       set -e
-                      # Отдельная папка под фронт: nginx проксирует altertravel.ru на PORT из .env
-                      APP_DIR=/var/www/altertravel.ru/data/www/altertravel-nuxt
+                      APP_DIR=/var/www/altertravel.ru/data/www/altertravel.ru
+                      REPO_URL=https://github.com/andreev-e/alter-nuxt.git
 
-                      # Если репозитория ещё нет — клонируем, но только в пустую папку
-                      mkdir -p "$APP_DIR"
                       cd "$APP_DIR"
 
-                      # .env могли положить в папку сайта altertravel.ru — берём оттуда
-                      [ -f .env ] || cp /var/www/altertravel.ru/data/www/altertravel.ru/.env . 2>/dev/null || true
-                      git config --global --get-all safe.directory | grep -qxF "$APP_DIR" || git config --global --add safe.directory "$APP_DIR"
-                      REPO_URL=https://github.com/andreev-e/alter-nuxt.git
+                      # .env могли положить во временную папку altertravel-nuxt — берём оттуда
+                      [ -f .env ] || cp /var/www/altertravel.ru/data/www/altertravel-nuxt/.env . 2>/dev/null || true
+
+                      # Если репозитория ещё нет — клонируем, но только в пустую папку
                       if [ ! -d .git ]; then
                           if [ -n "$(ls -A | grep -vxF .env)" ]; then
                               echo "$APP_DIR не пустая и не git-репозиторий, освободите её"; exit 1
@@ -44,7 +60,7 @@ jobs:
                       git fetch "$REPO_URL" master
                       git checkout -f -B master FETCH_HEAD
 
-                      # Удаляем кеш Nuxt, чтобы избежать проблем с правами доступа
+                      # Удаляем кеш Nuxt, чтобы сборка шла с нуля
                       rm -rf .nuxt
 
                       # Ключ MapTiler для карты с русскими подписями
@@ -59,19 +75,21 @@ jobs:
                           grep -q "^$var=" .env || { echo "В $APP_DIR/.env не задан $var"; exit 1; }
                       done
 
-                      # Убеждаемся, что используем Node.js 16 (если на сервере стоит другая версия)
+                      # Node.js 16 через nvm пользователя сайта
                       export NVM_DIR="$HOME/.nvm"
-                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                      if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+                          curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | PROFILE=/dev/null bash
+                      fi
+                      . "$NVM_DIR/nvm.sh"
                       nvm use 16 || nvm install 16
                       node -v
+                      command -v pm2 >/dev/null || npm install -g pm2
 
                       # Установка зависимостей и сборка
                       npm install
                       npm run build
 
-                      # Старый процесс .pro-версии больше не нужен
-                      pm2 delete altertravel.pro 2>/dev/null || true
-
                       # Перезапускаем приложение, а если его ещё нет в pm2 — запускаем
                       pm2 restart altertravel.ru || pm2 start npm --name altertravel.ru -- run start
                       pm2 save
+                      DEPLOY
