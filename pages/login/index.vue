@@ -29,6 +29,7 @@
                         </button>
                     </div>
                 </form>
+                <SocialLogin />
             </div>
         </div>
         <Footer />
@@ -37,9 +38,10 @@
 
 <script>
     import TextInput from '../../components/ui/TextInput.vue';
+    import SocialLogin from '../../components/user/SocialLogin.vue';
 
     export default {
-        components: { TextInput },
+        components: { TextInput, SocialLogin },
         data() {
             return {
                 email: '',

@@ -55,6 +55,8 @@ export default {
         NEW_PUBLICATIONS: 'new publications',
         LOG_IN_FIRST: 'Please, log in first',
         LOGIN: 'Login form',
+        LOGIN_WITH: 'Or log in with',
+        SOCIAL_LOGIN_ERROR: 'Social login failed, please try again',
     },
     COMMENT: {
         COMMENTS: 'Comments',
