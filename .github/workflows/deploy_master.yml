@@ -20,11 +20,15 @@ jobs:
                   script: |
                       # Прерываем деплой на первой ошибке, чтобы не перезапускать pm2 без сборки
                       set -e
-                      APP_DIR=/var/www/altertravel.ru/data/www/altertravel.ru
+                      # Отдельная папка под фронт: nginx проксирует altertravel.ru на PORT из .env
+                      APP_DIR=/var/www/altertravel.ru/data/www/altertravel-nuxt
 
                       # Если репозитория ещё нет — клонируем, но только в пустую папку
                       mkdir -p "$APP_DIR"
                       cd "$APP_DIR"
+
+                      # .env могли положить в папку сайта altertravel.ru — берём оттуда
+                      [ -f .env ] || cp /var/www/altertravel.ru/data/www/altertravel.ru/.env . 2>/dev/null || true
                       git config --global --get-all safe.directory | grep -qxF "$APP_DIR" || git config --global --add safe.directory "$APP_DIR"
                       REPO_URL=https://github.com/andreev-e/alter-nuxt.git
                       if [ ! -d .git ]; then
