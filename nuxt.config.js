@@ -36,11 +36,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        {
-            src: '~/plugins/vue2-google-maps',
-            mode: 'client',
-            ssr: false,
-        },
+        '~/plugins/leaflet.client',
         '~/plugins/font-awesome',
         '~/plugins/country-flag',
         '~/plugins/image-fallback.client',
@@ -98,7 +94,6 @@ export default {
     },
 
     build: {
-        transpile: [/^vue2-google-maps($|\/)/],
         babel: {
             compact: true,
         },

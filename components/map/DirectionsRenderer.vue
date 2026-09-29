@@ -1,13 +1,18 @@
-<script>
-    import { MapElementFactory } from 'vue2-google-maps';
+<template>
+    <l-polyline
+        v-if="path.length"
+        :lat-lngs="path"
+        :weight="5"
+        :opacity="0.8"
+    />
+</template>
 
-    export default MapElementFactory({
+<script>
+    import polyline from '@mapbox/polyline';
+    import { ROUTING_URL, ROUTING_PROFILES } from '../../constants/map';
+
+    export default {
         name: 'DirectionsRenderer',
-        ctr() {
-            return window.google ? window.google.maps.DirectionsRenderer : null;
-        },
-        events: ['routeFound'],
-        mappedProps: {},
         props: {
             origin: { type: [Object, Boolean] },
             destination: { type: [Object, Boolean] },
@@ -21,62 +26,59 @@
             },
             travelMode: { type: String, default: 'DRIVING' },
         },
+        emits: ['routeFound'],
         data() {
             return {
-                dR: null,
+                path: [],
+                requestId: 0,
             };
         },
-        created() {
-            this.rebuildRoute();
+        computed: {
+            url() {
+                if (!this.origin || !this.destination) {
+                    return null;
+                }
+                const points = [this.origin, ...(this.waypoints || []), this.destination];
+                const coordinates = points.map(({ lat, lng }) => `${lng},${lat}`).join(';');
+                const profile = ROUTING_PROFILES[this.travelMode] || ROUTING_PROFILES.DRIVING;
+                // trip сам подбирает оптимальный порядок промежуточных точек
+                const trip = this.optimizeWaypoints && points.length > 3;
+                const params = trip ? '&source=first&destination=last&roundtrip=false' : '';
+                return `${ROUTING_URL}/routed-${profile}/${trip ? 'trip' : 'route'}/v1/driving/${coordinates}`
+                    + `?overview=full&geometries=polyline${params}`;
+            },
+        },
+        watch: {
+            url: {
+                handler: 'rebuildRoute',
+                immediate: true,
+            },
         },
         methods: {
             rebuildRoute() {
-                const directionsService = window.google ? new window.google.maps.DirectionsService() : null;
-                const {
-                    origin,
-                    destination,
-                    travelMode,
-                    waypoints,
-                    optimizeWaypoints,
-                } = this;
-                if (!origin || !destination) {
+                this.requestId += 1;
+                const { requestId, url } = this;
+                if (!url) {
+                    this.path = [];
                     return;
                 }
-                directionsService.route(
-                    {
-                        origin,
-                        destination,
-                        travelMode,
-                        waypoints,
-                        optimizeWaypoints,
-                    },
-                    (response, status) => {
-                        if (status === 'OK') {
-                            this.dR.setDirections(response);
-                            const myroute = this.dR.directions.routes[0];
-                            let total = 0;
-                            myroute.legs.forEach((leg) => { total += leg.distance.value; });
-                            this.$emit('routeFound', Math.round(total / 1000));
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (requestId !== this.requestId) {
                             return;
                         }
-                        if (status === 'ZERO_RESULTS') {
+                        const found = data.code === 'Ok' && (data.routes || data.trips || [])[0];
+                        if (!found) {
+                            this.path = [];
                             this.$emit('routeFound', 0);
+                            return;
                         }
-                        // console.log(status);
-                    },
-                );
+                        this.path = polyline.decode(found.geometry);
+                        this.$emit('routeFound', Math.round(found.distance / 1000));
+                    })
+                    .catch(() => {});
             },
         },
-        afterCreate(directionsRenderer) {
-            directionsRenderer.setOptions({ suppressMarkers: true });
-            this.dR = directionsRenderer;
-
-            this.$watch(
-                () => [this.origin, this.destination, this.travelMode, this.waypoints, this.optimizeWaypoints],
-                () => {
-                    this.rebuildRoute();
-                },
-            );
-        },
-    });
+    };
 </script>

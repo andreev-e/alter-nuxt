@@ -23,24 +23,6 @@
                 altertravel_bot
             </a>
         </div>
-        <div class="second_menu col-sm-3 text-center lg:text-right">
-            <font-awesome-icon
-                icon="fa-hand-holding-dollar"
-            />
-            <a
-                target="_blank"
-                href="https://www.patreon.com/altertravel"
-            >
-                Patreon
-            </a>
-            |
-            <a
-                target="_blank"
-                href="https://boosty.to/altertravel"
-            >
-                Boosty
-            </a>
-        </div>
     </div>
 </template>
 

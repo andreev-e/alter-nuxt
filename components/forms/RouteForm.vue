@@ -14,53 +14,55 @@
                 {{ form.pois.length }} точек по пути
             </badge>
 
-            <gmap-map
-                ref="map"
-                :zoom="8"
-                map-type-id="terrain"
-                :center="center"
-            >
-                <gmap-marker
-                    v-if="start"
-                    :position="start"
-                    :icon="iconStart"
-                    draggable
-                    @dragend="startMoved"
-                />
-                <gmap-marker
-                    v-if="finish"
-                    :position="finish"
-                    :icon="iconFinish"
-                    draggable
-                    @dragend="finishMoved"
-                />
-                <gmap-polyline
-                    v-if="manual"
-                    ref="polyline"
-                    :path="path"
-                    :options="{ strokeColor: '#FF0000' }"
-                    editable
-                    @path_changed="polylineChanged"
-                />
-                <directions-renderer
-                    v-else
-                    :origin="start"
-                    :waypoints="waypoints"
-                    :optimize-waypoints="true"
-                    :destination="finish"
-                    :travel-mode="travelMode"
-                    @routeFound="routeFound"
-                />
-                <gmap-marker
-                    v-for="poi in poisForRoute"
-                    :key="`poi_`+poi.id"
-                    :position="{ lat: poi.lat, lng: poi.lng }"
-                    clickable
-                    :title="poi.name"
-                    :icon="getIcon(poi.type)"
-                    @click="$router.push('/poi/' + poi.id)"
-                />
-            </gmap-map>
+            <div class="map-container">
+                <l-map
+                    ref="map"
+                    :zoom="8"
+                    :center="center"
+                    @ready="observeMapSize"
+                >
+                    <l-tile-layer
+                        :url="tileUrl"
+                        :attribution="tileAttribution"
+                    />
+                    <l-marker
+                        v-if="start"
+                        :lat-lng="start"
+                        :icon="iconStart"
+                        draggable
+                        @dragend="startMoved"
+                    />
+                    <l-marker
+                        v-if="finish"
+                        :lat-lng="finish"
+                        :icon="iconFinish"
+                        draggable
+                        @dragend="finishMoved"
+                    />
+                    <editable-polyline
+                        v-if="manual"
+                        :lat-lngs="path"
+                        @change="polylineChanged"
+                    />
+                    <directions-renderer
+                        v-else
+                        :origin="start"
+                        :waypoints="waypoints"
+                        :optimize-waypoints="true"
+                        :destination="finish"
+                        :travel-mode="travelMode"
+                        @routeFound="routeFound"
+                    />
+                    <l-marker
+                        v-for="poi in poisForRoute"
+                        :key="`poi_`+poi.id"
+                        :lat-lng="{ lat: poi.lat, lng: poi.lng }"
+                        :options="{ title: poi.name }"
+                        :icon="getIcon(poi.type)"
+                        @click="$router.push('/poi/' + poi.id)"
+                    />
+                </l-map>
+            </div>
         </client-only>
         <el-row
             :gutter="30"
@@ -134,12 +136,12 @@
 <script>
   // eslint-disable-next-line import/no-extraneous-dependencies
     import { Form, Request } from 'laravel-request-utils';
-    import { gmapApi } from 'vue2-google-maps';
     // eslint-disable-next-line import/no-extraneous-dependencies
     import { mapGetters } from 'vuex';
     import TextInput from '../ui/TextInput.vue';
     import Toggler from '../ui/Toggler.vue';
     import DirectionsRenderer from '../map/DirectionsRenderer.vue';
+    import EditablePolyline from '../map/EditablePolyline.vue';
     import map from '../../mixins/map';
     import Badge from '../ui/Badge.vue';
 
@@ -150,6 +152,7 @@
             Toggler,
             TextInput,
             DirectionsRenderer,
+            EditablePolyline,
         },
         mixins: [map],
         props: {
@@ -186,12 +189,6 @@
                 }, {
                     removeNullValues: false,
                 }),
-                iconStart: {
-                    url: '/start.png',
-                },
-                iconFinish: {
-                    url: '/end.png',
-                },
                 manual: false,
                 travelMode: 'DRIVING',
                 loading: false,
@@ -204,7 +201,12 @@
             ...mapGetters({
                 poiEndpoint: 'poisPaginated/endpoint',
             }),
-            google: gmapApi,
+            iconStart() {
+                return this.getImageIcon('/start.png', [30, 21]);
+            },
+            iconFinish() {
+                return this.getImageIcon('/end.png', [37, 21]);
+            },
             center: {
                 get() {
                     if (this.form.start && this.form.finish) {
@@ -246,9 +248,8 @@
                 return false;
             },
             path() {
-                if (this.google && this.form.encoded_route) {
-                    return this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route);
+                if (this.form.encoded_route) {
+                    return this.decodePath(this.form.encoded_route);
                 }
                 return [];
             },
@@ -256,11 +257,8 @@
                 if (process.client && this.poisForRoute.length > 0) {
                     return this.poisForRoute
                         .map((poi) => ({
-                            location: {
-                                lat: poi.lat,
-                                lng: poi.lng,
-                            },
-                            stopover: true,
+                            lat: poi.lat,
+                            lng: poi.lng,
                         }));
                 }
                 return [];
@@ -277,11 +275,8 @@
                 if (this.form.encoded_route) {
                     this.manual = true;
                 }
-                if (!this.form.start || !this.form.finish) {
-                    const path = this.google && this.form.encoded_route ? this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route) : [];
-                    this.form.start = `${path[0].lat()};${path[0].lng()}`;
-                    this.form.finish = `${path[path.length - 1].lat()};${path[path.length - 1].lng()}`;
+                if ((!this.form.start || !this.form.finish) && this.path.length) {
+                    this.setEnds(this.path);
                 }
             },
         },
@@ -314,39 +309,33 @@
                     });
             },
             startMoved(e) {
-                this.form.start = `${e.latLng.lat()};${e.latLng.lng()}`;
-                if (this.google) {
-                    let path = this.form.encoded_route ? this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route) : [];
-                    path = [
-                        this.start,
-                        ...path.slice(1, -1),
-                        this.finish,
-                    ];
-                    this.form.encoded_route = this.google.maps.geometry.encoding
-                        .encodePath(path);
-                }
+                const { lat, lng } = e.target.getLatLng();
+                this.form.start = `${lat};${lng}`;
+                this.updateManualEnds();
             },
             finishMoved(e) {
-                this.form.finish = `${e.latLng.lat()};${e.latLng.lng()}`;
-                if (this.google) {
-                    let path = this.form.encoded_route ? this.google.maps.geometry.encoding
-                        .decodePath(this.form.encoded_route) : [];
-                    path = [
+                const { lat, lng } = e.target.getLatLng();
+                this.form.finish = `${lat};${lng}`;
+                this.updateManualEnds();
+            },
+            updateManualEnds() {
+                if (this.manual) {
+                    this.form.encoded_route = this.encodePath([
                         this.start,
-                        ...path.slice(1, -1),
+                        ...this.path.slice(1, -1),
                         this.finish,
-                    ];
-                    this.form.encoded_route = this.google.maps.geometry.encoding
-                        .encodePath(path);
+                    ]);
                 }
             },
-            polylineChanged(e) {
-                const arr = e.getArray();
-                this.form.encoded_route = this.google.maps.geometry.encoding
-                    .encodePath(arr);
-                this.form.start = `${arr[0].lat()};${arr[0].lng()}`;
-                this.form.finish = `${arr[arr.length - 1].lat()};${arr[arr.length - 1].lng()}`;
+            setEnds(path) {
+                const first = path[0];
+                const last = path[path.length - 1];
+                this.form.start = `${first.lat};${first.lng}`;
+                this.form.finish = `${last.lat};${last.lng}`;
+            },
+            polylineChanged(path) {
+                this.form.encoded_route = this.encodePath(path);
+                this.setEnds(path);
             },
             routeFound(length) {
                 if (length === 0) {
@@ -361,8 +350,7 @@
                         this.start,
                         this.finish,
                     ];
-                    this.form.encoded_route = this.google.maps.geometry.encoding
-                        .encodePath(path);
+                    this.form.encoded_route = this.encodePath(path);
                     return;
                 }
                 this.form.encoded_route = null;
@@ -392,5 +380,9 @@
 </script>
 
 <style scoped>
-
+    .map-container {
+        height: 500px;
+        width: 100%;
+        z-index: 0;
+    }
 </style>

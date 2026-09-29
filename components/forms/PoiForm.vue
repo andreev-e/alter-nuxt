@@ -1,17 +1,25 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <gmap-map
-            ref="map"
-            :zoom="12"
-            map-type-id="terrain"
-            :center="center"
-        >
-            <gmap-marker
-                :position="center"
-                draggable
-                @dragend="markerMoved"
-            />
-        </gmap-map>
+        <client-only>
+            <div class="map-container">
+                <l-map
+                    ref="map"
+                    :zoom="12"
+                    :center="center"
+                    @ready="observeMapSize"
+                >
+                    <l-tile-layer
+                        :url="tileUrl"
+                        :attribution="tileAttribution"
+                    />
+                    <l-marker
+                        :lat-lng="center"
+                        draggable
+                        @dragend="markerMoved"
+                    />
+                </l-map>
+            </div>
+        </client-only>
         <div class="text-center">
             <p
                 v-if="form.errors.errors.lat || form.errors.errors.lng"
@@ -105,6 +113,7 @@
     import { TYPES } from '../../constants/index';
     import TextInput from '../ui/TextInput.vue';
     import SelectInput from '../ui/SelectInput.vue';
+    import map from '../../mixins/map';
 
     export default {
         name: 'PoiForm',
@@ -112,6 +121,7 @@
             SelectInput,
             TextInput,
         },
+        mixins: [map],
         props: {
             poi: {
                 type: Object,
@@ -262,14 +272,11 @@
                     });
             },
             markerMoved(e) {
+                const { lat, lng } = e.target.getLatLng();
                 this.form.errors.errors.lat = undefined;
                 this.form.errors.errors.lng = undefined;
-                this.center = {
-                    lat: e.latLng.lat(),
-                    lng: e.latLng.lng(),
-                };
-                this.form.lat = e.latLng.lat();
-                this.form.lng = e.latLng.lng();
+                this.form.lat = lat;
+                this.form.lng = lng;
             },
             isChecked(value) {
                 return this.form.tags.find((item) => item === value) !== undefined;
@@ -294,5 +301,11 @@
 <style scoped>
     .el-select {
         width: 100%;
+    }
+
+    .map-container {
+        height: 500px;
+        width: 100%;
+        z-index: 0;
     }
 </style>
