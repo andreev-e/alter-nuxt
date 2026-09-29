@@ -7,8 +7,6 @@ export default {
     HEADER: {
         REGISTER: 'Регистрация',
         LOGIN: 'Вход',
-        LOGIN_WITH: 'Или войдите через',
-        SOCIAL_LOGIN_ERROR: 'Не удалось войти через соцсеть, попробуйте ещё раз',
     },
     MENU: {
         FAVORITE: 'Избранное',
@@ -57,6 +55,8 @@ export default {
         NEW_PUBLICATIONS: 'новые публикации',
         LOG_IN_FIRST: 'Пожалуйста, сначала авторизуйтесь',
         LOGIN: 'Вход',
+        LOGIN_WITH: 'Или войдите через',
+        SOCIAL_LOGIN_ERROR: 'Не удалось войти через соцсеть, попробуйте ещё раз',
     },
     COMMENT: {
         COMMENTS: 'Комментарии',
