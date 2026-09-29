@@ -18,7 +18,7 @@
             >
             <img
                 v-else
-                src="https://via.placeholder.com/600"
+                src="/placeholder.svg"
                 class="img-fluid"
                 :alt="name"
             >

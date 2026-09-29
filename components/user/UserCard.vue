@@ -4,6 +4,7 @@
             <img
                 v-if="user.thumb"
                 class="img-fluid"
+                data-fallback="/avatar-placeholder.svg"
                 :src="user.thumb"
                 :alt="user.username"
             >

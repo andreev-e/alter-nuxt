@@ -9,6 +9,7 @@
                     v-if="comment.user"
                     :src="comment.user.images[0].original"
                     class="w-75"
+                    data-fallback="/avatar-placeholder.svg"
                 >
             </div>
             <div class="col-11 author-date">
