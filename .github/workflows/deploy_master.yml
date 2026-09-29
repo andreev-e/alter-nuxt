@@ -18,6 +18,8 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
                   script: |
+                      # Прерываем деплой на первой ошибке, чтобы не перезапускать pm2 без сборки
+                      set -e
                       cd /var/www/altertravel.ru/data/www/altertravel.pro
 
                       # Безопасная работа с git
