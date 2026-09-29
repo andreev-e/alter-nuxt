@@ -71,7 +71,7 @@
             <el-col
                 :xs="24"
                 :sm="6"
-                class="text-md-right text-sm-center mt-2"
+                class="text-center text-md-right mt-2"
             >
                 Точки (до 8 шт)
             </el-col>
@@ -380,9 +380,7 @@
 </script>
 
 <style scoped>
-    .map-container {
-        height: 500px;
+    .el-select {
         width: 100%;
-        z-index: 0;
     }
 </style>

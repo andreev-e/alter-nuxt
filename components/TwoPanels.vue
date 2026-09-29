@@ -1,6 +1,11 @@
 <template>
     <b-row>
-        <b-col v-if="left.length">
+        <b-col
+            v-if="left.length"
+            cols="12"
+            md
+            class="mb-2 mb-md-0"
+        >
             <b>{{ $t('TWO_PANELS.SELECT_REGION') }} {{ tag.NAME_ROD_ED }}</b>
             <ul class="additional_cities">
                 <li
@@ -22,7 +27,11 @@
                 </li>
             </ul>
         </b-col>
-        <b-col v-if="right.length">
+        <b-col
+            v-if="right.length"
+            cols="12"
+            md
+        >
             <b>{{ $t('TWO_PANELS.POINTS') }} {{ tag.NAME_ROD_ED }} {{ $t('TWO_PANELS.BY_TYPE') }}</b>
             <ul class="pravaya_kolonka">
                 <li

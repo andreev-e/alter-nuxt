@@ -64,9 +64,37 @@ h2 {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.map-container {
+  height: 500px;
+  width: 100%;
+  z-index: 0;
+}
+
+@media (max-width: 767.98px) {
+  .map-container {
+    height: 60vh;
+    min-height: 280px;
+    max-height: 500px;
+  }
+}
+
+.rich-text {
+  overflow-wrap: anywhere;
+}
+
+.rich-text img {
+  max-width: 100%;
+  height: auto;
+}
+
 .el-message-box {
   width: auto !important;
+  max-width: 95vw;
   border: none !important;
+}
+
+.show-photo img {
+  max-height: 85vh;
 }
 
 

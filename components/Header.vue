@@ -6,7 +6,7 @@
                 <lang-switcher class="mr-3" />
                 <div
                     v-if="$auth.loggedIn"
-                    class="d-flex justify-content-between"
+                    class="d-flex flex-wrap justify-content-center align-items-center"
                 >
                     <router-link
                         to="/secure/favorite"
@@ -44,7 +44,7 @@
                     </router-link>
                     <nuxt-link
                         to="/secure"
-                        class="d-inline-block mr-2 mt-1"
+                        class="user-name d-inline-block text-truncate mr-2 mt-1"
                     >
                         {{ $auth.user.firstname || $auth.user.lastname
                             ? `${$auth.user.firstname}  ${$auth.user.lastname}`
@@ -133,6 +133,11 @@
 
   .user-panel {
     font-size: 20px;
+  }
+
+  .user-name {
+    max-width: 220px;
+    vertical-align: bottom;
   }
 
   @media only screen and (min-width: 992px) {

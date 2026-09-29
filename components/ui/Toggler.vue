@@ -3,7 +3,7 @@
         <b-col
             md="3"
             cols="12"
-            class="text-md-right text-sm-center mt-2"
+            class="text-center text-md-right mt-2"
         >
             {{ label }}
             {{ required ? '*' : '' }}

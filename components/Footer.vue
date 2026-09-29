@@ -1,9 +1,9 @@
 <template>
     <div class="row footer text-center">
-        <div class="copyright col-sm-5">
+        <div class="copyright col-12 col-md-6 text-md-left">
             2009-{{ year }} © {{ $t('ALTERTRAVEL') }}
         </div>
-        <div class="second_menu col-sm-3">
+        <div class="second_menu col-12 col-md-6 text-md-right">
             <a
                 target="_blank"
                 href="https://t.me/altertravel_bot"
@@ -42,5 +42,9 @@
 <style>
   .footer {
     font-size: 20px;
+  }
+
+  .footer svg {
+    vertical-align: middle;
   }
 </style>

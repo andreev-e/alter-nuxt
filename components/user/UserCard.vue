@@ -1,5 +1,5 @@
 <template>
-    <div class="col-2">
+    <div class="col-4 col-sm-3 col-md-2">
         <nuxt-link :to="`/user/${user.username}`">
             <img
                 v-if="user.thumb"

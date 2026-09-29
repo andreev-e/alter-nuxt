@@ -71,8 +71,12 @@
 </script>
 
 <style>
+  .navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .navigation li {
-    float: left;
     margin-left: 7px;
     font-size: 16px;
   }

@@ -311,12 +311,6 @@
 </script>
 
 <style>
-    .map-container {
-        height: 500px;
-        width: 100%;
-        z-index: 0;
-    }
-
     .map-poi-icon {
         background: none;
         border: none;

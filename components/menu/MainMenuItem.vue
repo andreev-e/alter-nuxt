@@ -17,7 +17,10 @@
             </div>
             <span class="d-none d-lg-block">{{ item.sub }}</span>
         </router-link>
-        <span v-else>
+        <span
+            v-else
+            :tabindex="item.submenu ? 0 : null"
+        >
             <font-awesome-icon
                 v-if="item.icon"
                 :icon="item.icon"
@@ -57,7 +60,7 @@
 </script>
 
 <style scoped>
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767.98px) {
     .menu-icon {
       height: 30px;
       width: 30px;

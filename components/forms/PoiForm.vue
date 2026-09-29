@@ -53,7 +53,7 @@
             <b-col
                 md="3"
                 cols="12"
-                class="text-md-right text-sm-center mt-2"
+                class="text-center text-md-right mt-2"
             />
             <b-col
                 cols="12"
@@ -75,7 +75,7 @@
             <el-col
                 :xs="24"
                 :sm="6"
-                class="text-md-right text-sm-center mt-2"
+                class="text-center text-md-right mt-2"
             >
                 {{ $t('POI.FORM.TAGS') }}
             </el-col>
@@ -301,11 +301,5 @@
 <style scoped>
     .el-select {
         width: 100%;
-    }
-
-    .map-container {
-        height: 500px;
-        width: 100%;
-        z-index: 0;
     }
 </style>

@@ -65,7 +65,7 @@
                     />
                 </client-only>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-12 rich-text">
                 <template v-if="route.pois && route.pois.length">
                     <h2>В маршрут входят точки</h2>
                     <item-gallery

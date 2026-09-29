@@ -4,7 +4,7 @@
         :class="{ 'text-muted': !comment.approved }"
     >
         <div class="row">
-            <div class="col-1 author-date">
+            <div class="col-2 col-md-1 author-date">
                 <img
                     v-if="comment.user"
                     :src="comment.user.images[0].original"
@@ -12,7 +12,7 @@
                     data-fallback="/avatar-placeholder.svg"
                 >
             </div>
-            <div class="col-11 author-date">
+            <div class="col-10 col-md-11 author-date">
                 <font-awesome-icon
                     v-if="canApprove"
                     icon="fa-check"
@@ -69,7 +69,7 @@
                 />
                 <div
                     v-else
-                    class="comment-text"
+                    class="comment-text rich-text"
                 >
                     <p>{{ comment.comment }}</p>
                 </div>

@@ -7,7 +7,7 @@
         <div class="row">
             <div
                 v-if="user.thumb"
-                class="col-sm-2"
+                class="col-4 col-sm-2"
             >
                 <img
                     class="img-fluid"
@@ -16,7 +16,7 @@
                     :alt="user.username"
                 >
             </div>
-            <div class="col-sm-10">
+            <div class="col">
                 <h1>
                     {{ user.firstname }} {{ user.lastname }}
                 </h1>

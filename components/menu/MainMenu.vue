@@ -115,6 +115,12 @@
 </script>
 
 <style>
+  .header-menu > ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .header-menu li a, .header-menu li > span {
     color: #244255;
     text-decoration: none;
@@ -125,7 +131,7 @@
     border-top-right-radius: 9px;
   }
 
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 991.98px) {
     .header-menu li a, .header-menu > ul > li {
       border-radius: 9px;
     }
@@ -135,7 +141,7 @@
     }
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767.98px) {
     .header-menu > ul > li > a, .header-menu > ul > li > span {
       font-size: 40px;
     }
@@ -152,7 +158,6 @@
 
   .header-menu > ul > li {
     text-align: center;
-    float: left;
     background-color: #A2B9C8;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
@@ -174,8 +179,17 @@
     border-top: none;
   }
 
-  .region_select:hover ul {
+  /* focus-within открывает выпадающий список по тапу на сенсорных экранах */
+  .region_select:hover ul, .region_select:focus-within ul {
     display: block;
+  }
+
+  .region_select > span {
+    cursor: pointer;
+  }
+
+  .region_select > span:focus:not(:focus-visible) {
+    outline: none;
   }
 
   .region_select ul li {
@@ -193,6 +207,17 @@
   .header-menu ul li a span {
     font-size: 14px;
     display: block;
+  }
+
+  /* На узких экранах список растягивается на ширину меню, а не вылезает за край */
+  @media only screen and (max-width: 767.98px) {
+    .region_select > ul {
+      left: 15px;
+      right: 15px;
+      width: auto;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
   }
 
 </style>

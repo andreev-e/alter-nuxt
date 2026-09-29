@@ -95,7 +95,7 @@
                             </div>
                         </b-tab>
                         <b-tab :title="$t('UI.DESCRIPTION')">
-                            <div class="py-3">
+                            <div class="py-3 rich-text">
                                 <p>
                                     {{ poi.description }}
                                 </p>
