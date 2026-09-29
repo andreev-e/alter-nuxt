@@ -27,6 +27,11 @@ jobs:
                       # Удаляем кеш Nuxt, чтобы избежать проблем с правами доступа
                       rm -rf .nuxt
 
+                      # Ключ MapTiler для карты с русскими подписями
+                      touch .env
+                      sed -i '/^MAPTILER_KEY=/d' .env
+                      echo "MAPTILER_KEY=${{ secrets.MAPTILER_KEY }}" >> .env
+
                       # (Опционально) Если нужно поменять владельца всей папки на текущего пользователя
                       # sudo chown -R $(whoami) .   # если есть sudo
 

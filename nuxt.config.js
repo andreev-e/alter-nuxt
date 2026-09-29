@@ -98,6 +98,14 @@ export default {
             compact: true,
         },
         postcss: null,
+        extend(config) {
+            // Готовый UMD-бандл MapLibre использует синтаксис, который не понимает парсер webpack 4
+            config.module.noParse = /maplibre-gl[\\/]dist[\\/]maplibre-gl\.js$/;
+        },
+    },
+
+    publicRuntimeConfig: {
+        maptilerKey: process.env.MAPTILER_KEY,
     },
 
     axios: {

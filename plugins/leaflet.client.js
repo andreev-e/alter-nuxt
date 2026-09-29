@@ -5,6 +5,9 @@ import {
     LMap, LTileLayer, LMarker, LPolyline, LFeatureGroup,
 } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'maplibre-gl';
+import '@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';

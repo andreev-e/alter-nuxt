@@ -1,17 +1,22 @@
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import polyline from '@mapbox/polyline';
 import { TYPES } from '../constants/index';
-import { TILE_URL, TILE_ATTRIBUTION } from '../constants/map';
+import {
+    TILE_URL, TILE_ATTRIBUTION, MAPTILER_STYLE_URL, MAPTILER_ATTRIBUTION,
+} from '../constants/map';
 
 const ICON_HEIGHT = 24;
 const iconCache = {};
 
 export default {
-    data() {
-        return {
-            tileUrl: TILE_URL,
-            tileAttribution: TILE_ATTRIBUTION,
-        };
+    computed: {
+        tileUrl() {
+            const key = this.$config.maptilerKey;
+            return key ? MAPTILER_STYLE_URL + key : TILE_URL;
+        },
+        tileAttribution() {
+            return this.$config.maptilerKey ? MAPTILER_ATTRIBUTION : TILE_ATTRIBUTION;
+        },
     },
     beforeDestroy() {
         if (this.mapResizeObserver) {
@@ -19,6 +24,33 @@ export default {
         }
     },
     methods: {
+        // Фабрика для <l-tile-layer>: с ключом MapTiler рисуем векторную карту
+        // с подписями на языке сайта
+        createTileLayer(url, options) {
+            if (!this.$config.maptilerKey) {
+                return this.$L.tileLayer(url, options);
+            }
+            const layer = this.$L.maplibreGL({ ...options, style: url });
+            const lang = this.$i18n.locale;
+            layer.on('add', () => {
+                const glMap = layer.getMaplibreMap();
+                glMap.on('style.load', () => this.localizeLabels(glMap, lang));
+            });
+            return layer;
+        },
+        localizeLabels(glMap, lang) {
+            const textField = ['coalesce', ['get', `name:${lang}`], ['get', 'name']];
+            glMap.getStyle().layers.forEach((styleLayer) => {
+                if (styleLayer.type !== 'symbol') {
+                    return;
+                }
+                const current = glMap.getLayoutProperty(styleLayer.id, 'text-field');
+                // Номера дорог и домов не трогаем
+                if (current && JSON.stringify(current).includes('name')) {
+                    glMap.setLayoutProperty(styleLayer.id, 'text-field', textField);
+                }
+            });
+        },
         // Leaflet не замечает смену размера контейнера, например в скрытой вкладке
         observeMapSize(mapObject, onShown = null) {
             if (typeof ResizeObserver === 'undefined') {

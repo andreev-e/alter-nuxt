@@ -24,6 +24,7 @@
                     <l-tile-layer
                         :url="tileUrl"
                         :attribution="tileAttribution"
+                        :tile-layer-class="createTileLayer"
                     />
                     <l-marker
                         v-if="start"
