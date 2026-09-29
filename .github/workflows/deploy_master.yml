@@ -52,7 +52,9 @@ jobs:
                       sed -i '/^MAPTILER_KEY=/d' .env
                       echo "MAPTILER_KEY=${{ secrets.MAPTILER_KEY }}" >> .env
 
-                      # API_URL и PORT задаются в .env на сервере вручную
+                      grep -q '^API_URL=' .env || echo "API_URL=http://api.altertravel.ru" >> .env
+
+                      # PORT задаётся в .env на сервере вручную: он должен совпадать с proxy_pass в nginx
                       for var in API_URL PORT; do
                           grep -q "^$var=" .env || { echo "В $APP_DIR/.env не задан $var"; exit 1; }
                       done
