@@ -153,6 +153,13 @@ export default {
             logout: '/',
             home: '/secure',
         },
+        // Without expires the auth cookies die with the browser session,
+        // although Laravel keeps the user logged in via the remember cookie.
+        cookie: {
+            options: {
+                expires: 365,
+            },
+        },
         strategies: {
             laravelSanctum: {
                 provider: 'laravel/sanctum',
