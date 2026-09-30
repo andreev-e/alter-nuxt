@@ -93,14 +93,12 @@
         },
         watch: {
             center(value, old) {
-                if (this.ready && (value.lat !== old.lat || value.lng !== old.lng)) {
-                    this.mapInstance.panTo([value.lng, value.lat]);
+                if (value.lat !== old.lat || value.lng !== old.lng) {
+                    this.scheduleViewUpdate();
                 }
             },
-            zoom(value) {
-                if (this.ready) {
-                    this.mapInstance.setZoom(value - ZOOM_OFFSET);
-                }
+            zoom() {
+                this.scheduleViewUpdate();
             },
         },
         async mounted() {
@@ -158,6 +156,25 @@
             }
         },
         methods: {
+            // Центр и зум часто меняются вместе (загрузилась новая страна): отдельные panTo и setZoom
+            // прерывают друг друга, и карта останавливается на полпути. Поэтому применяем их одним переходом.
+            scheduleViewUpdate() {
+                if (this.viewUpdateScheduled) {
+                    return;
+                }
+                this.viewUpdateScheduled = true;
+                this.$nextTick(() => {
+                    this.viewUpdateScheduled = false;
+                    // До создания карты менять нечего: она возьмёт актуальные center и zoom при создании
+                    if (!this.mapInstance) {
+                        return;
+                    }
+                    this.mapInstance.easeTo({
+                        center: [this.center.lng, this.center.lat],
+                        zoom: this.zoom - ZOOM_OFFSET,
+                    });
+                });
+            },
             styleFor(type) {
                 const key = this.$config.maptilerKey;
                 if (!key || this.styleFailed) {
