@@ -86,7 +86,7 @@
             <nuxt-link :to="'/'">
                 <img
                     class="img-fluid mb-3"
-                    src="/logo.png"
+                    :src="$i18n.locale === 'en' ? '/logo-en.svg' : '/logo.svg'"
                     :alt="$t('ALTERTRAVEL')"
                 >
             </nuxt-link>
