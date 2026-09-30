@@ -41,6 +41,7 @@ export default {
         '~/plugins/country-flag',
         '~/plugins/image-fallback.client',
         '~/plugins/locale.client',
+        '~/plugins/seo',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -123,6 +124,7 @@ export default {
     serverMiddleware: [
         '~/server-middleware/logger',
         '~/server-middleware/redirect-www',
+        '~/server-middleware/seo-files',
         {
             path: '/',
             handler: '~/server-middleware/redirect',

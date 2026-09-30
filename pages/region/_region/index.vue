@@ -104,21 +104,13 @@
             }
         },
         head() {
-            return {
+            const poi = this.pois.find((item) => item.thumb);
+
+            return this.$seo.head({
                 title: this.title,
-                meta: [
-                    {
-                        name: 'description',
-                        content: this.description,
-                    },
-                ],
-                link: [
-                    {
-                        rel: 'canonical',
-                        href: `/region/${this.$route.params.region}${this.$route.params.tag ? `/${this.$route.params.tag}` : ''}`,
-                    },
-                ],
-            };
+                description: this.description,
+                image: poi ? poi.thumb : null,
+            });
         },
         computed: {
             ...mapGetters({

@@ -57,15 +57,12 @@
             await this.fetchPois();
         },
         head() {
-            return {
-                title: `${this.$t('UI.NEW')} ${this.$t('SEO.INDEX_TITLE').toLowerCase()}`,
-                meta: [
-                    {
-                        name: 'description',
-                        content: this.$t('SEO.INDEX_DESCRIPTION'),
-                    },
-                ],
-            };
+            const page = this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : '';
+
+            return this.$seo.head({
+                title: `${page}${this.$t('UI.NEW')} ${this.$t('SEO.INDEX_TITLE').toLowerCase()}`,
+                description: this.$t('SEO.INDEX_DESCRIPTION'),
+            });
         },
         computed: {
             ...mapGetters({

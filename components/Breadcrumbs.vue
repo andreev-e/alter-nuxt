@@ -11,13 +11,20 @@
                     itemtype="https://schema.org/ListItem"
                     class="first"
                 >
-                    <router-link to="/">
+                    <router-link
+                        to="/"
+                        itemprop="item"
+                    >
                         <font-awesome-icon
                             icon="fa-home"
                             :style="{ height: '14px' }"
                         />
-                        {{ $t('ALTERTRAVEL') }}
+                        <span itemprop="name">{{ $t('ALTERTRAVEL') }}</span>
                     </router-link>
+                    <meta
+                        itemprop="position"
+                        content="1"
+                    >
                 </li>
                 <li v-if="loading">
                     <span>
@@ -40,12 +47,20 @@
                         <router-link
                             v-if="crumb.url"
                             :to="crumb.url"
+                            itemprop="item"
+                        >
+                            <span itemprop="name">{{ crumb.name }}</span>
+                        </router-link>
+                        <span
+                            v-else
+                            itemprop="name"
                         >
                             {{ crumb.name }}
-                        </router-link>
-                        <span v-else>
-                            {{ crumb.name }}
                         </span>
+                        <meta
+                            itemprop="position"
+                            :content="index + 2"
+                        >
                     </li>
                 </template>
             </ul>

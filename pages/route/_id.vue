@@ -31,24 +31,24 @@
                     v-if="route.days"
                     class="bg-primary text-white"
                 >
-                    {{ route.days }} дней
+                    {{ $t('ROUTE.DAYS', { days: route.days }) }}
                 </badge>
                 <badge
                     v-if="route.cost"
                     class="bg-warning"
                 >
-                    {{ route.cost }} руб.
+                    {{ $t('ROUTE.COST', { cost: route.cost }) }}
                 </badge>
                 <client-only>
                     <badge
                         v-if="routeLength"
                         class="bg-primary text-white"
                     >
-                        {{ routeLength }} км
+                        {{ routeLength }} {{ $t('UI.KM') }}
                     </badge>
                 </client-only>
                 <badge class="bg-warning">
-                    Опубликовано - {{ route.date }}
+                    {{ $t('UI.PUBLISHED') }} - {{ route.date }}
                 </badge>
                 <views-badge :views="route.views" />
             </div>
@@ -160,15 +160,21 @@
             }
         },
         head() {
-            return {
+            const description = [
+                this.$t('ROUTE.SEO_DESCRIPTION'),
+                this.route.days ? this.$t('ROUTE.SEO_DAYS', { days: this.route.days }) : '',
+                this.route.cost ? this.$t('ROUTE.SEO_COST', { cost: this.route.cost }) : '',
+            ].filter(Boolean).join(' ');
+            const poi = (this.route.pois || []).find((item) => item.thumb);
+            const image = (this.route.images && this.route.images.length && this.route.images[0].original)
+                || this.route.thumb || (poi && poi.thumb);
+
+            return this.$seo.head({
                 title: this.route.name,
-                meta: [
-                    {
-                        name: 'description',
-                        content: `Готовый маршрут с достопримечательностями ${this.route.days ? `на ${this.route.days} дней` : ''}${this.route.cost ? `, за ${this.route.cost} рублей` : ''}`,
-                    },
-                ],
-            };
+                description: `${this.route.name}. ${description}. ${this.route.description || ''}`,
+                image,
+                type: 'article',
+            });
         },
         computed: {
             ...mapGetters({
@@ -178,7 +184,7 @@
             crumbs() {
                 return [
                     {
-                        name: 'Маршруты',
+                        name: this.$t('ROUTE.ROUTES'),
                         url: '/route',
                     },
                     {

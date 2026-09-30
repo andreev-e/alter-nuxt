@@ -82,14 +82,16 @@
                 });
             }
         },
-        head: {
-            title: 'Карта достопримечательностей для самостоятельных путешественников',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Каталог достопримечательностей на карте . Для самостоятельной организации путешествия!',
-                },
-            ],
+        head() {
+            const username = this.user.username || this.$route.params.id;
+            const image = this.user.images && this.user.images.length ? this.user.images[0].original : null;
+
+            return this.$seo.head({
+                title: this.$t('AUTHORS.USER_TITLE', { username }),
+                description: this.$t('AUTHORS.USER_DESCRIPTION', { username }),
+                image,
+                type: 'profile',
+            });
         },
         computed: {
             ...mapGetters({

@@ -1,9 +1,0 @@
-User-agent: *
-Disallow: /catalog/*
-Sitemap: https://api.altertravel.ru/sitemap.xml
-
-User-agent: Yandex
-Disallow: /catalog/*
-Host: https://altertravel.pro
-Clean-Param: stat&d
-Sitemap: https://api.altertravel.ru/sitemap.xml

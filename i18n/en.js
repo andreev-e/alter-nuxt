@@ -119,6 +119,12 @@ export default {
         ROUTES: 'Routes',
         VOYAGES: 'Voyages',
         ROUTES_AND_VOYAGES_WITH_DESСRIPTION: 'Routes and voyages with description',
+        DAYS: 'Days: {days}',
+        COST: '{cost} RUB',
+        SEO_DESCRIPTION: 'Ready-made route with points of interest',
+        SEO_DAYS: 'for {days} days',
+        SEO_COST: 'for {cost} RUB',
+        LIST_DESCRIPTION: 'Ready-made travel routes with points of interest on the map: tracks, duration, budget and author reports.',
     },
     MAP: {
         HIDE_FILTER: 'Hide map filter',
@@ -131,6 +137,10 @@ export default {
         TITLE: 'Secure section',
     },
     AUTHORS: {
+        TITLE: 'Authors',
+        DESCRIPTION: 'Members of the alternative guide: authors of points of interest and routes.',
+        USER_TITLE: '{username} — author of the alternative guide',
+        USER_DESCRIPTION: 'Points of interest and routes published and visited by {username}.',
         WITH_US_FROM: 'With us from',
         PARTICIPANT: 'Participant',
     },

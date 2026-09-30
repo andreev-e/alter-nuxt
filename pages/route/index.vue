@@ -56,15 +56,10 @@
             await this.load();
         },
         head() {
-            return {
-                title: this.$t('ROUTE.VOYAGES'),
-                meta: [
-                    {
-                        name: 'description',
-                        content: 'todo',
-                    },
-                ],
-            };
+            return this.$seo.head({
+                title: this.$t('ROUTE.ROUTES_AND_VOYAGES_WITH_DESСRIPTION'),
+                description: this.$t('ROUTE.LIST_DESCRIPTION'),
+            });
         },
         computed: {
             ...mapGetters({

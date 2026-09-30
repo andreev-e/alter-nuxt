@@ -17,7 +17,8 @@
             <a
                 v-else
                 :key="locale.code"
-                href="#"
+                :href="$seo.url($seo.pagePath($route), locale.code)"
+                :hreflang="locale.code"
                 @click.prevent="$switchLocale(locale.code)"
             >{{ locale.code.toUpperCase() }}</a>
         </template>

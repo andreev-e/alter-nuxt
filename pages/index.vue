@@ -66,15 +66,15 @@
             this.getPoi();
         },
         head() {
-            return {
+            return this.$seo.head({
                 title: this.$t('SEO.INDEX_TITLE'),
-                meta: [
-                    {
-                        name: 'description',
-                        content: this.$t('SEO.INDEX_DESCRIPTION'),
-                    },
-                ],
-            };
+                description: this.$t('SEO.INDEX_DESCRIPTION'),
+                jsonLd: [{
+                    '@type': 'WebSite',
+                    name: this.$t('ALTERTRAVEL'),
+                    url: this.$seo.url('/'),
+                }],
+            });
         },
         computed: {
             ...mapGetters({

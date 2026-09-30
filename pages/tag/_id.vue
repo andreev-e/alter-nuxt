@@ -82,15 +82,15 @@
             }
         },
         head() {
-            return {
-                title: `${this.$t('UI.ALL')} ${this.nameRod} ${this.$t('SEO.IN_GUIDE_WITH')}. ${this.$t('POINTS_OF_INTEREST')}.`,
-                meta: [
-                    {
-                        name: 'description',
-                        content: `${this.$t('UI.ALL')} ${this.nameRod} ${this.$t('SEO.IN_GUIDE_WITH')}. ${this.$t('POINTS_OF_INTEREST')}.`,
-                    },
-                ],
-            };
+            const text = `${this.$t('UI.ALL')} ${this.nameRod} ${this.$t('SEO.IN_GUIDE_WITH')}`;
+            const page = this.page > 1 ? `${this.$t('UI.PAGE')}. ${this.page}. ` : '';
+            const poi = this.pois.find((item) => item.thumb);
+
+            return this.$seo.head({
+                title: `${page}${this.h1 || text}`,
+                description: `${page}${text} ${this.$t('POINTS_OF_INTEREST')}.`,
+                image: poi ? poi.thumb : null,
+            });
         },
         computed: {
             ...mapGetters({

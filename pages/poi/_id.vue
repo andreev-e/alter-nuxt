@@ -247,21 +247,30 @@
             }
         },
         head() {
-            return {
-                title: this.title,
-                meta: [
-                    {
-                        name: 'description',
-                        content: `${this.name} - ${this.$t('SEO.HOW_TO_GET_TO')}. ${this.$t('SEO.END_OF_DESCRIPTION')}`,
-                    },
-                ],
-                link: [
-                    {
-                        rel: 'canonical',
-                        href: `/poi/${this.poi.id}`,
-                    },
-                ],
+            const image = this.poi.images && this.poi.images.length ? this.poi.images[0].original : null;
+            const description = this.localDescription
+                || `${this.name} - ${this.$t('SEO.HOW_TO_GET_TO')}. ${this.$t('SEO.END_OF_DESCRIPTION')}`;
+            const place = {
+                '@type': 'TouristAttraction',
+                name: this.name,
+                url: this.$seo.url(`/poi/${this.poi.id}`),
+                description: this.$seo.truncate(description, 500),
+                geo: {
+                    '@type': 'GeoCoordinates',
+                    latitude: this.poi.lat,
+                    longitude: this.poi.lng,
+                },
+                ...(this.poi.images && this.poi.images.length
+                    ? { image: this.poi.images.slice(0, 5).map((img) => img.original) } : {}),
             };
+
+            return this.$seo.head({
+                title: this.title,
+                description,
+                image,
+                type: 'article',
+                jsonLd: this.poi.id ? [place] : [],
+            });
         },
         computed: {
             ...mapGetters({
@@ -283,6 +292,10 @@
             },
             name() {
                 return this.$i18n.locale === 'en' && this.poi.name_en ? this.poi.name_en : this.poi.name;
+            },
+            // Описание есть только на русском, на английской версии оставляем шаблонное
+            localDescription() {
+                return this.$i18n.locale === 'en' ? '' : this.poi.description;
             },
             breadCrumbs() {
                 const breadCrumbs = [...this.poi.locations ?? []].map((location) => ({

@@ -76,14 +76,11 @@
         async fetch() {
             await this.paginate(1);
         },
-        head: {
-            title: 'Авторы',
-            meta: [
-                {
-                    name: 'description',
-                    content: 'Участники путеводителя',
-                },
-            ],
+        head() {
+            return this.$seo.head({
+                title: this.$t('AUTHORS.TITLE'),
+                description: this.$t('AUTHORS.DESCRIPTION'),
+            });
         },
         computed: {
             ...mapGetters({

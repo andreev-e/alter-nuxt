@@ -1,6 +1,9 @@
 // Языки живут на разных доменах (altertravel.ru / altertravel.pro) с отдельными сессиями,
 // поэтому залогиненного пользователя переносим через одноразовую ссылку бэкенда.
-export default ({ app, $axios, $auth }, inject) => {
+export default ({ app, $axios }, inject) => {
+    // Плагин auth-модуля подключается после пользовательских, поэтому $auth берём в момент вызова
+    const auth = () => app.$auth;
+
     let switching = false;
 
     function localeDomain(code) {
@@ -14,16 +17,16 @@ export default ({ app, $axios, $auth }, inject) => {
         switching = true;
 
         try {
-            if ($auth.loggedIn && save) {
+            if (auth().loggedIn && save) {
                 // Не сохранился выбор в профиле — язык всё равно переключаем
-                await $axios.patch(`/api/user/${$auth.user.username}`, { locale: code }).catch(() => {});
+                await $axios.patch(`/api/user/${auth().user.username}`, { locale: code }).catch(() => {});
             }
 
             // Локально (localhost) доменов нет — просто меняем язык интерфейса
             if (window.location.hostname !== localeDomain(app.i18n.locale)) {
                 app.i18n.locale = code;
-                if ($auth.loggedIn) {
-                    await $auth.fetchUser();
+                if (auth().loggedIn) {
+                    await auth().fetchUser();
                 }
                 switching = false;
                 return;
@@ -32,7 +35,7 @@ export default ({ app, $axios, $auth }, inject) => {
             // Пути на обоих доменах совпадают, меняется только домен
             const origin = `${window.location.protocol}//${localeDomain(code)}`;
             const path = app.router.currentRoute.fullPath;
-            if ($auth.loggedIn) {
+            if (auth().loggedIn) {
                 const { data } = await $axios.post('/api/login/transfer', { redirect: path });
                 window.location.href = origin + data.url;
             } else {
@@ -53,7 +56,7 @@ export default ({ app, $axios, $auth }, inject) => {
     inject('switchLocale', switchLocale);
 
     window.onNuxtReady(() => {
-        applyUserLocale($auth.user);
-        $auth.$storage.watchState('user', applyUserLocale);
+        applyUserLocale(auth().user);
+        auth().$storage.watchState('user', applyUserLocale);
     });
 };
