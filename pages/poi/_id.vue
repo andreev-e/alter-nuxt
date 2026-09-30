@@ -41,13 +41,13 @@
                     <badge
                         class="bg-primary text-white"
                     >
-                        {{ $t('UI.PUBLISHED') }} {{ $moment(poi.created_at).format('LL') }}
+                        {{ $t('UI.PUBLISHED') }} {{ $formatDate(poi.created_at) }}
                     </badge>
                     <badge
-                        v-if="poi.updated_at && $moment(poi.created_at).format('LL') !== $moment(poi.updated_at).format('LL')"
+                        v-if="poi.updated_at && $formatDate(poi.created_at) !== $formatDate(poi.updated_at)"
                         class="bg-success text-white"
                     >
-                        {{ $t('UI.UPDATED') }}&nbsp;{{ $moment(poi.updated_at).format('LL') }}
+                        {{ $t('UI.UPDATED') }}&nbsp;{{ $formatDate(poi.updated_at) }}
                     </badge>
                     <badge
                         v-for="tag in poi.tags"
@@ -319,9 +319,6 @@
             isAdmin() {
                 return this.$auth.user && this.$auth.user.username === 'andreev';
             },
-        },
-        mounted() {
-            this.$moment.locale(this.$i18n.locale);
         },
         methods: {
             ...mapActions({

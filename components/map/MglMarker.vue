@@ -21,7 +21,7 @@
 
     export default {
         name: 'MglMarker',
-        inject: ['getMap'],
+        inject: ['getMap', 'getMaplibre'],
         props: {
             latLng: {
                 type: Object,
@@ -64,7 +64,8 @@
                     options.element = createElement(this.icon);
                     options.anchor = this.icon.anchor || 'center';
                 }
-                this.marker = new this.$maplibregl.Marker(options)
+                const { Marker } = this.getMaplibre();
+                this.marker = new Marker(options)
                     .setLngLat([this.latLng.lng, this.latLng.lat])
                     .addTo(this.getMap());
 

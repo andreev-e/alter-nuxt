@@ -35,7 +35,7 @@
                     <span v-else>{{ comment.name }}
                     </span>
                 </b>
-                <i>{{ $moment(comment.created_at).format('LLLL') }}</i>
+                <i>{{ $formatDate(comment.created_at, 'dateTime') }}</i>
                 <template v-if="linkObjects">
                     {{ $t('COMMENT.ABOUT') }}
                     <router-link
@@ -129,9 +129,6 @@
                     && (this.$auth.user.username === 'andreev'
                         || (this.comment.user && this.$auth.user.username === this.comment.user.username));
             },
-        },
-        mounted() {
-            this.$moment.locale(this.$i18n.locale);
         },
         methods: {
             del(id) {

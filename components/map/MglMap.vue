@@ -29,6 +29,7 @@
     import {
         ESRI_HYBRID_STYLE, MAP_TYPES, MAPTILER_HYBRID_STYLE_URL, MAPTILER_STYLE_URL, OSM_STYLE,
     } from '../../constants/map';
+    import loadMaplibre from '../../utils/maplibre';
 
     const MAP_TYPE_STORAGE_KEY = 'mapType';
 
@@ -68,6 +69,7 @@
         provide() {
             return {
                 getMap: () => this.mapInstance,
+                getMaplibre: () => this.maplibregl,
             };
         },
         props: {
@@ -101,9 +103,15 @@
                 }
             },
         },
-        mounted() {
+        async mounted() {
             this.mapType = readMapType();
-            const map = new this.$maplibregl.Map({
+            const maplibregl = await loadMaplibre();
+            // Компонент могли убрать, пока грузилась библиотека
+            if (this.isDestroyed) {
+                return;
+            }
+            this.maplibregl = maplibregl;
+            const map = new maplibregl.Map({
                 container: this.$refs.container,
                 style: this.styleFor(this.mapType),
                 center: [this.center.lng, this.center.lat],
@@ -115,7 +123,7 @@
             });
             this.mapInstance = map;
             map.touchZoomRotate.disableRotation();
-            map.addControl(new this.$maplibregl.NavigationControl({ showCompass: false }), 'top-left');
+            map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
 
             map.on('style.load', () => this.localizeLabels(map));
             map.on('error', (event) => {
@@ -144,6 +152,7 @@
         // После дочерних слоёв и маркеров, чтобы они успели убрать себя с карты
         // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle -- проект на Vue 2
         destroyed() {
+            this.isDestroyed = true;
             if (this.mapInstance) {
                 this.mapInstance.remove();
             }

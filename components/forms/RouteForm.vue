@@ -140,10 +140,12 @@
     import MglMap from '../map/MglMap.vue';
     import MglMarker from '../map/MglMarker.vue';
     import Badge from '../ui/Badge.vue';
+    import elementComponents from '../../utils/element';
 
     export default {
         name: 'RouteForm',
         components: {
+            ...elementComponents,
             MglMap,
             MglMarker,
             Badge,

@@ -31,9 +31,11 @@
 
 <script>
     import { Form } from 'laravel-request-utils';
+    import elementComponents from '../../utils/element';
 
     export default {
         name: 'TextInput',
+        components: { ...elementComponents },
         props: {
             label: {
                 type: String,

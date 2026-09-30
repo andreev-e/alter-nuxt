@@ -29,8 +29,11 @@
 </template>
 
 <script>
+    import elementComponents from '../../utils/element';
+
     export default {
         name: 'SelectInput',
+        components: { ...elementComponents },
         props: {
             label: { type: String, required: true },
             value: { type: String, required: false, default: null },

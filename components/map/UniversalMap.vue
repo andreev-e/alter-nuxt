@@ -297,9 +297,12 @@
             fitToContent() {
                 const { mapObject } = this;
                 if (this.fitContent && mapObject && this.contentPoints.length) {
-                    const bounds = new this.$maplibregl.LngLatBounds();
-                    this.contentPoints.forEach(({ lat, lng }) => bounds.extend([lng, lat]));
-                    mapObject.fitBounds(bounds, { padding: 20, duration: 0 });
+                    const lngs = this.contentPoints.map(({ lng }) => lng);
+                    const lats = this.contentPoints.map(({ lat }) => lat);
+                    mapObject.fitBounds(
+                        [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
+                        { padding: 20, duration: 0 },
+                    );
                 }
             },
             userManipulates() {

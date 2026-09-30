@@ -110,10 +110,12 @@
     import map from '../../mixins/map';
     import MglMap from '../map/MglMap.vue';
     import MglMarker from '../map/MglMarker.vue';
+    import elementComponents from '../../utils/element';
 
     export default {
         name: 'PoiForm',
         components: {
+            ...elementComponents,
             MglMap,
             MglMarker,
             SelectInput,

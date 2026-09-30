@@ -3,6 +3,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1;
 export default {
     target: 'server',
 
+    // Современные браузеры получают сборку без лишних полифиллов и транспиляции
+    modern: process.env.NODE_ENV === 'production' ? 'server' : false,
+
     head: {
         title: 'Altertravel',
         meta: [
@@ -28,20 +31,16 @@ export default {
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~assets/css/common',
-        {
-            src: 'element-ui/lib/theme-chalk/index.css',
-            lang: 'scss',
-        },
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/maplibre.client',
         '~/plugins/font-awesome',
-        '~/plugins/country-flag',
         '~/plugins/image-fallback.client',
         '~/plugins/locale.client',
         '~/plugins/seo',
+        '~/plugins/date',
+        '~/plugins/element',
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -53,15 +52,10 @@ export default {
         '@nuxtjs/eslint-module',
     ],
 
-    moment: {
-        locales: ['ru'],
-    },
-
     modules: [
         'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/auth-next',
-        '@nuxtjs/moment',
         '@nuxtjs/i18n',
         ['@nuxtjs/yandex-metrika', {
             id: 10896850,
@@ -74,7 +68,6 @@ export default {
             max: 10000,
             maxAge: 1000 * 60 * 60,
         }],
-        'nuxt-element-ui',
     ],
 
     i18n: {
@@ -92,19 +85,41 @@ export default {
         defaultLocale: 'ru',
     },
 
-    elementUI: {
-        components: ['Row', 'Col', 'Form', 'Input', 'Select', 'Option', 'Button', 'FormItem', 'Message', 'MessageBox'],
-        locale: 'ru-RU',
+    // Подключаем только используемые компоненты, а не всю библиотеку
+    bootstrapVue: {
+        // Стили bootstrap-vue нужны только его собственным компонентам
+        // (таблицы, календарь и т. п.), у нас их нет
+        bootstrapVueCSS: false,
+        componentPlugins: [
+            'LayoutPlugin',
+            'SpinnerPlugin',
+            'PaginationPlugin',
+            'TabsPlugin',
+            'ButtonPlugin',
+            'FormGroupPlugin',
+            'FormTextareaPlugin',
+            'FormCheckboxPlugin',
+        ],
+        directivePlugins: [],
     },
 
     build: {
+        // Стили отдельными минифицированными файлами, которые кэширует браузер,
+        // а не в HTML каждой страницы
+        extractCSS: true,
         babel: {
             compact: true,
         },
         postcss: null,
-        extend(config) {
+        extend(config, { isClient }) {
             // Готовый UMD-бандл MapLibre использует синтаксис, который не понимает парсер webpack 4
             config.module.noParse = /maplibre-gl[\\/]dist[\\/]maplibre-gl\.js$/;
+            if (isClient) {
+                // .mjs-модули (auth-next) иначе получают CommonJS-сборку Vue,
+                // и в бандле оказываются две копии
+                // eslint-disable-next-line no-param-reassign
+                config.resolve.alias.vue$ = 'vue/dist/vue.runtime.esm.js';
+            }
         },
     },
 

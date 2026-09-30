@@ -9,12 +9,6 @@
     export default {
         head() {
             const path = this.$seo.pagePath(this.$route);
-            const alternates = this.$i18n.locales.map((locale) => ({
-                hid: `alternate-${locale.code}`,
-                rel: 'alternate',
-                hreflang: locale.code,
-                href: this.$seo.url(path, locale.code),
-            }));
 
             return {
                 htmlAttrs: {
@@ -22,13 +16,6 @@
                 },
                 link: [
                     { hid: 'canonical', rel: 'canonical', href: this.$seo.url(path) },
-                    ...alternates,
-                    {
-                        hid: 'alternate-x-default',
-                        rel: 'alternate',
-                        hreflang: 'x-default',
-                        href: this.$seo.url(path, this.$i18n.defaultLocale),
-                    },
                 ],
                 meta: [
                     { hid: 'og:site_name', property: 'og:site_name', content: this.$t('ALTERTRAVEL') },

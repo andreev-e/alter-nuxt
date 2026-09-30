@@ -1,15 +1,12 @@
-// robots.txt и sitemap.xml у каждого языкового домена свои: поисковики принимают
-// карту сайта только со ссылками на тот же домен. Сами карты генерирует бэкенд.
+// robots.txt и sitemap.xml. Поисковики принимают карту сайта только с того же домена,
+// поэтому файл, который генерирует бэкенд, отдаём с основного домена.
 const API_URL = process.env.API_URL || 'https://api.altertravel.ru';
 
-const SITEMAPS = {
-    'altertravel.ru': 'sitemap_ru.xml',
-    'altertravel.pro': 'sitemap.xml',
-};
+const HOST = 'altertravel.ru';
 
 function robots(host) {
     // Тестовые и прочие копии сайта не индексируем
-    if (!SITEMAPS[host]) {
+    if (host !== HOST) {
         return 'User-agent: *\nDisallow: /\n';
     }
 
@@ -44,9 +41,9 @@ export default async function seoFiles(req, res, next) {
         return;
     }
 
-    if (path === '/sitemap.xml' && SITEMAPS[host]) {
+    if (path === '/sitemap.xml' && host === HOST) {
         try {
-            const response = await fetch(`${API_URL}/${SITEMAPS[host]}`);
+            const response = await fetch(`${API_URL}/sitemap.xml`);
             if (!response.ok) {
                 throw new Error(`Sitemap responded with ${response.status}`);
             }
