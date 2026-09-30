@@ -1,14 +1,12 @@
-// Языки живут на разных доменах (altertravel.ru / altertravel.pro) с отдельными сессиями,
-// поэтому залогиненного пользователя переносим через одноразовую ссылку бэкенда.
+// Язык переключается на текущем домене: выбор запоминается в cookie (см. plugins/locale.js),
+// а у залогиненного пользователя ещё и в профиле.
+import { applyLocale, saveLocaleCookie } from './locale';
+
 export default ({ app, $axios }, inject) => {
     // Плагин auth-модуля подключается после пользовательских, поэтому $auth берём в момент вызова
     const auth = () => app.$auth;
 
     let switching = false;
-
-    function localeDomain(code) {
-        return (app.i18n.locales.find((l) => l.code === code) || {}).domain;
-    }
 
     async function switchLocale(code, { save = true } = {}) {
         if (switching || code === app.i18n.locale) {
@@ -21,29 +19,13 @@ export default ({ app, $axios }, inject) => {
                 // Не сохранился выбор в профиле — язык всё равно переключаем
                 await $axios.patch(`/api/user/${auth().user.username}`, { locale: code }).catch(() => {});
             }
-
-            // Локально (localhost) доменов нет — просто меняем язык интерфейса
-            if (window.location.hostname !== localeDomain(app.i18n.locale)) {
-                app.i18n.locale = code;
-                if (auth().loggedIn) {
-                    await auth().fetchUser();
-                }
-                switching = false;
-                return;
+            saveLocaleCookie(code);
+            applyLocale(app.i18n, code);
+            if (auth().loggedIn && save) {
+                await auth().fetchUser();
             }
-
-            // Пути на обоих доменах совпадают, меняется только домен
-            const origin = `${window.location.protocol}//${localeDomain(code)}`;
-            const path = app.router.currentRoute.fullPath;
-            if (auth().loggedIn) {
-                const { data } = await $axios.post('/api/login/transfer', { redirect: path });
-                window.location.href = origin + data.url;
-            } else {
-                window.location.href = origin + path;
-            }
-        } catch (e) {
+        } finally {
             switching = false;
-            throw e;
         }
     }
 

@@ -1,11 +1,11 @@
 // SEO-разметка: абсолютные URL, Open Graph, JSON-LD.
-// Абсолютные адреса строятся из домена локали,
-// поэтому canonical тестовых копий ведёт на основной сайт.
+// Абсолютные адреса строятся от текущего домена (для прочих доменов — от основного),
+// а не от языка, выбранного в переключателе. Поэтому canonical тестовых копий ведёт на основной сайт.
 // Протокол фиксированный: за прокси nuxt-i18n может определить его как http.
 const DESCRIPTION_LENGTH = 160;
 
 export default ({ app }, inject) => {
-    function origin(code = app.i18n.locale) {
+    function origin(code = app.i18n.domainLocale) {
         const locale = app.i18n.locales.find((l) => l.code === code) || {};
         return `https://${locale.domain}`;
     }

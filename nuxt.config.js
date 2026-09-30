@@ -37,6 +37,7 @@ export default {
     plugins: [
         '~/plugins/font-awesome',
         '~/plugins/image-fallback.client',
+        '~/plugins/locale',
         '~/plugins/locale.client',
         '~/plugins/seo',
         '~/plugins/date',
